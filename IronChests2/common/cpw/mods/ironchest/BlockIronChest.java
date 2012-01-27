@@ -1,7 +1,5 @@
 package cpw.mods.ironchest;
 
-import java.util.Random;
-
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.IBlockAccess;
@@ -29,6 +27,19 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 		return "ic2/sprites/ironchest_block_tex.png";
 	}
 
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
+	
+	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
+	@Override
+	public int getRenderType() {
+		return 22;
+	}
 	@Override
 	public TileEntity getBlockEntity(int metadata) {
 		return IronChestType.makeEntity(metadata);

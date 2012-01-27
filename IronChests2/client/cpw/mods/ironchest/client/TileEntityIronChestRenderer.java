@@ -16,9 +16,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 
 	public void render(TileEntityIronChest tile, double d, double d1, double d2, float f) {
 		int facing = 3;
-		int metatype = 0;
 		if (tile != null && tile.worldObj != null) {
-			metatype = tile.getBlockMetadata();
 			facing = tile.getFacing();
 		}
 		bindTextureByName(tile.getType().getModelTexture());

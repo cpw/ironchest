@@ -5,6 +5,7 @@ import java.io.File;
 import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.ItemIronChest;
+import cpw.mods.ironchest.client.IronChestRenderHelper;
 import cpw.mods.ironchest.client.TileEntityIronChestRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.forge.Configuration;
@@ -46,7 +47,7 @@ public class mod_IronChest extends BaseModMp {
         IronChestType.registerTileEntities(TileEntityIronChestRenderer.class);
         IronChestType.registerRecipes(ironChestBlock);
 
-        System.out.printf("Item : %s\n", Item.itemsList[ironChestBlock.blockID]);
+        ChestItemRenderHelper.instance=new IronChestRenderHelper();
         MinecraftForgeClient.preloadTexture("ic2/sprites/ironchest_block_tex.png");
 	}
 

@@ -1,7 +1,5 @@
 package cpw.mods.ironchest;
 
-import java.util.Arrays;
-
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -25,7 +23,7 @@ public enum IronChestType {
 	IronChestType(int size, String friendlyName, String modelTexture, int textureRow, Item mat, Class<? extends TileEntityIronChest> clazz, String... recipes) {
 		this.size = size;
 		this.friendlyName = friendlyName;
-		this.modelTexture = "ic2/sprites/"+modelTexture;
+		this.modelTexture = "/ic2/sprites/"+modelTexture;
 		this.textureRow = textureRow;
 		this.clazz = clazz;
 		this.mat = mat;
