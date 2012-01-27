@@ -35,7 +35,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 	}
 	@Override
 	public String getInvName() {
-		return type.friendlyName;
+		return type.name();
 	}
 
 	public IronChestType getType() {

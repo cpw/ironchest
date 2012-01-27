@@ -1,5 +1,7 @@
 package cpw.mods.ironchest;
 
+import java.util.Random;
+
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.IBlockAccess;
@@ -13,6 +15,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 
 	public BlockIronChest(int id) {
 		super(id, Material.iron);
+		setBlockName("IronChest");
 		setHardness(3.0F);
 	}
 
@@ -53,7 +56,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 		case 0:
 		case 1:
 			return typ.getTextureRow()*16+1;
-		case 2:
+		case 3:
 			return typ.getTextureRow()*16+2;
 		default:
 			return typ.getTextureRow()*16;
@@ -88,5 +91,9 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 			((TileEntityIronChest) te).setFacing(chestFacing);
 			world.markBlockNeedsUpdate(i, j, k);
 		}
+	}
+	@Override
+	protected int damageDropped(int i) {
+		return i;
 	}
 }
