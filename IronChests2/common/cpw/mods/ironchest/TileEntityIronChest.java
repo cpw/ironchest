@@ -8,41 +8,21 @@ import net.minecraft.src.NBTTagList;
 import net.minecraft.src.TileEntity;
 
 public class TileEntityIronChest extends TileEntity implements IInventory {
-	public enum Type {
-		IRON(54,"IronChest","ironchest.png",0),
-		GOLD(81,"GoldChest","goldchest.png",1),
-		DIAMOND(108,"DiamondChest","diamondchest.png",2);
-		private int size;
-		private String friendlyName;
-		private String modelTexture;
-		private int textureRow;
-		
-		Type(int size, String friendlyName, String modelTexture, int textureRow) {
-			this.size=size;
-			this.friendlyName=friendlyName;
-			this.modelTexture=modelTexture;
-			this.textureRow=textureRow;
-		}
-		
-		public String getModelTexture() {
-			return modelTexture;
-		}
-		
-		public int getTextureRow() {
-			return textureRow;
-		}
-	}
 	private int ticksSinceSync;
 	public float prevLidAngle;
 	public float lidAngle;
 	private int numUsingPlayers;
-	private Type type;
+	private IronChestType type;
 	public ItemStack[] chestContents;
 	private byte facing;
 
-	public TileEntityIronChest(Type type, byte facing) {
+	public TileEntityIronChest() {
+		this(IronChestType.IRON);
+	}
+	
+	protected TileEntityIronChest(IronChestType type) {
+		super();
 		this.type=type;
-		this.facing=facing;
 		this.chestContents=new ItemStack[getSizeInventory()];
 	}
 	@Override
@@ -58,25 +38,47 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 		return type.friendlyName;
 	}
 
-	public Type getType() {
+	public IronChestType getType() {
 		return type;
 	}
 	@Override
 	public ItemStack getStackInSlot(int i) {
-		// TODO Auto-generated method stub
-		return null;
+        return chestContents[i];
 	}
 
 	@Override
 	public ItemStack decrStackSize(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
+        if (chestContents[i] != null)
+        {
+            if (chestContents[i].stackSize <= j)
+            {
+                ItemStack itemstack = chestContents[i];
+                chestContents[i] = null;
+                onInventoryChanged();
+                return itemstack;
+            }
+            ItemStack itemstack1 = chestContents[i].splitStack(j);
+            if (chestContents[i].stackSize == 0)
+            {
+                chestContents[i] = null;
+            }
+            onInventoryChanged();
+            return itemstack1;
+        }
+        else
+        {
+            return null;
+        }
 	}
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		// TODO Auto-generated method stub
-
+        chestContents[i] = itemstack;
+        if (itemstack != null && itemstack.stackSize > getInventoryStackLimit())
+        {
+            itemstack.stackSize = getInventoryStackLimit();
+        }
+        onInventoryChanged();
 	}
 
     @Override
@@ -94,6 +96,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
                 chestContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }
+        facing=nbttagcompound.getByte("facing");
     }
 
     @Override
@@ -113,6 +116,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
         }
 
         nbttagcompound.setTag("Items", nbttaglist);
+        nbttagcompound.setByte("facing", facing);
     }
 
 	@Override
@@ -170,6 +174,8 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
         if (i == 1)
         {
             numUsingPlayers = j;
+        } else if (i == 2) {
+        	facing = (byte)j;
         }
     }
 
@@ -185,19 +191,11 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
         worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, numUsingPlayers);
 	}
 
-	protected static TileEntity makeEntity(int metadata) {
-		//Compatibility			
-		int chesttype=metadata;
-		int facing=0;
-
-		if (metadata>2) {
-			chesttype=metadata<<2;
-			facing=metadata&3;
-		}
-		return new TileEntityIronChest(Type.values()[chesttype],(byte)facing);
-	}
 	public void setFacing(byte chestFacing) {
 		this.facing=chestFacing;
+		if (worldObj!=null) {
+			worldObj.playNoteAt(xCoord, yCoord, zCoord, 2, facing);
+		}
 	}
 
 }

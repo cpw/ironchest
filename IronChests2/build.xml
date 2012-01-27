@@ -68,7 +68,7 @@
 		<property name="jarname" value="${modname}-${side}-${version}" />
 		<jar destfile="${basedir}/${jarname}.zip">
 			<fileset dir="${output}" includes="**/*.class" />
-			<fileset dir="${resource.dir}" />
+			<fileset dir="${resource.dir}" includes="**/*.png"/>
 		</jar>
 	</target>
 	<target name="build" depends="merge-client,merge-server,build-client,build-server" />
@@ -114,8 +114,9 @@
 		<exec executable="${mcp.home}/reobfuscate.sh" dir="${mcp.home}" />
 	</target>
 
-	<target name="deploy" depends="init,build">
-		<move file="${deploy.dir}/${output}.zip" tofile="${deploy.dir}/${output}.zip.${timestamp}" failonerror="false" verbose="true" />
-		<copy file="${basedir}/${output}.zip" todir="${deploy.dir}" verbose="true" />
+	<target name="deploy" depends="init,build-client">
+		<property name="jarname" value="${modname}-client-${version}" />
+		<move file="${deploy.dir}/${jarname}.zip" tofile="${deploy.dir}/${jarname}.zip.${timestamp}" failonerror="false" verbose="true" />
+		<copy file="${basedir}/${jarname}.zip" todir="${deploy.dir}" verbose="true" />
 	</target>
 </project>

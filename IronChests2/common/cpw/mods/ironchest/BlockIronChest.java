@@ -28,7 +28,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 
 	@Override
 	public TileEntity getBlockEntity(int metadata) {
-		return TileEntityIronChest.makeEntity(metadata);
+		return IronChestType.makeEntity(metadata);
 	}
 
 	public int getBlockTexture(IBlockAccess worldAccess, int i, int j, int k, int l) {
@@ -36,34 +36,38 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 		if (te != null && te instanceof TileEntityIronChest) {
 			TileEntityIronChest icte=(TileEntityIronChest) te;
 			if (l==0 || l==1) {									// Top and Bottom
-				return icte.getType().getTextureRow()*16;
-			} else if (l==getTextureFace(icte.getFacing())) {	// Front
 				return icte.getType().getTextureRow()*16+1;
-			} else { 											// Back and Sides
+			} else if (l==icte.getFacing()) {	// Front
 				return icte.getType().getTextureRow()*16+2;
+			} else { 											// Back and Sides
+				return icte.getType().getTextureRow()*16;
 			}
 		}
 		return 0;
 	}
 
-	public byte getTextureFace(byte facing) {
-		switch (facing) {
+	@Override
+	public int getBlockTextureFromSideAndMetadata(int i, int j) {
+		IronChestType typ=IronChestType.values()[j];
+		switch (i) {
 		case 0:
-			return 3;
 		case 1:
-			return 4;
+			return typ.getTextureRow()*16+1;
 		case 2:
-			return 2;
-		case 3:
-			return 5;
+			return typ.getTextureRow()*16+2;
 		default:
-			return 0;
+			return typ.getTextureRow()*16;
 		}
 	}
-
+	
+	@Override
+	public void onBlockAdded(World world, int i, int j, int k) {
+		super.onBlockAdded(world, i, j, k);
+        world.markBlockNeedsUpdate(i, j, k);
+	}
+	
 	@Override
 	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving) {
-		super.onBlockPlacedBy(world, i, j, k, entityliving);
 		byte chestFacing = 0;
 		int facing = MathHelper.floor_double((double) ((entityliving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
 		if (facing == 0) {
@@ -78,9 +82,11 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 		if (facing == 3) {
 			chestFacing = 4;
 		}
+		System.out.printf("Facing %d %d\n", facing,chestFacing);
 		TileEntity te = world.getBlockTileEntity(i, j, k);
 		if (te != null && te instanceof TileEntityIronChest) {
 			((TileEntityIronChest) te).setFacing(chestFacing);
+			world.markBlockNeedsUpdate(i, j, k);
 		}
 	}
 }
