@@ -2,11 +2,13 @@ package cpw.mods.ironchest;
 
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.EntityLiving;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.Material;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import net.minecraft.src.mod_IronChest;
 import net.minecraft.src.forge.ITextureProvider;
 
 public class BlockIronChest extends BlockContainer implements ITextureProvider {
@@ -72,6 +74,27 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 		default:
 			return typ.getTextureRow()*16;
 		}
+	}
+	@Override
+	public boolean blockActivated(World world, int i, int j, int k, EntityPlayer player) {
+        TileEntity te = world.getBlockTileEntity(i, j, k);
+        
+        if(te == null || !(te instanceof TileEntityIronChest))
+        {
+            return true;
+        }
+
+        if(world.isBlockSolidOnSide(i, j + 1, k, 0))
+        {
+            return true;
+        }
+        
+        if (world.isRemote) {
+        	return true;
+        }
+        
+        mod_IronChest.openGUI(player, (TileEntityIronChest)te);
+        return true;
 	}
 	
 	@Override

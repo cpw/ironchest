@@ -5,6 +5,8 @@ import java.io.File;
 import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.ItemIronChest;
+import cpw.mods.ironchest.TileEntityIronChest;
+import cpw.mods.ironchest.client.GUIChest;
 import cpw.mods.ironchest.client.IronChestRenderHelper;
 import cpw.mods.ironchest.client.TileEntityIronChestRenderer;
 import net.minecraft.client.Minecraft;
@@ -34,6 +36,7 @@ public class mod_IronChest extends BaseModMp {
 			compatibilityMode = Boolean.parseBoolean(cfg.getOrCreateBooleanProperty("compatibilityMode", Configuration.GENERAL_PROPERTY,
 					defaultCompatibility).value);
 			ironChestBlock = new BlockIronChest(Integer.parseInt(cfg.getOrCreateBlockIdProperty("blockVeryLargeChest", 181).value));
+			IronChestType.initGUIs(cfg);
 		} catch (Exception e) {
 			ModLoader.getLogger().severe("IronChest was unable to load it's configuration successfully");
 			e.printStackTrace(System.err);
@@ -49,6 +52,10 @@ public class mod_IronChest extends BaseModMp {
 
         ChestItemRenderHelper.instance=new IronChestRenderHelper();
         MinecraftForgeClient.preloadTexture("ic2/sprites/ironchest_block_tex.png");
+	}
+
+	public static void openGUI(EntityPlayer player, TileEntityIronChest te) {
+		GUIChest.GUI.showGUI(te, player);
 	}
 
 }

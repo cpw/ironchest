@@ -7,22 +7,26 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraft.src.mod_IronChest;
+import net.minecraft.src.forge.Configuration;
 
 public enum IronChestType {
-	IRON(54, "Iron Chest", "ironchest.png", 0, Item.ingotIron, TileEntityIronChest.class, "mmmmPmmmm"),
-	GOLD(81, "Gold Chest", "goldchest.png", 1, Item.ingotGold, TileEntityGoldChest.class, "mmmmPmmmm");
-	// DIAMOND(108,"DiamondChest","diamondchest.png",2);
+	IRON(54, "Iron Chest", null, "ironchest.png", 0, Item.ingotIron, TileEntityIronChest.class, "mmmmPmmmm"),
+	GOLD(81, "Gold Chest", "guiGoldChest", "goldchest.png", 1, Item.ingotGold, TileEntityGoldChest.class, "mmmmPmmmm"),
+	DIAMOND(108,"Diamond Chest","guiDiamondChest", "diamondchest.png", 2, Item.diamond, TileEntityDiamondChest.class, "mmmmPmmmm");
 	int size;
 	String friendlyName;
 	private String modelTexture;
+	private String guiName;
 	private int textureRow;
 	private Class<? extends TileEntityIronChest> clazz;
 	private Item mat;
 	private String[] recipes;
+	private int guiId;
 
-	IronChestType(int size, String friendlyName, String modelTexture, int textureRow, Item mat, Class<? extends TileEntityIronChest> clazz, String... recipes) {
+	IronChestType(int size, String friendlyName, String guiName, String modelTexture, int textureRow, Item mat, Class<? extends TileEntityIronChest> clazz, String... recipes) {
 		this.size = size;
 		this.friendlyName = friendlyName;
+		this.guiName=guiName;
 		this.modelTexture = "/ic2/sprites/"+modelTexture;
 		this.textureRow = textureRow;
 		this.clazz = clazz;
@@ -98,5 +102,20 @@ public enum IronChestType {
 	}
 	private static void addRecipe(ItemStack is, Object... parts) {
 		ModLoader.AddRecipe(is, parts);
+	}
+
+	public int getGUI() {
+		return guiId;
+	}
+	
+	public static void initGUIs(Configuration cfg) {
+		int defGUI=51;
+		for (IronChestType typ : values()) {
+			if (typ.guiName!=null) {
+				typ.guiId=Integer.parseInt(cfg.getOrCreateIntProperty(typ.guiName, Configuration.GENERAL_PROPERTY, defGUI++).value);
+			} else {
+				typ.guiId=-1;
+			}
+		}
 	}
 }
