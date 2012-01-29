@@ -36,14 +36,21 @@ public class GUIChest extends GuiContainer {
 			return new ContainerIronChestBase(player,chest, mainType, xSize, ySize);
 		}
 		
-		public static void showGUI(TileEntityIronChest te, EntityPlayer player) {
+		public static GUIChest buildGUI(IronChestType type, IInventory playerInventory, TileEntityIronChest chestInventory) {
 			for (GUI gui : values()) {
-				if (te.getType()==gui.mainType) {
-					ModLoader.OpenGUI(player, new GUIChest(gui,player.inventory,te));
-					return;
+				if (chestInventory.getType()==gui.mainType) {
+					return new GUIChest(gui,playerInventory,chestInventory);
 				}
 			}
-			player.displayGUIChest(te);
+			return null;
+		}
+		public static void showGUI(TileEntityIronChest te, EntityPlayer player) {
+			GUIChest gui=buildGUI(te.getType(),player.inventory,te);
+			if (gui!=null) {
+				ModLoader.OpenGUI(player, gui);
+			} else {
+				player.displayGUIChest(te);
+			}
 		}
 	}
 

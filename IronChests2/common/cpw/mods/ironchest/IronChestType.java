@@ -4,27 +4,26 @@ import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.TileEntitySpecialRenderer;
+import net.minecraft.src.mod_IronChest;
 import net.minecraft.src.forge.Configuration;
 
 public enum IronChestType {
-	IRON(54, 9, true, "Iron Chest", null, "ironchest.png", 0, Item.ingotIron, TileEntityIronChest.class, "mmmmPmmmm","mGmG3GmGm"), 
+	IRON(54, 9, true, "Iron Chest", "guiIronChest", "ironchest.png", 0, Item.ingotIron, TileEntityIronChest.class, "mmmmPmmmm","mGmG3GmGm"), 
 	GOLD(81, 9, true, "Gold Chest", "guiGoldChest", "goldchest.png", 1, Item.ingotGold, TileEntityGoldChest.class, "mmmmPmmmm","mGmG4GmGm"), 
 	DIAMOND(108, 12, true, "Diamond Chest", "guiDiamondChest", "diamondchest.png", 2, Item.diamond, TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"), 
 	COPPER(45, 9, false, "Copper Chest", "guiCopperChest", "copperchest.png", 3, null, TileEntityCopperChest.class, "mmmmCmmmm"), 
 	SILVER(72, 9, false, "Silver Chest", "guiSilverChest", "silverchest.png", 4, null, TileEntitySilverChest.class, "mmmm0mmmm", "mmmm3mmmm");
 	int size;
 	private int rowLength;
-	String friendlyName;
+	public String friendlyName;
 	private boolean tieredChest;
 	private String modelTexture;
 	private String guiName;
 	private int textureRow;
-	private Class<? extends TileEntityIronChest> clazz;
+	public Class<? extends TileEntityIronChest> clazz;
 	private Item mat;
 	private String[] recipes;
-	private int guiId;
+	public int guiId;
 
 	IronChestType(int size, int rowLength, boolean tieredChest, String friendlyName, String guiName, String modelTexture, int textureRow, Item mat,
 			Class<? extends TileEntityIronChest> clazz, String... recipes) {
@@ -48,7 +47,7 @@ public enum IronChestType {
 		return textureRow;
 	}
 
-	public static TileEntity makeEntity(int metadata) {
+	public static TileEntityIronChest makeEntity(int metadata) {
 		// Compatibility
 		int chesttype = metadata;
 		try {
@@ -64,28 +63,7 @@ public enum IronChestType {
 		return null;
 	}
 
-	public static void registerTileEntities(Class<? extends TileEntitySpecialRenderer> renderer) {
-		for (IronChestType typ : values()) {
-			try {
-				if (renderer != null) {
-					ModLoader.RegisterTileEntity(typ.clazz, typ.name(), renderer.newInstance());
-				} else {
-					ModLoader.RegisterTileEntity(typ.clazz, typ.name());
-				}
-			} catch (InstantiationException e) {
-				// unpossible
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// unpossible
-				e.printStackTrace();
-			}
-		}
-	}
-
 	public static void registerTranslations() {
-		for (IronChestType typ : values()) {
-			ModLoader.AddLocalization(typ.name() + ".name", typ.friendlyName);
-		}
 	}
 
 	public static void generateTieredRecipies(BlockIronChest blockResult) {
@@ -120,6 +98,7 @@ public enum IronChestType {
 		for (IronChestType typ : values()) {
 			if (typ.guiName != null) {
 				typ.guiId = Integer.parseInt(cfg.getOrCreateIntProperty(typ.guiName, Configuration.GENERAL_PROPERTY, defGUI++).value);
+				mod_IronChest.proxy.registerGUI(typ.guiId);
 			} else {
 				typ.guiId = -1;
 			}
@@ -131,7 +110,6 @@ public enum IronChestType {
 	}
 
 	public int getRowLength() {
-		// TODO Auto-generated method stub
 		return rowLength;
 	}
 

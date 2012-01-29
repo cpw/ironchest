@@ -2,32 +2,31 @@ package net.minecraft.src;
 
 import java.io.File;
 
-import cpw.mods.ironchest.BlockIronChest;
-import cpw.mods.ironchest.IronChestType;
-import cpw.mods.ironchest.ItemIronChest;
-import cpw.mods.ironchest.TileEntityIronChest;
-import cpw.mods.ironchest.client.GUIChest;
-import cpw.mods.ironchest.client.IronChestRenderHelper;
-import cpw.mods.ironchest.client.TileEntityIronChestRenderer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.IOreHandler;
 import net.minecraft.src.forge.MinecraftForge;
-import net.minecraft.src.forge.MinecraftForgeClient;
+import cpw.mods.ironchest.BlockIronChest;
+import cpw.mods.ironchest.IProxy;
+import cpw.mods.ironchest.IronChestType;
+import cpw.mods.ironchest.ItemIronChest;
+import cpw.mods.ironchest.ServerClientProxy;
+import cpw.mods.ironchest.TileEntityIronChest;
 
 public class mod_IronChest extends BaseModMp {
 
 	public static BlockIronChest ironChestBlock;
-	public static boolean compatibilityMode;
+	public static IProxy proxy;
 
 	@Override
 	public String getVersion() {
-		return "2.0.1";
+		return "2.1";
 	}
 
 	@Override
 	public void load() {
-		File cfgFile = new File(Minecraft.getMinecraftDir(), "config/IronChest.cfg");
+		MinecraftForge.versionDetect("IronChest", 1, 3, 0);
+		proxy = ServerClientProxy.getProxy();
+		File cfgFile = new File(proxy.getMinecraftDir(), "config/IronChest.cfg");
 		Configuration cfg = new Configuration(cfgFile);
 		try {
 			cfg.load();
@@ -56,16 +55,15 @@ public class mod_IronChest extends BaseModMp {
 			}
 		});
 		ModLoader.RegisterBlock(ironChestBlock, ItemIronChest.class);
-		IronChestType.registerTranslations();
-        IronChestType.registerTileEntities(TileEntityIronChestRenderer.class);
+		proxy.registerTranslations();
+		proxy.registerTileEntities();
         IronChestType.generateTieredRecipies(ironChestBlock);
 
-        ChestItemRenderHelper.instance=new IronChestRenderHelper();
-        MinecraftForgeClient.preloadTexture("cpw/mods/ironchest/sprites/block_textures.png");
+        proxy.registerRenderInformation();
 	}
+
 
 	public static void openGUI(EntityPlayer player, TileEntityIronChest te) {
-		GUIChest.GUI.showGUI(te, player);
+		proxy.showGUI(te,player);
 	}
-
 }

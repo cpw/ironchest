@@ -126,6 +126,9 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+		if (worldObj==null) {
+			return true;
+		}
 		if (worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) != this) {
 			return false;
 		}
@@ -137,7 +140,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 		super.updateEntity();
 		// Resynchronize clients with the server state
 		if ((++ticksSinceSync % 20) * 4 == 0) {
-			worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, numUsingPlayers);
+			worldObj.playNoteAt(xCoord, yCoord, zCoord, 3, ( ( numUsingPlayers<<3 ) & 0xF8 ) | (facing & 0x7));
 		}
 		prevLidAngle = lidAngle;
 		float f = 0.1F;
@@ -176,26 +179,28 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
             numUsingPlayers = j;
         } else if (i == 2) {
         	facing = (byte)j;
+        } else if (i == 3) {
+        	facing = (byte)(j & 0x7);
+        	numUsingPlayers = (j & 0xF8 )>> 3;
         }
     }
 
 	@Override
 	public void openChest() {
+		if (worldObj==null) return;
         numUsingPlayers++;
         worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, numUsingPlayers);
 	}
 
 	@Override
 	public void closeChest() {
+		if (worldObj==null) return;
         numUsingPlayers--;
         worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, numUsingPlayers);
 	}
 
 	public void setFacing(byte chestFacing) {
 		this.facing=chestFacing;
-		if (worldObj!=null) {
-			worldObj.playNoteAt(xCoord, yCoord, zCoord, 2, facing);
-		}
 	}
 
 }
