@@ -6,8 +6,8 @@ import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Slot;
 
-public abstract class IronChestContainer extends Container {
-	public IronChestContainer(IInventory playerInventory, IInventory chestInventory) {
+public abstract class ContainerIronChestBase extends Container {
+	public ContainerIronChestBase(IInventory playerInventory, IInventory chestInventory) {
         numRows = chestInventory.getSizeInventory() / getRowLength();
         chest = chestInventory;
         chestInventory.openChest();

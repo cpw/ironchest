@@ -7,7 +7,7 @@ package cpw.mods.ironchest;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.Slot;
 
-public class ContainerGoldChest extends IronChestContainer
+public class ContainerGoldChest extends ContainerIronChestBase
 {
 
     private static final int NUM_ROWS = 9;

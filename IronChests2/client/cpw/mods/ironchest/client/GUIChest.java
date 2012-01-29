@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.ironchest.ContainerDiamondChest;
 import cpw.mods.ironchest.ContainerGoldChest;
-import cpw.mods.ironchest.IronChestContainer;
+import cpw.mods.ironchest.ContainerIronChestBase;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 import net.minecraft.src.Container;
@@ -20,13 +20,13 @@ public class GUIChest extends GuiContainer {
 		GOLD(ContainerGoldChest.class,184,256,"/ic2/sprites/goldcontainer.png",IronChestType.GOLD),
 		DIAMOND(ContainerDiamondChest.class,238,256,"/ic2/sprites/diamondcontainer.png",IronChestType.DIAMOND);
 		
-		private Class<? extends IronChestContainer> clazz;
+		private Class<? extends ContainerIronChestBase> clazz;
 		private int xSize;
 		private int ySize;
 		private String guiTexture;
 		private IronChestType mainType;
 
-		private GUI(Class<? extends IronChestContainer> clazz, int xSize, int ySize, String guiTexture, IronChestType mainType) {
+		private GUI(Class<? extends ContainerIronChestBase> clazz, int xSize, int ySize, String guiTexture, IronChestType mainType) {
 			this.clazz=clazz;
 			this.xSize=xSize;
 			this.ySize=ySize;

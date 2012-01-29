@@ -3,7 +3,7 @@ package cpw.mods.ironchest;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.Slot;
 
-public class ContainerDiamondChest extends IronChestContainer {
+public class ContainerDiamondChest extends ContainerIronChestBase {
     public ContainerDiamondChest(IInventory playerInventory, IInventory chestInventory) {
 		super(playerInventory, chestInventory);
 	}
