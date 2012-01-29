@@ -12,7 +12,6 @@ import net.minecraft.src.Material;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
-import net.minecraft.src.TileEntityChest;
 import net.minecraft.src.World;
 import net.minecraft.src.mod_IronChest;
 import net.minecraft.src.forge.ITextureProvider;
@@ -34,7 +33,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 
 	@Override
 	public String getTextureFile() {
-		return "ic2/sprites/ironchest_block_tex.png";
+		return "cpw/mods/ironchest/sprites/block_textures.png";
 	}
 
 	@Override
@@ -140,7 +139,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 
 	public void onBlockRemoval(World world, int i, int j, int k)
 	{
-	    TileEntityChest tileentitychest = (TileEntityChest)world.getBlockTileEntity(i, j, k);
+	    TileEntityIronChest tileentitychest = (TileEntityIronChest)world.getBlockTileEntity(i, j, k);
 	    if (tileentitychest != null)
 	    {
 	        for (int l = 0; l < tileentitychest.getSizeInventory(); l++)

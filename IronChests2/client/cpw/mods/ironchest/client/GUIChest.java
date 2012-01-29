@@ -1,31 +1,31 @@
 package cpw.mods.ironchest.client;
 
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.ironchest.ContainerDiamondChest;
-import cpw.mods.ironchest.ContainerGoldChest;
-import cpw.mods.ironchest.ContainerIronChestBase;
-import cpw.mods.ironchest.IronChestType;
-import cpw.mods.ironchest.TileEntityIronChest;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiContainer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ModLoader;
 
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.ironchest.ContainerIronChestBase;
+import cpw.mods.ironchest.IronChestType;
+import cpw.mods.ironchest.TileEntityIronChest;
+
 public class GUIChest extends GuiContainer {
 	public enum GUI {
-		GOLD(ContainerGoldChest.class,184,256,"/ic2/sprites/goldcontainer.png",IronChestType.GOLD),
-		DIAMOND(ContainerDiamondChest.class,238,256,"/ic2/sprites/diamondcontainer.png",IronChestType.DIAMOND);
+		IRON(184,202,"/cpw/mods/ironchest/sprites/ironcontainer.png",IronChestType.IRON),
+		GOLD(184,256,"/cpw/mods/ironchest/sprites/goldcontainer.png",IronChestType.GOLD),
+		DIAMOND(238,256,"/cpw/mods/ironchest/sprites/diamondcontainer.png",IronChestType.DIAMOND),
+		COPPER(184,184,"/cpw/mods/ironchest/sprites/coppercontainer.png",IronChestType.COPPER),
+		SILVER(184,238,"/cpw/mods/ironchest/sprites/silvercontainer.png",IronChestType.SILVER);
 		
-		private Class<? extends ContainerIronChestBase> clazz;
 		private int xSize;
 		private int ySize;
 		private String guiTexture;
 		private IronChestType mainType;
 
-		private GUI(Class<? extends ContainerIronChestBase> clazz, int xSize, int ySize, String guiTexture, IronChestType mainType) {
-			this.clazz=clazz;
+		private GUI(int xSize, int ySize, String guiTexture, IronChestType mainType) {
 			this.xSize=xSize;
 			this.ySize=ySize;
 			this.guiTexture=guiTexture;
@@ -33,13 +33,7 @@ public class GUIChest extends GuiContainer {
 		}
 		
 		protected Container makeContainer(IInventory player, IInventory chest) {
-			try {
-				return clazz.getConstructor(IInventory.class,IInventory.class).newInstance(player,chest);
-			} catch (Exception e) {
-				// unpossible
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			}
+			return new ContainerIronChestBase(player,chest, mainType, xSize, ySize);
 		}
 		
 		public static void showGUI(TileEntityIronChest te, EntityPlayer player) {
@@ -53,6 +47,9 @@ public class GUIChest extends GuiContainer {
 		}
 	}
 
+	public int getRowLength() {
+		return type.mainType.getRowLength();
+	}
 	private GUI type;
 
 	private GUIChest(GUI type, IInventory player, IInventory chest) {

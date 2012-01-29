@@ -6,18 +6,15 @@ import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Slot;
 
-public abstract class ContainerIronChestBase extends Container {
-	public ContainerIronChestBase(IInventory playerInventory, IInventory chestInventory) {
-        numRows = chestInventory.getSizeInventory() / getRowLength();
+public class ContainerIronChestBase extends Container {
+	private IronChestType type;
+	public ContainerIronChestBase(IInventory playerInventory, IInventory chestInventory, IronChestType type, int xSize, int ySize) {
         chest = chestInventory;
+        this.type=type;
         chestInventory.openChest();
-        layoutContainer(playerInventory, chestInventory);
-
+        layoutContainer(playerInventory, chestInventory, type, xSize, ySize);
     }
 
-	protected abstract void layoutContainer(IInventory playerInventory, IInventory chestInventory);
-	protected abstract int getRowLength();
-	
     public boolean canInteractWith(EntityPlayer player)
     {
         return chest.isUseableByPlayer(player);
@@ -31,14 +28,14 @@ public abstract class ContainerIronChestBase extends Container {
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
-            if(i < numRows * getRowLength())
+            if(i < type.size)
             {
-                if(!mergeItemStack(itemstack1, numRows * getRowLength(), inventorySlots.size(), true))
+                if(!mergeItemStack(itemstack1, type.size, inventorySlots.size(), true))
                 {
                     return null;
                 }
             } else
-            if(!mergeItemStack(itemstack1, 0, numRows * getRowLength(), false))
+            if(!mergeItemStack(itemstack1, 0, type.size, false))
             {
                 return null;
             }
@@ -59,6 +56,31 @@ public abstract class ContainerIronChestBase extends Container {
         chest.closeChest();
     }
 
-    private IInventory chest;
-    private int numRows;
+    protected void layoutContainer(IInventory playerInventory, IInventory chestInventory, IronChestType type, int xSize, int ySize) {
+		for(int chestRow = 0; chestRow < type.getRowCount(); chestRow++)
+	    {
+	        for(int chestCol = 0; chestCol < type.getRowLength(); chestCol++)
+	        {
+	            addSlot(new Slot(chestInventory, chestCol + chestRow * type.getRowLength(), 12 + chestCol * 18, 8 + chestRow * 18));
+	        }
+	
+	    }
+	
+		int leftCol=(xSize-162)/2 + 1;
+	    for(int playerInvRow = 0; playerInvRow < 3; playerInvRow++)
+	    {
+	        for(int playerInvCol = 0; playerInvCol < 9; playerInvCol++)
+	        {
+	            addSlot(new Slot(playerInventory, playerInvCol + playerInvRow * 9 + 9, leftCol + playerInvCol * 18, ySize - (4-playerInvRow) * 18 - 10));
+	        }
+	
+	    }
+	
+	    for(int hotbarSlot = 0; hotbarSlot < 9; hotbarSlot++)
+	    {
+	        addSlot(new Slot(playerInventory, hotbarSlot, leftCol + hotbarSlot * 18, ySize-24));
+	    }
+	}
+
+	private IInventory chest;
 }

@@ -11,6 +11,8 @@ import cpw.mods.ironchest.client.IronChestRenderHelper;
 import cpw.mods.ironchest.client.TileEntityIronChestRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.forge.Configuration;
+import net.minecraft.src.forge.IOreHandler;
+import net.minecraft.src.forge.MinecraftForge;
 import net.minecraft.src.forge.MinecraftForgeClient;
 
 public class mod_IronChest extends BaseModMp {
@@ -26,16 +28,10 @@ public class mod_IronChest extends BaseModMp {
 	@Override
 	public void load() {
 		File cfgFile = new File(Minecraft.getMinecraftDir(), "config/IronChest.cfg");
-		// If our config file exists
-		boolean defaultCompatibility = cfgFile.exists();
 		Configuration cfg = new Configuration(cfgFile);
 		try {
 			cfg.load();
-			// But doesn't have the compatibilityMode flag, enable compatibility
-			// mode
-			compatibilityMode = Boolean.parseBoolean(cfg.getOrCreateBooleanProperty("compatibilityMode", Configuration.GENERAL_PROPERTY,
-					defaultCompatibility).value);
-			ironChestBlock = new BlockIronChest(Integer.parseInt(cfg.getOrCreateBlockIdProperty("blockVeryLargeChest", 181).value));
+			ironChestBlock = new BlockIronChest(Integer.parseInt(cfg.getOrCreateBlockIdProperty("ironChests", 181).value));
 			IronChestType.initGUIs(cfg);
 		} catch (Exception e) {
 			ModLoader.getLogger().severe("IronChest was unable to load it's configuration successfully");
@@ -45,13 +41,27 @@ public class mod_IronChest extends BaseModMp {
 			cfg.save();
 		}
 
+		MinecraftForge.registerOreHandler(new IOreHandler() {
+			@Override
+			public void registerOre(String oreClass, ItemStack ore) {
+				if ("ingotCopper".equals(oreClass)) {
+					IronChestType.generateRecipesForType(ironChestBlock, Block.chest, IronChestType.COPPER, ore);
+				}
+				if ("ingotSilver".equals(oreClass)) {
+					IronChestType.generateRecipesForType(ironChestBlock, ironChestBlock, IronChestType.SILVER, ore);
+				}
+				if ("ingotRefinedIron".equals(oreClass)) {
+					IronChestType.generateRecipesForType(ironChestBlock, Block.chest, IronChestType.IRON, ore);
+				}
+			}
+		});
 		ModLoader.RegisterBlock(ironChestBlock, ItemIronChest.class);
 		IronChestType.registerTranslations();
         IronChestType.registerTileEntities(TileEntityIronChestRenderer.class);
-        IronChestType.registerRecipes(ironChestBlock);
+        IronChestType.generateTieredRecipies(ironChestBlock);
 
         ChestItemRenderHelper.instance=new IronChestRenderHelper();
-        MinecraftForgeClient.preloadTexture("ic2/sprites/ironchest_block_tex.png");
+        MinecraftForgeClient.preloadTexture("cpw/mods/ironchest/sprites/block_textures.png");
 	}
 
 	public static void openGUI(EntityPlayer player, TileEntityIronChest te) {
