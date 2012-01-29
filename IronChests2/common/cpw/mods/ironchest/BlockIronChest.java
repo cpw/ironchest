@@ -1,22 +1,30 @@
 package cpw.mods.ironchest;
 
+import java.util.Random;
+
 import net.minecraft.src.BlockContainer;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IBlockAccess;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.MathHelper;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
+import net.minecraft.src.TileEntityChest;
 import net.minecraft.src.World;
 import net.minecraft.src.mod_IronChest;
 import net.minecraft.src.forge.ITextureProvider;
 
 public class BlockIronChest extends BlockContainer implements ITextureProvider {
 
+	private Random random;
 	public BlockIronChest(int id) {
 		super(id, Material.iron);
 		setBlockName("IronChest");
 		setHardness(3.0F);
+		random=new Random();
 	}
 
 	@Override
@@ -119,7 +127,6 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 		if (facing == 3) {
 			chestFacing = 4;
 		}
-		System.out.printf("Facing %d %d\n", facing,chestFacing);
 		TileEntity te = world.getBlockTileEntity(i, j, k);
 		if (te != null && te instanceof TileEntityIronChest) {
 			((TileEntityIronChest) te).setFacing(chestFacing);
@@ -129,5 +136,44 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 	@Override
 	protected int damageDropped(int i) {
 		return i;
+	}
+
+	public void onBlockRemoval(World world, int i, int j, int k)
+	{
+	    TileEntityChest tileentitychest = (TileEntityChest)world.getBlockTileEntity(i, j, k);
+	    if (tileentitychest != null)
+	    {
+	        for (int l = 0; l < tileentitychest.getSizeInventory(); l++)
+	        {
+	            ItemStack itemstack = tileentitychest.getStackInSlot(l);
+	            if (itemstack == null)
+	            {
+	                continue;
+	            }
+	            float f = random.nextFloat() * 0.8F + 0.1F;
+	            float f1 = random.nextFloat() * 0.8F + 0.1F;
+	            float f2 = random.nextFloat() * 0.8F + 0.1F;
+	            while (itemstack.stackSize > 0)
+	            {
+	                int i1 = random.nextInt(21) + 10;
+	                if (i1 > itemstack.stackSize)
+	                {
+	                    i1 = itemstack.stackSize;
+	                }
+	                itemstack.stackSize -= i1;
+	                EntityItem entityitem = new EntityItem(world, (float)i + f, (float)j + f1, (float)k + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
+	                float f3 = 0.05F;
+	                entityitem.motionX = (float)random.nextGaussian() * f3;
+	                entityitem.motionY = (float)random.nextGaussian() * f3 + 0.2F;
+	                entityitem.motionZ = (float)random.nextGaussian() * f3;
+	                if (itemstack.hasTagCompound())
+	                {
+	                    entityitem.item.setTagCompound((NBTTagCompound)itemstack.getTagCompound().cloneTag());
+	                }
+	                world.spawnEntityInWorld(entityitem);
+	            }
+	        }
+	    }
+	    super.onBlockRemoval(world, i, j, k);
 	}
 }

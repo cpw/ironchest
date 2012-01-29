@@ -1,7 +1,5 @@
 package cpw.mods.ironchest.client;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.ironchest.ContainerDiamondChest;
