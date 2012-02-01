@@ -25,6 +25,11 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 		this.type=type;
 		this.chestContents=new ItemStack[getSizeInventory()];
 	}
+	
+	public ItemStack[] getContents() {
+		return chestContents;
+	}
+	
 	@Override
 	public int getSizeInventory() {
 		return type.size;
