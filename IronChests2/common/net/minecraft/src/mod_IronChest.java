@@ -40,6 +40,7 @@ public class mod_IronChest extends BaseModMp {
 			cfg.save();
 		}
 
+		ModLoader.RegisterBlock(ironChestBlock, ItemIronChest.class);
 		MinecraftForge.registerOreHandler(new IOreHandler() {
 			@Override
 			public void registerOre(String oreClass, ItemStack ore) {
@@ -54,7 +55,6 @@ public class mod_IronChest extends BaseModMp {
 				}
 			}
 		});
-		ModLoader.RegisterBlock(ironChestBlock, ItemIronChest.class);
 		proxy.registerTranslations();
 		proxy.registerTileEntities();
         IronChestType.generateTieredRecipies(ironChestBlock);
