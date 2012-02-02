@@ -1,11 +1,13 @@
 package cpw.mods.ironchest;
 
+import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
 import net.minecraft.src.TileEntity;
+import net.minecraft.src.mod_IronChest;
 
 public class TileEntityIronChest extends TileEntity implements IInventory {
 	private int ticksSinceSync;
@@ -206,6 +208,22 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 
 	public void setFacing(byte chestFacing) {
 		this.facing=chestFacing;
+	}
+
+	public TileEntityIronChest applyUpgradeItem(ItemChestChanger itemChestChanger) {
+		if (numUsingPlayers>0) {
+			return null;
+		}
+		if (!itemChestChanger.getType().canUpgrade(this.getType())) {
+			return null;
+		}
+		TileEntityIronChest newEntity=IronChestType.makeEntity(itemChestChanger.getTargetChestOrdinal(getType().ordinal()));
+		int newSize=newEntity.chestContents.length;
+		System.arraycopy(chestContents, 0, newEntity.chestContents, 0, Math.min(newSize,chestContents.length));
+		BlockIronChest block=mod_IronChest.ironChestBlock;
+		block.dropContent(newSize,this,this.worldObj);
+		newEntity.setFacing(facing);
+		return newEntity;
 	}
 
 }

@@ -142,37 +142,41 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 	    TileEntityIronChest tileentitychest = (TileEntityIronChest)world.getBlockTileEntity(i, j, k);
 	    if (tileentitychest != null)
 	    {
-	        for (int l = 0; l < tileentitychest.getSizeInventory(); l++)
-	        {
-	            ItemStack itemstack = tileentitychest.getStackInSlot(l);
-	            if (itemstack == null)
-	            {
-	                continue;
-	            }
-	            float f = random.nextFloat() * 0.8F + 0.1F;
-	            float f1 = random.nextFloat() * 0.8F + 0.1F;
-	            float f2 = random.nextFloat() * 0.8F + 0.1F;
-	            while (itemstack.stackSize > 0)
-	            {
-	                int i1 = random.nextInt(21) + 10;
-	                if (i1 > itemstack.stackSize)
-	                {
-	                    i1 = itemstack.stackSize;
-	                }
-	                itemstack.stackSize -= i1;
-	                EntityItem entityitem = new EntityItem(world, (float)i + f, (float)j + f1, (float)k + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
-	                float f3 = 0.05F;
-	                entityitem.motionX = (float)random.nextGaussian() * f3;
-	                entityitem.motionY = (float)random.nextGaussian() * f3 + 0.2F;
-	                entityitem.motionZ = (float)random.nextGaussian() * f3;
-	                if (itemstack.hasTagCompound())
-	                {
-	                	mod_IronChest.proxy.applyExtraDataToDrops(entityitem, (NBTTagCompound)itemstack.getTagCompound().cloneTag());
-	                }
-	                world.spawnEntityInWorld(entityitem);
-	            }
-	        }
+	    	dropContent(0, tileentitychest, world);
 	    }
 	    super.onBlockRemoval(world, i, j, k);
+	}
+
+	public void dropContent(int newSize, TileEntityIronChest chest, World world) {
+        for (int l = newSize; l < chest.getSizeInventory(); l++)
+        {
+            ItemStack itemstack = chest.getStackInSlot(l);
+            if (itemstack == null)
+            {
+                continue;
+            }
+            float f = random.nextFloat() * 0.8F + 0.1F;
+            float f1 = random.nextFloat() * 0.8F + 0.1F;
+            float f2 = random.nextFloat() * 0.8F + 0.1F;
+            while (itemstack.stackSize > 0)
+            {
+                int i1 = random.nextInt(21) + 10;
+                if (i1 > itemstack.stackSize)
+                {
+                    i1 = itemstack.stackSize;
+                }
+                itemstack.stackSize -= i1;
+                EntityItem entityitem = new EntityItem(world, (float)chest.xCoord + f, (float)chest.yCoord + (newSize>0 ? 1 : 0) + f1, (float)chest.zCoord + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
+                float f3 = 0.05F;
+                entityitem.motionX = (float)random.nextGaussian() * f3;
+                entityitem.motionY = (float)random.nextGaussian() * f3 + 0.2F;
+                entityitem.motionZ = (float)random.nextGaussian() * f3;
+                if (itemstack.hasTagCompound())
+                {
+                	mod_IronChest.proxy.applyExtraDataToDrops(entityitem, (NBTTagCompound)itemstack.getTagCompound().cloneTag());
+                }
+                world.spawnEntityInWorld(entityitem);
+            }
+        }
 	}
 }

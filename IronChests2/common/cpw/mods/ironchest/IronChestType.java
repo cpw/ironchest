@@ -1,5 +1,8 @@
 package cpw.mods.ironchest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -21,9 +24,10 @@ public enum IronChestType {
 	private String guiName;
 	private int textureRow;
 	public Class<? extends TileEntityIronChest> clazz;
-	private Item mat;
+	Item mat;
 	private String[] recipes;
 	public int guiId;
+	private ArrayList<ItemStack> matList;
 
 	IronChestType(int size, int rowLength, boolean tieredChest, String friendlyName, String guiName, String modelTexture, int textureRow, Item mat,
 			Class<? extends TileEntityIronChest> clazz, String... recipes) {
@@ -37,6 +41,10 @@ public enum IronChestType {
 		this.clazz = clazz;
 		this.mat = mat;
 		this.recipes = recipes;
+		this.matList=new ArrayList<ItemStack>();
+		if (mat!=null) {
+			matList.add(new ItemStack(mat));
+		}
 	}
 
 	public String getModelTexture() {
@@ -85,7 +93,7 @@ public enum IronChestType {
 		}
 	}
 
-	private static void addRecipe(ItemStack is, Object... parts) {
+	public static void addRecipe(ItemStack is, Object... parts) {
 		ModLoader.AddRecipe(is, parts);
 	}
 
@@ -111,6 +119,14 @@ public enum IronChestType {
 
 	public int getRowLength() {
 		return rowLength;
+	}
+
+	public void addMat(ItemStack ore) {
+		this.matList.add(ore);
+	}
+
+	public List<ItemStack> getMatList() {
+		return matList;
 	}
 
 }

@@ -12,6 +12,7 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.ModLoaderMp;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.forge.MinecraftForgeClient;
+import cpw.mods.ironchest.ChestChangerType;
 import cpw.mods.ironchest.IProxy;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
@@ -21,6 +22,7 @@ public class ClientProxy extends BaseModMp implements IProxy {
 	public void registerRenderInformation() {
 		ChestItemRenderHelper.instance=new IronChestRenderHelper();
         MinecraftForgeClient.preloadTexture("cpw/mods/ironchest/sprites/block_textures.png");
+        MinecraftForgeClient.preloadTexture("cpw/mods/ironchest/sprites/item_textures.png");
 	}
 
 	@Override
@@ -34,6 +36,9 @@ public class ClientProxy extends BaseModMp implements IProxy {
 	public void registerTranslations() {
 		for (IronChestType typ : IronChestType.values()) {
 			ModLoader.AddLocalization(typ.name() + ".name", typ.friendlyName);
+		}
+		for (ChestChangerType typ : ChestChangerType.values()) {
+			ModLoader.AddLocalization("item."+typ.itemName+".name", typ.descriptiveName);
 		}
 	}
 
