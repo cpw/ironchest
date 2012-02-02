@@ -14,8 +14,8 @@ public class ItemChestChanger extends Item implements ITextureProvider {
 	public ItemChestChanger(int id, ChestChangerType type) {
 		super(id);
 		setMaxStackSize(1);
-		setIconIndex(0);
 		this.type=type;
+		setIconIndex(type.ordinal());
 		setItemName(type.itemName);
 	}
 
