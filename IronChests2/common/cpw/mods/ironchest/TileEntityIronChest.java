@@ -1,6 +1,5 @@
 package cpw.mods.ironchest;
 
-import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
