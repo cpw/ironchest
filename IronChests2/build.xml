@@ -13,7 +13,7 @@
     </description>
 
 	<property name="modname" value="mod_ironchests" />
-	<property name="version" value="2.2" />
+	<property name="version" value="2.3" />
 	<property name="mcp.home" location="/home/cpw/minecraft1dev/forge1.31" />
 	<property name="mcp.obfoutput" location="${mcp.home}/reobf" />
 	<property name="client.mcp.obfoutput" location="${mcp.obfoutput}/minecraft" />
@@ -33,6 +33,12 @@
 	  <attribute name="side"/>
 	  <sequential>
 	    <property name="@{prop}" value="${@{side}.@{src}}"/>
+	  	<condition property="is.client">
+	  		<equals arg1="@{side}" arg2="client"/>
+	  	</condition>
+	  	<condition property="is.server">
+	  		<equals arg1="@{side}" arg2="server"/>
+	  	</condition>
 	  </sequential>
 	</macrodef>
 	
@@ -66,9 +72,15 @@
 	<target name="extract-built-jar">
 		<side prop="output" src="mcp.obfoutput" side="${side}"/>
 		<property name="jarname" value="${modname}-${side}-${version}" />
-		<jar destfile="${basedir}/${jarname}.zip">
+		<jar destfile="${basedir}/${jarname}.zip" >
 			<fileset dir="${output}" includes="**/*.class" />
-			<fileset dir="${resource.dir}" includes="**/*.png"/>
+			<fileset dir="${resource.dir}" erroronmissingdir="false">
+				<selector if="is.client">
+					<filename name="**/*.png"/>
+				</selector>
+			</fileset>
+		</jar>
+		<jar destfile="${basedir}/${jarname}.zip" update="true">
 		</jar>
 	</target>
 	<target name="build" depends="merge-client,merge-server,build-client,build-server" />

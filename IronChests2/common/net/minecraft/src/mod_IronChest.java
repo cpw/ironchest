@@ -1,6 +1,7 @@
 package net.minecraft.src;
 
 import java.io.File;
+import java.lang.reflect.Method;
 
 import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.IOreHandler;
@@ -22,7 +23,7 @@ public class mod_IronChest extends BaseModMp {
 
 	@Override
 	public String getVersion() {
-		return "2.2";
+		return "2.3";
 	}
 
 	@Override
@@ -77,7 +78,19 @@ public class mod_IronChest extends BaseModMp {
 
 	@Override
 	public void ModsLoaded() {
-		
+		try {
+			Class<?> equivexmaps=Class.forName("ee.EEMaps");
+			Method addEMC=equivexmaps.getMethod("addEMC",int.class,int.class,int.class);
+			Method addMeta=equivexmaps.getMethod("addMeta",int.class,int.class);
+			int[] chestEMCValues=new int[] { 8*8+256*8, 8*8+256*8+2048*8, 2*8192+8*8+256*8+2048*8+6, 85*8+8*8, 85*8+8*8+512*8 };
+			for (IronChestType icType : IronChestType.values()) { 
+				addEMC.invoke(null,ironChestBlock.blockID,icType.ordinal(),chestEMCValues[icType.ordinal()]);
+			}
+			addMeta.invoke(null,ironChestBlock.blockID,IronChestType.values().length-1);
+			ModLoader.getLogger().fine("mod_IronChest registered chests with Equivalent Exchange");
+		} catch (Exception ex) {
+			ModLoader.getLogger().fine("mod_IronChest unable to load Equivalent Exchange integration");
+		}
 	}
 	
 	public static void openGUI(EntityPlayer player, TileEntityIronChest te) {

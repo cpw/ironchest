@@ -14,7 +14,8 @@ public enum ChestChangerType {
 	IRONGOLD(IRON,GOLD,"ironGoldUpgrade","Iron to Gold Chest Upgrade","mmm","msm","mmm"),
 	GOLDDIAMOND(GOLD,DIAMOND,"goldDiamondUpgrade","Gold to Diamond Chest Upgrade","GGG","msm","GGG"),
 	COPPERSILVER(COPPER,SILVER,"copperSilverUpgrade","Copper to Silver Chest Upgrade","mmm","msm","mmm"),
-	SILVERGOLD(SILVER,GOLD,"silverGoldUpgrade","Silver to Gold Chest Upgrade","mGm","GsG","mGm");
+	SILVERGOLD(SILVER,GOLD,"silverGoldUpgrade","Silver to Gold Chest Upgrade","mGm","GsG","mGm"),
+	COPPERIRON(COPPER,IRON,"copperIronUpgrade","Copper to Iron Chest Upgrade","mGm","GsG","mGm");
 
 	private IronChestType source;
 	private IronChestType target;
