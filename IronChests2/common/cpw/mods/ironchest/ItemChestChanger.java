@@ -41,7 +41,7 @@ public class ItemChestChanger extends Item implements ITextureProvider {
 
 	@Override
 	public String getTextureFile() {
-		return "cpw/mods/ironchest/sprites/item_textures.png";
+		return "/cpw/mods/ironchest/sprites/item_textures.png";
 	}
 
 	public int getTargetChestOrdinal(int sourceOrdinal) {

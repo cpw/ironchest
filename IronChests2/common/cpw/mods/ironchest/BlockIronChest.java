@@ -33,7 +33,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 
 	@Override
 	public String getTextureFile() {
-		return "cpw/mods/ironchest/sprites/block_textures.png";
+		return "/cpw/mods/ironchest/sprites/block_textures.png";
 	}
 
 	@Override
