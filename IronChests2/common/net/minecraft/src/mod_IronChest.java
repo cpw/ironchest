@@ -70,6 +70,7 @@ public class mod_IronChest extends BaseModMp {
 		proxy.registerTileEntities();
 		ChestChangerType.generateRecipe(IronChestType.IRON);
 		ChestChangerType.generateRecipe(IronChestType.GOLD);
+		ChestChangerType.generateRecipe(IronChestType.DIAMOND);
         IronChestType.generateTieredRecipies(ironChestBlock);
 
         proxy.registerRenderInformation();
