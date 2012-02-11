@@ -82,7 +82,7 @@ public class mod_IronChest extends BaseModMp {
 			Class<?> equivexmaps=Class.forName("ee.EEMaps");
 			Method addEMC=equivexmaps.getMethod("addEMC",int.class,int.class,int.class);
 			Method addMeta=equivexmaps.getMethod("addMeta",int.class,int.class);
-			int[] chestEMCValues=new int[] { 8*8+256*8, 8*8+256*8+2048*8, 2*8192+8*8+256*8+2048*8+6, 85*8+8*8, 85*8+8*8+512*8 };
+			int[] chestEMCValues=new int[] { 8*8+256*8, 8*8+256*8+2048*8, 2*8192+8*8+256*8+2048*8+6, 85*8+8*8, 85*8+8*8+512*8, 2*8192+8*8+256*8+2048*8+6+8 };
 			for (IronChestType icType : IronChestType.values()) { 
 				addEMC.invoke(null,ironChestBlock.blockID,icType.ordinal(),chestEMCValues[icType.ordinal()]);
 			}
