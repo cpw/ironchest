@@ -12,20 +12,25 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
 import java.util.Random;
 
 import net.minecraft.src.Block;
+import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModelChest;
 import net.minecraft.src.RenderBlocks;
+import net.minecraft.src.RenderManager;
+import net.minecraft.src.Tessellator;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraft.src.forge.ForgeHooksClient;
+import net.minecraft.src.forge.ICustomItemRenderer;
+import net.minecraft.src.forge.MinecraftForgeClient;
 import cpw.mods.ironchest.TileEntityIronChest;
 
 public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 	private Random random;
 	private RenderBlocks renderBlocks;
 
-	private static float[][] shifts = { { 0.3F, 0.7F, 0.3F }, { 0.7F, 0.7F, 0.3F }, { 0.3F, 0.7F, 0.7F }, { 0.7F, 0.7F, 0.7F },
-			{ 0.3F, 0.15F, 0.3F }, { 0.7F, 0.15F, 0.3F }, { 0.3F, 0.15F, 0.7F }, { 0.7F, 0.15F, 0.7F }, { 0.5F, 0.35F, 0.5F }, };
+	private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F },
+			{ 0.3F, 0.1F, 0.3F }, { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.35F, 0.5F }, };
 
 	public TileEntityIronChestRenderer() {
 		model = new ModelChest();
@@ -81,10 +86,13 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 			float shiftY;
 			float shiftZ;
 			int shift = 0;
-			float blockScale = 0.125F;
+			float spread = 0.1F;
+			float blockScale = 0.15F;
+			float timeD = (float) (360.0 * (double) (System.currentTimeMillis() & 0x3FFFL) / (double) 0x3FFFL);
 			if (tile.getTopItemStacks()[1] == null) {
 				shift = 8;
-				blockScale = 0.25F;
+				blockScale = 0.2F;
+				spread = 0.25F;
 			}
 			for (ItemStack item : tile.getTopItemStacks()) {
 				if (shift > shifts.length) {
@@ -98,33 +106,66 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 				shiftY = shifts[shift][1];
 				shiftZ = shifts[shift][2];
 				shift++;
-				if (item.itemID < Block.blocksList.length && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
-					glPushMatrix();
+				ICustomItemRenderer customRenderer = MinecraftForgeClient.getCustomItemRenderer(item.itemID);
+				float localScale = blockScale;
+				if (item.itemID < Block.blocksList.length) {
 					bindTextureByName("/terrain.png");
 					ForgeHooksClient.overrideTexture(Block.blocksList[item.itemID]);
 					int j = Block.blocksList[item.itemID].getRenderType();
-					float localScale = blockScale;
 					if (j == 1 || j == 19 || j == 12 || j == 2) {
 						localScale = 2 * blockScale;
 					}
-					glTranslatef(shiftX, shiftY, shiftZ);
-					glScalef(localScale, localScale, localScale);
-					float timeD = (float) (360.0 * (double) (System.currentTimeMillis() & 0x3FFFL) / (double) 0x3FFFL);
-					for (int miniBlocks = 0; miniBlocks < (item.stackSize / 32) + 1; miniBlocks++) {
-						glPushMatrix();
-						glRotatef(timeD, 0.0F, 1.0F, 0.0F);
-						if (miniBlocks > 0) {
-							float minishiftX = ((random.nextFloat() * 2.0F - 1.0F) * 0.1F) / localScale;
-							float minishiftY = ((random.nextFloat() * 2.0F - 1.0F) * 0.1F) / localScale;
-							float minishiftZ = ((random.nextFloat() * 2.0F - 1.0F) * 0.1F) / localScale;
-							glTranslatef(minishiftX, minishiftY, minishiftZ);
-						}
-						renderBlocks.renderBlockAsItem(Block.blocksList[item.itemID], item.getItemDamage(), 1.0F);
+				}
+				glPushMatrix();
+				glTranslatef(shiftX, shiftY, shiftZ);
+				glScalef(localScale, localScale, localScale);
+				for (int miniBlocks = 0; miniBlocks < (item.stackSize / 32) + 1; miniBlocks++) {
+					glPushMatrix();
+					glRotatef(timeD, 0.0F, 1.0F, 0.0F);
+					if (miniBlocks > 0) {
+						float minishiftX = ((random.nextFloat() * 2.0F - 1.0F) * spread) / localScale;
+						float minishiftY = ((random.nextFloat() * 2.0F - 1.0F) * spread) / localScale;
+						float minishiftZ = ((random.nextFloat() * 2.0F - 1.0F) * spread) / localScale;
+						glTranslatef(minishiftX, minishiftY, minishiftZ);
+					}
 
-						glPopMatrix();
+					if (customRenderer != null) {
+						ForgeHooksClient.renderCustomItem(customRenderer, renderBlocks, item.itemID, item.getItemDamage(), 1.0F);
+					} else if (item.itemID < Block.blocksList.length && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
+						renderBlocks.renderBlockAsItem(Block.blocksList[item.itemID], item.getItemDamage(), 1.0F);
+					} else {
+						int i = item.getIconIndex();
+						if (item.itemID >= Block.blocksList.length) {
+							bindTextureByName("/gui/items.png");
+							ForgeHooksClient.overrideTexture(Item.itemsList[item.itemID]);
+						}
+						Tessellator tessellator = Tessellator.instance;
+						float f5 = (float) ((i % 16) * 16 + 0) / 256F;
+						float f8 = (float) ((i % 16) * 16 + 16) / 256F;
+						float f10 = (float) ((i / 16) * 16 + 0) / 256F;
+						float f12 = (float) ((i / 16) * 16 + 16) / 256F;
+						float f13 = 1.0F;
+						float f14 = 0.5F;
+						float f15 = 0.25F;
+						tessellator.startDrawingQuads();
+						tessellator.setNormal(0.0F, 1.0F, 0.0F);
+						tessellator.addVertexWithUV(0.0F - f14, 0.0F - f15, 0.0D, f5, f12);
+						tessellator.addVertexWithUV(f13 - f14, 0.0F - f15, 0.0D, f8, f12);
+						tessellator.addVertexWithUV(f13 - f14, 1.0F - f15, 0.0D, f8, f10);
+						tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
+						tessellator.draw();
+						glScalef(-1.0F, 1.0F, 1.0F);
+						tessellator.startDrawingQuads();
+						tessellator.setNormal(0.0F, 1.0F, 0.0F);
+						tessellator.addVertexWithUV(0.0F - f14, 0.0F - f15, 0.0D, f5, f12);
+						tessellator.addVertexWithUV(f13 - f14, 0.0F - f15, 0.0D, f8, f12);
+						tessellator.addVertexWithUV(f13 - f14, 1.0F - f15, 0.0D, f8, f10);
+						tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
+						tessellator.draw();
 					}
 					glPopMatrix();
 				}
+				glPopMatrix();
 			}
 			glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
 			glEnable(2896 /* GL_LIGHTING */);

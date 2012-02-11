@@ -20,6 +20,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 	public ItemStack[] chestContents;
 	private ItemStack[] topStacks;
 	private byte facing;
+	private boolean inventoryTouched;
 
 	public TileEntityIronChest() {
 		this(IronChestType.IRON);
@@ -54,6 +55,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 	}
 	@Override
 	public ItemStack getStackInSlot(int i) {
+		inventoryTouched=true;
         return chestContents[i];
 	}
 
@@ -212,6 +214,10 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 		// Resynchronize clients with the server state
 		if ((++ticksSinceSync % 20) * 4 == 0) {
 			worldObj.playNoteAt(xCoord, yCoord, zCoord, 3, ( ( numUsingPlayers<<3 ) & 0xF8 ) | (facing & 0x7));
+			if (inventoryTouched) {
+				inventoryTouched=false;
+				sortTopStacks();
+			}
 		}
 		prevLidAngle = lidAngle;
 		float f = 0.1F;
