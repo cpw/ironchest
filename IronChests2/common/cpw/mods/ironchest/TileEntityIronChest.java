@@ -1,5 +1,8 @@
 package cpw.mods.ironchest;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
@@ -15,6 +18,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 	private int numUsingPlayers;
 	private IronChestType type;
 	public ItemStack[] chestContents;
+	private ItemStack[] topStacks;
 	private byte facing;
 
 	public TileEntityIronChest() {
@@ -25,6 +29,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 		super();
 		this.type=type;
 		this.chestContents=new ItemStack[getSizeInventory()];
+		this.topStacks = new ItemStack[8];
 	}
 	
 	public ItemStack[] getContents() {
@@ -52,6 +57,65 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
         return chestContents[i];
 	}
 
+	@Override
+	public void onInventoryChanged() {
+		super.onInventoryChanged();
+		sortTopStacks();
+	}
+
+	protected void sortTopStacks() {
+		if (!type.isTransparent()) {
+			return;
+		}
+		ItemStack[] tempCopy=new ItemStack[getSizeInventory()];
+		boolean hasStuff=false;
+		int compressedIdx=0;
+		mainLoop:
+		for (int i=0; i<getSizeInventory(); i++) {
+			if (chestContents[i]!=null) {
+				for (int j=0; j<compressedIdx; j++) {
+					if (tempCopy[j].isItemEqual(chestContents[i])) {
+						tempCopy[j].stackSize+=chestContents[i].stackSize;
+						continue mainLoop;
+					}
+				}
+				tempCopy[compressedIdx++]=chestContents[i].copy();
+				hasStuff=true;
+			}
+		}
+		if (!hasStuff) {
+			for (int i=0; i<topStacks.length; i++) {
+				topStacks[i]=null;
+			}
+			return;
+		}
+ 		Arrays.sort(tempCopy, new Comparator<ItemStack>() {
+			@Override
+			public int compare(ItemStack o1, ItemStack o2) {
+				if (o1==null) {
+					return 1;
+				} else if (o2==null) {
+					return -1;
+				} else {
+					return o2.stackSize-o1.stackSize;
+				}
+			}
+		});
+		int p=0;
+		for (int i=0; i<tempCopy.length; i++) {
+			if (tempCopy[i]!=null && tempCopy[i].stackSize>0) {
+				topStacks[p++]=tempCopy[i];
+				if (p==topStacks.length) {
+					break;
+				}
+			}
+		}
+		for (int i=p; i<topStacks.length; i++) {
+			topStacks[i]=null;
+		}
+		
+	}
+	
 	@Override
 	public ItemStack decrStackSize(int i, int j) {
         if (chestContents[i] != null)
@@ -103,6 +167,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
             }
         }
         facing=nbttagcompound.getByte("facing");
+        sortTopStacks();
     }
 
     @Override
@@ -225,4 +290,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 		return newEntity;
 	}
 
+	public ItemStack[] getTopItemStacks() {
+		return topStacks;
+	}
 }

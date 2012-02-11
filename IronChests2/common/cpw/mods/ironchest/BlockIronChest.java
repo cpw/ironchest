@@ -14,9 +14,10 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.mod_IronChest;
+import net.minecraft.src.forge.IMultipassRender;
 import net.minecraft.src.forge.ITextureProvider;
 
-public class BlockIronChest extends BlockContainer implements ITextureProvider {
+public class BlockIronChest extends BlockContainer implements ITextureProvider, IMultipassRender {
 
 	private Random random;
 	public BlockIronChest(int id) {
@@ -179,4 +180,9 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
             }
         }
 	}
-}
+
+	@Override
+	public boolean canRenderInPass(int n) {
+		return n==0;
+	}
+}	
