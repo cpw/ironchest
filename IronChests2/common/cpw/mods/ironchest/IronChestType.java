@@ -16,7 +16,7 @@ public enum IronChestType {
 	DIAMOND(108, 12, true, "Diamond Chest", "guiDiamondChest", "diamondchest.png", 2, Item.diamond, TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"), 
 	COPPER(45, 9, false, "Copper Chest", "guiCopperChest", "copperchest.png", 3, null, TileEntityCopperChest.class, "mmmmCmmmm"), 
 	SILVER(72, 9, false, "Silver Chest", "guiSilverChest", "silverchest.png", 4, null, TileEntitySilverChest.class, "mmmm0mmmm", "mmmm3mmmm"),
-	CRYSTAL(72, 9, true, "Crystal Chest", "guiSilverChest", "crystalchest.png", 5, null, TileEntityCrystalChest.class, "GGGGCGGGG");
+	CRYSTAL(108, 12, true, "Crystal Chest", "guiDiamondChest", "crystalchest.png", 5, null, TileEntityCrystalChest.class, "GGGGPGGGG");
 	int size;
 	private int rowLength;
 	public String friendlyName;

@@ -19,7 +19,7 @@ public class GUIChest extends GuiContainer {
 		DIAMOND(238,256,"/cpw/mods/ironchest/sprites/diamondcontainer.png",IronChestType.DIAMOND),
 		COPPER(184,184,"/cpw/mods/ironchest/sprites/coppercontainer.png",IronChestType.COPPER),
 		SILVER(184,238,"/cpw/mods/ironchest/sprites/silvercontainer.png",IronChestType.SILVER),
-		CRYSTAL(184,238,"/cpw/mods/ironchest/sprites/silvercontainer.png",IronChestType.CRYSTAL);
+		CRYSTAL(238,256,"/cpw/mods/ironchest/sprites/diamondcontainer.png",IronChestType.CRYSTAL);
 		
 		private int xSize;
 		private int ySize;
