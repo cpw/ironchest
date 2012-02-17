@@ -174,7 +174,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider, 
                 entityitem.motionZ = (float)random.nextGaussian() * f3;
                 if (itemstack.hasTagCompound())
                 {
-                	mod_IronChest.proxy.applyExtraDataToDrops(entityitem, (NBTTagCompound)itemstack.getTagCompound().cloneTag());
+                	mod_IronChest.proxy.applyExtraDataToDrops(entityitem, (NBTTagCompound)itemstack.getTagCompound().copy());
                 }
                 world.spawnEntityInWorld(entityitem);
             }

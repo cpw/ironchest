@@ -43,7 +43,7 @@ public class ServerProxy implements IProxy {
 
 	@Override
 	public void applyExtraDataToDrops(EntityItem entityitem, NBTTagCompound data) {
-        entityitem.item.setNBTData(data);
+        entityitem.item.setTagCompound(data);
 	}
 
 	@Override
