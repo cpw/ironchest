@@ -17,13 +17,14 @@ import net.minecraft.src.mod_IronChest;
 import net.minecraft.src.forge.IMultipassRender;
 import net.minecraft.src.forge.ITextureProvider;
 
-public class BlockIronChest extends BlockContainer implements ITextureProvider, IMultipassRender {
+public class BlockIronChest extends BlockContainer implements ITextureProvider {
 
 	private Random random;
 	public BlockIronChest(int id) {
 		super(id, Material.iron);
 		setBlockName("IronChest");
 		setHardness(3.0F);
+		setRequiresSelfNotify();
 		random=new Random();
 	}
 
@@ -56,18 +57,19 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider, 
 	}
 
 	public int getBlockTexture(IBlockAccess worldAccess, int i, int j, int k, int l) {
+		IronChestType type=IronChestType.values()[l];
 		TileEntity te = worldAccess.getBlockTileEntity(i, j, k);
-		if (te != null && te instanceof TileEntityIronChest) {
-			TileEntityIronChest icte=(TileEntityIronChest) te;
-			if (l==0 || l==1) {									// Top and Bottom
-				return icte.getType().getTextureRow()*16+1;
-			} else if (l==icte.getFacing()) {	// Front
-				return icte.getType().getTextureRow()*16+2;
-			} else { 											// Back and Sides
-				return icte.getType().getTextureRow()*16;
-			}
+		TileEntityIronChest icte=null;
+		if (te!=null && te instanceof TileEntityIronChest) {
+			icte=(TileEntityIronChest)te;
 		}
-		return 0;
+		if (l==0 || l==1) {									// Top and Bottom
+			return type.getTextureRow()*16+1;
+		} else if (icte!=null && l==icte.getFacing()) {		// Front
+			return type.getTextureRow()*16+2;
+		} else { 											// Back and Sides
+			return type.getTextureRow()*16;
+		}
 	}
 
 	@Override
@@ -181,8 +183,8 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider, 
         }
 	}
 
-	@Override
+/*	@Override
 	public boolean canRenderInPass(int n) {
 		return n==0;
-	}
+	}*/
 }	

@@ -22,6 +22,7 @@ import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraft.src.forge.ForgeHooksClient;
 import net.minecraft.src.forge.ICustomItemRenderer;
 import net.minecraft.src.forge.MinecraftForgeClient;
+import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 
 public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
@@ -38,11 +39,18 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 	}
 
 	public void render(TileEntityIronChest tile, double x, double y, double z, float partialTick) {
+		if (tile==null) {
+			return;
+		}
 		int facing = 3;
+		IronChestType type=tile.getType();
 		if (tile != null && tile.worldObj != null) {
 			facing = tile.getFacing();
+			type=tile.getType();
+			int typ=tile.worldObj.getBlockMetadata(tile.xCoord,tile.yCoord,tile.zCoord);
+			type=IronChestType.values()[typ];
 		}
-		bindTextureByName(tile.getType().getModelTexture());
+		bindTextureByName(type.getModelTexture());
 
 		glPushMatrix();
 		glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
@@ -75,7 +83,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 		glPopMatrix();
 		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		if (tile.getType().isTransparent()) {
+		if (type.isTransparent()) {
 			random.setSeed(254L);
 			float shiftX;
 			float shiftY;

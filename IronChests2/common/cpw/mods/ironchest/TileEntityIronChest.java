@@ -299,4 +299,14 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 	public ItemStack[] getTopItemStacks() {
 		return topStacks;
 	}
+
+	public TileEntityIronChest updateFromMetadata(int l) {
+		if (worldObj!=null && worldObj.isRemote) {
+			if (l!=type.ordinal()) {
+				worldObj.setBlockTileEntity(xCoord, yCoord, zCoord, IronChestType.makeEntity(l));
+				return (TileEntityIronChest)worldObj.getBlockTileEntity(xCoord, yCoord, zCoord);
+			}
+		}
+		return this;
+	}
 }

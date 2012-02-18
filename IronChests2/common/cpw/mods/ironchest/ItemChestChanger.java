@@ -29,8 +29,7 @@ public class ItemChestChanger extends Item implements ITextureProvider {
 				return false;
 			}
 			world.setBlockTileEntity(X, Y, Z, newchest);
-			world.setBlockMetadata(X, Y, Z, newchest.getType().ordinal());
-			world.markBlockNeedsUpdate(X, Y, Z);
+			world.setBlockMetadataWithNotify(X, Y, Z, newchest.getType().ordinal());
 			world.notifyBlocksOfNeighborChange(X, Y, Z, world.getBlockId(X, Y, Z));
 			stack.stackSize=0;
 			return true;
