@@ -8,6 +8,7 @@ import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
+import net.minecraft.src.Packet;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.mod_IronChest;
 
@@ -21,6 +22,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 	private ItemStack[] topStacks;
 	private byte facing;
 	private boolean inventoryTouched;
+	private boolean hadStuff;
 
 	public TileEntityIronChest() {
 		this(IronChestType.IRON);
@@ -66,7 +68,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 	}
 
 	protected void sortTopStacks() {
-		if (!type.isTransparent()) {
+		if (!type.isTransparent() || mod_IronChest.proxy.isRemote()) {
 			return;
 		}
 		ItemStack[] tempCopy=new ItemStack[getSizeInventory()];
@@ -85,12 +87,15 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 				hasStuff=true;
 			}
 		}
-		if (!hasStuff) {
+		if (!hasStuff && hadStuff) {
+			hadStuff=false;
 			for (int i=0; i<topStacks.length; i++) {
 				topStacks[i]=null;
 			}
+			mod_IronChest.proxy.sendTileEntityUpdate(this);
 			return;
 		}
+		hadStuff=true;
  		Arrays.sort(tempCopy, new Comparator<ItemStack>() {
 			@Override
 			public int compare(ItemStack o1, ItemStack o2) {
@@ -115,7 +120,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 		for (int i=p; i<topStacks.length; i++) {
 			topStacks[i]=null;
 		}
-		
+		mod_IronChest.proxy.sendTileEntityUpdate(this);
 	}
 	
 	@Override
@@ -293,6 +298,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 		BlockIronChest block=mod_IronChest.ironChestBlock;
 		block.dropContent(newSize,this,this.worldObj);
 		newEntity.setFacing(facing);
+		newEntity.sortTopStacks();
 		return newEntity;
 	}
 
@@ -308,5 +314,51 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 			}
 		}
 		return this;
+	}
+	
+	public Packet getDescriptionPacket() {
+		return mod_IronChest.proxy.getDescriptionPacket(this);
+	}
+
+	public void handlePacketData(int typeData, int[] intData, float[] floatData, String[] stringData) {
+		TileEntityIronChest chest=this;
+		if (this.type.ordinal()!=typeData) {
+			chest=updateFromMetadata(typeData);
+		}
+		if (IronChestType.values()[typeData].isTransparent() && intData!=null) {
+			int pos=0;
+			if (intData.length<chest.topStacks.length*3) {
+				return;
+			}
+			for (int i=0; i<chest.topStacks.length; i++) {
+				if (intData[pos+2]!=0) {
+					ItemStack is=new ItemStack(intData[pos],intData[pos+2],intData[pos+1]);
+					chest.topStacks[i]=is;
+				} else {
+					chest.topStacks[i]=null;
+				}
+				pos+=3;
+			}
+		}
+	}
+
+	public int[] buildIntDataList() {
+		if (type.isTransparent()) {
+			int[] sortList=new int[topStacks.length*3];
+			int pos=0;
+			for (ItemStack is : topStacks) {
+				if (is!=null) {
+					sortList[pos++]=is.itemID;
+					sortList[pos++]=is.getItemDamage();
+					sortList[pos++]=is.stackSize;
+				} else {
+					sortList[pos++]=0;
+					sortList[pos++]=0;
+					sortList[pos++]=0;
+				}
+			}
+			return sortList;
+		}
+		return null;
 	}
 }

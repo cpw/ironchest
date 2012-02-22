@@ -2,10 +2,13 @@ package cpw.mods.ironchest.server;
 
 import java.io.File;
 
+import net.minecraft.src.BaseModMp;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.ModLoaderMp;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.Packet;
 import net.minecraft.src.mod_IronChest;
 import cpw.mods.ironchest.ContainerIronChestBase;
 import cpw.mods.ironchest.IProxy;
@@ -49,6 +52,26 @@ public class ServerProxy implements IProxy {
 	@Override
 	public void registerGUI(int guiId) {
 		// NOOP on server
+	}
+
+	@Override
+	public void handleTileEntityPacket(int x, int y, int z, int type, int[] intData, float[] floatData, String[] stringData) {
+		// NOOP on server
+	}
+
+	@Override
+	public Packet getDescriptionPacket(TileEntityIronChest tile) {
+		return ModLoaderMp.GetTileEntityPacket(ModLoaderMp.GetModInstance(mod_IronChest.class), tile.xCoord, tile.yCoord, tile.zCoord, tile.getType().ordinal(), tile.buildIntDataList(),null,null);
+	}
+
+	@Override
+	public void sendTileEntityUpdate(TileEntityIronChest tile) {
+		ModLoaderMp.SendTileEntityPacket(tile);
+	}
+
+	@Override
+	public boolean isRemote() {
+		return false;
 	}
 
 }

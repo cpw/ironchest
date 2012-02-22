@@ -23,12 +23,12 @@ public class mod_IronChest extends BaseModMp {
 
 	@Override
 	public String getVersion() {
-		return "2.4";
+		return "2.5";
 	}
 
 	@Override
 	public void load() {
-		MinecraftForge.versionDetect("IronChest", 1, 3, 0);
+		MinecraftForge.versionDetect("IronChest", 1, 3, 3);
 		proxy = ServerClientProxy.getProxy();
 		File cfgFile = new File(proxy.getMinecraftDir(), "config/IronChest.cfg");
 		Configuration cfg = new Configuration(cfgFile);
@@ -96,5 +96,9 @@ public class mod_IronChest extends BaseModMp {
 	
 	public static void openGUI(EntityPlayer player, TileEntityIronChest te) {
 		proxy.showGUI(te,player);
+	}
+	
+	public void HandleTileEntityPacket(int x, int y, int z, int type, int[] intData, float[] floatData, String[] stringData) {
+		proxy.handleTileEntityPacket(x,y,z,type,intData,floatData,stringData);
 	}
 }

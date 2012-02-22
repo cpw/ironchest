@@ -5,6 +5,7 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import net.minecraft.src.mod_IronChest;
 import net.minecraft.src.forge.ITextureProvider;
 
 public class ItemChestChanger extends Item implements ITextureProvider {
@@ -32,6 +33,7 @@ public class ItemChestChanger extends Item implements ITextureProvider {
 			world.setBlockMetadataWithNotify(X, Y, Z, newchest.getType().ordinal());
 			world.notifyBlocksOfNeighborChange(X, Y, Z, world.getBlockId(X, Y, Z));
 			stack.stackSize=0;
+			mod_IronChest.proxy.sendTileEntityUpdate(newchest);
 			return true;
 		} else {
 			return false;

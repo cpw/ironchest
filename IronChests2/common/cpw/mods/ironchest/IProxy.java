@@ -5,6 +5,7 @@ import java.io.File;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.Packet;
 
 public interface IProxy {
 
@@ -22,4 +23,11 @@ public interface IProxy {
 
 	public abstract void registerGUI(int guiId);
 
+	public abstract void handleTileEntityPacket(int x, int y, int z, int type, int[] intData, float[] floatData, String[] stringData);
+
+	public abstract Packet getDescriptionPacket(TileEntityIronChest tile);
+	
+	public abstract void sendTileEntityUpdate(TileEntityIronChest tile);
+
+	public abstract boolean isRemote();
 }

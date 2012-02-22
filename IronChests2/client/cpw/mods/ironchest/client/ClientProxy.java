@@ -11,6 +11,8 @@ import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.ModLoaderMp;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.Packet;
+import net.minecraft.src.TileEntity;
 import net.minecraft.src.forge.MinecraftForgeClient;
 import cpw.mods.ironchest.ChestChangerType;
 import cpw.mods.ironchest.IProxy;
@@ -21,8 +23,8 @@ public class ClientProxy extends BaseModMp implements IProxy {
 	@Override
 	public void registerRenderInformation() {
 		ChestItemRenderHelper.instance=new IronChestRenderHelper();
-        MinecraftForgeClient.preloadTexture("cpw/mods/ironchest/sprites/block_textures.png");
-        MinecraftForgeClient.preloadTexture("cpw/mods/ironchest/sprites/item_textures.png");
+        MinecraftForgeClient.preloadTexture("/cpw/mods/ironchest/sprites/block_textures.png");
+        MinecraftForgeClient.preloadTexture("/cpw/mods/ironchest/sprites/item_textures.png");
 	}
 
 	@Override
@@ -83,5 +85,30 @@ public class ClientProxy extends BaseModMp implements IProxy {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void handleTileEntityPacket(int x, int y, int z, int type, int[] intData, float[] floatData, String[] stringData) {
+		TileEntity te=ModLoader.getMinecraftInstance().theWorld.getBlockTileEntity(x, y, z);
+		if (te!=null && te instanceof TileEntityIronChest) {
+			TileEntityIronChest icte=(TileEntityIronChest)te;
+			icte.handlePacketData(type,intData,floatData,stringData);
+		}
+	}
+
+	@Override
+	public Packet getDescriptionPacket(TileEntityIronChest tile) {
+		// NOOP on client
+		return null;
+	}
+
+	@Override
+	public void sendTileEntityUpdate(TileEntityIronChest tile) {
+		// NOOP on client
+	}
+
+	@Override
+	public boolean isRemote() {
+		return ModLoader.getMinecraftInstance().theWorld.isRemote;
 	}
 }
