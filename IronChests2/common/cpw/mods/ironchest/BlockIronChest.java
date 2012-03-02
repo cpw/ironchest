@@ -56,7 +56,8 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 	}
 
 	public int getBlockTexture(IBlockAccess worldAccess, int i, int j, int k, int l) {
-		IronChestType type=IronChestType.values()[l];
+		int meta=worldAccess.getBlockMetadata(i, j, k);
+		IronChestType type=IronChestType.values()[meta];
 		TileEntity te = worldAccess.getBlockTileEntity(i, j, k);
 		TileEntityIronChest icte=null;
 		if (te!=null && te instanceof TileEntityIronChest) {
