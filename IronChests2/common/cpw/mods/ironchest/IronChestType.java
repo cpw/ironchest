@@ -95,7 +95,7 @@ public enum IronChestType {
 	}
 
 	public static void addRecipe(ItemStack is, Object... parts) {
-		ModLoader.AddRecipe(is, parts);
+		ModLoader.addRecipe(is, parts);
 	}
 
 	public int getGUI() {

@@ -45,7 +45,7 @@ public class mod_IronChest extends BaseModMp {
 			cfg.save();
 		}
 
-		ModLoader.RegisterBlock(ironChestBlock, ItemIronChest.class);
+		ModLoader.registerBlock(ironChestBlock, ItemIronChest.class);
 		MinecraftForge.registerOreHandler(new IOreHandler() {
 			@Override
 			public void registerOre(String oreClass, ItemStack ore) {

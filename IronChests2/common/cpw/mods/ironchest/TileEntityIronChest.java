@@ -361,4 +361,18 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 		}
 		return null;
 	}
+	
+  public ItemStack func_48081_b(int par1)
+  {
+      if (this.chestContents[par1] != null)
+      {
+          ItemStack var2 = this.chestContents[par1];
+          this.chestContents[par1] = null;
+          return var2;
+      }
+      else
+      {
+          return null;
+      }
+  }
 }

@@ -61,12 +61,12 @@ public class ServerProxy implements IProxy {
 
 	@Override
 	public Packet getDescriptionPacket(TileEntityIronChest tile) {
-		return ModLoaderMp.GetTileEntityPacket(ModLoaderMp.GetModInstance(mod_IronChest.class), tile.xCoord, tile.yCoord, tile.zCoord, tile.getType().ordinal(), tile.buildIntDataList(),null,null);
+		return ModLoaderMp.getTileEntityPacket(ModLoaderMp.GetModInstance(mod_IronChest.class), tile.xCoord, tile.yCoord, tile.zCoord, tile.getType().ordinal(), tile.buildIntDataList(),null,null);
 	}
 
 	@Override
 	public void sendTileEntityUpdate(TileEntityIronChest tile) {
-		ModLoaderMp.SendTileEntityPacket(tile);
+		ModLoaderMp.sendTileEntityPacket(tile);
 	}
 
 	@Override

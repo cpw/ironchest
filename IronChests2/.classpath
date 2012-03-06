@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="common"/>
 	<classpathentry kind="src" path="server"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/minecraft1.1-client"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/forge1.3.4.33-client"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

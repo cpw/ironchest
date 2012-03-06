@@ -13,8 +13,8 @@
     </description>
 
 	<property name="modname" value="mod_ironchests" />
-	<property name="version" value="2.5" />
-	<property name="mcp.home" location="/home/cpw/minecraft1dev/forge1.3.3.12" />
+	<property name="version" value="3.0-alpha" />
+	<property name="mcp.home" location="/home/cpw/projects/mcworkspace/forge1.3.4" />
 	<property name="mcp.obfoutput" location="${mcp.home}/reobf" />
 	<property name="client.mcp.obfoutput" location="${mcp.obfoutput}/minecraft" />
 	<property name="server.mcp.obfoutput" location="${mcp.obfoutput}/minecraft_server" />
@@ -54,7 +54,9 @@
 		<antcall target="clean-source">
 			<param name="side" value="server" />
 		</antcall>
-		<exec executable="${mcp.home}/updatemd5.sh" dir="${mcp.home}" />
+		<exec executable="${mcp.home}/updatemd5.sh" dir="${mcp.home}">
+			<arg value="-f"/>
+		</exec>
 	</target>
 
 	<target name="build-client" depends="init,clean,merge-client,buildandreobfmcp">

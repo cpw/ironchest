@@ -78,7 +78,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 		lidangle = 1.0F - lidangle * lidangle * lidangle;
 		model.chestLid.rotateAngleX = -((lidangle * 3.141593F) / 2.0F);
 		// Render the chest itself
-		model.func_35402_a();
+		model.renderAll();
 		glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
 		glPopMatrix();
 		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -115,7 +115,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 				shift++;
 				ICustomItemRenderer customRenderer = MinecraftForgeClient.getCustomItemRenderer(item.itemID);
 				float localScale = blockScale;
-				if (item.itemID < Block.blocksList.length) {
+				if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID]!=null) {
 					int j = Block.blocksList[item.itemID].getRenderType();
 					if (j == 1 || j == 19 || j == 12 || j == 2) {
 						localScale = 2 * blockScale;
@@ -138,13 +138,13 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 						bindTextureByName("/terrain.png");
 						ForgeHooksClient.overrideTexture(item.getItem());
 						ForgeHooksClient.renderCustomItem(customRenderer, renderBlocks, item.itemID, item.getItemDamage(), 1.0F);
-					} else if (item.itemID < Block.blocksList.length && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
+					} else if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID]!=null && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
 						bindTextureByName("/terrain.png");
 						ForgeHooksClient.overrideTexture(Block.blocksList[item.itemID]);
 						renderBlocks.renderBlockAsItem(Block.blocksList[item.itemID], item.getItemDamage(), 1.0F);
 					} else {
 						int i = item.getIconIndex();
-						if (item.itemID >= Block.blocksList.length) {
+						if (item.itemID >= Block.blocksList.length || Block.blocksList[item.itemID]==null) {
 							bindTextureByName("/gui/items.png");
 							ForgeHooksClient.overrideTexture(Item.itemsList[item.itemID]);
 						} else {

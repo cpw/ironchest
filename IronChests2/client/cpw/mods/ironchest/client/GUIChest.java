@@ -48,7 +48,7 @@ public class GUIChest extends GuiContainer {
 		public static void showGUI(TileEntityIronChest te, EntityPlayer player) {
 			GUIChest gui=buildGUI(te.getType(),player.inventory,te);
 			if (gui!=null) {
-				ModLoader.OpenGUI(player, gui);
+				ModLoader.openGUI(player, gui);
 			} else {
 				player.displayGUIChest(te);
 			}

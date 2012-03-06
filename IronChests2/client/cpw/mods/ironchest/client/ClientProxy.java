@@ -30,17 +30,17 @@ public class ClientProxy extends BaseModMp implements IProxy {
 	@Override
 	public void registerTileEntities() {
 		for (IronChestType typ : IronChestType.values()) {
-			ModLoader.RegisterTileEntity(typ.clazz, typ.name(), new TileEntityIronChestRenderer());
+			ModLoader.registerTileEntity(typ.clazz, typ.name(), new TileEntityIronChestRenderer());
 		}
 	}
 
 	@Override
 	public void registerTranslations() {
 		for (IronChestType typ : IronChestType.values()) {
-			ModLoader.AddLocalization(typ.name() + ".name", typ.friendlyName);
+			ModLoader.addLocalization(typ.name() + ".name", typ.friendlyName);
 		}
 		for (ChestChangerType typ : ChestChangerType.values()) {
-			ModLoader.AddLocalization("item."+typ.itemName+".name", typ.descriptiveName);
+			ModLoader.addLocalization("item."+typ.itemName+".name", typ.descriptiveName);
 		}
 	}
 
