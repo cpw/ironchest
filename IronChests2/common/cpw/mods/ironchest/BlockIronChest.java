@@ -1,5 +1,6 @@
 package cpw.mods.ironchest;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.src.BlockContainer;
@@ -181,5 +182,12 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
                 world.spawnEntityInWorld(entityitem);
             }
         }
+	}
+	
+	@Override
+	public void addCreativeItems(ArrayList itemList) {
+		for (IronChestType type : IronChestType.values()) {
+			itemList.add(new ItemStack(this,1,type.ordinal()));
+		}
 	}
 }	
