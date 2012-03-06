@@ -1,5 +1,7 @@
 package cpw.mods.ironchest;
 
+import java.util.ArrayList;
+
 import net.minecraft.src.ItemBlock;
 import net.minecraft.src.ItemStack;
 
@@ -22,5 +24,9 @@ public class ItemIronChest extends ItemBlock {
 	@Override
 	public String getItemNameIS(ItemStack itemstack) {
 		return IronChestType.values()[itemstack.getItemDamage()].name();
+	}
+	
+	@Override
+	public void addCreativeItems(@SuppressWarnings("rawtypes") ArrayList itemList) {
 	}
 }

@@ -184,6 +184,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
         }
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
 		for (IronChestType type : IronChestType.values()) {
