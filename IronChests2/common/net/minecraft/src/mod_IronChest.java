@@ -23,12 +23,12 @@ public class mod_IronChest extends BaseModMp {
 
 	@Override
 	public String getVersion() {
-		return "2.5";
+		return "3.0";
 	}
 
 	@Override
 	public void load() {
-		MinecraftForge.versionDetect("IronChest", 1, 3, 3);
+		MinecraftForge.versionDetect("IronChest", 1, 3, 4);
 		proxy = ServerClientProxy.getProxy();
 		File cfgFile = new File(proxy.getMinecraftDir(), "config/IronChest.cfg");
 		Configuration cfg = new Configuration(cfgFile);
@@ -78,7 +78,7 @@ public class mod_IronChest extends BaseModMp {
 
 
 	@Override
-	public void ModsLoaded() {
+	public void modsLoaded() {
 		try {
 			Class<?> equivexmaps=Class.forName("ee.EEMaps");
 			Method addEMC=equivexmaps.getMethod("addEMC",int.class,int.class,int.class);

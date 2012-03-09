@@ -25,7 +25,7 @@ public class ServerProxy implements IProxy {
 	@Override
 	public void registerTileEntities() {
 		for (IronChestType typ : IronChestType.values()) {
-			ModLoader.RegisterTileEntity(typ.clazz, typ.name());
+			ModLoader.registerTileEntity(typ.clazz, typ.name());
 		}
 	}
 
@@ -36,7 +36,7 @@ public class ServerProxy implements IProxy {
 
 	@Override
 	public void showGUI(TileEntityIronChest te, EntityPlayer player) {
-		ModLoader.OpenGUI(player, te.getType().guiId, te, new ContainerIronChestBase(player.inventory,te, te.getType(), 1, 1));
+		ModLoader.openGUI(player, te.getType().guiId, te, new ContainerIronChestBase(player.inventory,te, te.getType(), 1, 1));
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class ServerProxy implements IProxy {
 
 	@Override
 	public Packet getDescriptionPacket(TileEntityIronChest tile) {
-		return ModLoaderMp.getTileEntityPacket(ModLoaderMp.GetModInstance(mod_IronChest.class), tile.xCoord, tile.yCoord, tile.zCoord, tile.getType().ordinal(), tile.buildIntDataList(),null,null);
+		return ModLoaderMp.getTileEntityPacket(ModLoaderMp.getModInstance(mod_IronChest.class), tile.xCoord, tile.yCoord, tile.zCoord, tile.getType().ordinal(), tile.buildIntDataList(),null,null);
 	}
 
 	@Override

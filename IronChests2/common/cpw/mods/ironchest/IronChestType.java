@@ -15,7 +15,7 @@ public enum IronChestType {
 	GOLD(81, 9, true, "Gold Chest", "guiGoldChest", "goldchest.png", 1, Item.ingotGold, TileEntityGoldChest.class, "mmmmPmmmm","mGmG4GmGm"), 
 	DIAMOND(108, 12, true, "Diamond Chest", "guiDiamondChest", "diamondchest.png", 2, Item.diamond, TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"), 
 	COPPER(45, 9, false, "Copper Chest", "guiCopperChest", "copperchest.png", 3, null, TileEntityCopperChest.class, "mmmmCmmmm"), 
-	SILVER(72, 9, false, "Silver Chest", "guiSilverChest", "silverchest.png", 4, null, TileEntitySilverChest.class, "mmmm0mmmm", "mmmm3mmmm"),
+	SILVER(72, 9, false, "Silver Chest", "guiSilverChest", "silverchest.png", 4, null, TileEntitySilverChest.class, "mmmm0mmmm", "mGmG3GmGm"),
 	CRYSTAL(108, 12, true, "Crystal Chest", "guiDiamondChest", "crystalchest.png", 5, Item.itemsList[Block.glass.blockID], TileEntityCrystalChest.class, "GGGGPGGGG");
 	int size;
 	private int rowLength;

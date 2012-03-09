@@ -63,7 +63,7 @@ public class ClientProxy extends BaseModMp implements IProxy {
 
 	@Override
 	public void registerGUI(int guiId) {
-		ModLoaderMp.RegisterGUI(this, guiId);
+		ModLoaderMp.registerGUI(this, guiId);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class ClientProxy extends BaseModMp implements IProxy {
 	}
 
 	@Override
-	public GuiScreen HandleGUI(int i) {
+	public GuiScreen handleGUI(int i) {
 		for (IronChestType type: IronChestType.values()) {
 			if (type.guiId==i) {
 				return GUIChest.GUI.buildGUI(type,ModLoader.getMinecraftInstance().thePlayer.inventory,IronChestType.makeEntity(type.ordinal()));

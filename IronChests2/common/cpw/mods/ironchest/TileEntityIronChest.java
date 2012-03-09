@@ -362,7 +362,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 		return null;
 	}
 	
-  public ItemStack func_48081_b(int par1)
+ 	public ItemStack getStackInSlotOnClosing(int par1)
   {
       if (this.chestContents[par1] != null)
       {
