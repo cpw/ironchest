@@ -98,7 +98,7 @@ public class mod_IronChest extends BaseModMp {
 		proxy.showGUI(te,player);
 	}
 	
-	public void HandleTileEntityPacket(int x, int y, int z, int type, int[] intData, float[] floatData, String[] stringData) {
+	public void handleTileEntityPacket(int x, int y, int z, int type, int[] intData, float[] floatData, String[] stringData) {
 		proxy.handleTileEntityPacket(x,y,z,type,intData,floatData,stringData);
 	}
 }
