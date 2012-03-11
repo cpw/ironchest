@@ -25,6 +25,9 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
 		setBlockName("IronChest");
 		setHardness(3.0F);
 		setRequiresSelfNotify();
+		if (id>=256) {
+			disableStats();
+		}
 		random=new Random();
 	}
 

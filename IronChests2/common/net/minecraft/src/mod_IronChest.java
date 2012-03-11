@@ -23,18 +23,22 @@ public class mod_IronChest extends BaseModMp {
 
 	@Override
 	public String getVersion() {
-		return "3.0";
+		return "3.0.1";
 	}
 
 	@Override
 	public void load() {
-		MinecraftForge.versionDetect("IronChest", 1, 3, 4);
+		MinecraftForge.versionDetect("IronChest", 1, 4, 0);
 		proxy = ServerClientProxy.getProxy();
 		File cfgFile = new File(proxy.getMinecraftDir(), "config/IronChest.cfg");
 		Configuration cfg = new Configuration(cfgFile);
 		try {
 			cfg.load();
-			ironChestBlock = new BlockIronChest(Integer.parseInt(cfg.getOrCreateBlockIdProperty("ironChests", 181).value));
+			int bId=Integer.parseInt(cfg.getOrCreateBlockIdProperty("ironChests", 181).value);
+			if (bId>=256) {
+				throw new RuntimeException(String.format("IronChest detected an invalid block id %s\n",bId));
+			}
+			ironChestBlock = new BlockIronChest(bId);
 			ChestChangerType.buildItems(cfg, 19501);
 			IronChestType.initGUIs(cfg);
 		} catch (Exception e) {
