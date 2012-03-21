@@ -13,8 +13,8 @@
     </description>
 
 	<property name="modname" value="mod_ironchests" />
-	<property name="version" value="3.0.1" />
-	<property name="mcp.home" location="/home/cpw/projects/mcworkspace/forge1.3.4" />
+	<property name="version" value="3.1" />
+	<property name="mcp.home" location="/home/cpw/projects/mcworkspace/forge59" />
 	<property name="mcp.obfoutput" location="${mcp.home}/reobf" />
 	<property name="client.mcp.obfoutput" location="${mcp.obfoutput}/minecraft" />
 	<property name="server.mcp.obfoutput" location="${mcp.obfoutput}/minecraft_server" />

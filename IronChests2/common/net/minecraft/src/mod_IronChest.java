@@ -23,7 +23,7 @@ public class mod_IronChest extends BaseModMp {
 
 	@Override
 	public String getVersion() {
-		return "3.0.1";
+		return "3.1";
 	}
 
 	@Override
