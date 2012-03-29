@@ -8,151 +8,151 @@
      cpw                                                                
      ====================================================================== -->
 <project name="mod_IronChests" default="build">
-	<description>
+  <description>
             Iron Chests
     </description>
-	<macrodef name="side">
-		<attribute name="prop" />
-		<attribute name="src" />
-		<attribute name="side" />
-		<sequential>
-			<property name="@{prop}" value="${@{side}.@{src}}" />
-			<condition property="is.client">
-				<equals arg1="@{side}" arg2="client" />
-			</condition>
-			<condition property="is.server">
-				<equals arg1="@{side}" arg2="server" />
-			</condition>
-		</sequential>
-	</macrodef>
+  <macrodef name="side">
+    <attribute name="prop" />
+    <attribute name="src" />
+    <attribute name="side" />
+    <sequential>
+      <property name="@{prop}" value="${@{side}.@{src}}" />
+      <condition property="is.client">
+        <equals arg1="@{side}" arg2="client" />
+      </condition>
+      <condition property="is.server">
+        <equals arg1="@{side}" arg2="server" />
+      </condition>
+    </sequential>
+  </macrodef>
 
-	<target name="init">
-		<tstamp>
-			<format pattern="yyMMddHHmmss" property="timestamp" />
-		</tstamp>
-		<property environment="env" />
-		<property name="modname" value="mod_ironchests" />
-		<property name="version.file" value="cpw/mods/ironchest/Version.java" />
-		<property name="version.major" value="3" />
-		<property name="version.minor" value="2" />
-		<property name="version.rev" value="0" />
-		<condition property="version.build" value="${env.BUILD_NUMBER}" else="0">
-			<isset property="env.BUILD_NUMBER" />
-		</condition>
-		<property name="version" value="${version.major}.${version.minor}.${version.rev}.${version.build}" />
-		<condition property="mcdev.home" value="${env.WORKSPACE}" else="/home/cpw/projects/mcworkspace">
-			<isset property="env.WORKSPACE" />
-		</condition>
-		<condition property="mcp.home" value="${env.WORKSPACE}/mcpworkspace" else="${mcdev.home}/forge67">
-			<isset property="env.WORKSPACE" />
-		</condition>
-		<property name="mcp.obfoutput" location="${mcp.home}/reobf" />
-		<property name="client.mcp.obfoutput" location="${mcp.obfoutput}/minecraft" />
-		<property name="server.mcp.obfoutput" location="${mcp.obfoutput}/minecraft_server" />
-		<property name="mcp.srcdir" location="${mcp.home}/src" />
-		<property name="client.mcp.srcdir" location="${mcp.srcdir}/minecraft" />
-		<property name="server.mcp.srcdir" location="${mcp.srcdir}/minecraft_server" />
-		<property name="deploy.dir" location="${user.home}/.minecraft/mods" />
-		<property name="common.src.dir" location="${basedir}/common" />
-		<property name="client.src.dir" location="${basedir}/client" />
-		<property name="server.src.dir" location="${basedir}/server" />
-		<property name="resource.dir" location="${basedir}/resources" />
-	</target>
-	<target name="clean">
-		<antcall target="clean-source">
-			<param name="side" value="client" />
-		</antcall>
-		<antcall target="clean-source">
-			<param name="side" value="server" />
-		</antcall>
-		<exec executable="${mcp.home}/updatemd5.sh" dir="${mcp.home}">
-			<arg value="-f" />
-		</exec>
-	</target>
+  <target name="init">
+    <tstamp>
+      <format pattern="yyMMddHHmmss" property="timestamp" />
+    </tstamp>
+    <property environment="env" />
+    <property name="modname" value="mod_ironchests" />
+    <property name="version.file" value="cpw/mods/ironchest/Version.java" />
+    <property name="version.major" value="3" />
+    <property name="version.minor" value="2" />
+    <property name="version.rev" value="0" />
+    <condition property="version.build" value="${env.BUILD_NUMBER}" else="0">
+      <isset property="env.BUILD_NUMBER" />
+    </condition>
+    <property name="version" value="${version.major}.${version.minor}.${version.rev}.${version.build}" />
+    <condition property="mcdev.home" value="${env.WORKSPACE}" else="/home/cpw/projects/mcworkspace">
+      <isset property="env.WORKSPACE" />
+    </condition>
+    <condition property="mcp.home" value="${env.WORKSPACE}/mcpworkspace" else="${mcdev.home}/forge67">
+      <isset property="env.WORKSPACE" />
+    </condition>
+    <property name="mcp.obfoutput" location="${mcp.home}/reobf" />
+    <property name="client.mcp.obfoutput" location="${mcp.obfoutput}/minecraft" />
+    <property name="server.mcp.obfoutput" location="${mcp.obfoutput}/minecraft_server" />
+    <property name="mcp.srcdir" location="${mcp.home}/src" />
+    <property name="client.mcp.srcdir" location="${mcp.srcdir}/minecraft" />
+    <property name="server.mcp.srcdir" location="${mcp.srcdir}/minecraft_server" />
+    <property name="deploy.dir" location="${user.home}/.minecraft/mods" />
+    <property name="common.src.dir" location="${basedir}/common" />
+    <property name="client.src.dir" location="${basedir}/client" />
+    <property name="server.src.dir" location="${basedir}/server" />
+    <property name="resource.dir" location="${basedir}/resources" />
+  </target>
+  <target name="clean">
+    <antcall target="clean-source">
+      <param name="side" value="client" />
+    </antcall>
+    <antcall target="clean-source">
+      <param name="side" value="server" />
+    </antcall>
+    <exec executable="${mcp.home}/updatemd5.sh" dir="${mcp.home}">
+      <arg value="-f" />
+    </exec>
+  </target>
 
-	<target name="build-client" depends="init,clean,merge-client,buildandreobfmcp">
-		<antcall target="extract-built-jar">
-			<param name="side" value="client" />
-		</antcall>
-	</target>
+  <target name="build-client" depends="init,clean,merge-client,buildandreobfmcp">
+    <antcall target="extract-built-jar">
+      <param name="side" value="client" />
+    </antcall>
+  </target>
 
-	<target name="build-server" depends="init,clean,merge-server,buildandreobfmcp">
-		<antcall target="extract-built-jar">
-			<param name="side" value="server" />
-		</antcall>
-	</target>
+  <target name="build-server" depends="init,clean,merge-server,buildandreobfmcp">
+    <antcall target="extract-built-jar">
+      <param name="side" value="server" />
+    </antcall>
+  </target>
 
-	<target name="extract-built-jar">
-		<side prop="output" src="mcp.obfoutput" side="${side}" />
-		<property name="jarname" value="${modname}-${side}-${version}" />
-		<mkdir dir="${basedir}/target" />
-		<jar destfile="${basedir}/target/${jarname}.zip">
-			<fileset dir="${output}" includes="**/*.class" />
-			<fileset dir="${resource.dir}" erroronmissingdir="false">
-				<selector if="is.client">
-					<filename name="**/*.png" />
-				</selector>
-			</fileset>
-		</jar>
-	</target>
-	<target name="build" depends="merge-client,merge-server,build-client,build-server" />
+  <target name="extract-built-jar">
+    <side prop="output" src="mcp.obfoutput" side="${side}" />
+    <property name="jarname" value="${modname}-${side}-${version}" />
+    <mkdir dir="${basedir}/target" />
+    <jar destfile="${basedir}/target/${jarname}.zip">
+      <fileset dir="${output}" includes="**/*.class" />
+      <fileset dir="${resource.dir}" erroronmissingdir="false">
+        <selector if="is.client">
+          <filename name="**/*.png" />
+        </selector>
+      </fileset>
+    </jar>
+  </target>
+  <target name="build" depends="merge-client,merge-server,build-client,build-server" />
 
-	<target name="buildandclean" depends="build">
-		<antcall target="clean" />
-	</target>
+  <target name="buildandclean" depends="build">
+    <antcall target="clean" />
+  </target>
 
-	<!-- antcall target to merge source to a side -->
-	<target name="clean-source">
-		<side prop="delete-targ" src="mcp.srcdir" side="${side}" />
-		<side prop="side-from" src="src.dir" side="${side}" />
-		<delete verbose="true">
-			<fileset dir="${delete-targ}">
-				<present present="both" targetdir="${side-from}" />
-			</fileset>
-			<fileset dir="${delete-targ}">
-				<present present="both" targetdir="${common.src.dir}" />
-			</fileset>
-		</delete>
-	</target>
+  <!-- antcall target to merge source to a side -->
+  <target name="clean-source">
+    <side prop="delete-targ" src="mcp.srcdir" side="${side}" />
+    <side prop="side-from" src="src.dir" side="${side}" />
+    <delete verbose="true">
+      <fileset dir="${delete-targ}">
+        <present present="both" targetdir="${side-from}" />
+      </fileset>
+      <fileset dir="${delete-targ}">
+        <present present="both" targetdir="${common.src.dir}" />
+      </fileset>
+    </delete>
+  </target>
 
-	<target name="merge-source">
-		<side prop="merge-to" src="mcp.srcdir" side="${side}" />
-		<side prop="side-from" src="src.dir" side="${side}" />
+  <target name="merge-source">
+    <side prop="merge-to" src="mcp.srcdir" side="${side}" />
+    <side prop="side-from" src="src.dir" side="${side}" />
 
-		<copy todir="${merge-to}" overwrite="true" verbose="true">
-			<fileset dir="${side-from}" includes="**/*.java" />
-			<fileset dir="${common.src.dir}" includes="**/*.java" />
-			<filterchain>
-				<replacetokens>
-					<token key="MAJOR" value="${version.major}" />
-					<token key="MINOR" value="${version.minor}" />
-					<token key="REV" value="${version.rev}" />
-					<token key="BUILD" value="${version.build}" />
-				</replacetokens>
-			</filterchain>
-		</copy>
-	</target>
+    <copy todir="${merge-to}" overwrite="true" verbose="true">
+      <fileset dir="${side-from}" includes="**/*.java" />
+      <fileset dir="${common.src.dir}" includes="**/*.java" />
+      <filterchain>
+        <replacetokens>
+          <token key="MAJOR" value="${version.major}" />
+          <token key="MINOR" value="${version.minor}" />
+          <token key="REV" value="${version.rev}" />
+          <token key="BUILD" value="${version.build}" />
+        </replacetokens>
+      </filterchain>
+    </copy>
+  </target>
 
-	<target name="merge-client" depends="init,clean">
-		<antcall target="merge-source">
-			<param name="side" value="client" />
-		</antcall>
-	</target>
+  <target name="merge-client" depends="init,clean">
+    <antcall target="merge-source">
+      <param name="side" value="client" />
+    </antcall>
+  </target>
 
-	<target name="merge-server" depends="init,clean">
-		<antcall target="merge-source">
-			<param name="side" value="server" />
-		</antcall>
-	</target>
+  <target name="merge-server" depends="init,clean">
+    <antcall target="merge-source">
+      <param name="side" value="server" />
+    </antcall>
+  </target>
 
-	<target name="buildandreobfmcp" depends="init">
-		<exec executable="${mcp.home}/recompile.sh" dir="${mcp.home}" />
-		<exec executable="${mcp.home}/reobfuscate.sh" dir="${mcp.home}" />
-	</target>
+  <target name="buildandreobfmcp" depends="init">
+    <exec executable="${mcp.home}/recompile.sh" dir="${mcp.home}" />
+    <exec executable="${mcp.home}/reobfuscate.sh" dir="${mcp.home}" />
+  </target>
 
-	<target name="deploy" depends="init,build-client">
-		<property name="jarname" value="${modname}-client-${version}" />
-		<move file="${deploy.dir}/${jarname}.zip" tofile="${deploy.dir}/${jarname}.zip.${timestamp}" failonerror="false" verbose="true" />
-		<copy file="${basedir}/${jarname}.zip" todir="${deploy.dir}" verbose="true" />
-	</target>
+  <target name="deploy" depends="init,build-client">
+    <property name="jarname" value="${modname}-client-${version}" />
+    <move file="${deploy.dir}/${jarname}.zip" tofile="${deploy.dir}/${jarname}.zip.${timestamp}" failonerror="false" verbose="true" />
+    <copy file="${basedir}/${jarname}.zip" todir="${deploy.dir}" verbose="true" />
+  </target>
 </project>
