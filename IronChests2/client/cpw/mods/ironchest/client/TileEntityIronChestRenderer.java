@@ -12,6 +12,7 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
 import java.util.Random;
 
 import net.minecraft.src.Block;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModelChest;
@@ -20,7 +21,8 @@ import net.minecraft.src.Tessellator;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraft.src.forge.ForgeHooksClient;
-import net.minecraft.src.forge.ICustomItemRenderer;
+import net.minecraft.src.forge.IItemRenderer;
+import net.minecraft.src.forge.ItemRenderType;
 import net.minecraft.src.forge.MinecraftForgeClient;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
@@ -101,6 +103,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 			glDisable(2896 /* GL_LIGHTING */);
 			glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
 			glTranslatef((float) x, (float) y, (float) z);
+      EntityItem customitem=new EntityItem(tileEntityRenderer.worldObj);
 			for (ItemStack item : tile.getTopItemStacks()) {
 				if (shift > shifts.length) {
 					break;
@@ -113,7 +116,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 				shiftY = shifts[shift][1];
 				shiftZ = shifts[shift][2];
 				shift++;
-				ICustomItemRenderer customRenderer = MinecraftForgeClient.getCustomItemRenderer(item.itemID);
+				IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item,ItemRenderType.ENTITY);
 				float localScale = blockScale;
 				if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID]!=null) {
 					int j = Block.blocksList[item.itemID].getRenderType();
@@ -135,9 +138,10 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 					}
 
 					if (customRenderer != null) {
+            customitem.item=item;
 						bindTextureByName("/terrain.png");
-						ForgeHooksClient.overrideTexture(item.getItem());
-						ForgeHooksClient.renderCustomItem(customRenderer, renderBlocks, item.itemID, item.getItemDamage(), 1.0F);
+            ForgeHooksClient.overrideTexture(item.getItem());
+						ForgeHooksClient.renderEntityItem(customRenderer, renderBlocks, customitem);
 					} else if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID]!=null && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
 						bindTextureByName("/terrain.png");
 						ForgeHooksClient.overrideTexture(Block.blocksList[item.itemID]);

@@ -38,20 +38,7 @@ public class GUIChest extends GuiContainer {
 		}
 		
 		public static GUIChest buildGUI(IronChestType type, IInventory playerInventory, TileEntityIronChest chestInventory) {
-			for (GUI gui : values()) {
-				if (chestInventory.getType()==gui.mainType) {
-					return new GUIChest(gui,playerInventory,chestInventory);
-				}
-			}
-			return null;
-		}
-		public static void showGUI(TileEntityIronChest te, EntityPlayer player) {
-			GUIChest gui=buildGUI(te.getType(),player.inventory,te);
-			if (gui!=null) {
-				ModLoader.openGUI(player, gui);
-			} else {
-				player.displayGUIChest(te);
-			}
+			return new GUIChest(values()[chestInventory.getType().ordinal()],playerInventory,chestInventory);
 		}
 	}
 

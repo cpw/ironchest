@@ -1,6 +1,7 @@
 package cpw.mods.ironchest;
 
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.forge.MinecraftForge;
 
 public enum ServerClientProxy {
 	CLIENT("cpw.mods.ironchest.client.ClientProxy"),
@@ -21,15 +22,10 @@ public enum ServerClientProxy {
 		}
 	}
 	public static IProxy getProxy() {
-		try {
-			ModLoader.class.getMethod("getMinecraftInstance");
-		} catch (SecurityException e) {
-			// UNPOSSIBLE
-			throw new RuntimeException(e);
-		} catch (NoSuchMethodException e) {
-			return SERVER.buildProxy();
+	  if (MinecraftForge.isClient()) {
+			return CLIENT.buildProxy();
+		} else {
+		  return SERVER.buildProxy();
 		}
-		return CLIENT.buildProxy();
 	}
-
 }

@@ -2,14 +2,13 @@ package cpw.mods.ironchest.server;
 
 import java.io.File;
 
-import net.minecraft.src.BaseModMp;
+import net.minecraft.src.Container;
 import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.ModLoaderMp;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.Packet;
-import net.minecraft.src.mod_IronChest;
+import net.minecraft.src.TileEntity;
+import net.minecraft.src.World;
 import cpw.mods.ironchest.ContainerIronChestBase;
 import cpw.mods.ironchest.IProxy;
 import cpw.mods.ironchest.IronChestType;
@@ -35,11 +34,6 @@ public class ServerProxy implements IProxy {
 	}
 
 	@Override
-	public void showGUI(TileEntityIronChest te, EntityPlayer player) {
-		ModLoader.openGUI(player, te.getType().guiId, te, new ContainerIronChestBase(player.inventory,te, te.getType(), 1, 1));
-	}
-
-	@Override
 	public File getMinecraftDir() {
 		return new File(".");
 	}
@@ -50,28 +44,25 @@ public class ServerProxy implements IProxy {
 	}
 
 	@Override
-	public void registerGUI(int guiId) {
-		// NOOP on server
-	}
-
-	@Override
-	public void handleTileEntityPacket(int x, int y, int z, int type, int[] intData, float[] floatData, String[] stringData) {
-		// NOOP on server
-	}
-
-	@Override
-	public Packet getDescriptionPacket(TileEntityIronChest tile) {
-		return ModLoaderMp.getTileEntityPacket(ModLoaderMp.getModInstance(mod_IronChest.class), tile.xCoord, tile.yCoord, tile.zCoord, tile.getType().ordinal(), tile.buildIntDataList(),null,null);
-	}
-
-	@Override
-	public void sendTileEntityUpdate(TileEntityIronChest tile) {
-		ModLoaderMp.sendTileEntityPacket(tile);
-	}
-
-	@Override
 	public boolean isRemote() {
 		return false;
 	}
+
+  @Override
+  public Container getGuiContainer(int ID, EntityPlayerMP player, World world, int X, int Y, int Z) {
+    TileEntity te=world.getBlockTileEntity(X, Y, Z);
+    if (te!=null && te instanceof TileEntityIronChest) {
+      TileEntityIronChest icte=(TileEntityIronChest) te;
+      return new ContainerIronChestBase(player.inventory, icte, icte.getType(), 0, 0);
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public World getCurrentWorld() {
+    // NOOP on server: there's lots
+    return null;
+  }
 
 }
