@@ -37,7 +37,7 @@
 		<property name="version.minor" value="2" />
 		<property name="version.rev" value="0" />
 		<condition property="version.build" value="${env.BUILD_NUMBER}" else="0">
-			<isset property="env.WORKSPACE" />
+			<isset property="env.BUILD_NUMBER" />
 		</condition>
 		<property name="version" value="${version.major}.${version.minor}.${version.rev}.${version.build}" />
 		<condition property="mcdev.home" value="${env.WORKSPACE}" else="/home/cpw/projects/mcworkspace">
