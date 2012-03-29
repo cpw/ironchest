@@ -7,7 +7,7 @@
                    
      cpw                                                                
      ====================================================================== -->
-<project name="mod_IronChests" default="buildandclean">
+<project name="mod_IronChests" default="build">
 	<description>
             Iron Chests
     </description>
