@@ -17,10 +17,10 @@
 	<property name="version.major" value="3"/>
 	<property name="version.minor" value="2"/>
 	<property name="version.rev" value="0"/>
-	<property name="version.build" value="0"/>
+	<property name="version.build" value="${BUILD_NO}" else="0"/>
 	<property name="version" value="${version.major}.${version.minor}.${version.rev}.${version.build}" />
-	<property name="mcdev.home" location="/home/cpw/projects/mcworkspace"/>
-	<property name="mcp.home" location="${mcdev.home}/forge67" />
+	<property name="mcdev.home" location="${WORKSPACE}" else="/home/cpw/projects/mcworkspace"/>
+	<property name="mcp.home" location="${WORKSPACE}/mcpworkspace" else="${mcdev.home}/forge67" />
 	<property name="mcp.obfoutput" location="${mcp.home}/reobf" />
 	<property name="client.mcp.obfoutput" location="${mcp.obfoutput}/minecraft" />
 	<property name="server.mcp.obfoutput" location="${mcp.obfoutput}/minecraft_server" />
