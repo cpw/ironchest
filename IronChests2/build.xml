@@ -32,9 +32,8 @@
     </tstamp>
     <property environment="env" />
     <property name="modname" value="mod_ironchests" />
-    <property name="version.file" value="cpw/mods/ironchest/Version.java" />
     <property name="version.major" value="3" />
-    <property name="version.minor" value="2" />
+    <property name="version.minor" value="3" />
     <property name="version.rev" value="0" />
     <condition property="version.build" value="${env.BUILD_NUMBER}" else="0">
       <isset property="env.BUILD_NUMBER" />
@@ -43,7 +42,7 @@
     <condition property="mcdev.home" value="${env.WORKSPACE}" else="/home/cpw/projects/mcworkspace">
       <isset property="env.WORKSPACE" />
     </condition>
-    <condition property="mcp.home" value="${env.WORKSPACE}/mcpworkspace" else="${mcdev.home}/forge67">
+    <condition property="mcp.home" value="${env.WORKSPACE}/mcpworkspace" else="${mcdev.home}/forge70">
       <isset property="env.WORKSPACE" />
     </condition>
     <property name="mcp.obfoutput" location="${mcp.home}/reobf" />
@@ -57,6 +56,7 @@
     <property name="client.src.dir" location="${basedir}/client" />
     <property name="server.src.dir" location="${basedir}/server" />
     <property name="resource.dir" location="${basedir}/resources" />
+    <property name="mfuploader.script" location="/home/cpw/mfuploader.py" />
   </target>
   <target name="clean">
     <antcall target="clean-source">
@@ -95,8 +95,24 @@
       </fileset>
     </jar>
   </target>
+
   <target name="build" depends="merge-client,merge-server,build-client,build-server" />
 
+  <target name="uploadartifacts" depends="build,domfupload"/>
+
+  <target name="domfupload" depends="-checkmfupload" if="${mfuploader.can.run}">
+    <property name="uploaddir" value="${modname}-${version}" />
+    <exec executable="/usr/bin/python">
+    	<arg value="${uploaddir}"/>
+	  	<arg value="${basedir}/target/${modname}-client-${version}.zip"/>
+	  	<arg value="${basedir}/target/${modname}-server-${version}.zip"/>
+    </exec>
+  </target>
+  
+  <target name="-checkmfupload" unless="mfuploader.can.run">
+    <available property="mfuploader.can.run" file="${mfuploader.script}"/>
+  </target>
+  
   <target name="buildandclean" depends="build">
     <antcall target="clean" />
   </target>

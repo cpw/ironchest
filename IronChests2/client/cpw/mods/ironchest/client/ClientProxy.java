@@ -5,8 +5,7 @@ import java.io.File;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.ChestItemRenderHelper;
 import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityPlayerSP;
-import net.minecraft.src.GuiScreen;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
@@ -59,17 +58,17 @@ public class ClientProxy implements IProxy {
   }
 
   @Override
-  public GuiScreen getGuiScreen(int ID, EntityPlayerSP player, World world, int X, int Y, int Z) {
-    TileEntity te = world.getBlockTileEntity(X, Y, Z);
+  public World getCurrentWorld() {
+    return ModLoader.getMinecraftInstance().theWorld;
+  }
+
+  @Override
+  public Object getGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+    TileEntity te = world.getBlockTileEntity(x, y, z);
     if (te != null && te instanceof TileEntityIronChest) {
       return GUIChest.GUI.buildGUI(IronChestType.values()[ID], player.inventory, (TileEntityIronChest) te);
     } else {
       return null;
     }
-  }
-
-  @Override
-  public World getCurrentWorld() {
-    return ModLoader.getMinecraftInstance().theWorld;
   }
 }

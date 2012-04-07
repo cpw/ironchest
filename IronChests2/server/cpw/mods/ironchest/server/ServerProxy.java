@@ -2,9 +2,8 @@ package cpw.mods.ironchest.server;
 
 import java.io.File;
 
-import net.minecraft.src.Container;
 import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
@@ -49,7 +48,7 @@ public class ServerProxy implements IProxy {
 	}
 
   @Override
-  public Container getGuiContainer(int ID, EntityPlayerMP player, World world, int X, int Y, int Z) {
+  public Object getGuiElement(int ID, EntityPlayer player, World world, int X, int Y, int Z) {
     TileEntity te=world.getBlockTileEntity(X, Y, Z);
     if (te!=null && te instanceof TileEntityIronChest) {
       TileEntityIronChest icte=(TileEntityIronChest) te;

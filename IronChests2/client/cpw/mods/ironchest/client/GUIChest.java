@@ -1,10 +1,8 @@
 package cpw.mods.ironchest.client;
 
 import net.minecraft.src.Container;
-import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiContainer;
 import net.minecraft.src.IInventory;
-import net.minecraft.src.ModLoader;
 
 import org.lwjgl.opengl.GL11;
 
