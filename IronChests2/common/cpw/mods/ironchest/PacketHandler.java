@@ -20,11 +20,11 @@ import net.minecraft.src.forge.MessageManager;
 public class PacketHandler implements IPacketHandler, IConnectionHandler {
 	@Override
 	public void onConnect(NetworkManager network) {
+    MessageManager.getInstance().registerChannel(network, this, "IronChest");
 	}
 
 	@Override
 	public void onLogin(NetworkManager network, Packet1Login login) {
-		MessageManager.getInstance().registerChannel(network, this, "IronChest");
 	}
 
 	@Override
