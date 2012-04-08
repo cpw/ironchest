@@ -34,6 +34,7 @@ public class PacketHandler implements IPacketHandler, IConnectionHandler {
 
 	@Override
 	public void onPacketData(NetworkManager network, String channel, byte[] data) {
+	  System.out.println("Got packet");
 		DataInputStream dis=new DataInputStream(new ByteArrayInputStream(data));
 		int x;
 		int y;
@@ -91,6 +92,7 @@ public class PacketHandler implements IPacketHandler, IConnectionHandler {
 	  pkt.channel="IronChest";
 	  pkt.data=bos.toByteArray();
 	  pkt.length=bos.size();
+	  System.out.println("Sent packet");
 		return pkt;
 	}
 }
