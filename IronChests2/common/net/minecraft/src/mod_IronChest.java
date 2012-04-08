@@ -31,7 +31,7 @@ public class mod_IronChest extends NetworkMod {
 
   @Override
   public void load() {
-    MinecraftForge.versionDetect("IronChest", 2, 0, 0);
+    MinecraftForge.versionDetect("IronChest", 3, 0, 0);
     instance = this;
     proxy = ServerClientProxy.getProxy();
     File cfgFile = new File(proxy.getMinecraftDir(), "config/IronChest.cfg");
@@ -110,6 +110,6 @@ public class mod_IronChest extends NetworkMod {
 
   @Override
   public boolean serverSideRequired() {
-    return true;
+    return false;
   }
 }
