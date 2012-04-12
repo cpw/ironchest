@@ -34,7 +34,7 @@
     <property name="modname" value="mod_ironchests" />
     <property name="version.major" value="3" />
     <property name="version.minor" value="3" />
-    <property name="version.rev" value="0" />
+    <property name="version.rev" value="1" />
     <condition property="version.build" value="${env.BUILD_NUMBER}" else="0">
       <isset property="env.BUILD_NUMBER" />
     </condition>

@@ -116,7 +116,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 				shiftY = shifts[shift][1];
 				shiftZ = shifts[shift][2];
 				shift++;
-				IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item,ItemRenderType.ENTITY);
+				IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item,IItemRenderer.ItemRenderType.ENTITY);
 				float localScale = blockScale;
 				if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID]!=null) {
 					int j = Block.blocksList[item.itemID].getRenderType();
@@ -138,10 +138,10 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 					}
 
 					if (customRenderer != null) {
-            customitem.item=item;
+						customitem.item=item;
 						bindTextureByName("/terrain.png");
-            ForgeHooksClient.overrideTexture(item.getItem());
-						ForgeHooksClient.renderEntityItem(customRenderer, renderBlocks, customitem);
+						ForgeHooksClient.overrideTexture(item.getItem());
+						customRenderer.renderItem(IItemRenderer.ItemRenderType.ENTITY, item, renderBlocks, customitem);
 					} else if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID]!=null && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
 						bindTextureByName("/terrain.png");
 						ForgeHooksClient.overrideTexture(Block.blocksList[item.itemID]);
