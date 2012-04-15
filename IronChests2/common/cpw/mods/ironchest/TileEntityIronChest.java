@@ -382,4 +382,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
       return null;
     }
   }
+  public void setMaxStackSize(int size) {
+    
+  }
 }
