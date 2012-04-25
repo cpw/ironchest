@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012 cpw.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v3.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/gpl.html
+ * 
+ * Contributors:
+ *     cpw - initial API and implementation
+ ******************************************************************************/
 package cpw.mods.ironchest.client;
 
 import static org.lwjgl.opengl.GL11.glColor4f;
@@ -22,7 +32,6 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraft.src.forge.ForgeHooksClient;
 import net.minecraft.src.forge.IItemRenderer;
-import net.minecraft.src.forge.ItemRenderType;
 import net.minecraft.src.forge.MinecraftForgeClient;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
