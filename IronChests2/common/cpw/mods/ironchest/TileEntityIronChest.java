@@ -233,7 +233,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     super.updateEntity();
     // Resynchronize clients with the server state
     if ((++ticksSinceSync % 20) * 4 == 0) {
-      worldObj.playNoteAt(xCoord, yCoord, zCoord, 3, ((numUsingPlayers << 3) & 0xF8) | (facing & 0x7));
+      worldObj.sendClientEvent(xCoord, yCoord, zCoord, 3, ((numUsingPlayers << 3) & 0xF8) | (facing & 0x7));
       if (inventoryTouched) {
         inventoryTouched = false;
         sortTopStacks();
@@ -268,8 +268,9 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     }
   }
 
+  
   @Override
-  public void onTileEntityPowered(int i, int j)
+  public void receiveClientEvent(int i, int j)
   {
     if (i == 1)
     {
@@ -287,7 +288,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     if (worldObj == null)
       return;
     numUsingPlayers++;
-    worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, numUsingPlayers);
+    worldObj.sendClientEvent(xCoord, yCoord, zCoord, 1, numUsingPlayers);
   }
 
   @Override
@@ -295,7 +296,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     if (worldObj == null)
       return;
     numUsingPlayers--;
-    worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, numUsingPlayers);
+    worldObj.sendClientEvent(xCoord, yCoord, zCoord, 1, numUsingPlayers);
   }
 
   public void setFacing(byte chestFacing) {

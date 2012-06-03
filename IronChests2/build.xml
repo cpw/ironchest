@@ -7,10 +7,8 @@
                    
      cpw                                                                
      ====================================================================== -->
-<project name="mod_IronChests" default="build">
-  <description>
-            Iron Chests
-    </description>
+<project name="IronChest" default="build">
+  <description>Iron Chest</description>
   <macrodef name="side">
     <attribute name="prop" />
     <attribute name="src" />
@@ -23,51 +21,118 @@
       <condition property="is.server">
         <equals arg1="@{side}" arg2="server" />
       </condition>
+      <condition property="is.bukkit">
+        <equals arg1="@{side}" arg2="bukkit" />
+      </condition>
     </sequential>
   </macrodef>
+  <target name="writeversion" depends="buildenvsetup">
+    <exec executable="${python.exe}" dir="${basedir}" failonerror="true">
+      <arg value="${basedir}/getversion.py" />
+    </exec>
+    <propertyfile file="ironchestversion.properties">
+      <entry key="ironchest.build.number" type="int" value="${version.build}"/>
+    </propertyfile>
+  </target>
 
-  <target name="init">
+  <target name="buildenvsetup">
     <tstamp>
       <format pattern="yyMMddHHmmss" property="timestamp" />
     </tstamp>
     <property environment="env" />
+    <property file="build.properties" />
+    <property file="ironchestversion.properties" />
     <property name="modname" value="mod_ironchests" />
-    <property name="version.major" value="3" />
-    <property name="version.minor" value="3" />
-    <property name="version.rev" value="1" />
-    <condition property="version.build" value="${env.BUILD_NUMBER}" else="0">
-      <isset property="env.BUILD_NUMBER" />
-    </condition>
-    <property name="version" value="${version.major}.${version.minor}.${version.rev}.${version.build}" />
-    <condition property="mcdev.home" value="${env.WORKSPACE}" else="/home/cpw/projects/mcworkspace">
+    <condition property="dev.home" value="${env.WORKSPACE}" else="${default.dev.home}">
       <isset property="env.WORKSPACE" />
     </condition>
-    <condition property="mcp.home" value="${env.WORKSPACE}/mcpworkspace" else="${mcdev.home}/forge70">
+    <condition property="mcp.home" value="${env.WORKSPACE}/mcpworkspace" else="${default.mcp.home}">
       <isset property="env.WORKSPACE" />
     </condition>
+    <condition property="python.exe" value="${mcp.home}/runtime/bin/python/python_mcp" else="python">
+      <os family="Windows" />
+    </condition>
+    <condition property="bukkitporting.dir" value="${env.WORKSPACE}/bukkitportingtools" else="${mcdev.home}/bukkitportingtools">
+      <isset property="env.WORKSPACE" />
+    </condition>
+    <property name="bukkit.tmpdir" location="${basedir}/build/bukkit" />
+    <property name="bukkit.mcp.srcdir" location="${bukkit.tmpdir}/src" />
     <property name="mcp.obfoutput" location="${mcp.home}/reobf" />
     <property name="client.mcp.obfoutput" location="${mcp.obfoutput}/minecraft" />
     <property name="server.mcp.obfoutput" location="${mcp.obfoutput}/minecraft_server" />
     <property name="mcp.srcdir" location="${mcp.home}/src" />
     <property name="client.mcp.srcdir" location="${mcp.srcdir}/minecraft" />
     <property name="server.mcp.srcdir" location="${mcp.srcdir}/minecraft_server" />
-    <property name="deploy.dir" location="${user.home}/.minecraft/mods" />
     <property name="common.src.dir" location="${basedir}/common" />
     <property name="client.src.dir" location="${basedir}/client" />
     <property name="server.src.dir" location="${basedir}/server" />
+    <property name="deploy.dir" location="${user.home}/.minecraft/mods" />
+    <property name="bukkit.src.dir" location="${server.src.dir}" />
     <property name="resource.dir" location="${basedir}/resources" />
-    <property name="mfuploader.script" location="/home/cpw/mfuploader.py" />
+  	<property name="bukkitporting.srgtools" location="${bukkitporting.dir}/bin/SrgTools.jar" />
+  	<property name="bukkitporting.asm" location="${bukkitporting.dir}/bin/asm-all-3.3.1.jar" />
+  	<property name="bukkitporting.translatedjar" location="${bukkitporting.dir}/jar/generated/craftbukkit-1.2.5-R1.1-MCPC-SNAPSHOT-73.MCP.jar" />
+  	<property name="bukkitporting.srg" location="${bukkitporting.dir}/mappings/generated/server_mcp_bukkit_1.2.5.srg" />
+    <property name="bukkit.mcp.jar" location="${bukkitporting.translatedjar}" />
+    <condition property="version.build" value="${env.BUILD_NUMBER}" else="1">
+      <isset property="env.BUILD_NUMBER" />
+    </condition>
   </target>
+
+  <target name="init" depends="buildenvsetup">
+    <antcall target="writeversion" />
+    <property file="ironchestversion.properties" />
+    <property name="build.number" value="${ironchest.build.major.number}.${ironchest.build.minor.number}.${ironchest.build.revision.number}" />
+    <property name="version.minecraft" value="${ironchest.build.mcversion}" />
+    <property name="version.major" value="${ironchest.build.major.number}" />
+    <property name="version.minor" value="${ironchest.build.minor.number}" />
+    <property name="version.rev" value="${ironchest.build.revision.number}" />
+    <property name="version" value="${version.major}.${version.minor}.${version.rev}.${version.build}" />
+  </target>
+  
   <target name="clean">
+    <delete dir="${bukkit.tmpdir}"/>
     <antcall target="clean-source">
       <param name="side" value="client" />
     </antcall>
     <antcall target="clean-source">
       <param name="side" value="server" />
     </antcall>
-    <exec executable="${mcp.home}/updatemd5.sh" dir="${mcp.home}">
+    <exec executable="${python.exe}" dir="${mcp.home}">
+      <arg value="${mcp.home}/runtime/updatemd5.py" />
       <arg value="-f" />
     </exec>
+  </target>
+
+  <target name="buildandreobfmcp" depends="init">
+    <exec executable="${python.exe}" dir="${mcp.home}" failonerror="true">
+      <arg value="${mcp.home}/runtime/recompile.py" />
+    </exec>
+    <exec executable="${python.exe}" dir="${mcp.home}">
+      <arg value="${mcp.home}/runtime/reobfuscate.py" />
+    </exec>
+  </target>
+
+  <target name="merge-client" depends="init,clean">
+    <antcall target="merge-source">
+      <param name="side" value="client" />
+    </antcall>
+  </target>
+
+  <target name="merge-server" depends="init,clean">
+    <antcall target="merge-source">
+      <param name="side" value="server" />
+    </antcall>
+  </target>
+
+  <target name="merge-source">
+    <side prop="merge-to" src="mcp.srcdir" side="${side}" />
+    <side prop="side-from" src="src.dir" side="${side}" />
+
+    <copy todir="${merge-to}" overwrite="true" verbose="true">
+      <fileset dir="${side-from}" includes="**/*.java" />
+      <fileset dir="${common.src.dir}" includes="**/*.java" />
+    </copy>
   </target>
 
   <target name="build-client" depends="init,clean,merge-client,buildandreobfmcp">
@@ -88,6 +153,18 @@
     <mkdir dir="${basedir}/target" />
     <jar destfile="${basedir}/target/${jarname}.zip">
       <fileset dir="${output}" includes="**/*.class" />
+      <zipfileset dir="${basedir}" includes="ironchestversion.properties"/>
+      <mappedresources>
+        <concat>
+          <fileset dir="${basedir}" includes="mcmod.info" />
+          <filterchain>
+            <replacetokens>
+              <token key="VERSION" value="${version}" />
+            </replacetokens>
+          </filterchain>
+        </concat>
+        <mergemapper to="mcmod.info" />
+      </mappedresources>
       <fileset dir="${resource.dir}" erroronmissingdir="false">
         <selector if="is.client">
           <filename name="**/*.png" />
@@ -98,22 +175,6 @@
 
   <target name="build" depends="merge-client,merge-server,build-client,build-server" />
 
-  <target name="uploadartifacts" depends="build,domfupload"/>
-
-  <target name="domfupload" depends="-checkmfupload" if="${mfuploader.can.run}">
-    <property name="uploaddir" value="${modname}-${version}" />
-    <exec executable="/usr/bin/python">
-      	<arg value="${mfuploader.script}"/>
-    	<arg value="${uploaddir}"/>
-	  	<arg value="${basedir}/target/${modname}-client-${version}.zip"/>
-	  	<arg value="${basedir}/target/${modname}-server-${version}.zip"/>
-    </exec>
-  </target>
-  
-  <target name="-checkmfupload" unless="mfuploader.can.run">
-    <available property="mfuploader.can.run" file="${mfuploader.script}"/>
-  </target>
-  
   <target name="buildandclean" depends="build">
     <antcall target="clean" />
   </target>
@@ -132,40 +193,43 @@
     </delete>
   </target>
 
-  <target name="merge-source">
-    <side prop="merge-to" src="mcp.srcdir" side="${side}" />
-    <side prop="side-from" src="src.dir" side="${side}" />
-
-    <copy todir="${merge-to}" overwrite="true" verbose="true">
-      <fileset dir="${side-from}" includes="**/*.java" />
-      <fileset dir="${common.src.dir}" includes="**/*.java" />
-      <filterchain>
-        <replacetokens>
-          <token key="MAJOR" value="${version.major}" />
-          <token key="MINOR" value="${version.minor}" />
-          <token key="REV" value="${version.rev}" />
-          <token key="BUILD" value="${version.build}" />
-        </replacetokens>
-      </filterchain>
-    </copy>
-  </target>
-
-  <target name="merge-client" depends="init,clean">
+  <target name="compile-bukkit" depends="init">
+    <mkdir dir="${bukkit.tmpdir}" />
     <antcall target="merge-source">
-      <param name="side" value="client" />
+      <param name="side" value="bukkit" />
     </antcall>
+    <mkdir dir="${bukkit.tmpdir}/compiled" />
+    <javac target="1.6" source="1.6" destdir="${bukkit.tmpdir}/compiled">
+      <src path="${bukkit.mcp.srcdir}" />
+      <classpath path="${bukkit.mcp.jar}" />
+    </javac>
   </target>
 
-  <target name="merge-server" depends="init,clean">
-    <antcall target="merge-source">
-      <param name="side" value="server" />
-    </antcall>
+  <target name="jar-bukkit" depends="init,compile-bukkit">
+  	<jar destfile="${bukkit.tmpdir}/${modname}-bukkit-tmp.jar" basedir="${bukkit.tmpdir}/compiled" />
   </target>
 
-  <target name="buildandreobfmcp" depends="init">
-    <exec executable="${mcp.home}/recompile.sh" dir="${mcp.home}" />
-    <exec executable="${mcp.home}/reobfuscate.sh" dir="${mcp.home}" />
+  <target name="translate-bukkit" depends="init,jar-bukkit">
+    <mkdir dir="${basedir}/target" />
+  	<java classname="nl.hardijzer.fw.applysrg.ApplySrg" failonerror="true" fork="true">
+  	  <classpath>
+  	    <pathelement location="${bukkitporting.asm}" />
+  	    <pathelement location="${bukkitporting.srgtools}" />
+  	  </classpath>
+  	  <arg value="--srg" />
+  	  <arg value="${bukkitporting.srg}" />
+  	  <arg value="--inheritance" />
+	  <arg value="${bukkit.mcp.jar}" />
+  	  <arg value="--inheritance" />
+  	  <arg value="${bukkit.tmpdir}/${modname}-bukkit-tmp.jar" />
+      <arg value="--in" />
+  	  <arg value="${bukkit.tmpdir}/${modname}-bukkit-tmp.jar" />
+  	  <arg value="--out" />
+  	  <arg value="${basedir}/target/${modname}-bukkit-${version}.jar" />
+  	</java>
   </target>
+
+  <target name="build-bukkit" depends="init,translate-bukkit"/>
 
   <target name="deploy" depends="init,build-client">
     <property name="jarname" value="${modname}-client-${version}" />

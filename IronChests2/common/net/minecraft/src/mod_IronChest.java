@@ -24,13 +24,13 @@ import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.ItemChestChanger;
 import cpw.mods.ironchest.ItemIronChest;
 import cpw.mods.ironchest.PacketHandler;
-import cpw.mods.ironchest.ServerClientProxy;
 import cpw.mods.ironchest.Version;
 
 public class mod_IronChest extends NetworkMod {
 
   public static BlockIronChest ironChestBlock;
   public static ItemChestChanger itemChestChanger;
+  @SidedProxy(clientSide="cpw.mods.ironchest.client.ClientProxy", serverSide="cpw.mods.ironchest.server.ServerProxy")
   public static IProxy proxy;
   public static mod_IronChest instance;
 
@@ -41,9 +41,8 @@ public class mod_IronChest extends NetworkMod {
 
   @Override
   public void load() {
-    MinecraftForge.versionDetect("IronChest", 3, 0, 1);
+    MinecraftForge.versionDetect("IronChest", 3, 2, 4);
     instance = this;
-    proxy = ServerClientProxy.getProxy();
     File cfgFile = new File(proxy.getMinecraftDir(), "config/IronChest.cfg");
     Configuration cfg = new Configuration(cfgFile);
     try {

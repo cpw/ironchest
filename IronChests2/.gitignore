@@ -2,3 +2,5 @@
 /*.jpage
 bin/
 /target
+/build.properties
+/build
