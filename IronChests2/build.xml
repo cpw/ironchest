@@ -41,7 +41,6 @@
     </tstamp>
     <property environment="env" />
     <property file="build.properties" />
-    <property file="ironchestversion.properties" />
     <property name="modname" value="mod_ironchests" />
     <condition property="dev.home" value="${env.WORKSPACE}" else="${default.dev.home}">
       <isset property="env.WORKSPACE" />
