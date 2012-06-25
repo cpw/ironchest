@@ -10,9 +10,14 @@
  ******************************************************************************/
 package cpw.mods.ironchest.client;
 
+import static org.lwjgl.opengl.GL11.GL_COMPILE;
 import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEndList;
+import static org.lwjgl.opengl.GL11.glGenLists;
+import static org.lwjgl.opengl.GL11.glCallList;
+import static org.lwjgl.opengl.GL11.glNewList;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glRotatef;
@@ -20,6 +25,8 @@ import static org.lwjgl.opengl.GL11.glScalef;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 
 import java.util.Random;
+import java.util.Map;
+import java.util.HashMap;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityItem;
@@ -37,11 +44,12 @@ import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 
 public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
+	private static Map<ItemStack, Integer> renderList = new HashMap<ItemStack, Integer>();
 	private Random random;
 	private RenderBlocks renderBlocks;
 
 	private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F },
-			{ 0.3F, 0.1F, 0.3F }, { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F }, };
+		{ 0.3F, 0.1F, 0.3F }, { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F }, };
 
 	public TileEntityIronChestRenderer() {
 		model = new ModelChest();
@@ -112,7 +120,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 			glDisable(2896 /* GL_LIGHTING */);
 			glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
 			glTranslatef((float) x, (float) y, (float) z);
-      EntityItem customitem=new EntityItem(tileEntityRenderer.worldObj);
+			EntityItem customitem=new EntityItem(tileEntityRenderer.worldObj);
 			for (ItemStack item : tile.getTopItemStacks()) {
 				if (shift > shifts.length) {
 					break;
@@ -146,48 +154,56 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 						glTranslatef(minishiftX, minishiftY, minishiftZ);
 					}
 
-					if (customRenderer != null) {
-						customitem.item=item;
-						bindTextureByName("/terrain.png");
-						ForgeHooksClient.overrideTexture(item.getItem());
-						customRenderer.renderItem(IItemRenderer.ItemRenderType.ENTITY, item, renderBlocks, customitem);
-					} else if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID]!=null && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
-						bindTextureByName("/terrain.png");
-						ForgeHooksClient.overrideTexture(Block.blocksList[item.itemID]);
-						renderBlocks.renderBlockAsItem(Block.blocksList[item.itemID], item.getItemDamage(), 1.0F);
-					} else {
-						int i = item.getIconIndex();
-						if (item.itemID >= Block.blocksList.length || Block.blocksList[item.itemID]==null) {
-							bindTextureByName("/gui/items.png");
-							ForgeHooksClient.overrideTexture(Item.itemsList[item.itemID]);
-						} else {
+					if (renderList.get(item) == null) {
+						int render = glGenLists(1);
+						renderList.put(item, render);
+						glNewList(render, GL_COMPILE);
+						if (customRenderer != null) {
+							customitem.item=item;
+							bindTextureByName("/terrain.png");
+							ForgeHooksClient.overrideTexture(item.getItem());
+							customRenderer.renderItem(IItemRenderer.ItemRenderType.ENTITY, item, renderBlocks, customitem);
+						} else if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID]!=null && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
 							bindTextureByName("/terrain.png");
 							ForgeHooksClient.overrideTexture(Block.blocksList[item.itemID]);
+							renderBlocks.renderBlockAsItem(Block.blocksList[item.itemID], item.getItemDamage(), 1.0F);
+						} else {
+							int i = item.getIconIndex();
+							if (item.itemID >= Block.blocksList.length || Block.blocksList[item.itemID]==null) {
+								bindTextureByName("/gui/items.png");
+								ForgeHooksClient.overrideTexture(Item.itemsList[item.itemID]);
+							} else {
+								bindTextureByName("/terrain.png");
+								ForgeHooksClient.overrideTexture(Block.blocksList[item.itemID]);
+							}
+							Tessellator tessellator = Tessellator.instance;
+							float f5 = (float) ((i % 16) * 16 + 0) / 256F;
+							float f8 = (float) ((i % 16) * 16 + 16) / 256F;
+							float f10 = (float) ((i / 16) * 16 + 0) / 256F;
+							float f12 = (float) ((i / 16) * 16 + 16) / 256F;
+							float f13 = 1.0F;
+							float f14 = 0.5F;
+							float f15 = 0.25F;
+							tessellator.startDrawingQuads();
+							tessellator.setNormal(0.0F, 1.0F, 0.0F);
+							tessellator.addVertexWithUV(0.0F - f14, 0.0F - f15, 0.0D, f5, f12);
+							tessellator.addVertexWithUV(f13 - f14, 0.0F - f15, 0.0D, f8, f12);
+							tessellator.addVertexWithUV(f13 - f14, 1.0F - f15, 0.0D, f8, f10);
+							tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
+							tessellator.draw();
+							glScalef(-1.0F, 1.0F, 1.0F);
+							tessellator.startDrawingQuads();
+							tessellator.setNormal(0.0F, 1.0F, 0.0F);
+							tessellator.addVertexWithUV(0.0F - f14, 0.0F - f15, 0.0D, f5, f12);
+							tessellator.addVertexWithUV(f13 - f14, 0.0F - f15, 0.0D, f8, f12);
+							tessellator.addVertexWithUV(f13 - f14, 1.0F - f15, 0.0D, f8, f10);
+							tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
+							tessellator.draw();
 						}
-						Tessellator tessellator = Tessellator.instance;
-						float f5 = (float) ((i % 16) * 16 + 0) / 256F;
-						float f8 = (float) ((i % 16) * 16 + 16) / 256F;
-						float f10 = (float) ((i / 16) * 16 + 0) / 256F;
-						float f12 = (float) ((i / 16) * 16 + 16) / 256F;
-						float f13 = 1.0F;
-						float f14 = 0.5F;
-						float f15 = 0.25F;
-						tessellator.startDrawingQuads();
-						tessellator.setNormal(0.0F, 1.0F, 0.0F);
-						tessellator.addVertexWithUV(0.0F - f14, 0.0F - f15, 0.0D, f5, f12);
-						tessellator.addVertexWithUV(f13 - f14, 0.0F - f15, 0.0D, f8, f12);
-						tessellator.addVertexWithUV(f13 - f14, 1.0F - f15, 0.0D, f8, f10);
-						tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
-						tessellator.draw();
-						glScalef(-1.0F, 1.0F, 1.0F);
-						tessellator.startDrawingQuads();
-						tessellator.setNormal(0.0F, 1.0F, 0.0F);
-						tessellator.addVertexWithUV(0.0F - f14, 0.0F - f15, 0.0D, f5, f12);
-						tessellator.addVertexWithUV(f13 - f14, 0.0F - f15, 0.0D, f8, f12);
-						tessellator.addVertexWithUV(f13 - f14, 1.0F - f15, 0.0D, f8, f10);
-						tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
-						tessellator.draw();
+					} else {
+						glCallList(renderList.get(item));
 					}
+					glEndList();
 					glPopMatrix();
 				}
 				glPopMatrix();
