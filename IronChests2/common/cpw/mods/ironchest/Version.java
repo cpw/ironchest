@@ -16,11 +16,8 @@ import cpw.mods.fml.common.FMLCommonHandler;
 public class Version {
   private static String major;
   private static String minor;
-  @SuppressWarnings("unused")
   private static String rev;
-  @SuppressWarnings("unused")
   private static String build;
-  @SuppressWarnings("unused")
   private static String mcversion;
   private static boolean loaded;
 
@@ -48,5 +45,11 @@ public class Version {
       init();
     }
     return major+"."+minor;
+  }
+  public static String fullVersionString() {
+    if (!loaded) {
+      init();
+    }
+    return String.format("%s.%s.%s build %s for %s", major,minor,rev, build, mcversion);
   }
 }

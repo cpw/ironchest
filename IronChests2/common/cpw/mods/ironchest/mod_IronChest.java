@@ -13,6 +13,9 @@ package cpw.mods.ironchest;
 import java.io.File;
 import java.lang.reflect.Method;
 
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.modloader.ModLoaderModContainer;
+
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.SidedProxy;
 import net.minecraft.src.forge.Configuration;
@@ -35,6 +38,10 @@ public class mod_IronChest extends NetworkMod {
   @Override
   public void load() {
     MinecraftForge.versionDetect("IronChest", 3, 3, 7);
+    ModContainer fml=ModLoaderModContainer.findContainerFor(this);
+    if (fml.getMetadata()!=null) {
+      fml.getMetadata().version=Version.fullVersionString();
+    }
     instance = this;
     File cfgFile = new File(proxy.getMinecraftDir(), "config/IronChest.cfg");
     Configuration cfg = new Configuration(cfgFile);
