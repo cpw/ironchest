@@ -20,7 +20,6 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
 import net.minecraft.src.Packet;
 import net.minecraft.src.TileEntity;
-import net.minecraft.src.mod_IronChest;
 
 public class TileEntityIronChest extends TileEntity implements IInventory {
   private int ticksSinceSync;

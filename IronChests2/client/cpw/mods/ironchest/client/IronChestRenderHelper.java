@@ -10,10 +10,10 @@
  ******************************************************************************/
 package cpw.mods.ironchest.client;
 
+import cpw.mods.ironchest.mod_IronChest;
 import net.minecraft.src.Block;
 import net.minecraft.src.ChestItemRenderHelper;
 import net.minecraft.src.TileEntityRenderer;
-import net.minecraft.src.mod_IronChest;
 
 public class IronChestRenderHelper extends ChestItemRenderHelper {
 	@Override

@@ -24,7 +24,6 @@ import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_IronChest;
 import net.minecraft.src.forge.ITextureProvider;
 
 public class BlockIronChest extends BlockContainer implements ITextureProvider {
