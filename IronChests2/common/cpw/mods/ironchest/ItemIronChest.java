@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- * 
+ *
  * Contributors:
  *     cpw - initial API and implementation
  ******************************************************************************/
@@ -25,17 +25,13 @@ public class ItemIronChest extends ItemBlock {
 
 	@Override
 	public int getMetadata(int i) {
-		if (i<IronChestType.values().length) {
-			return i;
-		} else {
-			return 0;
-		}
+	  return IronChestType.validateMeta(i);
 	}
 	@Override
 	public String getItemNameIS(ItemStack itemstack) {
 		return IronChestType.values()[itemstack.getItemDamage()].name();
 	}
-	
+
 	@Override
 	public void addCreativeItems(@SuppressWarnings("rawtypes") ArrayList itemList) {
 	}

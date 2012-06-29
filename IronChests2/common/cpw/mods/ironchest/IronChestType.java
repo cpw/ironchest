@@ -26,7 +26,8 @@ public enum IronChestType {
   DIAMOND(108, 12, true, "Diamond Chest", "diamondchest.png", 2, Arrays.asList("gemDiamond"), TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"),
   COPPER(45, 9, false, "Copper Chest", "copperchest.png", 3, Arrays.asList("ingotCopper"), TileEntityCopperChest.class, "mmmmCmmmm"),
   SILVER(72, 9, false, "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm0mmmm", "mGmG3GmGm"),
-  CRYSTAL(108, 12, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG");
+  CRYSTAL(108, 12, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
+  WOOD(0,0,false,"","",-1,Arrays.asList("blockPlanks"),null);
   int size;
   private int rowLength;
   public String friendlyName;
@@ -61,16 +62,18 @@ public enum IronChestType {
 
   public static TileEntityIronChest makeEntity(int metadata) {
     // Compatibility
-    int chesttype = metadata;
-    try {
-      TileEntityIronChest te = values()[chesttype].clazz.newInstance();
-      return te;
-    } catch (InstantiationException e) {
-      // unpossible
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      // unpossible
-      e.printStackTrace();
+    int chesttype = validateMeta(metadata);
+    if (chesttype == metadata) {
+      try {
+        TileEntityIronChest te = values()[chesttype].clazz.newInstance();
+        return te;
+      } catch (InstantiationException e) {
+        // unpossible
+        e.printStackTrace();
+      } catch (IllegalAccessException e) {
+        // unpossible
+        e.printStackTrace();
+      }
     }
     return null;
   }
@@ -117,6 +120,8 @@ public enum IronChestType {
       return Item.diamond;
     } else if (mat == "blockGlass") {
       return Block.glass;
+    } else if (mat == "blockPlanks") {
+      return Block.planks;
     }
     return mat;
   }
@@ -141,6 +146,18 @@ public enum IronChestType {
 
   public List<String> getMatList() {
     return matList;
+  }
+
+  public static int validateMeta(int i) {
+    if (i < values().length && values()[i].size>0) {
+      return i;
+    } else {
+      return 0;
+    }
+  }
+
+  public boolean isValidForCreativeMode() {
+    return validateMeta(ordinal())==ordinal();
   }
 
 }

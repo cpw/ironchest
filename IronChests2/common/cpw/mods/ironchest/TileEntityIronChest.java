@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- * 
+ *
  * Contributors:
  *     cpw - initial API and implementation
  ******************************************************************************/
@@ -267,7 +267,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     }
   }
 
-  
+
   @Override
   public void receiveClientEvent(int i, int j)
   {
@@ -313,7 +313,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     int newSize = newEntity.chestContents.length;
     System.arraycopy(chestContents, 0, newEntity.chestContents, 0, Math.min(newSize, chestContents.length));
     BlockIronChest block = mod_IronChest.ironChestBlock;
-    block.dropContent(newSize, this, this.worldObj);
+    block.dropContent(newSize, this, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
     newEntity.setFacing(facing);
     newEntity.sortTopStacks();
     return newEntity;
@@ -393,6 +393,6 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     }
   }
   public void setMaxStackSize(int size) {
-    
+
   }
 }

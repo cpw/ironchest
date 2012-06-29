@@ -47,7 +47,7 @@ public class mod_IronChest extends NetworkMod {
     Configuration cfg = new Configuration(cfgFile);
     try {
       cfg.load();
-      int bId = cfg.getOrCreateBlockIdProperty("ironChests", 181).getInt(181);
+      int bId = cfg.getOrCreateBlockIdProperty("ironChests", 502).getInt(502);
       ironChestBlock = new BlockIronChest(bId);
       ChestChangerType.buildItems(cfg, 19501);
     } catch (Exception e) {
