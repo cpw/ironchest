@@ -10,6 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ReflectionHelper;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
@@ -51,7 +52,7 @@ public class ItemChestChanger extends Item implements ITextureProvider {
 	    }
 	    newchest = IronChestType.makeEntity(getTargetChestOrdinal(IronChestType.WOOD.ordinal()));
 	    int newSize = newchest.chestContents.length;
-	    ItemStack[] chestContents = ReflectionHelper.getPrivateValue(TileEntityChest.class, tec, "chestContents");
+	    ItemStack[] chestContents = ReflectionHelper.getPrivateValue(TileEntityChest.class, tec, 0);
 	    System.arraycopy(chestContents, 0, newchest.chestContents, 0, Math.min(newSize, chestContents.length));
 	    BlockIronChest block = mod_IronChest.ironChestBlock;
 	    block.dropContent(newSize, tec, world, tec.xCoord, tec.yCoord, tec.zCoord);
