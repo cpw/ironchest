@@ -168,7 +168,7 @@
     </jar>
   </target>
 
-  <target name="build" depends="merge-client,merge-server,build-client,build-server,build-bukkit" />
+  <target name="build" depends="merge-client,merge-server,build-client,build-server" />
 
   <target name="buildandclean" depends="build">
     <antcall target="clean" />
