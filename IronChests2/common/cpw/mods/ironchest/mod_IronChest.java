@@ -37,7 +37,7 @@ public class mod_IronChest extends NetworkMod {
 
   @Override
   public void load() {
-    MinecraftForge.versionDetect("IronChest", 3, 3, 7);
+    MinecraftForge.versionDetect("IronChest", 3, 3, 8);
     ModContainer fml=ModLoaderModContainer.findContainerFor(this);
     if (fml.getMetadata()!=null) {
       fml.getMetadata().version=Version.fullVersionString();
@@ -47,9 +47,9 @@ public class mod_IronChest extends NetworkMod {
     Configuration cfg = new Configuration(cfgFile);
     try {
       cfg.load();
-      int bId = cfg.getOrCreateBlockIdProperty("ironChests", 502).getInt(502);
+      int bId = cfg.getOrCreateBlockIdProperty("ironChests", 181).getInt(181);
       ironChestBlock = new BlockIronChest(bId);
-      ChestChangerType.buildItems(cfg, 19501);
+      ChestChangerType.buildItems(cfg, 29501);
     } catch (Exception e) {
       ModLoader.getLogger().severe("IronChest was unable to load it's configuration successfully");
       e.printStackTrace(System.err);

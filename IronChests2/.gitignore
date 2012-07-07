@@ -4,3 +4,5 @@ bin/
 /target
 /build.properties
 /build
+/ironchestversion.properties
+/tmpbukkit

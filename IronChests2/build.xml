@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ====================================================================== 
-                                                            
+<!-- ======================================================================
 
-     mod_IronChest    
+
+     mod_IronChest
      Bigger chests
-                   
-     cpw                                                                
+
+     cpw
      ====================================================================== -->
 <project name="IronChest" default="build">
   <description>Iron Chest</description>
@@ -29,9 +29,10 @@
   <target name="writeversion" depends="buildenvsetup">
     <exec executable="${python.exe}" dir="${basedir}" failonerror="true">
       <arg value="${basedir}/getversion.py" />
+      <arg value="${mcp.home}" />
     </exec>
     <propertyfile file="ironchestversion.properties">
-      <entry key="ironchest.build.number" type="int" value="${version.build}"/>
+      <entry key="ironchest.build.build.number" type="int" value="${version.build}"/>
     </propertyfile>
   </target>
 
@@ -51,10 +52,10 @@
     <condition property="python.exe" value="${mcp.home}/runtime/bin/python/python_mcp" else="python">
       <os family="Windows" />
     </condition>
-    <condition property="bukkitporting.dir" value="${env.WORKSPACE}/bukkitportingtools" else="${mcdev.home}/bukkitportingtools">
+    <condition property="bukkitporting.dir" value="${env.WORKSPACE}/bukkitportingtools" else="${dev.home}/bukkitportingtools">
       <isset property="env.WORKSPACE" />
     </condition>
-    <property name="bukkit.tmpdir" location="${basedir}/build/bukkit" />
+    <property name="bukkit.tmpdir" location="${basedir}/tmpbukkit" />
     <property name="bukkit.mcp.srcdir" location="${bukkit.tmpdir}/src" />
     <property name="mcp.obfoutput" location="${mcp.home}/reobf" />
     <property name="client.mcp.obfoutput" location="${mcp.obfoutput}/minecraft" />
@@ -65,14 +66,9 @@
     <property name="common.src.dir" location="${basedir}/common" />
     <property name="client.src.dir" location="${basedir}/client" />
     <property name="server.src.dir" location="${basedir}/server" />
-    <property name="deploy.dir" location="${user.home}/.minecraft/mods" />
     <property name="bukkit.src.dir" location="${server.src.dir}" />
+    <property name="deploy.dir" location="${user.home}/.minecraft/mods" />
     <property name="resource.dir" location="${basedir}/resources" />
-  	<property name="bukkitporting.srgtools" location="${bukkitporting.dir}/bin/SrgTools.jar" />
-  	<property name="bukkitporting.asm" location="${bukkitporting.dir}/bin/asm-all-3.3.1.jar" />
-  	<property name="bukkitporting.translatedjar" location="${bukkitporting.dir}/jar/generated/craftbukkit-1.2.5-R1.1-MCPC-SNAPSHOT-73.MCP.jar" />
-  	<property name="bukkitporting.srg" location="${bukkitporting.dir}/mappings/generated/server_mcp_bukkit_1.2.5.srg" />
-    <property name="bukkit.mcp.jar" location="${bukkitporting.translatedjar}" />
     <condition property="version.build" value="${env.BUILD_NUMBER}" else="1">
       <isset property="env.BUILD_NUMBER" />
     </condition>
@@ -88,7 +84,7 @@
     <property name="version.rev" value="${ironchest.build.revision.number}" />
     <property name="version" value="${version.major}.${version.minor}.${version.rev}.${version.build}" />
   </target>
-  
+
   <target name="clean">
     <delete dir="${bukkit.tmpdir}"/>
     <antcall target="clean-source">
@@ -172,7 +168,7 @@
     </jar>
   </target>
 
-  <target name="build" depends="merge-client,merge-server,build-client,build-server" />
+  <target name="build" depends="merge-client,merge-server,build-client,build-server,build-bukkit" />
 
   <target name="buildandclean" depends="build">
     <antcall target="clean" />
@@ -192,43 +188,26 @@
     </delete>
   </target>
 
-  <target name="compile-bukkit" depends="init">
-    <mkdir dir="${bukkit.tmpdir}" />
+  <target name="merge-bukkit" depends="init">
+    <mkdir dir="${bukkit.tmpdir}"/>
+    <mkdir dir="${bukkit.mcp.srcdir}"/>
     <antcall target="merge-source">
       <param name="side" value="bukkit" />
     </antcall>
-    <mkdir dir="${bukkit.tmpdir}/compiled" />
-    <javac target="1.6" source="1.6" destdir="${bukkit.tmpdir}/compiled">
-      <src path="${bukkit.mcp.srcdir}" />
-      <classpath path="${bukkit.mcp.jar}" />
-    </javac>
   </target>
 
-  <target name="jar-bukkit" depends="init,compile-bukkit">
-  	<jar destfile="${bukkit.tmpdir}/${modname}-bukkit-tmp.jar" basedir="${bukkit.tmpdir}/compiled" />
-  </target>
-
-  <target name="translate-bukkit" depends="init,jar-bukkit">
+  <target name="build-bukkit" depends="init,merge-bukkit">
+    <property name="jarname" value="${basedir}/target/${modname}-bukkit-${version}.jar" />
+    <path id="bukkit.compile.ref"/>
     <mkdir dir="${basedir}/target" />
-  	<java classname="nl.hardijzer.fw.applysrg.ApplySrg" failonerror="true" fork="true">
-  	  <classpath>
-  	    <pathelement location="${bukkitporting.asm}" />
-  	    <pathelement location="${bukkitporting.srgtools}" />
-  	  </classpath>
-  	  <arg value="--srg" />
-  	  <arg value="${bukkitporting.srg}" />
-  	  <arg value="--inheritance" />
-	  <arg value="${bukkit.mcp.jar}" />
-  	  <arg value="--inheritance" />
-  	  <arg value="${bukkit.tmpdir}/${modname}-bukkit-tmp.jar" />
-      <arg value="--in" />
-  	  <arg value="${bukkit.tmpdir}/${modname}-bukkit-tmp.jar" />
-  	  <arg value="--out" />
-  	  <arg value="${basedir}/target/${modname}-bukkit-${version}.jar" />
-  	</java>
+    <ant dir="${bukkitporting.dir}" target="convert-mcp-to-bukkit">
+      <reference refid="bukkit.compile.ref" />
+      <property name="modname" value="ironchest"/>
+      <property name="bukkit.output.jar" value="${jarname}"/>
+      <property name="bukkit.mcp.srcdir" value="${bukkit.mcp.srcdir}"/>
+    </ant>
+    <delete dir="${bukkit.tmpdir}"/>
   </target>
-
-  <target name="build-bukkit" depends="init,translate-bukkit"/>
 
   <target name="deploy" depends="init,build-client">
     <property name="jarname" value="${modname}-client-${version}" />

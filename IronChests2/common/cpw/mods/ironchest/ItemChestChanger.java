@@ -10,7 +10,6 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ReflectionHelper;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
