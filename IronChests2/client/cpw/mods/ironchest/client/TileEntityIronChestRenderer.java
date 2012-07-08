@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- * 
+ *
  * Contributors:
  * cpw - initial API and implementation
  ******************************************************************************/
@@ -41,18 +41,28 @@ import net.minecraft.src.forge.ForgeHooksClient;
 import net.minecraft.src.forge.IItemRenderer;
 import net.minecraft.src.forge.MinecraftForgeClient;
 import cpw.mods.ironchest.IronChestType;
+import cpw.mods.ironchest.MappableItemStackWrapper;
 import cpw.mods.ironchest.TileEntityIronChest;
+import cpw.mods.ironchest.mod_IronChest;
 
 public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
-	private static Map<ItemStack, Integer> renderList = new HashMap<ItemStack, Integer>();
+	private static Map<MappableItemStackWrapper, Integer> renderList = new HashMap<MappableItemStackWrapper, Integer>();
 
 	private Random random;
 
 	private RenderBlocks renderBlocks;
 
-	private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F }, { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F }, };
-
-	public static boolean CACHE_RENDER = true;
+	private static float[][] shifts = {
+	  { 0.3F, 0.45F, 0.3F },
+	  { 0.7F, 0.45F, 0.3F },
+	  { 0.3F, 0.45F, 0.7F },
+	  { 0.7F, 0.45F, 0.7F },
+	  { 0.3F, 0.1F, 0.3F },
+	  { 0.7F, 0.1F, 0.3F },
+	  { 0.3F, 0.1F, 0.7F },
+	  { 0.7F, 0.1F, 0.7F },
+	  { 0.5F, 0.32F, 0.5F },
+	};
 
 	public TileEntityIronChestRenderer() {
 		model = new ModelChest();
@@ -134,7 +144,6 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 				shiftY = shifts[shift][1];
 				shiftZ = shifts[shift][2];
 				shift++;
-				IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item, IItemRenderer.ItemRenderType.ENTITY);
 				float localScale = blockScale;
 				if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID] != null) {
 					int j = Block.blocksList[item.itemID].getRenderType();
@@ -154,12 +163,14 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 						float minishiftZ = ((random.nextFloat() * 2.0F - 1.0F) * spread) / localScale;
 						glTranslatef(minishiftX, minishiftY, minishiftZ);
 					}
-					if (renderList.get(item) == null || !CACHE_RENDER) { // Added support for using only old system.
-						if (CACHE_RENDER) {
+					MappableItemStackWrapper mis = new MappableItemStackWrapper(item);
+					if (!mod_IronChest.CACHE_RENDER || !renderList.containsKey(mis)) { // Added support for using only old system.
+						if (mod_IronChest.CACHE_RENDER) {
 							int render = glGenLists(1);
-							renderList.put(item, render);
+							renderList.put(mis, render);
 							glNewList(render, GL_COMPILE_AND_EXECUTE);
 						}
+		        IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item, IItemRenderer.ItemRenderType.ENTITY);
 						if (customRenderer != null) {
 							customitem.item = item;
 							bindTextureByName("/terrain.png");
@@ -202,12 +213,14 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 							tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
 							tessellator.draw();
 						}
-						if (CACHE_RENDER)
-							glEndList();
+						if (mod_IronChest.CACHE_RENDER) {
+              glEndList();
+						}
 					} else {
-						Integer integer = renderList.get(item);
-						if (integer != null) // Added null check for auto-unboxing JUST in case.
+						Integer integer = renderList.get(mis);
+						if (integer != null) { // Added null check for auto-unboxing JUST in case.
 							glCallList(integer.intValue());
+						}
 					}
 					glPopMatrix();
 				}

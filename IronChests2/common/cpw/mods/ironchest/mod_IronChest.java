@@ -25,10 +25,10 @@ import net.minecraft.src.forge.NetworkMod;
 public class mod_IronChest extends NetworkMod {
 
   public static BlockIronChest ironChestBlock;
-  public static ItemChestChanger itemChestChanger;
   @SidedProxy(clientSide="cpw.mods.ironchest.client.ClientProxy", serverSide="cpw.mods.ironchest.server.ServerProxy")
   public static IProxy proxy;
   public static mod_IronChest instance;
+  public static boolean CACHE_RENDER = true;
 
   @Override
   public String getVersion() {
@@ -50,6 +50,7 @@ public class mod_IronChest extends NetworkMod {
       int bId = cfg.getOrCreateBlockIdProperty("ironChests", 181).getInt(181);
       ironChestBlock = new BlockIronChest(bId);
       ChestChangerType.buildItems(cfg, 29501);
+      CACHE_RENDER = cfg.getOrCreateBooleanProperty("cacheRenderingInformation", Configuration.CATEGORY_GENERAL, true).getBoolean(true);
     } catch (Exception e) {
       ModLoader.getLogger().severe("IronChest was unable to load it's configuration successfully");
       e.printStackTrace(System.err);
@@ -85,6 +86,8 @@ public class mod_IronChest extends NetworkMod {
           2 * 8192 + 8 * 8 + 256 * 8 + 2048 * 8 + 6 + 8 /* crystal chest */
       };
       for (IronChestType icType : IronChestType.values()) {
+        if (icType.ordinal()>=chestEMCValues.length)
+          break;
         addEMC.invoke(null, ironChestBlock.blockID, icType.ordinal(), chestEMCValues[icType.ordinal()]);
       }
       addMeta.invoke(null, ironChestBlock.blockID, IronChestType.values().length - 1);
