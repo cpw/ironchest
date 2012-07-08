@@ -6,11 +6,11 @@
  * http://www.gnu.org/licenses/gpl.html
  * 
  * Contributors:
- *     cpw - initial API and implementation
+ * cpw - initial API and implementation
  ******************************************************************************/
 package cpw.mods.ironchest.client;
 
-import static org.lwjgl.opengl.GL11.GL_COMPILE;
+import static org.lwjgl.opengl.GL11.GL_COMPILE_AND_EXECUTE;
 import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
@@ -44,12 +44,21 @@ import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 
 public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
-	private static Map<ItemStack, Integer> renderList = new HashMap<ItemStack, Integer>();
+	private static Map<ItemWrap, Integer> renderList = new HashMap<ItemWrap, Integer>();
+
+	private static Map<ItemWrap, IItemRenderer> customRenderList = new HashMap<ItemWrap, IItemRenderer>();
+
 	private Random random;
+
 	private RenderBlocks renderBlocks;
 
-	private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F },
-		{ 0.3F, 0.1F, 0.3F }, { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F }, };
+	private static float[][] shifts = {
+		{ 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F },
+		{ 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F,  0.3F }, { 0.7F, 0.1F,  0.3F },
+		{ 0.3F, 0.1F,  0.7F }, { 0.7F, 0.1F,  0.7F }, { 0.5F, 0.32F, 0.5F },
+	};
+
+	public static boolean CACHE_RENDER = true;
 
 	public TileEntityIronChestRenderer() {
 		model = new ModelChest();
@@ -58,19 +67,18 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 	}
 
 	public void render(TileEntityIronChest tile, double x, double y, double z, float partialTick) {
-		if (tile==null) {
+		if (tile == null) {
 			return;
 		}
 		int facing = 3;
-		IronChestType type=tile.getType();
+		IronChestType type = tile.getType();
 		if (tile != null && tile.worldObj != null) {
 			facing = tile.getFacing();
-			type=tile.getType();
-			int typ=tile.worldObj.getBlockMetadata(tile.xCoord,tile.yCoord,tile.zCoord);
-			type=IronChestType.values()[typ];
+			type = tile.getType();
+			int typ = tile.worldObj.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+			type = IronChestType.values()[typ];
 		}
 		bindTextureByName(type.getModelTexture());
-
 		glPushMatrix();
 		glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
 		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -101,7 +109,6 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 		glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
 		glPopMatrix();
 		glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-
 		if (type.isTransparent()) {
 			random.setSeed(254L);
 			float shiftX;
@@ -120,7 +127,6 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 			glDisable(2896 /* GL_LIGHTING */);
 			glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
 			glTranslatef((float) x, (float) y, (float) z);
-			EntityItem customitem=new EntityItem(tileEntityRenderer.worldObj);
 			for (ItemStack item : tile.getTopItemStacks()) {
 				if (shift > shifts.length) {
 					break;
@@ -129,13 +135,14 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 					shift++;
 					continue;
 				}
+				// Fix for limiting display lists.
+				ItemWrap wrap = new ItemWrap(item);
 				shiftX = shifts[shift][0];
 				shiftY = shifts[shift][1];
 				shiftZ = shifts[shift][2];
 				shift++;
-				IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item,IItemRenderer.ItemRenderType.ENTITY);
 				float localScale = blockScale;
-				if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID]!=null) {
+				if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID] != null) {
 					int j = Block.blocksList[item.itemID].getRenderType();
 					if (j == 1 || j == 19 || j == 12 || j == 2) {
 						localScale = 2 * blockScale;
@@ -144,32 +151,44 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 				glPushMatrix();
 				glTranslatef(shiftX, shiftY, shiftZ);
 				glScalef(localScale, localScale, localScale);
+				glRotatef(timeD, 0.0F, 1.0F, 0.0F);
 				for (int miniBlocks = 0; miniBlocks < (item.stackSize / 32) + 1; miniBlocks++) {
 					glPushMatrix();
-					glRotatef(timeD, 0.0F, 1.0F, 0.0F);
 					if (miniBlocks > 0) {
 						float minishiftX = ((random.nextFloat() * 2.0F - 1.0F) * spread) / localScale;
 						float minishiftY = ((random.nextFloat() * 2.0F - 1.0F) * spread * 0.9F) / localScale;
 						float minishiftZ = ((random.nextFloat() * 2.0F - 1.0F) * spread) / localScale;
 						glTranslatef(minishiftX, minishiftY, minishiftZ);
 					}
-
-					if (renderList.get(item) == null) {
-						int render = glGenLists(1);
-						renderList.put(item, render);
-						glNewList(render, GL_COMPILE);
+					// Added support for using only old system.
+					if (!renderList.containsKey(wrap) || !CACHE_RENDER) {
+						if (CACHE_RENDER) {
+							int render = glGenLists(1);
+							renderList.put(wrap, render);
+							glNewList(render, GL_COMPILE_AND_EXECUTE);
+						}
+						// Moved here as it's only called once anyway.
+						IItemRenderer customRenderer = null;
+						// If different items use the same Forge render.
+						if (customRenderList.containsKey(wrap))
+							customRenderer = customRenderList.get(wrap);
+						else {
+							customRenderer = MinecraftForgeClient.getItemRenderer(item, IItemRenderer.ItemRenderType.ENTITY);
+							customRenderList.put(wrap, customRenderer);
+						}
 						if (customRenderer != null) {
-							customitem.item=item;
+							EntityItem customitem = new EntityItem(tileEntityRenderer.worldObj);
+							customitem.item = item;
 							bindTextureByName("/terrain.png");
 							ForgeHooksClient.overrideTexture(item.getItem());
 							customRenderer.renderItem(IItemRenderer.ItemRenderType.ENTITY, item, renderBlocks, customitem);
-						} else if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID]!=null && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
+						} else if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID] != null && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
 							bindTextureByName("/terrain.png");
 							ForgeHooksClient.overrideTexture(Block.blocksList[item.itemID]);
 							renderBlocks.renderBlockAsItem(Block.blocksList[item.itemID], item.getItemDamage(), 1.0F);
 						} else {
 							int i = item.getIconIndex();
-							if (item.itemID >= Block.blocksList.length || Block.blocksList[item.itemID]==null) {
+							if (item.itemID >= Block.blocksList.length || Block.blocksList[item.itemID] == null) {
 								bindTextureByName("/gui/items.png");
 								ForgeHooksClient.overrideTexture(Item.itemsList[item.itemID]);
 							} else {
@@ -200,10 +219,14 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 							tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
 							tessellator.draw();
 						}
+						if (CACHE_RENDER)
+							glEndList();
 					} else {
-						glCallList(renderList.get(item));
+						Integer integer = renderList.get(wrap);
+						// Added null check for auto-unboxing JUST in case.
+						if (integer != null)
+							glCallList(integer.intValue());
 					}
-					glEndList();
 					glPopMatrix();
 				}
 				glPopMatrix();
