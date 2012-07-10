@@ -49,6 +49,8 @@ public class ItemChestChanger extends Item implements ITextureProvider {
 	    if (!getType().canUpgrade(IronChestType.WOOD)) {
 	      return false;
 	    }
+	    org.lwjgl.input.Mouse.setGrabbed(false);
+	    // Force old TE out of the world so that adjacent chests can update
 	    newchest = IronChestType.makeEntity(getTargetChestOrdinal(IronChestType.WOOD.ordinal()));
 	    int newSize = newchest.chestContents.length;
 	    ItemStack[] chestContents = ReflectionHelper.getPrivateValue(TileEntityChest.class, tec, 0);
@@ -61,6 +63,13 @@ public class ItemChestChanger extends Item implements ITextureProvider {
 	    {
 	      chestContents[i]=null;
 	    }
+	    // Clear the old block out
+      world.setBlock(X, Y, Z, 0);
+      // Force the Chest TE to reset it's knowledge of neighbouring blocks
+      tec.updateContainingBlockInfo();
+      // Force the Chest TE to update any neighbours so they update next tick
+      tec.checkForAdjacentChests();
+      // And put in our block instead
 	    world.setBlock(X, Y, Z, block.blockID);
 		} else {
 			return false;
