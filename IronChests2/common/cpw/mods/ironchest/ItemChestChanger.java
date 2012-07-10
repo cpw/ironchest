@@ -49,7 +49,6 @@ public class ItemChestChanger extends Item implements ITextureProvider {
 	    if (!getType().canUpgrade(IronChestType.WOOD)) {
 	      return false;
 	    }
-	    org.lwjgl.input.Mouse.setGrabbed(false);
 	    // Force old TE out of the world so that adjacent chests can update
 	    newchest = IronChestType.makeEntity(getTargetChestOrdinal(IronChestType.WOOD.ordinal()));
 	    int newSize = newchest.chestContents.length;
