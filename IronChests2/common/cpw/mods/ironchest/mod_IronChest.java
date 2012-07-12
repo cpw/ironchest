@@ -21,6 +21,7 @@ import net.minecraft.src.SidedProxy;
 import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.MinecraftForge;
 import net.minecraft.src.forge.NetworkMod;
+import net.minecraft.src.forge.adaptors.EntityLivingHandlerAdaptor;
 
 public class mod_IronChest extends NetworkMod {
 
@@ -29,6 +30,7 @@ public class mod_IronChest extends NetworkMod {
   public static IProxy proxy;
   public static mod_IronChest instance;
   public static boolean CACHE_RENDER = true;
+  public static boolean OCELOTS_SITONCHESTS = true;
 
   @Override
   public String getVersion() {
@@ -51,6 +53,7 @@ public class mod_IronChest extends NetworkMod {
       ironChestBlock = new BlockIronChest(bId);
       ChestChangerType.buildItems(cfg, 29501);
       CACHE_RENDER = cfg.getOrCreateBooleanProperty("cacheRenderingInformation", Configuration.CATEGORY_GENERAL, true).getBoolean(true);
+      OCELOTS_SITONCHESTS  = cfg.getOrCreateBooleanProperty("ocelotsSitOnChests", Configuration.CATEGORY_GENERAL, true).getBoolean(true);
     } catch (Exception e) {
       ModLoader.getLogger().severe("IronChest was unable to load it's configuration successfully");
       e.printStackTrace(System.err);
@@ -68,6 +71,7 @@ public class mod_IronChest extends NetworkMod {
     MinecraftForge.setGuiHandler(this, proxy);
     MinecraftForge.registerConnectionHandler(new PacketHandler());
     proxy.registerRenderInformation();
+    MinecraftForge.registerEntityLivingHandler(new OcelotsSitOnChestsHandler());
   }
 
   @Override
