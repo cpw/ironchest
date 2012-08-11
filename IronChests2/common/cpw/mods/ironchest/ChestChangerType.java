@@ -16,7 +16,7 @@ import static cpw.mods.ironchest.IronChestType.WOOD;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.forge.Configuration;
+import net.minecraftforge.common.Configuration;
 
 public enum ChestChangerType {
   IRONGOLD(IRON, GOLD, "ironGoldUpgrade", "Iron to Gold Chest Upgrade", "mmm", "msm", "mmm"),

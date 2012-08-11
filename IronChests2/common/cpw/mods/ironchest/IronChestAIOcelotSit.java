@@ -126,7 +126,7 @@ public class IronChestAIOcelotSit extends EntityAIBase {
   }
 
   private boolean isBlockAChestBlock(World world, int x, int y, int z) {
-    if (world.getBlockId(x, y, z)==mod_IronChest.ironChestBlock.blockID) {
+    if (world.getBlockId(x, y, z)==IronChest.ironChestBlock.blockID) {
       return true;
     }
     try {

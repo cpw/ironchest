@@ -31,8 +31,4 @@ public class ItemIronChest extends ItemBlock {
 	public String getItemNameIS(ItemStack itemstack) {
 		return IronChestType.values()[itemstack.getItemDamage()].name();
 	}
-
-	@Override
-	public void addCreativeItems(@SuppressWarnings("rawtypes") ArrayList itemList) {
-	}
 }

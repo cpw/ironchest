@@ -10,16 +10,15 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
-import cpw.mods.fml.common.ReflectionHelper;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntityChest;
 import net.minecraft.src.World;
-import net.minecraft.src.forge.ITextureProvider;
 
-public class ItemChestChanger extends Item implements ITextureProvider {
+public class ItemChestChanger extends Item {
 
 	private ChestChangerType type;
 
@@ -52,9 +51,9 @@ public class ItemChestChanger extends Item implements ITextureProvider {
 	    // Force old TE out of the world so that adjacent chests can update
 	    newchest = IronChestType.makeEntity(getTargetChestOrdinal(IronChestType.WOOD.ordinal()));
 	    int newSize = newchest.chestContents.length;
-	    ItemStack[] chestContents = ReflectionHelper.getPrivateValue(TileEntityChest.class, tec, 0);
+	    ItemStack[] chestContents = ObfuscationReflectionHelper.getPrivateValue(TileEntityChest.class, tec, 0);
 	    System.arraycopy(chestContents, 0, newchest.chestContents, 0, Math.min(newSize, chestContents.length));
-	    BlockIronChest block = mod_IronChest.ironChestBlock;
+	    BlockIronChest block = IronChest.ironChestBlock;
 	    block.dropContent(newSize, tec, world, tec.xCoord, tec.yCoord, tec.zCoord);
 	    newchest.setFacing((byte)tec.getBlockMetadata());
 	    newchest.sortTopStacks();

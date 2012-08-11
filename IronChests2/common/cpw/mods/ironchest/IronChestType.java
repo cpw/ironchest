@@ -18,7 +18,7 @@ import net.minecraft.src.Block;
 import net.minecraft.src.CraftingManager;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.forge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public enum IronChestType {
   IRON(54, 9, true, "Iron Chest", "ironchest.png", 0, Arrays.asList("ingotIron","ingotRefinedIron"), TileEntityIronChest.class, "mmmmPmmmm", "mGmG3GmGm"),

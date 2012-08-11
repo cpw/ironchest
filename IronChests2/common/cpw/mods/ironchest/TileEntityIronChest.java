@@ -79,7 +79,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
   }
 
   protected void sortTopStacks() {
-    if (!type.isTransparent() || mod_IronChest.proxy.isRemote()) {
+    if (!type.isTransparent() || IronChest.proxy.isRemote()) {
       return;
     }
     ItemStack[] tempCopy = new ItemStack[getSizeInventory()];
@@ -232,7 +232,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     super.updateEntity();
     // Resynchronize clients with the server state
     if ((++ticksSinceSync % 20) * 4 == 0) {
-      worldObj.sendClientEvent(xCoord, yCoord, zCoord, 3, ((numUsingPlayers << 3) & 0xF8) | (facing & 0x7));
+      worldObj.addBlockEvent(xCoord, yCoord, zCoord, IronChest.ironChestBlock.blockID, 3, ((numUsingPlayers << 3) & 0xF8) | (facing & 0x7));
       if (inventoryTouched) {
         inventoryTouched = false;
         sortTopStacks();
@@ -287,7 +287,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     if (worldObj == null)
       return;
     numUsingPlayers++;
-    worldObj.sendClientEvent(xCoord, yCoord, zCoord, 1, numUsingPlayers);
+    worldObj.addBlockEvent(xCoord, yCoord, zCoord, IronChest.ironChestBlock.blockID, 1, numUsingPlayers);
   }
 
   @Override
@@ -295,7 +295,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     if (worldObj == null)
       return;
     numUsingPlayers--;
-    worldObj.sendClientEvent(xCoord, yCoord, zCoord, 1, numUsingPlayers);
+    worldObj.addBlockEvent(xCoord, yCoord, zCoord, IronChest.ironChestBlock.blockID, 1, numUsingPlayers);
   }
 
   public void setFacing(byte chestFacing) {
@@ -312,7 +312,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     TileEntityIronChest newEntity = IronChestType.makeEntity(itemChestChanger.getTargetChestOrdinal(getType().ordinal()));
     int newSize = newEntity.chestContents.length;
     System.arraycopy(chestContents, 0, newEntity.chestContents, 0, Math.min(newSize, chestContents.length));
-    BlockIronChest block = mod_IronChest.ironChestBlock;
+    BlockIronChest block = IronChest.ironChestBlock;
     block.dropContent(newSize, this, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
     newEntity.setFacing(facing);
     newEntity.sortTopStacks();

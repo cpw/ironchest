@@ -25,9 +25,9 @@ import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-import net.minecraft.src.forge.ITextureProvider;
+import net.minecraftforge.common.Orientation;
 
-public class BlockIronChest extends BlockContainer implements ITextureProvider {
+public class BlockIronChest extends BlockContainer {
 
   private Random random;
 
@@ -44,7 +44,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
   }
 
   @Override
-  public TileEntity getBlockEntity() {
+  public TileEntity createNewTileEntity(World w) {
     return null;
   }
 
@@ -69,7 +69,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
   }
 
   @Override
-  public TileEntity getBlockEntity(int metadata) {
+  public TileEntity createNewTileEntity(World world, int metadata) {
     return IronChestType.makeEntity(metadata);
   }
 
@@ -105,7 +105,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
   }
 
   @Override
-  public boolean blockActivated(World world, int i, int j, int k, EntityPlayer player) {
+  public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int i1, float f1, float f2, float f3) {
     TileEntity te = world.getBlockTileEntity(i, j, k);
 
     if (te == null || !(te instanceof TileEntityIronChest))
@@ -113,7 +113,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
       return true;
     }
 
-    if (world.isBlockSolidOnSide(i, j + 1, k, 0))
+    if (world.isBlockSolidOnSide(i, j + 1, k, Orientation.DOWN))
     {
       return true;
     }
@@ -122,7 +122,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
       return true;
     }
 
-    player.openGui(mod_IronChest.instance, ((TileEntityIronChest) te).getType().ordinal(), world, i, j, k);
+    player.openGui(IronChest.instance, ((TileEntityIronChest) te).getType().ordinal(), world, i, j, k);
     return true;
   }
 
@@ -160,14 +160,15 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
     return i;
   }
 
-  public void onBlockRemoval(World world, int i, int j, int k)
+  @Override
+  public void breakBlock(World world, int i, int j, int k, int i1, int i2)
   {
     TileEntityIronChest tileentitychest = (TileEntityIronChest) world.getBlockTileEntity(i, j, k);
     if (tileentitychest != null)
     {
       dropContent(0, tileentitychest, world, tileentitychest.xCoord, tileentitychest.yCoord, tileentitychest.zCoord);
     }
-    super.onBlockRemoval(world, i, j, k);
+    super.breakBlock(world, i, j, k, i1, i2);
   }
 
   public void dropContent(int newSize, IInventory chest, World world, int xCoord, int yCoord, int zCoord) {
@@ -197,7 +198,7 @@ public class BlockIronChest extends BlockContainer implements ITextureProvider {
         entityitem.motionZ = (float) random.nextGaussian() * f3;
         if (itemstack.hasTagCompound())
         {
-          mod_IronChest.proxy.applyExtraDataToDrops(entityitem, (NBTTagCompound) itemstack.getTagCompound().copy());
+        	entityitem.item.setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
         }
         world.spawnEntityInWorld(entityitem);
       }

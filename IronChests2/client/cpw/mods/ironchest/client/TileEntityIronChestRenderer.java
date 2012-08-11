@@ -37,13 +37,13 @@ import net.minecraft.src.RenderBlocks;
 import net.minecraft.src.Tessellator;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
-import net.minecraft.src.forge.ForgeHooksClient;
-import net.minecraft.src.forge.IItemRenderer;
-import net.minecraft.src.forge.MinecraftForgeClient;
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.MappableItemStackWrapper;
 import cpw.mods.ironchest.TileEntityIronChest;
-import cpw.mods.ironchest.mod_IronChest;
+import cpw.mods.ironchest.IronChest;
 
 public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 	private static Map<MappableItemStackWrapper, Integer> renderList = new HashMap<MappableItemStackWrapper, Integer>();
@@ -76,10 +76,10 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 		}
 		int facing = 3;
 		IronChestType type = tile.getType();
-		if (tile != null && tile.worldObj != null) {
+		if (tile != null && tile.func_70314_l() != null) {
 			facing = tile.getFacing();
 			type = tile.getType();
-			int typ = tile.worldObj.getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+			int typ = tile.func_70314_l().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
 			type = IronChestType.values()[typ];
 		}
 		bindTextureByName(type.getModelTexture());
@@ -154,7 +154,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 				glPushMatrix();
 				glTranslatef(shiftX, shiftY, shiftZ);
 				glScalef(localScale, localScale, localScale);
-				for (int miniBlocks = 0; miniBlocks < (item.stackSize / 32) + 1; miniBlocks++) {
+/*				for (int miniBlocks = 0; miniBlocks < (item.stackSize / 32) + 1; miniBlocks++) {
 					glPushMatrix();
 					glRotatef(timeD, 0.0F, 1.0F, 0.0F);
 					if (miniBlocks > 0) {
@@ -164,8 +164,8 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 						glTranslatef(minishiftX, minishiftY, minishiftZ);
 					}
 					MappableItemStackWrapper mis = new MappableItemStackWrapper(item);
-					if (!mod_IronChest.CACHE_RENDER || !renderList.containsKey(mis)) { // Added support for using only old system.
-						if (mod_IronChest.CACHE_RENDER) {
+					if (!IronChest.CACHE_RENDER || !renderList.containsKey(mis)) { // Added support for using only old system.
+						if (IronChest.CACHE_RENDER) {
 							int render = glGenLists(1);
 							renderList.put(mis, render);
 							glNewList(render, GL_COMPILE_AND_EXECUTE);
@@ -213,7 +213,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 							tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
 							tessellator.draw();
 						}
-						if (mod_IronChest.CACHE_RENDER) {
+						if (IronChest.CACHE_RENDER) {
               glEndList();
 						}
 					} else {
@@ -224,7 +224,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 					}
 					glPopMatrix();
 				}
-				glPopMatrix();
+*/				glPopMatrix();
 			}
 			glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
 			glEnable(2896 /* GL_LIGHTING */);
