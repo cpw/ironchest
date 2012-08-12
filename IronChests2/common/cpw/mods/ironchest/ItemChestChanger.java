@@ -32,6 +32,8 @@ public class ItemChestChanger extends Item {
 
 	@Override
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int X, int Y, int Z, int side) {
+		if (world.isRemote)
+			return false;
 		TileEntity te=world.getBlockTileEntity(X,Y,Z);
 		TileEntityIronChest newchest;
 		if (te!=null && te instanceof TileEntityIronChest) {
@@ -76,6 +78,7 @@ public class ItemChestChanger extends Item {
     world.setBlockMetadataWithNotify(X, Y, Z, newchest.getType().ordinal());
     world.notifyBlocksOfNeighborChange(X, Y, Z, world.getBlockId(X, Y, Z));
     world.markBlockNeedsUpdate(X, Y, Z);
+    world.markBlocksDirty(X, Y, Z, X, Y, Z);
     stack.stackSize=0;
     return true;
 	}

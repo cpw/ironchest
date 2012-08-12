@@ -10,16 +10,30 @@
  ******************************************************************************/
 package cpw.mods.ironchest.client;
 
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 import cpw.mods.ironchest.IronChest;
+import cpw.mods.ironchest.IronChestType;
+import cpw.mods.ironchest.TileEntityIronChest;
 import net.minecraft.src.Block;
 import net.minecraft.src.ChestItemRenderHelper;
 import net.minecraft.src.TileEntityRenderer;
 
 public class IronChestRenderHelper extends ChestItemRenderHelper {
+	private Map<Integer, TileEntityIronChest> itemRenders = Maps.newHashMap();
+
+	public IronChestRenderHelper() {
+		for (IronChestType typ : IronChestType.values())
+		{
+			itemRenders.put(typ.ordinal(), (TileEntityIronChest) IronChest.ironChestBlock.createTileEntity(null, typ.ordinal()));
+		}
+	}
 	@Override
 	public void renderChest(Block block, int i, float f) {
 		if (block==IronChest.ironChestBlock) {
-			TileEntityRenderer.instance.renderTileEntityAt(block.createTileEntity(null,i), 0.0D, 0.0D, 0.0D, 0.0F);
+			TileEntityRenderer.instance.renderTileEntityAt(itemRenders.get(i), 0.0D, 0.0D, 0.0D, 0.0F);
 		} else {
 			super.renderChest(block, i, f);
 		}

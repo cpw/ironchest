@@ -28,6 +28,8 @@ import java.util.Random;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.Item;
@@ -40,6 +42,7 @@ import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.MappableItemStackWrapper;
 import cpw.mods.ironchest.TileEntityIronChest;
@@ -68,6 +71,18 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 		model = new ModelChest();
 		random = new Random();
 		renderBlocks = new RenderBlocks();
+	}
+
+	private void overrideTexture(Object obj)
+	{
+		if (obj instanceof Item)
+		{
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, FMLClientHandler.instance().getClient().renderEngine.getTexture(((Item)obj).getTextureFile()));
+		}
+		else if (obj instanceof Block)
+		{
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, FMLClientHandler.instance().getClient().renderEngine.getTexture(((Block)obj).getTextureFile()));
+		}
 	}
 
 	public void render(TileEntityIronChest tile, double x, double y, double z, float partialTick) {
@@ -154,7 +169,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 				glPushMatrix();
 				glTranslatef(shiftX, shiftY, shiftZ);
 				glScalef(localScale, localScale, localScale);
-/*				for (int miniBlocks = 0; miniBlocks < (item.stackSize / 32) + 1; miniBlocks++) {
+				for (int miniBlocks = 0; miniBlocks < (item.stackSize / 32) + 1; miniBlocks++) {
 					glPushMatrix();
 					glRotatef(timeD, 0.0F, 1.0F, 0.0F);
 					if (miniBlocks > 0) {
@@ -174,20 +189,20 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 						if (customRenderer != null) {
 							customitem.item = item;
 							bindTextureByName("/terrain.png");
-							ForgeHooksClient.overrideTexture(item.getItem());
+							overrideTexture(item.getItem());
 							customRenderer.renderItem(IItemRenderer.ItemRenderType.ENTITY, item, renderBlocks, customitem);
 						} else if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID] != null && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
 							bindTextureByName("/terrain.png");
-							ForgeHooksClient.overrideTexture(Block.blocksList[item.itemID]);
+							overrideTexture(Block.blocksList[item.itemID]);
 							renderBlocks.renderBlockAsItem(Block.blocksList[item.itemID], item.getItemDamage(), 1.0F);
 						} else {
 							int i = item.getIconIndex();
 							if (item.itemID >= Block.blocksList.length || Block.blocksList[item.itemID] == null) {
 								bindTextureByName("/gui/items.png");
-								ForgeHooksClient.overrideTexture(Item.itemsList[item.itemID]);
+								overrideTexture(Item.itemsList[item.itemID]);
 							} else {
 								bindTextureByName("/terrain.png");
-								ForgeHooksClient.overrideTexture(Block.blocksList[item.itemID]);
+								overrideTexture(Block.blocksList[item.itemID]);
 							}
 							Tessellator tessellator = Tessellator.instance;
 							float f5 = (float) ((i % 16) * 16 + 0) / 256F;
@@ -224,7 +239,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 					}
 					glPopMatrix();
 				}
-*/				glPopMatrix();
+				glPopMatrix();
 			}
 			glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
 			glEnable(2896 /* GL_LIGHTING */);

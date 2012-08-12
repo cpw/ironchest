@@ -13,6 +13,8 @@ package cpw.mods.ironchest;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import org.lwjgl.input.Mouse;
+
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
@@ -79,7 +81,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
   }
 
   protected void sortTopStacks() {
-    if (!type.isTransparent() || IronChest.proxy.isRemote()) {
+    if (!type.isTransparent() || (worldObj != null && worldObj.isRemote)) {
       return;
     }
     ItemStack[] tempCopy = new ItemStack[getSizeInventory()];
@@ -303,6 +305,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
   }
 
   public TileEntityIronChest applyUpgradeItem(ItemChestChanger itemChestChanger) {
+	  Mouse.setGrabbed(false);
     if (numUsingPlayers > 0) {
       return null;
     }
@@ -333,7 +336,8 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     return this;
   }
 
-  public Packet getDescriptionPacket() {
+  @Override
+  public Packet getAuxillaryInfoPacket() {
     return PacketHandler.getPacket(this);
   }
 

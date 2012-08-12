@@ -61,7 +61,7 @@ public class IronChest {
 
 	@Init
 	public void load(FMLInitializationEvent evt) {
-		GameRegistry.registerBlock(ironChestBlock);
+		GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class);
 		for (IronChestType typ : IronChestType.values()) {
 			GameRegistry.registerTileEntity(typ.clazz, typ.name());
 			LanguageRegistry.instance().addStringLocalization(typ.name() + ".name", "en_US", typ.friendlyName);

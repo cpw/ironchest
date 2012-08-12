@@ -14,4 +14,16 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>common/ironchestversion.properties</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/ironchestversion.properties</locationURI>
+		</link>
+		<link>
+			<name>common/mcmod.info</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/mcmod.info</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
