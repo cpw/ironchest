@@ -2,27 +2,29 @@ package cpw.mods.ironchest;
 
 import java.util.List;
 
-import cpw.mods.fml.common.ReflectionHelper;
-import net.minecraft.src.EntityAIBase;
-import net.minecraft.src.EntityAIOcelotSit;
-import net.minecraft.src.EntityAITasks;
-import net.minecraft.src.EntityLiving;
+import net.minecraft.src.EntityAITaskEntry;
 import net.minecraft.src.EntityOcelot;
-import net.minecraft.src.World;
-import net.minecraft.src.forge.IEntityLivingHandler;
-import net.minecraft.src.forge.adaptors.EntityLivingHandlerAdaptor;
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingSpecialSpawnEvent;
 
-public class OcelotsSitOnChestsHandler extends EntityLivingHandlerAdaptor {
-  private static EntityAIOcelotSit aiTask = new EntityAIOcelotSit(null, 0);
-  @Override
-  public boolean onEntityLivingUpdate(EntityLiving entity) {
-    if (entity.ticksExisted<2 && entity instanceof EntityOcelot) {
-      EntityOcelot ocelot = (EntityOcelot) entity;
-      EntityAITasks ocelotTasks = ReflectionHelper.getPrivateValue(EntityLiving.class, ocelot, "tasks");
-      List taskList = ReflectionHelper.getPrivateValue(EntityAITasks.class, ocelotTasks, "tasksToDo");
-      taskList.remove(5);
-      ocelotTasks.addTask(6, new IronChestAIOcelotSit(ocelot, 0.4F, aiTask));
-    }
-    return false;
-  }
+public class OcelotsSitOnChestsHandler {
+	@ForgeSubscribe
+	public void changeSittingTaskForOcelots(LivingEvent.LivingUpdateEvent evt) {
+		if (evt.entityLiving instanceof EntityOcelot && evt.entityLiving.ticksExisted < 5)
+		{
+			EntityOcelot ocelot = (EntityOcelot) evt.entityLiving;
+			@SuppressWarnings("unchecked")
+			List<EntityAITaskEntry> tasks = ocelot.tasks.field_75782_a;
+
+			for (int i=0; i<tasks.size(); i++)
+			{
+				EntityAITaskEntry task = tasks.get(i);
+				if (task.priority == 6 && !(task.action instanceof IronChestAIOcelotSit))
+				{
+					task.action = new IronChestAIOcelotSit(ocelot, 0.4F);
+				}
+			}
+		}
+	}
 }

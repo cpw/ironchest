@@ -23,11 +23,6 @@ public class CommonProxy implements IGuiHandler {
 
 	}
 
-	public boolean isRemote()
-	{
-		return true;
-	}
-
 	public void registerTileEntitySpecialRenderer(IronChestType typ)
 	{
 

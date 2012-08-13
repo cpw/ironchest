@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Level;
 
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -74,6 +75,10 @@ public class IronChest {
 		ChestChangerType.generateRecipes();
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		proxy.registerRenderInformation();
+		if (OCELOTS_SITONCHESTS)
+		{
+			MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
+		}
 	}
 
 	@PostInit

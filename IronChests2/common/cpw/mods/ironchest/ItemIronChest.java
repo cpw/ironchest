@@ -10,8 +10,6 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
-import java.util.ArrayList;
-
 import net.minecraft.src.ItemBlock;
 import net.minecraft.src.ItemStack;
 
