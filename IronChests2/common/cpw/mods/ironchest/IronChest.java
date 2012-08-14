@@ -35,21 +35,21 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class IronChest {
 
 	public static BlockIronChest ironChestBlock;
-	@SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.common.CommonProxy")
+	@SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
 	public static CommonProxy proxy;
 	@Instance
 	public static IronChest instance;
 	public static boolean CACHE_RENDER = true;
 	public static boolean OCELOTS_SITONCHESTS = true;
+	private int blockId;
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
-		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
 		event.getModMetadata().version = Version.fullVersionString();
+		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
 		try {
 			cfg.load();
-			int bId = cfg.getOrCreateBlockIdProperty("ironChests", 181).getInt(181);
-			ironChestBlock = new BlockIronChest(bId);
+			blockId = cfg.getOrCreateBlockIdProperty("ironChests", 181).getInt(181);
 			ChestChangerType.buildItems(cfg, 29501);
 			CACHE_RENDER = cfg.getOrCreateBooleanProperty("cacheRenderingInformation", Configuration.CATEGORY_GENERAL, true).getBoolean(true);
 			OCELOTS_SITONCHESTS = cfg.getOrCreateBooleanProperty("ocelotsSitOnChests", Configuration.CATEGORY_GENERAL, true).getBoolean(true);
@@ -62,6 +62,7 @@ public class IronChest {
 
 	@Init
 	public void load(FMLInitializationEvent evt) {
+		ironChestBlock = new BlockIronChest(blockId);
 		GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class);
 		for (IronChestType typ : IronChestType.values()) {
 			GameRegistry.registerTileEntity(typ.clazz, typ.name());

@@ -114,12 +114,6 @@
     </antcall>
   </target>
 
-  <target name="merge-server" depends="init,clean">
-    <antcall target="merge-source">
-      <param name="side" value="server" />
-    </antcall>
-  </target>
-
   <target name="merge-source">
     <side prop="merge-to" src="mcp.srcdir" side="${side}" />
     <side prop="side-from" src="src.dir" side="${side}" />
@@ -133,12 +127,6 @@
   <target name="build-client" depends="init,clean,merge-client,buildandreobfmcp">
     <antcall target="extract-built-jar">
       <param name="side" value="client" />
-    </antcall>
-  </target>
-
-  <target name="build-server" depends="init,clean,merge-server,buildandreobfmcp">
-    <antcall target="extract-built-jar">
-      <param name="side" value="server" />
     </antcall>
   </target>
 
@@ -168,7 +156,7 @@
     </jar>
   </target>
 
-  <target name="build" depends="merge-client,merge-server,build-client,build-server" />
+  <target name="build" depends="merge-client,build-client" />
 
   <target name="buildandclean" depends="build">
     <antcall target="clean" />

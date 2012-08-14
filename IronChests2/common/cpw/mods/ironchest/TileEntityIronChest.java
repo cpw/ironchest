@@ -13,8 +13,6 @@ package cpw.mods.ironchest;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.lwjgl.input.Mouse;
-
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
@@ -305,7 +303,6 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
   }
 
   public TileEntityIronChest applyUpgradeItem(ItemChestChanger itemChestChanger) {
-	  Mouse.setGrabbed(false);
     if (numUsingPlayers > 0) {
       return null;
     }

@@ -2,6 +2,7 @@ package cpw.mods.ironchest;
 
 import java.util.List;
 
+import net.minecraft.src.EntityAIOcelotSit;
 import net.minecraft.src.EntityAITaskEntry;
 import net.minecraft.src.EntityOcelot;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -20,7 +21,7 @@ public class OcelotsSitOnChestsHandler {
 			for (int i=0; i<tasks.size(); i++)
 			{
 				EntityAITaskEntry task = tasks.get(i);
-				if (task.priority == 6 && !(task.action instanceof IronChestAIOcelotSit))
+				if (task.priority == 6 && (task.action instanceof EntityAIOcelotSit) && !(task.action instanceof IronChestAIOcelotSit))
 				{
 					task.action = new IronChestAIOcelotSit(ocelot, 0.4F);
 				}
