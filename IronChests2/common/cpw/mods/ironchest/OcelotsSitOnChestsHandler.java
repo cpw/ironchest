@@ -12,7 +12,7 @@ import net.minecraftforge.event.entity.living.LivingSpecialSpawnEvent;
 public class OcelotsSitOnChestsHandler {
 	@ForgeSubscribe
 	public void changeSittingTaskForOcelots(LivingEvent.LivingUpdateEvent evt) {
-		if (evt.entityLiving instanceof EntityOcelot && evt.entityLiving.ticksExisted < 5)
+		if (evt.entityLiving.ticksExisted < 5 && evt.entityLiving instanceof EntityOcelot)
 		{
 			EntityOcelot ocelot = (EntityOcelot) evt.entityLiving;
 			@SuppressWarnings("unchecked")
