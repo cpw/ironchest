@@ -25,7 +25,7 @@ import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-import net.minecraftforge.common.Orientation;
+import net.minecraftforge.common.ForgeDirection;
 
 public class BlockIronChest extends BlockContainer {
 
@@ -113,7 +113,7 @@ public class BlockIronChest extends BlockContainer {
       return true;
     }
 
-    if (world.isBlockSolidOnSide(i, j + 1, k, Orientation.DOWN))
+    if (world.isBlockSolidOnSide(i, j + 1, k, ForgeDirection.DOWN))
     {
       return true;
     }
