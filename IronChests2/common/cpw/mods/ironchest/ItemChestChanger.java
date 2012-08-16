@@ -11,6 +11,7 @@
 package cpw.mods.ironchest;
 
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -28,6 +29,7 @@ public class ItemChestChanger extends Item {
 		this.type=type;
 		setIconIndex(type.ordinal());
 		setItemName(type.itemName);
+		setTabToDisplayOn(CreativeTabs.tabMisc);
 	}
 
 	@Override

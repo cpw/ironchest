@@ -11,9 +11,14 @@
 package cpw.mods.ironchest;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
 import net.minecraft.src.BlockContainer;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
@@ -41,6 +46,7 @@ public class BlockIronChest extends BlockContainer {
     }
     setBlockBounds(0.0625F, 0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
     random = new Random();
+    setCreativeTab(CreativeTabs.tabDeco);
   }
 
   @Override
@@ -205,13 +211,14 @@ public class BlockIronChest extends BlockContainer {
     }
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public void addCreativeItems(ArrayList itemList) {
-    for (IronChestType type : IronChestType.values()) {
-      if (type.isValidForCreativeMode()) {
-        itemList.add(new ItemStack(this, 1, type.ordinal()));
-      }
-    }
-  }
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+	@SideOnly(Side.CLIENT)
+	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
+	    for (IronChestType type : IronChestType.values()) {
+	        if (type.isValidForCreativeMode()) {
+	          par3List.add(new ItemStack(this, 1, type.ordinal()));
+	        }
+	      }
+	}
 }

@@ -7,7 +7,6 @@ import net.minecraft.src.EntityAITaskEntry;
 import net.minecraft.src.EntityOcelot;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingSpecialSpawnEvent;
 
 public class OcelotsSitOnChestsHandler {
 	@ForgeSubscribe
