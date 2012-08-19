@@ -50,7 +50,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
 
   @Override
   public int getSizeInventory() {
-    return type.size;
+    return type.getMaximumSize();
   }
 
   public byte getFacing() {

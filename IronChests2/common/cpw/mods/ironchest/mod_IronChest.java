@@ -29,6 +29,7 @@ public class mod_IronChest extends NetworkMod {
   public static IProxy proxy;
   public static mod_IronChest instance;
   public static boolean CACHE_RENDER = true;
+  public static boolean SHORT_CHESTS = false;
 
   @Override
   public String getVersion() {
@@ -51,6 +52,7 @@ public class mod_IronChest extends NetworkMod {
       ironChestBlock = new BlockIronChest(bId);
       ChestChangerType.buildItems(cfg, 29501);
       CACHE_RENDER = cfg.getOrCreateBooleanProperty("cacheRenderingInformation", Configuration.CATEGORY_GENERAL, true).getBoolean(true);
+      SHORT_CHESTS = cfg.getOrCreateBooleanProperty("shortChests", Configuration.CATEGORY_GENERAL, false).getBoolean(false);
     } catch (Exception e) {
       ModLoader.getLogger().severe("IronChest was unable to load it's configuration successfully");
       e.printStackTrace(System.err);

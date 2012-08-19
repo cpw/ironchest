@@ -43,13 +43,13 @@ public class ContainerIronChestBase extends Container {
     {
       ItemStack itemstack1 = slot.getStack();
       itemstack = itemstack1.copy();
-      if (i < type.size)
+      if (i < type.getSize())
       {
-        if (!mergeItemStack(itemstack1, type.size, inventorySlots.size(), true))
+        if (!mergeItemStack(itemstack1, type.getSize(), inventorySlots.size(), true))
         {
           return null;
         }
-      } else if (!mergeItemStack(itemstack1, 0, type.size, false))
+      } else if (!mergeItemStack(itemstack1, 0, type.getSize(), false))
       {
         return null;
       }

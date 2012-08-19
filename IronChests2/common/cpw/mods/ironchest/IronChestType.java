@@ -21,15 +21,17 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.forge.oredict.ShapedOreRecipe;
 
 public enum IronChestType {
-  IRON(54, 9, true, "Iron Chest", "ironchest.png", 0, Arrays.asList("ingotIron","ingotRefinedIron"), TileEntityIronChest.class, "mmmmPmmmm", "mGmG3GmGm"),
-  GOLD(81, 9, true, "Gold Chest", "goldchest.png", 1, Arrays.asList("ingotGold"), TileEntityGoldChest.class, "mmmmPmmmm", "mGmG4GmGm"),
-  DIAMOND(108, 12, true, "Diamond Chest", "diamondchest.png", 2, Arrays.asList("gemDiamond"), TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"),
-  COPPER(45, 9, false, "Copper Chest", "copperchest.png", 3, Arrays.asList("ingotCopper"), TileEntityCopperChest.class, "mmmmCmmmm"),
-  SILVER(72, 9, false, "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"),
-  CRYSTAL(108, 12, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
-  WOOD(0,0,false,"","",-1,Arrays.asList("blockPlanks"),null);
-  int size;
-  private int rowLength;
+  IRON(54, 9, 54, 9, true, "Iron Chest", "ironchest.png", 0, Arrays.asList("ingotIron","ingotRefinedIron"), TileEntityIronChest.class, "mmmmPmmmm", "mGmG3GmGm"),
+  GOLD(81, 9, 84, 12, true, "Gold Chest", "goldchest.png", 1, Arrays.asList("ingotGold"), TileEntityGoldChest.class, "mmmmPmmmm", "mGmG4GmGm"),
+  DIAMOND(108, 12, 104, 13, true, "Diamond Chest", "diamondchest.png", 2, Arrays.asList("gemDiamond"), TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"),
+  COPPER(45, 9, 45, 9, false, "Copper Chest", "copperchest.png", 3, Arrays.asList("ingotCopper"), TileEntityCopperChest.class, "mmmmCmmmm"),
+  SILVER(72, 9, 72, 12, false, "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"),
+  CRYSTAL(108, 12, 104, 13, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
+  WOOD(0,0,0,0,false,"","",-1,Arrays.asList("blockPlanks"),null);
+  private int normalSize;
+  private int normalRowLength;
+  private int shortSize;
+  private int shortRowLength;
   public String friendlyName;
   private boolean tieredChest;
   private String modelTexture;
@@ -38,10 +40,12 @@ public enum IronChestType {
   private String[] recipes;
   private ArrayList<String> matList;
 
-  IronChestType(int size, int rowLength, boolean tieredChest, String friendlyName, String modelTexture, int textureRow, List<String> mats,
+  IronChestType(int normalSize, int normalRowLength, int shortSize, int shortRowLength, boolean tieredChest, String friendlyName, String modelTexture, int textureRow, List<String> mats,
       Class<? extends TileEntityIronChest> clazz, String... recipes) {
-    this.size = size;
-    this.rowLength = rowLength;
+    this.normalSize = normalSize;
+    this.normalRowLength = normalRowLength;
+    this.shortSize = shortSize;
+    this.shortRowLength = shortRowLength;
     this.tieredChest = tieredChest;
     this.friendlyName = friendlyName;
     this.modelTexture = "/cpw/mods/ironchest/sprites/" + modelTexture;
@@ -132,12 +136,20 @@ public enum IronChestType {
     CraftingManager.getInstance().getRecipeList().add(oreRecipe);
   }
 
+  public int getSize() {
+    return mod_IronChest.SHORT_CHESTS ? shortSize : normalSize;
+  }
+
+  public int getMaximumSize() {
+    return Math.max(shortSize, normalSize);
+  }
+
   public int getRowCount() {
-    return size / rowLength;
+    return getSize() / getRowLength();
   }
 
   public int getRowLength() {
-    return rowLength;
+    return mod_IronChest.SHORT_CHESTS ? shortRowLength : normalRowLength;
   }
 
   public boolean isTransparent() {
@@ -149,7 +161,7 @@ public enum IronChestType {
   }
 
   public static int validateMeta(int i) {
-    if (i < values().length && values()[i].size>0) {
+    if (i < values().length && values()[i].getSize()>0) {
       return i;
     } else {
       return 0;
