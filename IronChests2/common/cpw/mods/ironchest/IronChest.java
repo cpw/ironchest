@@ -84,26 +84,6 @@ public class IronChest {
 
 	@PostInit
 	public void modsLoaded(FMLPostInitializationEvent evt) {
-		try {
-			Class<?> equivexmaps = Class.forName("ee.EEMaps");
-			Method addEMC = equivexmaps.getMethod("addEMC", int.class, int.class, int.class);
-			Method addMeta = equivexmaps.getMethod("addMeta", int.class, int.class);
-			int[] chestEMCValues = new int[] { 8 * 8 + 256 * 8, /* iron chest */
-			8 * 8 + 256 * 8 + 2048 * 8, /* gold chest */
-			2 * 8192 + 8 * 8 + 256 * 8 + 2048 * 8 + 6, /* diamond chest */
-			85 * 8 + 8 * 8, /* copper chest */
-			85 * 8 + 8 * 8 + 512 * 8, /* silver chest */
-			2 * 8192 + 8 * 8 + 256 * 8 + 2048 * 8 + 6 + 8 /* crystal chest */
-			};
-			for (IronChestType icType : IronChestType.values()) {
-				if (icType.ordinal() >= chestEMCValues.length)
-					break;
-				addEMC.invoke(null, ironChestBlock.blockID, icType.ordinal(), chestEMCValues[icType.ordinal()]);
-			}
-			addMeta.invoke(null, ironChestBlock.blockID, IronChestType.values().length - 1);
-			FMLLog.fine("mod_IronChest registered chests with Equivalent Exchange");
-		} catch (Exception ex) {
-			FMLLog.fine("mod_IronChest unable to load Equivalent Exchange integration");
-		}
+		
 	}
 }
