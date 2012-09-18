@@ -16,14 +16,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>common/ironchestversion.properties</name>
-			<type>1</type>
-			<locationURI>PROJECT_LOC/ironchestversion.properties</locationURI>
-		</link>
-		<link>
 			<name>common/mcmod.info</name>
 			<type>1</type>
-			<locationURI>PROJECT_LOC/mcmod.info</locationURI>
+			<location>/home/cpw/projects/gitstores/ironchests/IronChests2/mcmod.info</location>
+		</link>
+		<link>
+			<name>common/version.properties</name>
+			<type>1</type>
+			<location>/home/cpw/projects/gitstores/ironchests/IronChests2/version.properties</location>
 		</link>
 	</linkedResources>
 </projectDescription>

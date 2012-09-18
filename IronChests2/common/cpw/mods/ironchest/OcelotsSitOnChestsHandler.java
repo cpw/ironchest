@@ -15,7 +15,7 @@ public class OcelotsSitOnChestsHandler {
 		{
 			EntityOcelot ocelot = (EntityOcelot) evt.entityLiving;
 			@SuppressWarnings("unchecked")
-			List<EntityAITaskEntry> tasks = ocelot.tasks.field_75782_a;
+			List<EntityAITaskEntry> tasks = ocelot.tasks.taskEntries;
 
 			for (int i=0; i<tasks.size(); i++)
 			{

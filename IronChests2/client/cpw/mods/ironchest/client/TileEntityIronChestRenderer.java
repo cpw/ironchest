@@ -55,17 +55,8 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 
 	private RenderBlocks renderBlocks;
 
-	private static float[][] shifts = {
-	  { 0.3F, 0.45F, 0.3F },
-	  { 0.7F, 0.45F, 0.3F },
-	  { 0.3F, 0.45F, 0.7F },
-	  { 0.7F, 0.45F, 0.7F },
-	  { 0.3F, 0.1F, 0.3F },
-	  { 0.7F, 0.1F, 0.3F },
-	  { 0.3F, 0.1F, 0.7F },
-	  { 0.7F, 0.1F, 0.7F },
-	  { 0.5F, 0.32F, 0.5F },
-	};
+	private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F },
+			{ 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F }, };
 
 	public TileEntityIronChestRenderer() {
 		model = new ModelChest();
@@ -73,15 +64,11 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 		renderBlocks = new RenderBlocks();
 	}
 
-	private void overrideTexture(Object obj)
-	{
-		if (obj instanceof Item)
-		{
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, FMLClientHandler.instance().getClient().renderEngine.getTexture(((Item)obj).getTextureFile()));
-		}
-		else if (obj instanceof Block)
-		{
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, FMLClientHandler.instance().getClient().renderEngine.getTexture(((Block)obj).getTextureFile()));
+	private void overrideTexture(Object obj) {
+		if (obj instanceof Item) {
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, FMLClientHandler.instance().getClient().renderEngine.getTexture(((Item) obj).getTextureFile()));
+		} else if (obj instanceof Block) {
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, FMLClientHandler.instance().getClient().renderEngine.getTexture(((Block) obj).getTextureFile()));
 		}
 	}
 
@@ -91,10 +78,10 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 		}
 		int facing = 3;
 		IronChestType type = tile.getType();
-		if (tile != null && tile.func_70314_l() != null) {
+		if (tile != null && tile.getWorldObj() != null) {
 			facing = tile.getFacing();
 			type = tile.getType();
-			int typ = tile.func_70314_l().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+			int typ = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
 			type = IronChestType.values()[typ];
 		}
 		bindTextureByName(type.getModelTexture());
@@ -160,7 +147,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 				shiftZ = shifts[shift][2];
 				shift++;
 				float localScale = blockScale;
-				if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID] != null) {
+				if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID] != null && Block.blocksList[item.itemID].blockID != 0) {
 					int j = Block.blocksList[item.itemID].getRenderType();
 					if (j == 1 || j == 19 || j == 12 || j == 2) {
 						localScale = 2 * blockScale;
@@ -180,24 +167,28 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 					}
 					MappableItemStackWrapper mis = new MappableItemStackWrapper(item);
 					if (!IronChest.CACHE_RENDER || !renderList.containsKey(mis)) { // Added support for using only old system.
-						if (IronChest.CACHE_RENDER) {
-							int render = glGenLists(1);
-							renderList.put(mis, render);
-							glNewList(render, GL_COMPILE_AND_EXECUTE);
-						}
-		        IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item, IItemRenderer.ItemRenderType.ENTITY);
+						IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item, IItemRenderer.ItemRenderType.ENTITY);
 						if (customRenderer != null) {
 							customitem.item = item;
 							bindTextureByName("/terrain.png");
 							overrideTexture(item.getItem());
 							customRenderer.renderItem(IItemRenderer.ItemRenderType.ENTITY, item, renderBlocks, customitem);
-						} else if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID] != null && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
+						} else if (item.itemID < Block.blocksList.length && Block.blocksList[item.itemID] != null && Block.blocksList[item.itemID].blockID != 0 && RenderBlocks.renderItemIn3d(Block.blocksList[item.itemID].getRenderType())) {
 							bindTextureByName("/terrain.png");
 							overrideTexture(Block.blocksList[item.itemID]);
 							renderBlocks.renderBlockAsItem(Block.blocksList[item.itemID], item.getItemDamage(), 1.0F);
 						} else {
+							int render = 0;
+							if (IronChest.CACHE_RENDER) {
+								render = glGenLists(1);
+								if (render != 0)
+								{
+									renderList.put(mis, render);
+									glNewList(render, GL_COMPILE_AND_EXECUTE);
+								}
+							}
 							int i = item.getIconIndex();
-							if (item.itemID >= Block.blocksList.length || Block.blocksList[item.itemID] == null) {
+							if (item.itemID >= Block.blocksList.length || Block.blocksList[item.itemID] == null || Block.blocksList[item.itemID].blockID == 0) {
 								bindTextureByName("/gui/items.png");
 								overrideTexture(Item.itemsList[item.itemID]);
 							} else {
@@ -227,9 +218,9 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 							tessellator.addVertexWithUV(f13 - f14, 1.0F - f15, 0.0D, f8, f10);
 							tessellator.addVertexWithUV(0.0F - f14, 1.0F - f15, 0.0D, f5, f10);
 							tessellator.draw();
-						}
-						if (IronChest.CACHE_RENDER) {
-              glEndList();
+							if (IronChest.CACHE_RENDER && render != 0) {
+								glEndList();
+							}
 						}
 					} else {
 						Integer integer = renderList.get(mis);

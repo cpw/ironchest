@@ -21,9 +21,6 @@
       <condition property="is.server">
         <equals arg1="@{side}" arg2="server" />
       </condition>
-      <condition property="is.bukkit">
-        <equals arg1="@{side}" arg2="bukkit" />
-      </condition>
     </sequential>
   </macrodef>
   <target name="writeversion" depends="buildenvsetup">
@@ -31,8 +28,9 @@
       <arg value="${basedir}/getversion.py" />
       <arg value="${mcp.home}" />
     </exec>
-    <propertyfile file="ironchestversion.properties">
-      <entry key="ironchest.build.build.number" type="int" value="${version.build}"/>
+    <propertyfile file="version.properties">
+      <entry key="IronChest.build.number" type="int" value="${version.build}"/>
+      <entry key="IronChest.version" type="string" value="${version}"/>
     </propertyfile>
   </target>
 
@@ -52,11 +50,6 @@
     <condition property="python.exe" value="${mcp.home}/runtime/bin/python/python_mcp" else="python">
       <os family="Windows" />
     </condition>
-    <condition property="bukkitporting.dir" value="${env.WORKSPACE}/bukkitportingtools" else="${dev.home}/bukkitportingtools">
-      <isset property="env.WORKSPACE" />
-    </condition>
-    <property name="bukkit.tmpdir" location="${basedir}/tmpbukkit" />
-    <property name="bukkit.mcp.srcdir" location="${bukkit.tmpdir}/src" />
     <property name="mcp.obfoutput" location="${mcp.home}/reobf" />
     <property name="client.mcp.obfoutput" location="${mcp.obfoutput}/minecraft" />
     <property name="server.mcp.obfoutput" location="${mcp.obfoutput}/minecraft_server" />
@@ -66,7 +59,6 @@
     <property name="common.src.dir" location="${basedir}/common" />
     <property name="client.src.dir" location="${basedir}/client" />
     <property name="server.src.dir" location="${basedir}/server" />
-    <property name="bukkit.src.dir" location="${server.src.dir}" />
     <property name="deploy.dir" location="${user.home}/.minecraft/mods" />
     <property name="resource.dir" location="${basedir}/resources" />
     <condition property="version.build" value="${env.BUILD_NUMBER}" else="1">
@@ -76,17 +68,17 @@
 
   <target name="init" depends="buildenvsetup">
     <antcall target="writeversion" />
-    <property file="ironchestversion.properties" />
-    <property name="build.number" value="${ironchest.build.major.number}.${ironchest.build.minor.number}.${ironchest.build.revision.number}" />
-    <property name="version.minecraft" value="${ironchest.build.mcversion}" />
-    <property name="version.major" value="${ironchest.build.major.number}" />
-    <property name="version.minor" value="${ironchest.build.minor.number}" />
-    <property name="version.rev" value="${ironchest.build.revision.number}" />
+    <property file="version.properties" />
+    <property name="build.number" value="${IronChest.build.major.number}.${IronChest.build.minor.number}.${IronChest.build.revision.number}" />
+    <property name="version.minecraft" value="${IronChest.build.mcversion}" />
+    <property name="version.major" value="${IronChest.build.major.number}" />
+    <property name="version.minor" value="${IronChest.build.minor.number}" />
+    <property name="version.rev" value="${IronChest.build.revision.number}" />
     <property name="version" value="${version.major}.${version.minor}.${version.rev}.${version.build}" />
+    <antcall target="writeversion" />
   </target>
 
   <target name="clean">
-    <delete dir="${bukkit.tmpdir}"/>
     <antcall target="clean-source">
       <param name="side" value="client" />
     </antcall>
@@ -125,6 +117,7 @@
   </target>
 
   <target name="build-client" depends="init,clean,merge-client,buildandreobfmcp">
+    <antcall target="writeversion" />
     <antcall target="extract-built-jar">
       <param name="side" value="client" />
     </antcall>
@@ -136,7 +129,7 @@
     <mkdir dir="${basedir}/target" />
     <jar destfile="${basedir}/target/${jarname}.zip">
       <fileset dir="${output}" includes="**/*.class" />
-      <zipfileset dir="${basedir}" includes="ironchestversion.properties"/>
+      <zipfileset dir="${basedir}" includes="version.properties"/>
       <mappedresources>
         <concat>
           <fileset dir="${basedir}" includes="mcmod.info" />
@@ -176,28 +169,7 @@
     </delete>
   </target>
 
-  <target name="merge-bukkit" depends="init">
-    <mkdir dir="${bukkit.tmpdir}"/>
-    <mkdir dir="${bukkit.mcp.srcdir}"/>
-    <antcall target="merge-source">
-      <param name="side" value="bukkit" />
-    </antcall>
-  </target>
-
-  <target name="build-bukkit" depends="init,merge-bukkit">
-    <property name="jarname" value="${basedir}/target/${modname}-bukkit-${version}.jar" />
-    <path id="bukkit.compile.ref"/>
-    <mkdir dir="${basedir}/target" />
-    <ant dir="${bukkitporting.dir}" target="convert-mcp-to-bukkit">
-      <reference refid="bukkit.compile.ref" />
-      <property name="modname" value="ironchest"/>
-      <property name="bukkit.output.jar" value="${jarname}"/>
-      <property name="bukkit.mcp.srcdir" value="${bukkit.mcp.srcdir}"/>
-    </ant>
-    <delete dir="${bukkit.tmpdir}"/>
-  </target>
-
-  <target name="deploy" depends="init,build-client">
+	<target name="deploy" depends="init,build-client">
     <property name="jarname" value="${modname}-client-${version}" />
     <move file="${deploy.dir}/${jarname}.zip" tofile="${deploy.dir}/${jarname}.zip.${timestamp}" failonerror="false" verbose="true" />
     <copy file="${basedir}/${jarname}.zip" todir="${deploy.dir}" verbose="true" />

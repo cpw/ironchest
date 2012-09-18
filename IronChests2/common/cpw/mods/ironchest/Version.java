@@ -6,12 +6,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
-import java.util.logging.Level;
-
-import cpw.mods.fml.common.FMLCommonHandler;
 
 public class Version {
   private static String major;
@@ -19,37 +14,18 @@ public class Version {
   private static String rev;
   private static String build;
   private static String mcversion;
-  private static boolean loaded;
 
-  private static void init() {
-    InputStream stream = Version.class.getClassLoader().getResourceAsStream("ironchestversion.properties");
-    Properties properties = new Properties();
-
-    if (stream != null) {
-      try {
-        properties.load(stream);
-        major = properties.getProperty("ironchest.build.major.number");
-        minor = properties.getProperty("ironchest.build.minor.number");
-        rev = properties.getProperty("ironchest.build.revision.number");
-        build = properties.getProperty("ironchest.build.build.number");
-        mcversion = properties.getProperty("ironchest.build.mcversion");
-      } catch (IOException ex) {
-        FMLCommonHandler.instance().getFMLLogger().log(Level.SEVERE, "Could not get IronChest version information - corrupted installation detected!", ex);
-        throw new RuntimeException(ex);
-      }
+  static void init(Properties properties) {
+    if (properties != null) {
+        major = properties.getProperty("IronChest.build.major.number");
+        minor = properties.getProperty("IronChest.build.minor.number");
+        rev = properties.getProperty("IronChest.build.revision.number");
+        build = properties.getProperty("IronChest.build.number");
+        mcversion = properties.getProperty("IronChest.build.mcversion");
     }
-    loaded = true;
   }
-  public static final String version() {
-    if (!loaded) {
-      init();
-    }
-    return major+"."+minor;
-  }
+    
   public static String fullVersionString() {
-    if (!loaded) {
-      init();
-    }
-    return String.format("%s.%s.%s build %s for %s", major,minor,rev, build, mcversion);
+    return String.format("%s.%s.%s build %s", major,minor,rev, build);
   }
 }

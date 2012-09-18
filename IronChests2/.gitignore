@@ -5,4 +5,5 @@ bin/
 /build.properties
 /build
 /ironchestversion.properties
+/version.properties
 /tmpbukkit

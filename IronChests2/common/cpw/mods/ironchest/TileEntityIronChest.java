@@ -334,7 +334,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
   }
 
   @Override
-  public Packet getAuxillaryInfoPacket() {
+  public Packet getDescriptionPacket() {
     return PacketHandler.getPacket(this);
   }
 

@@ -10,7 +10,6 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
-import java.lang.reflect.Method;
 import java.util.logging.Level;
 
 import net.minecraftforge.common.Configuration;
@@ -30,14 +29,14 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "IronChest", name = "Iron Chests", version = "4.0")
-@NetworkMod(channels = { "IronChest" }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies="required-after:FML@[3.1.15,)")
+@NetworkMod(channels = { "IronChest" }, versionBounds = "[4.0,)", clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class IronChest {
 
 	public static BlockIronChest ironChestBlock;
 	@SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
 	public static CommonProxy proxy;
-	@Instance
+	@Instance("IronChest")
 	public static IronChest instance;
 	public static boolean CACHE_RENDER = true;
 	public static boolean OCELOTS_SITONCHESTS = true;
@@ -45,6 +44,7 @@ public class IronChest {
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
+		Version.init(event.getVersionProperties());
 		event.getModMetadata().version = Version.fullVersionString();
 		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
 		try {
@@ -84,26 +84,5 @@ public class IronChest {
 
 	@PostInit
 	public void modsLoaded(FMLPostInitializationEvent evt) {
-		try {
-			Class<?> equivexmaps = Class.forName("ee.EEMaps");
-			Method addEMC = equivexmaps.getMethod("addEMC", int.class, int.class, int.class);
-			Method addMeta = equivexmaps.getMethod("addMeta", int.class, int.class);
-			int[] chestEMCValues = new int[] { 8 * 8 + 256 * 8, /* iron chest */
-			8 * 8 + 256 * 8 + 2048 * 8, /* gold chest */
-			2 * 8192 + 8 * 8 + 256 * 8 + 2048 * 8 + 6, /* diamond chest */
-			85 * 8 + 8 * 8, /* copper chest */
-			85 * 8 + 8 * 8 + 512 * 8, /* silver chest */
-			2 * 8192 + 8 * 8 + 256 * 8 + 2048 * 8 + 6 + 8 /* crystal chest */
-			};
-			for (IronChestType icType : IronChestType.values()) {
-				if (icType.ordinal() >= chestEMCValues.length)
-					break;
-				addEMC.invoke(null, ironChestBlock.blockID, icType.ordinal(), chestEMCValues[icType.ordinal()]);
-			}
-			addMeta.invoke(null, ironChestBlock.blockID, IronChestType.values().length - 1);
-			FMLLog.fine("mod_IronChest registered chests with Equivalent Exchange");
-		} catch (Exception ex) {
-			FMLLog.fine("mod_IronChest unable to load Equivalent Exchange integration");
-		}
 	}
 }

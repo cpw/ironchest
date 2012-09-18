@@ -29,7 +29,7 @@ public class ItemChestChanger extends Item {
 		this.type=type;
 		setIconIndex(type.ordinal());
 		setItemName(type.itemName);
-		setTabToDisplayOn(CreativeTabs.tabMisc);
+		setCreativeTab(CreativeTabs.tabMisc);
 	}
 
 	@Override
