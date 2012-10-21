@@ -35,7 +35,7 @@ public class ContainerIronChestBase extends Container {
     return chest.isUseableByPlayer(player);
   }
 
-  public ItemStack transferStackInSlot(int i)
+  public ItemStack func_82846_b(EntityPlayer p, int i)
   {
     ItemStack itemstack = null;
     Slot slot = (Slot) inventorySlots.get(i);
