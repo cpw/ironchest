@@ -30,11 +30,13 @@ public class ContainerIronChestBase extends Container {
     layoutContainer(playerInventory, chestInventory, type, xSize, ySize);
   }
 
+  @Override
   public boolean canInteractWith(EntityPlayer player)
   {
     return chest.isUseableByPlayer(player);
   }
 
+  @Override
   public ItemStack func_82846_b(EntityPlayer p, int i)
   {
     ItemStack itemstack = null;
@@ -64,6 +66,7 @@ public class ContainerIronChestBase extends Container {
     return itemstack;
   }
 
+  @Override
   public void onCraftGuiClosed(EntityPlayer entityplayer)
   {
     super.onCraftGuiClosed(entityplayer);
@@ -95,6 +98,7 @@ public class ContainerIronChestBase extends Container {
       addSlotToContainer(new Slot(playerInventory, hotbarSlot, leftCol + hotbarSlot * 18, ySize - 24));
     }
   }
+
   public EntityPlayer getPlayer() {
     return player;
   }

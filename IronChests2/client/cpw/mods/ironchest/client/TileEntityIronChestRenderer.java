@@ -167,6 +167,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 					}
 					MappableItemStackWrapper mis = new MappableItemStackWrapper(item);
 					if (!IronChest.CACHE_RENDER || !renderList.containsKey(mis)) { // Added support for using only old system.
+						// TODO add support for the skull TESR
 						IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(item, IItemRenderer.ItemRenderType.ENTITY);
 						if (customRenderer != null) {
 							customitem.item = item;
@@ -242,6 +243,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
 	public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float partialTick) {
 		render((TileEntityIronChest) tileentity, x, y, z, partialTick);
 	}
+
 
 	private ModelChest model;
 }
