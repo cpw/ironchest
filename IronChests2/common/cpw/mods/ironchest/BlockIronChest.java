@@ -158,7 +158,7 @@ public class BlockIronChest extends BlockContainer {
   }
 
   @Override
-  protected int damageDropped(int i) {
+  public int damageDropped(int i) {
     return i;
   }
 
