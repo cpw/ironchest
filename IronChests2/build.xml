@@ -115,9 +115,7 @@
         <mergemapper to="mcmod.info" />
       </mappedresources>
       <fileset dir="${resource.dir}" erroronmissingdir="false">
-        <selector if="is.client">
-          <filename name="**/*.png" />
-        </selector>
+	    <filename name="**/*.png" />
       </fileset>
     </jar>
   </target>
