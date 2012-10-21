@@ -29,10 +29,9 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "IronChest", name = "Iron Chests", dependencies="required-after:FML@[3.1.15,)")
-@NetworkMod(channels = { "IronChest" }, versionBounds = "[4.0,)", clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies="required-after:FML@[4.0,)")
+@NetworkMod(channels = { "IronChest" }, versionBounds = "[4.1,)", clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class IronChest {
-
 	public static BlockIronChest ironChestBlock;
 	@SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
 	public static CommonProxy proxy;
@@ -49,10 +48,10 @@ public class IronChest {
 		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
 		try {
 			cfg.load();
-			blockId = cfg.getOrCreateBlockIdProperty("ironChests", 181).getInt(181);
+			blockId = cfg.get(Configuration.CATEGORY_BLOCK, "ironChests", 181).getInt(181);
 			ChestChangerType.buildItems(cfg, 29501);
-			CACHE_RENDER = cfg.getOrCreateBooleanProperty("cacheRenderingInformation", Configuration.CATEGORY_GENERAL, true).getBoolean(true);
-			OCELOTS_SITONCHESTS = cfg.getOrCreateBooleanProperty("ocelotsSitOnChests", Configuration.CATEGORY_GENERAL, true).getBoolean(true);
+			CACHE_RENDER = cfg.get(Configuration.CATEGORY_GENERAL, "cacheRenderingInformation", true).getBoolean(true);
+			OCELOTS_SITONCHESTS = cfg.get(Configuration.CATEGORY_GENERAL, "ocelotsSitOnChests", true).getBoolean(true);
 		} catch (Exception e) {
 			FMLLog.log(Level.SEVERE, e, "IronChest has a problem loading it's configuration");
 		} finally {

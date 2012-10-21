@@ -10,11 +10,10 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.ironchest.client.GUIChest;
 
 
 public class CommonProxy implements IGuiHandler {
@@ -30,12 +29,7 @@ public class CommonProxy implements IGuiHandler {
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		TileEntity te = world.getBlockTileEntity(x, y, z);
-		if (te != null && te instanceof TileEntityIronChest) {
-			return GUIChest.GUI.buildGUI(IronChestType.values()[ID], player.inventory, (TileEntityIronChest) te);
-		} else {
-			return null;
-		}
+		return null;
 	}
 
 	@Override

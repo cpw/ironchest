@@ -52,7 +52,7 @@ public enum ChestChangerType {
   }
 
   public ItemChestChanger buildItem(Configuration cfg, int id) {
-    int itemId = cfg.getOrCreateIntProperty(itemName, Configuration.CATEGORY_ITEM, id).getInt(id);
+    int itemId = cfg.get(Configuration.CATEGORY_ITEM, itemName, id).getInt(id);
     item = new ItemChestChanger(itemId, this);
     return item;
   }

@@ -11,12 +11,15 @@
 package cpw.mods.ironchest.client;
 
 import net.minecraft.src.ChestItemRenderHelper;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.ironchest.CommonProxy;
 import cpw.mods.ironchest.IronChestType;
+import cpw.mods.ironchest.TileEntityIronChest;
 
 public class ClientProxy extends CommonProxy {
 	@Override
@@ -34,5 +37,16 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public World getClientWorld() {
 		return FMLClientHandler.instance().getClient().theWorld;
+	}
+
+
+	@Override
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		TileEntity te = world.getBlockTileEntity(x, y, z);
+		if (te != null && te instanceof TileEntityIronChest) {
+			return GUIChest.GUI.buildGUI(IronChestType.values()[ID], player.inventory, (TileEntityIronChest) te);
+		} else {
+			return null;
+		}
 	}
 }
