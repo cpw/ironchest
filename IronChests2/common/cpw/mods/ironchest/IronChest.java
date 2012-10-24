@@ -29,7 +29,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "IronChest", name = "Iron Chests", dependencies="required-after:FML@[6.0,)")
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies="required-after:Forge@[6.0,)")
 @NetworkMod(channels = { "IronChest" }, versionBounds = "[4.2,)", clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class IronChest {
 	public static BlockIronChest ironChestBlock;
