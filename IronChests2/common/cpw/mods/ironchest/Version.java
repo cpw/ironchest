@@ -13,7 +13,8 @@ public class Version {
   private static String minor;
   private static String rev;
   private static String build;
-  private static String mcversion;
+  @SuppressWarnings("unused")
+private static String mcversion;
 
   static void init(Properties properties) {
     if (properties != null) {
@@ -24,7 +25,7 @@ public class Version {
         mcversion = properties.getProperty("IronChest.build.mcversion");
     }
   }
-    
+
   public static String fullVersionString() {
     return String.format("%s.%s.%s build %s", major,minor,rev, build);
   }

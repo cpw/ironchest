@@ -2,7 +2,7 @@
 <!-- ======================================================================
 
 
-     mod_IronChest
+     IronChest
      Bigger chests
 
      cpw
@@ -62,7 +62,7 @@
     <antcall target="writeversion" />
   </target>
 
-  <target name="clean">
+  <target name="clean" depends="buildenvsetup">
     <antcall target="clean-source"/>
     <exec executable="${python.exe}" dir="${mcp.home}">
       <arg value="${mcp.home}/runtime/updatemd5.py" />
@@ -70,20 +70,19 @@
     </exec>
   </target>
 
-  <target name="buildandreobfmcp" depends="init">
+  <target name="recompile" depends="init">
     <exec executable="${python.exe}" dir="${mcp.home}" failonerror="true">
       <arg value="${mcp.home}/runtime/recompile.py" />
     </exec>
+  </target>
+
+  <target name="reobfuscate" depends="init">
     <exec executable="${python.exe}" dir="${mcp.home}">
       <arg value="${mcp.home}/runtime/reobfuscate.py" />
     </exec>
   </target>
 
-  <target name="merge-client" depends="init,clean">
-    <antcall target="merge-source"/>
-  </target>
-
-  <target name="merge-source">
+  <target name="merge" depends="init">
     <copy todir="${client.mcp.srcdir}" overwrite="true" verbose="true">
       <fileset dir="${client.src.dir}" includes="**/*.java" />
     </copy>
@@ -92,7 +91,7 @@
     </copy>
   </target>
 
-  <target name="build-client" depends="init,clean,merge-client,buildandreobfmcp">
+  <target name="build-universal" depends="init,clean,merge,recompile,reobfuscate">
     <antcall target="writeversion" />
     <antcall target="extract-built-jar"/>
   </target>
@@ -120,7 +119,7 @@
     </jar>
   </target>
 
-  <target name="build" depends="merge-client,build-client" />
+  <target name="build" depends="build-universal" />
 
   <target name="buildandclean" depends="build">
     <antcall target="clean" />
@@ -136,11 +135,5 @@
         <present present="both" targetdir="${common.src.dir}" />
       </fileset>
     </delete>
-  </target>
-
-	<target name="deploy" depends="init,build-client">
-    <property name="jarname" value="${modname}-client-${version}" />
-    <move file="${deploy.dir}/${jarname}.zip" tofile="${deploy.dir}/${jarname}.zip.${timestamp}" failonerror="false" verbose="true" />
-    <copy file="${basedir}/${jarname}.zip" todir="${deploy.dir}" verbose="true" />
   </target>
 </project>
