@@ -79,8 +79,7 @@ public class ItemChestChanger extends Item {
     world.setBlockTileEntity(X, Y, Z, newchest);
     world.setBlockMetadataWithNotify(X, Y, Z, newchest.getType().ordinal());
     world.notifyBlocksOfNeighborChange(X, Y, Z, world.getBlockId(X, Y, Z));
-    world.markBlockNeedsUpdate(X, Y, Z);
-    world.markBlocksDirty(X, Y, Z, X, Y, Z);
+    world.markBlockForUpdate(X, Y, Z);
     stack.stackSize=0;
     return true;
 	}

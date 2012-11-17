@@ -103,7 +103,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
         topStacks[i] = null;
       }
       if (worldObj!=null) {
-        worldObj.markBlockNeedsUpdate(xCoord, yCoord, zCoord);
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
       }
       return;
     }
@@ -133,7 +133,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
       topStacks[i] = null;
     }
     if (worldObj!=null) {
-      worldObj.markBlockNeedsUpdate(xCoord, yCoord, zCoord);
+      worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
   }
 

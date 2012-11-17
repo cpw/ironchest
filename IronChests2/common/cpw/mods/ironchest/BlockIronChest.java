@@ -131,7 +131,7 @@ public class BlockIronChest extends BlockContainer {
   @Override
   public void onBlockAdded(World world, int i, int j, int k) {
     super.onBlockAdded(world, i, j, k);
-    world.markBlockNeedsUpdate(i, j, k);
+    world.markBlockForUpdate(i, j, k);
   }
 
   @Override
@@ -153,7 +153,7 @@ public class BlockIronChest extends BlockContainer {
     TileEntity te = world.getBlockTileEntity(i, j, k);
     if (te != null && te instanceof TileEntityIronChest) {
       ((TileEntityIronChest) te).setFacing(chestFacing);
-      world.markBlockNeedsUpdate(i, j, k);
+      world.markBlockForUpdate(i, j, k);
     }
   }
 
