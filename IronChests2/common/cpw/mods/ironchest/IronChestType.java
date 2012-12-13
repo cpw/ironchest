@@ -14,10 +14,11 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.CraftingManager;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import cpw.mods.fml.common.registry.GameRegistry;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public enum IronChestType {
@@ -129,7 +130,7 @@ public enum IronChestType {
   @SuppressWarnings("unchecked")
   public static void addRecipe(ItemStack is, Object... parts) {
     ShapedOreRecipe oreRecipe = new ShapedOreRecipe(is, parts);
-    CraftingManager.getInstance().getRecipeList().add(oreRecipe);
+    GameRegistry.addRecipe(oreRecipe);
   }
 
   public int getRowCount() {

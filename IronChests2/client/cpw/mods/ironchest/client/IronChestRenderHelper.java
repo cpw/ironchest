@@ -12,14 +12,15 @@ package cpw.mods.ironchest.client;
 
 import java.util.Map;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.ChestItemRenderHelper;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+
 import com.google.common.collect.Maps;
 
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
-import net.minecraft.src.Block;
-import net.minecraft.src.ChestItemRenderHelper;
-import net.minecraft.src.TileEntityRenderer;
 
 public class IronChestRenderHelper extends ChestItemRenderHelper {
 	private Map<Integer, TileEntityIronChest> itemRenders = Maps.newHashMap();

@@ -1,8 +1,8 @@
 package cpw.mods.ironchest;
 
-import net.minecraft.src.EntityAIOcelotSit;
-import net.minecraft.src.EntityOcelot;
-import net.minecraft.src.World;
+import net.minecraft.entity.ai.EntityAIOcelotSit;
+import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.world.World;
 
 public class IronChestAIOcelotSit extends EntityAIOcelotSit {
 	public IronChestAIOcelotSit(EntityOcelot par1EntityOcelot, float par2) {

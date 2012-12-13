@@ -14,8 +14,8 @@ import static cpw.mods.ironchest.IronChestType.SILVER;
 import static cpw.mods.ironchest.IronChestType.CRYSTAL;
 import static cpw.mods.ironchest.IronChestType.WOOD;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 
 public enum ChestChangerType {

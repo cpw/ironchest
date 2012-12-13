@@ -2,9 +2,9 @@ package cpw.mods.ironchest;
 
 import java.util.List;
 
-import net.minecraft.src.EntityAIOcelotSit;
-import net.minecraft.src.EntityAITaskEntry;
-import net.minecraft.src.EntityOcelot;
+import net.minecraft.entity.ai.EntityAIOcelotSit;
+import net.minecraft.entity.ai.EntityAITaskEntry;
+import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingEvent;
 

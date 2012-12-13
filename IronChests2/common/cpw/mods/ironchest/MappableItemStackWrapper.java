@@ -1,6 +1,6 @@
 package cpw.mods.ironchest;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public class MappableItemStackWrapper {
   private ItemStack wrap;
