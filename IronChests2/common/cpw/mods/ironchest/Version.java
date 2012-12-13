@@ -13,8 +13,7 @@ public class Version {
   private static String minor;
   private static String rev;
   private static String build;
-  @SuppressWarnings("unused")
-private static String mcversion;
+  private static String mcversion;
 
   static void init(Properties properties) {
     if (properties != null) {
