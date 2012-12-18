@@ -15,18 +15,22 @@ import net.minecraft.item.ItemStack;
 
 public class ItemIronChest extends ItemBlock {
 
-	public ItemIronChest(int id) {
-		super(id);
+    public ItemIronChest(int id)
+    {
+        super(id);
         setMaxDamage(0);
         setHasSubtypes(true);
-	}
+    }
 
-	@Override
-	public int getMetadata(int i) {
-	  return IronChestType.validateMeta(i);
-	}
-	@Override
-	public String getItemNameIS(ItemStack itemstack) {
-		return IronChestType.values()[itemstack.getItemDamage()].name();
-	}
+    @Override
+    public int getMetadata(int i)
+    {
+        return IronChestType.validateMeta(i);
+    }
+
+    @Override
+    public String getItemNameIS(ItemStack itemstack)
+    {
+        return IronChestType.values()[itemstack.getItemDamage()].name();
+    }
 }

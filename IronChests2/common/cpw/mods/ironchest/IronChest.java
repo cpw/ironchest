@@ -14,6 +14,7 @@ import java.util.logging.Level;
 
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -29,59 +30,71 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "IronChest", name = "Iron Chests", dependencies="required-after:Forge@[6.0,)")
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[6.0,)")
 @NetworkMod(channels = { "IronChest" }, versionBounds = "[4.2,)", clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class IronChest {
-	public static BlockIronChest ironChestBlock;
-	@SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
-	public static CommonProxy proxy;
-	@Instance("IronChest")
-	public static IronChest instance;
-	public static boolean CACHE_RENDER = true;
-	public static boolean OCELOTS_SITONCHESTS = true;
-	private int blockId;
+    public static BlockIronChest ironChestBlock;
+    @SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
+    public static CommonProxy proxy;
+    @Instance("IronChest")
+    public static IronChest instance;
+    public static boolean CACHE_RENDER = true;
+    public static boolean OCELOTS_SITONCHESTS = true;
+    private int blockId;
 
-	@PreInit
-	public void preInit(FMLPreInitializationEvent event) {
-		Version.init(event.getVersionProperties());
-		event.getModMetadata().version = Version.fullVersionString();
-		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
-		try {
-			cfg.load();
-			blockId = cfg.get(Configuration.CATEGORY_BLOCK, "ironChests", 181).getInt(181);
-			ChestChangerType.buildItems(cfg, 29501);
-			CACHE_RENDER = cfg.get(Configuration.CATEGORY_GENERAL, "cacheRenderingInformation", true).getBoolean(true);
-			OCELOTS_SITONCHESTS = cfg.get(Configuration.CATEGORY_GENERAL, "ocelotsSitOnChests", true).getBoolean(true);
-		} catch (Exception e) {
-			FMLLog.log(Level.SEVERE, e, "IronChest has a problem loading it's configuration");
-		} finally {
-			cfg.save();
-		}
-	}
+    @PreInit
+    public void preInit(FMLPreInitializationEvent event)
+    {
+        Version.init(event.getVersionProperties());
+        event.getModMetadata().version = Version.fullVersionString();
+        Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
+        try
+        {
+            cfg.load();
+            blockId = cfg.get(Configuration.CATEGORY_BLOCK, "ironChests", 181).getInt(181);
+            ChestChangerType.buildItems(cfg, 29501);
+            CACHE_RENDER = cfg.get(Configuration.CATEGORY_GENERAL, "cacheRenderingInformation", true).getBoolean(true);
+            OCELOTS_SITONCHESTS = cfg.get(Configuration.CATEGORY_GENERAL, "ocelotsSitOnChests", true).getBoolean(true);
+        }
+        catch (Exception e)
+        {
+            FMLLog.log(Level.SEVERE, e, "IronChest has a problem loading it's configuration");
+        }
+        finally
+        {
+            cfg.save();
+        }
+    }
 
-	@Init
-	public void load(FMLInitializationEvent evt) {
-		ironChestBlock = new BlockIronChest(blockId);
-		GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class);
-		for (IronChestType typ : IronChestType.values()) {
-			GameRegistry.registerTileEntity(typ.clazz, typ.name());
-			LanguageRegistry.instance().addStringLocalization(typ.name() + ".name", "en_US", typ.friendlyName);
-			proxy.registerTileEntitySpecialRenderer(typ);
-		}
-		for (ChestChangerType typ : ChestChangerType.values()) {
-			LanguageRegistry.instance().addStringLocalization("item." + typ.itemName + ".name", "en_US", typ.descriptiveName);
-		}
-		IronChestType.generateTieredRecipes(ironChestBlock);
-		ChestChangerType.generateRecipes();
-		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
-		proxy.registerRenderInformation();
-		if (OCELOTS_SITONCHESTS)
-		{
-			MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
-		}
-	}
+    @Init
+    public void load(FMLInitializationEvent evt)
+    {
+        ironChestBlock = new BlockIronChest(blockId);
+        GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class);
+        for (IronChestType typ : IronChestType.values())
+        {
+            GameRegistry.registerTileEntity(typ.clazz, typ.name());
+            LanguageRegistry.instance().addStringLocalization(typ.name() + ".name", "en_US", typ.friendlyName);
+            proxy.registerTileEntitySpecialRenderer(typ);
+        }
+        for (ChestChangerType typ : ChestChangerType.values())
+        {
+            LanguageRegistry.instance().addStringLocalization("item." + typ.itemName + ".name", "en_US", typ.descriptiveName);
+        }
+        IronChestType.generateTieredRecipes(ironChestBlock);
+        ChestChangerType.generateRecipes();
+        NetworkRegistry.instance().registerGuiHandler(instance, proxy);
+        proxy.registerRenderInformation();
+        if (OCELOTS_SITONCHESTS)
+        {
+            MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
+        }
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 
-	@PostInit
-	public void modsLoaded(FMLPostInitializationEvent evt) {
-	}
+    @PostInit
+    public void modsLoaded(FMLPostInitializationEvent evt)
+    {
+    }
+
 }
