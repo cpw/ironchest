@@ -27,7 +27,7 @@
     <property environment="env" />
     <property file="build.properties" />
     <property name="modname" value="ironchest" />
-    <condition property="mcp.home" value="${env.WORKSPACE}/mcpworkspace" else="${default.mcp.home}">
+    <condition property="mcp.home" value="${env.WORKSPACE}/mcpworkspace/forge/mcp" else="${default.mcp.home}">
       <isset property="env.WORKSPACE" />
     </condition>
     <condition property="python.exe" value="${mcp.home}/runtime/bin/python/python_mcp" else="python">
