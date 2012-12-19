@@ -27,9 +27,6 @@
     <property environment="env" />
     <property file="build.properties" />
     <property name="modname" value="ironchest" />
-    <condition property="dev.home" value="${env.WORKSPACE}" else="${default.dev.home}">
-      <isset property="env.WORKSPACE" />
-    </condition>
     <condition property="mcp.home" value="${env.WORKSPACE}/mcpworkspace" else="${default.mcp.home}">
       <isset property="env.WORKSPACE" />
     </condition>
@@ -40,9 +37,7 @@
     <property name="mcp.obfoutput.classes" location="${mcp.obfoutput}/minecraft" />
     <property name="mcp.srcdir" location="${mcp.home}/src" />
     <property name="client.mcp.srcdir" location="${mcp.srcdir}/minecraft" />
-    <property name="common.mcp.srcdir" location="${mcp.srcdir}/common" />
     <property name="common.src.dir" location="${basedir}/common" />
-    <property name="client.src.dir" location="${basedir}/client" />
     <property name="deploy.dir" location="${user.home}/.minecraft/mods" />
     <property name="resource.dir" location="${basedir}/resources" />
     <condition property="version.build" value="${env.BUILD_NUMBER}" else="1">
@@ -84,9 +79,6 @@
 
   <target name="merge" depends="init">
     <copy todir="${client.mcp.srcdir}" overwrite="true" verbose="true">
-      <fileset dir="${client.src.dir}" includes="**/*.java" />
-    </copy>
-    <copy todir="${common.mcp.srcdir}" overwrite="true" verbose="true">
       <fileset dir="${common.src.dir}" includes="**/*.java" />
     </copy>
   </target>
@@ -97,7 +89,7 @@
   </target>
 
   <target name="extract-built-jar">
-    <property name="jarname" value="${modname}-universal-${version}" />
+    <property name="jarname" value="${modname}-universal-${version.minecraft}-${version}" />
     <mkdir dir="${basedir}/target" />
     <jar destfile="${basedir}/target/${jarname}.zip">
       <fileset dir="${mcp.obfoutput.classes}" includes="**/*.class" />
@@ -129,9 +121,6 @@
   <target name="clean-source">
     <delete verbose="true">
       <fileset dir="${client.mcp.srcdir}">
-        <present present="both" targetdir="${client.src.dir}" />
-      </fileset>
-      <fileset dir="${common.mcp.srcdir}">
         <present present="both" targetdir="${common.src.dir}" />
       </fileset>
     </delete>

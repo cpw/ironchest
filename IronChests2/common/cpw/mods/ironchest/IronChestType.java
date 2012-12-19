@@ -22,13 +22,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public enum IronChestType {
-    IRON(54, 9, true, "Iron Chest", "ironchest.png", 0, Arrays.asList("ingotIron", "ingotRefinedIron"), TileEntityIronChest.class, "mmmmPmmmm", "mGmG3GmGm"), GOLD(
-            81, 9, true, "Gold Chest", "goldchest.png", 1, Arrays.asList("ingotGold"), TileEntityGoldChest.class, "mmmmPmmmm", "mGmG4GmGm"), DIAMOND(108, 12,
-            true, "Diamond Chest", "diamondchest.png", 2, Arrays.asList("gemDiamond"), TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"), COPPER(45, 9,
-            false, "Copper Chest", "copperchest.png", 3, Arrays.asList("ingotCopper"), TileEntityCopperChest.class, "mmmmCmmmm"), SILVER(72, 9, false,
-            "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"), CRYSTAL(108, 12, true,
-            "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"), WOOD(0, 0, false, "", "", -1,
-            Arrays.asList("blockPlanks"), null);
+    IRON(54, 9, true, "Iron Chest", "ironchest.png", 0, Arrays.asList("ingotIron", "ingotRefinedIron"), TileEntityIronChest.class, "mmmmPmmmm", "mGmG3GmGm"),
+    GOLD(81, 9, true, "Gold Chest", "goldchest.png", 1, Arrays.asList("ingotGold"), TileEntityGoldChest.class, "mmmmPmmmm", "mGmG4GmGm"),
+    DIAMOND(108, 12, true, "Diamond Chest", "diamondchest.png", 2, Arrays.asList("gemDiamond"), TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"),
+    COPPER(45, 9, false, "Copper Chest", "copperchest.png", 3, Arrays.asList("ingotCopper"), TileEntityCopperChest.class, "mmmmCmmmm"),
+    SILVER(72, 9, false, "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"),
+    CRYSTAL(108, 12, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
+    WOOD(0, 0, false, "", "", -1, Arrays.asList("blockPlanks"), null);
     int size;
     private int rowLength;
     public String friendlyName;
@@ -112,16 +112,10 @@ public enum IronChestType {
             for (String mat : type.matList)
             {
                 mainMaterial = translateOreName(mat);
-                addRecipe(new ItemStack(blockResult, 1, type.ordinal()), recipeSplit, 'm', mainMaterial, 'P', previousTier, /*
-                                                                                                                             * previous
-                                                                                                                             * tier
-                                                                                                                             * of
-                                                                                                                             * chest
-                                                                                                                             */
-                        'G', Block.glass, 'C', Block.chest, '0', new ItemStack(blockResult, 1, 0), /*
-                                                                                                    * Iron
-                                                                                                    * Chest
-                                                                                                    */
+                addRecipe(new ItemStack(blockResult, 1, type.ordinal()), recipeSplit,
+                        'm', mainMaterial, 'P', previousTier, /* previous tier of chest */
+                        'G', Block.glass, 'C', Block.chest,
+                        '0', new ItemStack(blockResult, 1, 0), /* Iron Chest */
                         '1', new ItemStack(blockResult, 1, 1), /* Gold Chest */
                         '2', new ItemStack(blockResult, 1, 1), /* Diamond Chest */
                         '3', new ItemStack(blockResult, 1, 3), /* Copper Chest */
