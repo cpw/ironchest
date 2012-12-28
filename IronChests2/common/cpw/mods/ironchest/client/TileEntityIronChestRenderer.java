@@ -73,10 +73,10 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
         itemRenderer = new RenderItem() {
             @Override
             public byte getMiniBlockCountForItemStack(ItemStack stack) {
-                return SignedBytes.saturatedCast((stack.stackSize / 32) + 1);
+                return SignedBytes.saturatedCast(Math.min(stack.stackSize / 32, 15) + 1);
             }
             public byte getMiniItemCountForItemStack(ItemStack stack) {
-                return SignedBytes.saturatedCast((stack.stackSize / 32) + 1);
+                return SignedBytes.saturatedCast(Math.min(stack.stackSize / 32, 7) + 1);
             };
             public boolean shouldBob() {
                 return false;
