@@ -28,7 +28,7 @@ public enum IronChestType {
     COPPER(45, 9, false, "Copper Chest", "copperchest.png", 3, Arrays.asList("ingotCopper"), TileEntityCopperChest.class, "mmmmCmmmm"),
     SILVER(72, 9, false, "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"),
     CRYSTAL(108, 12, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
-    WOOD(0, 0, false, "", "", -1, Arrays.asList("blockPlanks"), null);
+    WOOD(0, 0, false, "", "", -1, Arrays.asList("plankWood"), null);
     int size;
     private int rowLength;
     public String friendlyName;
@@ -142,10 +142,6 @@ public enum IronChestType {
         else if (mat == "blockGlass")
         {
             return Block.glass;
-        }
-        else if (mat == "blockPlanks")
-        {
-            return Block.planks;
         }
         return mat;
     }
