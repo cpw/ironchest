@@ -12,6 +12,7 @@ package cpw.mods.ironchest;
 
 import java.util.logging.Level;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -30,7 +31,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[6.5,)")
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[6.5,);required-after:FML@[4.7.22,)")
 @NetworkMod(channels = { "IronChest" }, versionBounds = "[5.0,)", clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class IronChest {
     public static BlockIronChest ironChestBlock;
@@ -73,7 +74,7 @@ public class IronChest {
         GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
         for (IronChestType typ : IronChestType.values())
         {
-            GameRegistry.registerTileEntity(typ.clazz, typ.name());
+            GameRegistry.registerTileEntityWithAlternatives(typ.clazz, "IronChest."+typ.name(), typ.name());
             LanguageRegistry.instance().addStringLocalization(typ.name() + ".name", "en_US", typ.friendlyName);
             proxy.registerTileEntitySpecialRenderer(typ);
         }
