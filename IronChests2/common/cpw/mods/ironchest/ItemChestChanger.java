@@ -28,7 +28,7 @@ public class ItemChestChanger extends Item {
         super(id);
         setMaxStackSize(1);
         this.type = type;
-//        setIconIndex(type.ordinal());
+        setIconIndex(type.ordinal());
         setItemName(type.itemName);
         setCreativeTab(CreativeTabs.tabMisc);
     }
