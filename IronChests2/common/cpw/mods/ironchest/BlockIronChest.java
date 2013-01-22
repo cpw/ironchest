@@ -84,29 +84,29 @@ public class BlockIronChest extends BlockContainer {
         return IronChestType.makeEntity(metadata);
     }
 
-    public int getBlockTexture(IBlockAccess worldAccess, int i, int j, int k, int l)
-    {
-        int meta = worldAccess.getBlockMetadata(i, j, k);
-        IronChestType type = IronChestType.values()[meta];
-        TileEntity te = worldAccess.getBlockTileEntity(i, j, k);
-        TileEntityIronChest icte = null;
-        if (te != null && te instanceof TileEntityIronChest)
-        {
-            icte = (TileEntityIronChest) te;
-        }
-        if (l == 0 || l == 1)
-        { // Top and Bottom
-            return type.getTextureRow() * 16 + 1;
-        }
-        else if (icte != null && l == icte.getFacing())
-        { // Front
-            return type.getTextureRow() * 16 + 2;
-        }
-        else
-        { // Back and Sides
-            return type.getTextureRow() * 16;
-        }
-    }
+//    public Icon getBlockTexture(IBlockAccess worldAccess, int i, int j, int k, int l)
+//    {
+//        int meta = worldAccess.getBlockMetadata(i, j, k);
+//        IronChestType type = IronChestType.values()[meta];
+//        TileEntity te = worldAccess.getBlockTileEntity(i, j, k);
+//        TileEntityIronChest icte = null;
+//        if (te != null && te instanceof TileEntityIronChest)
+//        {
+//            icte = (TileEntityIronChest) te;
+//        }
+//        if (l == 0 || l == 1)
+//        { // Top and Bottom
+//            return type.getTextureRow() * 16 + 1;
+//        }
+//        else if (icte != null && l == icte.getFacing())
+//        { // Front
+//            return type.getTextureRow() * 16 + 2;
+//        }
+//        else
+//        { // Back and Sides
+//            return type.getTextureRow() * 16;
+//        }
+//    }
 
 //    @Override
 //    public Icon getBlockTextureFromSideAndMetadata(int i, int j)
