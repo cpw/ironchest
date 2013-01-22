@@ -19,6 +19,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -227,7 +228,7 @@ public class BlockIronChest extends BlockContainer {
                 entityitem.motionZ = (float) random.nextGaussian() * f3;
                 if (itemstack.hasTagCompound())
                 {
-                    entityitem.func_92014_d().setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
+                    entityitem.getEntityItem().setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
                 }
                 world.spawnEntityInWorld(entityitem);
             }
@@ -246,5 +247,20 @@ public class BlockIronChest extends BlockContainer {
                 par3List.add(new ItemStack(this, 1, type.ordinal()));
             }
         }
+    }
+
+    @Override
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
+    {
+       TileEntity te = world.getBlockTileEntity(x, y, z);
+       if (te instanceof TileEntityIronChest)
+       {
+           TileEntityIronChest teic = (TileEntityIronChest) te;
+           if (teic.getType().isExplosionResistant())
+           {
+               return 10000f;
+           }
+       }
+       return super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 }

@@ -39,6 +39,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -75,29 +76,20 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
             public byte getMiniBlockCountForItemStack(ItemStack stack) {
                 return SignedBytes.saturatedCast(Math.min(stack.stackSize / 32, 15) + 1);
             }
+            @Override
             public byte getMiniItemCountForItemStack(ItemStack stack) {
                 return SignedBytes.saturatedCast(Math.min(stack.stackSize / 32, 7) + 1);
-            };
+            }
+            @Override
             public boolean shouldBob() {
                 return false;
-            };
+            }
+            @Override
             public boolean shouldSpreadItems() {
                 return false;
-            };
+            }
         };
         itemRenderer.setRenderManager(RenderManager.instance);
-    }
-
-    private void overrideTexture(Object obj)
-    {
-        if (obj instanceof Item)
-        {
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, FMLClientHandler.instance().getClient().renderEngine.getTexture(((Item) obj).getTextureFile()));
-        }
-        else if (obj instanceof Block)
-        {
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, FMLClientHandler.instance().getClient().renderEngine.getTexture(((Block) obj).getTextureFile()));
-        }
     }
 
     public void render(TileEntityIronChest tile, double x, double y, double z, float partialTick) {
@@ -176,7 +168,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
                 glTranslatef(shiftX, shiftY, shiftZ);
                 glRotatef(timeD, 0.0F, 1.0F, 0.0F);
                 glScalef(blockScale, blockScale, blockScale);
-                customitem.func_92013_a(item);
+                customitem.func_92058_a(item);
                 itemRenderer.doRenderItem(customitem, 0, 0, 0, 0, 0);
                 glPopMatrix();
             }
