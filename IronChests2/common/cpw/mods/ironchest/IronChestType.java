@@ -28,8 +28,8 @@ public enum IronChestType {
     COPPER(45, 9, false, "Copper Chest", "copperchest.png", 3, Arrays.asList("ingotCopper"), TileEntityCopperChest.class, "mmmmCmmmm"),
     SILVER(72, 9, false, "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"),
     CRYSTAL(108, 12, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
-    OBSIDIAN(108, 12, false, "Obsidian Chest", "obsidianchest.png", 6, Arrays.asList("obsidian"), TileEntityObsidianChest.class, "OOOO4OOOO"),
-    WOOD(0, 0, false, "", "", -1, Arrays.asList("blockPlanks"), null);
+    OBSIDIAN(108, 12, false, "Obsidian Chest", "obsidianchest.png", 6, Arrays.asList("obsidian"), TileEntityObsidianChest.class, "mmmm2mmmm"),
+    WOOD(0, 0, false, "", "", -1, Arrays.asList("plankWood"), null);
     int size;
     private int rowLength;
     public String friendlyName;
@@ -118,7 +118,7 @@ public enum IronChestType {
                         'G', Block.glass, 'C', Block.chest,
                         '0', new ItemStack(blockResult, 1, 0), /* Iron Chest */
                         '1', new ItemStack(blockResult, 1, 1), /* Gold Chest */
-                        '2', new ItemStack(blockResult, 1, 1), /* Diamond Chest */
+                        '2', new ItemStack(blockResult, 1, 2), /* Diamond Chest */
                         '3', new ItemStack(blockResult, 1, 3), /* Copper Chest */
                         '4', new ItemStack(blockResult, 1, 4)/* Silver Chest */
                 );
@@ -144,14 +144,13 @@ public enum IronChestType {
         {
             return Block.glass;
         }
-        else if (mat == "blockPlanks")
+        else if (mat == "obsidian")
         {
-            return Block.planks;
+            return Block.obsidian;
         }
         return mat;
     }
 
-    @SuppressWarnings("unchecked")
     public static void addRecipe(ItemStack is, Object... parts)
     {
         ShapedOreRecipe oreRecipe = new ShapedOreRecipe(is, parts);

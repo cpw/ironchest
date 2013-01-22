@@ -73,14 +73,14 @@ public class ItemChestChanger extends Item {
                 chestContents[i] = null;
             }
             // Clear the old block out
-            world.setBlock(X, Y, Z, 0);
+            world.setBlockWithNotify(X, Y, Z, 0);
             // Force the Chest TE to reset it's knowledge of neighbouring blocks
             tec.updateContainingBlockInfo();
             // Force the Chest TE to update any neighbours so they update next
             // tick
             tec.checkForAdjacentChests();
             // And put in our block instead
-            world.setBlock(X, Y, Z, block.blockID);
+            world.setBlockWithNotify(X, Y, Z, block.blockID);
         }
         else
         {
