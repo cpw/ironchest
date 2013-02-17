@@ -27,7 +27,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 
 public class TileEntityIronChest extends TileEntity implements IInventory {
-    private int ticksSinceSync;
+    private int ticksSinceSync = -1;
     public float prevLidAngle;
     public float lidAngle;
     private int numUsingPlayers;
