@@ -34,7 +34,9 @@ public class PacketHandler implements IPacketHandler {
         int x = dat.readInt();
         int y = dat.readInt();
         int z = dat.readInt();
-        byte typ = dat.readByte();
+        int typDat = dat.readByte();
+        byte typ = (byte)(typDat & 0xf);
+        byte facing = (byte)((typDat >> 4) & 0xf);
         boolean hasStacks = dat.readByte() != 0;
         int[] items = new int[0];
         if (hasStacks)
@@ -50,6 +52,7 @@ public class PacketHandler implements IPacketHandler {
         if (te instanceof TileEntityIronChest)
         {
             TileEntityIronChest icte = (TileEntityIronChest) te;
+            icte.setFacing(facing);
             icte.handlePacketData(typ, items);
         }
     }
@@ -61,7 +64,7 @@ public class PacketHandler implements IPacketHandler {
         int x = tileEntityIronChest.xCoord;
         int y = tileEntityIronChest.yCoord;
         int z = tileEntityIronChest.zCoord;
-        int typ = tileEntityIronChest.getType().ordinal();
+        int typ = (tileEntityIronChest.getType().ordinal() | (tileEntityIronChest.getFacing() << 4)) & 0xFF;
         int[] items = tileEntityIronChest.buildIntDataList();
         boolean hasStacks = (items != null);
         try
