@@ -41,7 +41,7 @@ public class BlockIronChest extends BlockContainer {
     public BlockIronChest(int id)
     {
         super(id, Material.iron);
-        setBlockName("IronChest");
+        setUnlocalizedName("IronChest");
         setHardness(3.0F);
         setBlockBounds(0.0625F, 0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
         random = new Random();
@@ -79,7 +79,7 @@ public class BlockIronChest extends BlockContainer {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int metadata)
+    public TileEntity createTileEntity(World world, int metadata)
     {
         return IronChestType.makeEntity(metadata);
     }

@@ -168,7 +168,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
                 glTranslatef(shiftX, shiftY, shiftZ);
                 glRotatef(timeD, 0.0F, 1.0F, 0.0F);
                 glScalef(blockScale, blockScale, blockScale);
-                customitem.func_92058_a(item);
+                customitem.setEntityItemStack(item);
                 itemRenderer.doRenderItem(customitem, 0, 0, 0, 0, 0);
                 glPopMatrix();
             }

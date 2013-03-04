@@ -314,7 +314,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     }
 
     @Override
-    public void receiveClientEvent(int i, int j)
+    public boolean receiveClientEvent(int i, int j)
     {
         if (i == 1)
         {
@@ -329,6 +329,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
             facing = (byte) (j & 0x7);
             numUsingPlayers = (j & 0xF8) >> 3;
         }
+        return true;
     }
 
     @Override

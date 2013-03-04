@@ -10,6 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -18,6 +19,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemChestChanger extends Item {
 
@@ -28,8 +31,15 @@ public class ItemChestChanger extends Item {
         super(id);
         setMaxStackSize(1);
         this.type = type;
-        setItemName(type.itemName);
+        setUnlocalizedName(type.itemName);
         setCreativeTab(CreativeTabs.tabMisc);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void func_94581_a(IconRegister par1IconRegister)
+    {
+        this.iconIndex = par1IconRegister.func_94245_a("ironchest:"+type.itemName);
     }
 
     @Override

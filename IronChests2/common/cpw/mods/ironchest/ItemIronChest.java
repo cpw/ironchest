@@ -29,7 +29,7 @@ public class ItemIronChest extends ItemBlock {
     }
 
     @Override
-    public String getItemNameIS(ItemStack itemstack)
+    public String getUnlocalizedName(ItemStack itemstack)
     {
         return IronChestType.values()[itemstack.getItemDamage()].name();
     }
