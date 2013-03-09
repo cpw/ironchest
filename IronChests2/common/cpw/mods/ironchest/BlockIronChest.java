@@ -18,6 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -37,6 +38,9 @@ import net.minecraftforge.common.ForgeDirection;
 public class BlockIronChest extends BlockContainer {
 
     private Random random;
+
+    @SideOnly(Side.CLIENT)
+    private Icon[][] icons;
 
     public BlockIronChest(int id)
     {
@@ -108,21 +112,17 @@ public class BlockIronChest extends BlockContainer {
 //        }
 //    }
 
-//    @Override
-//    public Icon getBlockTextureFromSideAndMetadata(int i, int j)
-//    {
-//        IronChestType typ = IronChestType.values()[j];
-//        switch (i)
-//        {
-//        case 0:
-//        case 1:
-//            return typ.getTextureRow() * 16 + 1;
-//        case 3:
-//            return typ.getTextureRow() * 16 + 2;
-//        default:
-//            return typ.getTextureRow() * 16;
-//        }
-//    }
+    @SideOnly(Side.CLIENT)
+    @Override
+    public Icon getBlockTextureFromSideAndMetadata(int i, int j)
+    {
+        if (j < IronChestType.values().length)
+        {
+            IronChestType type = IronChestType.values()[j];
+            return type.getIcon(i);
+        }
+        return null;
+    }
 
     @Override
     public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int i1, float f1, float f2, float f3)
@@ -271,4 +271,13 @@ public class BlockIronChest extends BlockContainer {
     }
 
 
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void func_94332_a(IconRegister par1IconRegister)
+    {
+        for (IronChestType typ: IronChestType.values())
+        {
+            typ.makeIcons(par1IconRegister);
+        }
+    }
 }

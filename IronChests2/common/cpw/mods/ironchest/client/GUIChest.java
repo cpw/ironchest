@@ -22,13 +22,13 @@ import cpw.mods.ironchest.TileEntityIronChest;
 
 public class GUIChest extends GuiContainer {
     public enum GUI {
-        IRON(184, 202, "/cpw/mods/ironchest/sprites/ironcontainer.png", IronChestType.IRON),
-        GOLD(184, 256, "/cpw/mods/ironchest/sprites/goldcontainer.png", IronChestType.GOLD),
-        DIAMOND(238, 256, "/cpw/mods/ironchest/sprites/diamondcontainer.png", IronChestType.DIAMOND),
-        COPPER(184, 184, "/cpw/mods/ironchest/sprites/coppercontainer.png", IronChestType.COPPER),
-        SILVER(184, 238, "/cpw/mods/ironchest/sprites/silvercontainer.png", IronChestType.SILVER),
-        CRYSTAL(238, 256, "/cpw/mods/ironchest/sprites/diamondcontainer.png", IronChestType.CRYSTAL),
-        OBSIDIAN(238, 256, "/cpw/mods/ironchest/sprites/diamondcontainer.png", IronChestType.OBSIDIAN);
+        IRON(184, 202, "/mods/ironchest/textures/gui/ironcontainer.png", IronChestType.IRON),
+        GOLD(184, 256, "/mods/ironchest/textures/gui/goldcontainer.png", IronChestType.GOLD),
+        DIAMOND(238, 256, "/mods/ironchest/textures/gui/diamondcontainer.png", IronChestType.DIAMOND),
+        COPPER(184, 184, "/mods/ironchest/textures/gui/coppercontainer.png", IronChestType.COPPER),
+        SILVER(184, 238, "/mods/ironchest/textures/gui/silvercontainer.png", IronChestType.SILVER),
+        CRYSTAL(238, 256, "/mods/ironchest/textures/gui/diamondcontainer.png", IronChestType.CRYSTAL),
+        OBSIDIAN(238, 256, "/mods/ironchest/textures/gui/diamondcontainer.png", IronChestType.OBSIDIAN);
 
         private int xSize;
         private int ySize;

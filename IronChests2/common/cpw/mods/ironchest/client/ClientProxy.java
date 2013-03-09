@@ -26,8 +26,6 @@ public class ClientProxy extends CommonProxy {
     public void registerRenderInformation()
     {
         ChestItemRenderHelper.instance = new IronChestRenderHelper();
-        MinecraftForgeClient.preloadTexture("/cpw/mods/ironchest/sprites/block_textures.png");
-        MinecraftForgeClient.preloadTexture("/cpw/mods/ironchest/sprites/item_textures.png");
     }
 
     @Override
