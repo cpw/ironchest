@@ -23,10 +23,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -39,9 +41,8 @@ public class BlockIronChest extends BlockContainer {
     public BlockIronChest(int id)
     {
         super(id, Material.iron);
-        setBlockName("IronChest");
+        setUnlocalizedName("IronChest");
         setHardness(3.0F);
-        setRequiresSelfNotify();
         setBlockBounds(0.0625F, 0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
         random = new Random();
         setCreativeTab(CreativeTabs.tabDecorations);
@@ -78,50 +79,50 @@ public class BlockIronChest extends BlockContainer {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int metadata)
+    public TileEntity createTileEntity(World world, int metadata)
     {
         return IronChestType.makeEntity(metadata);
     }
 
-    public int getBlockTexture(IBlockAccess worldAccess, int i, int j, int k, int l)
-    {
-        int meta = worldAccess.getBlockMetadata(i, j, k);
-        IronChestType type = IronChestType.values()[meta];
-        TileEntity te = worldAccess.getBlockTileEntity(i, j, k);
-        TileEntityIronChest icte = null;
-        if (te != null && te instanceof TileEntityIronChest)
-        {
-            icte = (TileEntityIronChest) te;
-        }
-        if (l == 0 || l == 1)
-        { // Top and Bottom
-            return type.getTextureRow() * 16 + 1;
-        }
-        else if (icte != null && l == icte.getFacing())
-        { // Front
-            return type.getTextureRow() * 16 + 2;
-        }
-        else
-        { // Back and Sides
-            return type.getTextureRow() * 16;
-        }
-    }
+//    public Icon getBlockTexture(IBlockAccess worldAccess, int i, int j, int k, int l)
+//    {
+//        int meta = worldAccess.getBlockMetadata(i, j, k);
+//        IronChestType type = IronChestType.values()[meta];
+//        TileEntity te = worldAccess.getBlockTileEntity(i, j, k);
+//        TileEntityIronChest icte = null;
+//        if (te != null && te instanceof TileEntityIronChest)
+//        {
+//            icte = (TileEntityIronChest) te;
+//        }
+//        if (l == 0 || l == 1)
+//        { // Top and Bottom
+//            return type.getTextureRow() * 16 + 1;
+//        }
+//        else if (icte != null && l == icte.getFacing())
+//        { // Front
+//            return type.getTextureRow() * 16 + 2;
+//        }
+//        else
+//        { // Back and Sides
+//            return type.getTextureRow() * 16;
+//        }
+//    }
 
-    @Override
-    public int getBlockTextureFromSideAndMetadata(int i, int j)
-    {
-        IronChestType typ = IronChestType.values()[j];
-        switch (i)
-        {
-        case 0:
-        case 1:
-            return typ.getTextureRow() * 16 + 1;
-        case 3:
-            return typ.getTextureRow() * 16 + 2;
-        default:
-            return typ.getTextureRow() * 16;
-        }
-    }
+//    @Override
+//    public Icon getBlockTextureFromSideAndMetadata(int i, int j)
+//    {
+//        IronChestType typ = IronChestType.values()[j];
+//        switch (i)
+//        {
+//        case 0:
+//        case 1:
+//            return typ.getTextureRow() * 16 + 1;
+//        case 3:
+//            return typ.getTextureRow() * 16 + 2;
+//        default:
+//            return typ.getTextureRow() * 16;
+//        }
+//    }
 
     @Override
     public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int i1, float f1, float f2, float f3)
@@ -155,7 +156,7 @@ public class BlockIronChest extends BlockContainer {
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving)
+    public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving, ItemStack itemStack)
     {
         byte chestFacing = 0;
         int facing = MathHelper.floor_double((double) ((entityliving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
@@ -263,4 +264,11 @@ public class BlockIronChest extends BlockContainer {
        }
        return super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
+    @Override
+    public int func_94328_b_(World par1World, int par2, int par3, int par4, int par5)
+    {
+        return Container.func_94526_b((TileEntityIronChest) par1World.getBlockTileEntity(par2, par3, par4));
+    }
+
+
 }

@@ -339,7 +339,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     }
 
     @Override
-    public void receiveClientEvent(int i, int j)
+    public boolean receiveClientEvent(int i, int j)
     {
         if (i == 1)
         {
@@ -354,6 +354,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
             facing = (byte) (j & 0x7);
             numUsingPlayers = (j & 0xF8) >> 3;
         }
+        return true;
     }
 
     @Override
@@ -495,5 +496,19 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     public void setMaxStackSize(int size)
     {
 
+    }
+
+    @Override
+    public boolean func_94041_b(int i, ItemStack itemstack)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean func_94042_c()
+    {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

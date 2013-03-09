@@ -10,6 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -18,6 +19,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemChestChanger extends Item {
 
@@ -28,9 +31,15 @@ public class ItemChestChanger extends Item {
         super(id);
         setMaxStackSize(1);
         this.type = type;
-        setIconIndex(type.ordinal());
-        setItemName(type.itemName);
+        setUnlocalizedName(type.itemName);
         setCreativeTab(CreativeTabs.tabMisc);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void func_94581_a(IconRegister par1IconRegister)
+    {
+        this.iconIndex = par1IconRegister.func_94245_a("ironchest:"+type.itemName);
     }
 
     @Override
@@ -73,31 +82,23 @@ public class ItemChestChanger extends Item {
                 chestContents[i] = null;
             }
             // Clear the old block out
-            world.setBlockWithNotify(X, Y, Z, 0);
+            world.setBlockAndMetadataWithNotify(X, Y, Z, 0, 0, 3);
             // Force the Chest TE to reset it's knowledge of neighbouring blocks
             tec.updateContainingBlockInfo();
             // Force the Chest TE to update any neighbours so they update next
             // tick
             tec.checkForAdjacentChests();
             // And put in our block instead
-            world.setBlockWithNotify(X, Y, Z, block.blockID);
+            world.setBlockAndMetadataWithNotify(X, Y, Z, block.blockID, newchest.getType().ordinal(), 3);
         }
         else
         {
             return false;
         }
         world.setBlockTileEntity(X, Y, Z, newchest);
-        world.setBlockMetadataWithNotify(X, Y, Z, newchest.getType().ordinal());
-        world.notifyBlocksOfNeighborChange(X, Y, Z, world.getBlockId(X, Y, Z));
-        world.markBlockForUpdate(X, Y, Z);
+        world.setBlockMetadataWithNotify(X, Y, Z, newchest.getType().ordinal(), 3);
         stack.stackSize = 0;
         return true;
-    }
-
-    @Override
-    public String getTextureFile()
-    {
-        return "/cpw/mods/ironchest/sprites/item_textures.png";
     }
 
     public int getTargetChestOrdinal(int sourceOrdinal)

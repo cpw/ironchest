@@ -73,11 +73,11 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
         renderBlocks = new RenderBlocks();
         itemRenderer = new RenderItem() {
             @Override
-            public byte getMiniBlockCountForItemStack(ItemStack stack) {
+            public byte getMiniBlockCount(ItemStack stack) {
                 return SignedBytes.saturatedCast(Math.min(stack.stackSize / 32, 15) + 1);
             }
             @Override
-            public byte getMiniItemCountForItemStack(ItemStack stack) {
+            public byte getMiniItemCount(ItemStack stack) {
                 return SignedBytes.saturatedCast(Math.min(stack.stackSize / 32, 7) + 1);
             }
             @Override
@@ -168,7 +168,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
                 glTranslatef(shiftX, shiftY, shiftZ);
                 glRotatef(timeD, 0.0F, 1.0F, 0.0F);
                 glScalef(blockScale, blockScale, blockScale);
-                customitem.func_92058_a(item);
+                customitem.setEntityItemStack(item);
                 itemRenderer.doRenderItem(customitem, 0, 0, 0, 0, 0);
                 glPopMatrix();
             }
