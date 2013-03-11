@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>mods.cpw</groupId>
+  <artifactId>ironchest</artifactId>
+  <version>5.2.0</version>
+  <name>ironchest</name>
+  <url>https://github.com/cpw/ironchest</url>
+
+  <parent>
+    <groupId>net.md-5</groupId>
+    <artifactId>ForgeMod</artifactId>
+    <version>1.5-7.7.0-SNAPSHOT</version>
+  </parent>
+
+  <repositories>
+    <repository>
+      <id>sonatype-oss-public</id>
+      <url>https://oss.sonatype.org/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <build>
+    <sourceDirectory>${basedir}/common</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>${basedir}/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+</project>
