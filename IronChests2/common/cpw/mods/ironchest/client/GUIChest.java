@@ -75,7 +75,7 @@ public class GUIChest extends GuiContainer {
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         // new "bind tex"
-        mc.renderEngine.func_98187_b(type.guiTexture);
+        mc.renderEngine.bindTexture(type.guiTexture);
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);

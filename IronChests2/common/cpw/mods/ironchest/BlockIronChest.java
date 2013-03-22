@@ -59,12 +59,6 @@ public class BlockIronChest extends BlockContainer {
     }
 
     @Override
-    public String getTextureFile()
-    {
-        return "/cpw/mods/ironchest/sprites/block_textures.png";
-    }
-
-    @Override
     public boolean isOpaqueCube()
     {
         return false;
@@ -264,8 +258,10 @@ public class BlockIronChest extends BlockContainer {
        }
        return super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
+
+
     @Override
-    public int func_94328_b_(World par1World, int par2, int par3, int par4, int par5)
+    public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
     {
         return Container.func_94526_b((TileEntityIronChest) par1World.getBlockTileEntity(par2, par3, par4));
     }
@@ -273,7 +269,7 @@ public class BlockIronChest extends BlockContainer {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
         for (IronChestType typ: IronChestType.values())
         {

@@ -35,11 +35,12 @@ public class ItemChestChanger extends Item {
         setCreativeTab(CreativeTabs.tabMisc);
     }
 
+
     @Override
     @SideOnly(Side.CLIENT)
-    public void func_94581_a(IconRegister par1IconRegister)
+    public void updateIcons(IconRegister par1IconRegister)
     {
-        this.iconIndex = par1IconRegister.func_94245_a("ironchest:"+type.itemName);
+        this.iconIndex = par1IconRegister.registerIcon("ironchest:"+type.itemName);
     }
 
     @Override
@@ -82,14 +83,14 @@ public class ItemChestChanger extends Item {
                 chestContents[i] = null;
             }
             // Clear the old block out
-            world.setBlockAndMetadataWithNotify(X, Y, Z, 0, 0, 3);
+            world.setBlock(X, Y, Z, 0, 0, 3);
             // Force the Chest TE to reset it's knowledge of neighbouring blocks
             tec.updateContainingBlockInfo();
             // Force the Chest TE to update any neighbours so they update next
             // tick
             tec.checkForAdjacentChests();
             // And put in our block instead
-            world.setBlockAndMetadataWithNotify(X, Y, Z, block.blockID, newchest.getType().ordinal(), 3);
+            world.setBlock(X, Y, Z, block.blockID, newchest.getType().ordinal(), 3);
         }
         else
         {

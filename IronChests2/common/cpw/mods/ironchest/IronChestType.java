@@ -215,7 +215,7 @@ public enum IronChestType {
             int i = 0;
             for (String s : sideNames)
             {
-                icons[i++] = par1IconRegister.func_94245_a(String.format("ironchest:%s_%s",name().toLowerCase(),s));
+                icons[i++] = par1IconRegister.registerIcon(String.format("ironchest:%s_%s",name().toLowerCase(),s));
             }
         }
     }
