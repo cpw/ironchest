@@ -25,6 +25,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraftforge.common.ForgeDirection;
 
 public class TileEntityIronChest extends TileEntity implements IInventory {
     private int ticksSinceSync = -1;
@@ -508,5 +509,11 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     public boolean isInvNameLocalized()
     {
         return false;
+    }
+
+    void rotateAround(ForgeDirection axis)
+    {
+        setFacing((byte)ForgeDirection.getOrientation(facing).getRotation(axis).ordinal());
+        worldObj.addBlockEvent(xCoord, yCoord, zCoord, IronChest.ironChestBlock.blockID, 2, getFacing());
     }
 }

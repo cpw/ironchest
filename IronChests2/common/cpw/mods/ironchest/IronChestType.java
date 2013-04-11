@@ -98,13 +98,15 @@ public enum IronChestType {
     {
     }
 
-    public static void generateTieredRecipes(BlockIronChest blockResult)
+    public static void registerBlocksAndRecipes(BlockIronChest blockResult)
     {
         ItemStack previous = new ItemStack(Block.chest);
         for (IronChestType typ : values())
         {
             generateRecipesForType(blockResult, previous, typ);
-            if (typ.tieredChest) previous = new ItemStack(blockResult, 1, typ.ordinal());
+            ItemStack chest = new ItemStack(blockResult, 1, typ.ordinal());
+            if (typ.isValidForCreativeMode()) GameRegistry.registerCustomItemStack(typ.friendlyName, chest);
+            if (typ.tieredChest) previous = chest;
         }
     }
 

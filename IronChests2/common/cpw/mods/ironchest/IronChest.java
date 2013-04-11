@@ -82,7 +82,7 @@ public class IronChest {
         {
             LanguageRegistry.instance().addStringLocalization("item." + typ.itemName + ".name", "en_US", typ.descriptiveName);
         }
-        IronChestType.generateTieredRecipes(ironChestBlock);
+        IronChestType.registerBlocksAndRecipes(ironChestBlock);
         ChestChangerType.generateRecipes();
         NetworkRegistry.instance().registerGuiHandler(instance, proxy);
         proxy.registerRenderInformation();

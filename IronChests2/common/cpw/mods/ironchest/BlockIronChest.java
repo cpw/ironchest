@@ -11,6 +11,7 @@
 package cpw.mods.ironchest;
 
 import java.util.List;
+
 import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
@@ -34,6 +35,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import static net.minecraftforge.common.ForgeDirection.*;
 
 public class BlockIronChest extends BlockContainer {
 
@@ -108,7 +110,7 @@ public class BlockIronChest extends BlockContainer {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public Icon getBlockTextureFromSideAndMetadata(int i, int j)
+    public Icon getIcon(int i, int j)
     {
         if (j < IronChestType.values().length)
         {
@@ -275,5 +277,31 @@ public class BlockIronChest extends BlockContainer {
         {
             typ.makeIcons(par1IconRegister);
         }
+    }
+
+    private static final ForgeDirection[] validRotationAxes = new ForgeDirection[] { UP, DOWN };
+    @Override
+    public ForgeDirection[] getValidRotations(World worldObj, int x, int y, int z)
+    {
+        return validRotationAxes;
+    }
+
+    @Override
+    public boolean rotateBlock(World worldObj, int x, int y, int z, ForgeDirection axis)
+    {
+        if (worldObj.isRemote)
+        {
+            return false;
+        }
+        if (axis == UP || axis == DOWN)
+        {
+            TileEntity tileEntity = worldObj.getBlockTileEntity(x, y, z);
+            if (tileEntity instanceof TileEntityIronChest) {
+                TileEntityIronChest icte = (TileEntityIronChest) tileEntity;
+                icte.rotateAround(axis);
+            }
+            return true;
+        }
+        return false;
     }
 }
