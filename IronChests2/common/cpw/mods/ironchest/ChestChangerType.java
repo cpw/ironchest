@@ -60,7 +60,7 @@ public enum ChestChangerType {
 
     public ItemChestChanger buildItem(Configuration cfg, int id)
     {
-        int itemId = cfg.get(Configuration.CATEGORY_ITEM, itemName, id).getInt(id);
+        int itemId = cfg.getItem(itemName, id).getInt(id);
         item = new ItemChestChanger(itemId, this);
         GameRegistry.registerItem(item, itemName);
         return item;
