@@ -10,12 +10,11 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import static net.minecraftforge.common.ForgeDirection.DOWN;
+import static net.minecraftforge.common.ForgeDirection.UP;
+
 import java.util.List;
-
 import java.util.Random;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -32,10 +31,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import static net.minecraftforge.common.ForgeDirection.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockIronChest extends BlockContainer {
 
@@ -265,7 +264,7 @@ public class BlockIronChest extends BlockContainer {
     @Override
     public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
     {
-        return Container.func_94526_b((TileEntityIronChest) par1World.getBlockTileEntity(par2, par3, par4));
+        return Container.calcRedstoneFromInventory((TileEntityIronChest) par1World.getBlockTileEntity(par2, par3, par4));
     }
 
 
