@@ -272,7 +272,7 @@ public class BlockIronChest extends BlockContainer {
     public boolean hasComparatorInputOverride() 
     {
         return true;
-    };
+    }
 
     @Override
     @SideOnly(Side.CLIENT)
