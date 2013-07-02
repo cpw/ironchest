@@ -36,6 +36,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -46,6 +47,8 @@ import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.opengl.GL11;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMap.Builder;
 import com.google.common.primitives.SignedBytes;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -57,6 +60,14 @@ import cpw.mods.ironchest.TileEntityIronChest;
 public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
     private static Map<MappableItemStackWrapper, Integer> renderList = new HashMap<MappableItemStackWrapper, Integer>();
 
+    private static Map<IronChestType, ResourceLocation> locations;
+    static {
+        Builder<IronChestType, ResourceLocation> builder = ImmutableMap.<IronChestType,ResourceLocation>builder();
+        for (IronChestType typ : IronChestType.values()) {
+            builder.put(typ, new ResourceLocation("ironchest","textures/model/"+typ.getModelTexture()));
+        }
+        locations = builder.build();
+    }
     private Random random;
 
     private RenderBlocks renderBlocks;
@@ -104,7 +115,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
             int typ = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
             type = IronChestType.values()[typ];
         }
-        bindTextureByName(type.getModelTexture());
+        func_110628_a(locations.get(type));
         glPushMatrix();
         glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
         glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

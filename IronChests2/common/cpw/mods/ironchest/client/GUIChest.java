@@ -11,6 +11,7 @@
 package cpw.mods.ironchest.client;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 
@@ -21,26 +22,38 @@ import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 
 public class GUIChest extends GuiContainer {
+    public enum ResourceList {
+        IRON(new ResourceLocation("ironchest", "textures/gui/ironcontainer.png")),
+        COPPER(new ResourceLocation("ironchest", "textures/gui/coppercontainer.png")),
+        SILVER(new ResourceLocation("ironchest", "textures/gui/silvercontainer.png")),
+        GOLD(new ResourceLocation("ironchest", "textures/gui/goldcontainer.png")),
+        DIAMOND(new ResourceLocation("ironchest", "textures/gui/diamondcontainer.png"));
+        public final ResourceLocation location;
+        private ResourceList(ResourceLocation loc) {
+            this.location = loc;
+        }
+    }
     public enum GUI {
-        IRON(184, 202, "/mods/ironchest/textures/gui/ironcontainer.png", IronChestType.IRON),
-        GOLD(184, 256, "/mods/ironchest/textures/gui/goldcontainer.png", IronChestType.GOLD),
-        DIAMOND(238, 256, "/mods/ironchest/textures/gui/diamondcontainer.png", IronChestType.DIAMOND),
-        COPPER(184, 184, "/mods/ironchest/textures/gui/coppercontainer.png", IronChestType.COPPER),
-        SILVER(184, 238, "/mods/ironchest/textures/gui/silvercontainer.png", IronChestType.SILVER),
-        CRYSTAL(238, 256, "/mods/ironchest/textures/gui/diamondcontainer.png", IronChestType.CRYSTAL),
-        OBSIDIAN(238, 256, "/mods/ironchest/textures/gui/diamondcontainer.png", IronChestType.OBSIDIAN);
+        IRON(184, 202, ResourceList.IRON, IronChestType.IRON),
+        GOLD(184, 256, ResourceList.GOLD, IronChestType.GOLD),
+        DIAMOND(238, 256, ResourceList.DIAMOND, IronChestType.DIAMOND),
+        COPPER(184, 184, ResourceList.COPPER, IronChestType.COPPER),
+        SILVER(184, 238, ResourceList.SILVER, IronChestType.SILVER),
+        CRYSTAL(238, 256, ResourceList.DIAMOND, IronChestType.CRYSTAL),
+        OBSIDIAN(238, 256, ResourceList.DIAMOND, IronChestType.OBSIDIAN);
 
         private int xSize;
         private int ySize;
-        private String guiTexture;
+        private ResourceList guiResourceList;
         private IronChestType mainType;
 
-        private GUI(int xSize, int ySize, String guiTexture, IronChestType mainType)
+        private GUI(int xSize, int ySize, ResourceList guiResourceList, IronChestType mainType)
         {
             this.xSize = xSize;
             this.ySize = ySize;
-            this.guiTexture = guiTexture;
+            this.guiResourceList = guiResourceList;
             this.mainType = mainType;
+
         }
 
         protected Container makeContainer(IInventory player, IInventory chest)
@@ -75,7 +88,7 @@ public class GUIChest extends GuiContainer {
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         // new "bind tex"
-        mc.renderEngine.bindTexture(type.guiTexture);
+        this.mc.func_110434_K().func_110577_a(type.guiResourceList.location);
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);

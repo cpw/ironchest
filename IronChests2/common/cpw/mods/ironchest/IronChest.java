@@ -18,6 +18,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
@@ -43,7 +44,7 @@ public class IronChest {
     public static boolean OCELOTS_SITONCHESTS = true;
     private int blockId;
 
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         Version.init(event.getVersionProperties());
@@ -63,15 +64,16 @@ public class IronChest {
         }
         finally
         {
-            cfg.save();
+            if (cfg.hasChanged())
+                cfg.save();
         }
-    }
-
-    @Init
-    public void load(FMLInitializationEvent evt)
-    {
         ironChestBlock = new BlockIronChest(blockId);
         GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
+    }
+
+    @EventHandler
+    public void load(FMLInitializationEvent evt)
+    {
         for (IronChestType typ : IronChestType.values())
         {
             GameRegistry.registerTileEntityWithAlternatives(typ.clazz, "IronChest."+typ.name(), typ.name());
@@ -93,7 +95,7 @@ public class IronChest {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    @PostInit
+    @EventHandler
     public void modsLoaded(FMLPostInitializationEvent evt)
     {
     }
