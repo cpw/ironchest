@@ -70,9 +70,9 @@ public class ContainerIronChestBase extends Container {
     }
 
     @Override
-    public void onCraftGuiClosed(EntityPlayer entityplayer)
+    public void onContainerClosed(EntityPlayer entityplayer)
     {
-        super.onCraftGuiClosed(entityplayer);
+        super.onContainerClosed(entityplayer);
         chest.closeChest();
     }
 
