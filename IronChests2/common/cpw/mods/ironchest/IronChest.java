@@ -72,12 +72,7 @@ public class IronChest {
         for (IronChestType typ : IronChestType.values())
         {
             GameRegistry.registerTileEntityWithAlternatives(typ.clazz, "IronChest."+typ.name(), typ.name());
-            LanguageRegistry.instance().addStringLocalization(typ.name() + ".name", "en_US", typ.friendlyName);
             proxy.registerTileEntitySpecialRenderer(typ);
-        }
-        for (ChestChangerType typ : ChestChangerType.values())
-        {
-            LanguageRegistry.instance().addStringLocalization("item." + typ.itemName + ".name", "en_US", typ.descriptiveName);
         }
         IronChestType.registerBlocksAndRecipes(ironChestBlock);
         ChestChangerType.generateRecipes();

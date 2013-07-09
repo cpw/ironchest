@@ -31,7 +31,7 @@ public class ItemChestChanger extends Item {
         super(id);
         setMaxStackSize(1);
         this.type = type;
-        setUnlocalizedName(type.itemName);
+        setUnlocalizedName("ironchest:"+type.name());
         setCreativeTab(CreativeTabs.tabMisc);
     }
 

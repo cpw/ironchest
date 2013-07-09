@@ -1,0 +1,17 @@
+tile.ironchest:IRON.name=Iron Chest
+tile.ironchest:GOLD.name=Gold Chest
+tile.ironchest:DIAMOND.name=Diamond Chest
+tile.ironchest:COPPER.name=Copper Chest
+tile.ironchest:SILVER.name=Silver Chest
+tile.ironchest:CRYSTAL.name=Crystal Chest
+tile.ironchest:OBSIDIAN.name=Obsidian Chest
+
+item.ironchest:IRONGOLD.name=Iron to Gold Chest Upgrade
+item.ironchest:GOLDDIAMOND.name=Gold to Diamond Chest Upgrade
+item.ironchest:COPPERSILVER.name=Copper to Silver Chest Upgrade
+item.ironchest:SILVERGOLD.name=Silver to Gold Chest Upgrade
+item.ironchest:COPPERIRON.name=Copper to Iron Chest Upgrade
+item.ironchest:DIAMONDCRYSTAL.name=Diamond to Crystal Chest Upgrade
+item.ironchest:WOODIRON.name=Wood to Iron Chest Upgrade
+item.ironchest:WOODCOPPER.name=Wood to Copper Chest Upgrade
+item.ironchest:DIAMONDOBSIDIAN.name=Diamond to Obsidian Chest Upgrade
