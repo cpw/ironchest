@@ -108,6 +108,8 @@
       </mappedresources>
       <fileset dir="${resource.dir}" erroronmissingdir="false">
 	    <filename name="**/*.png" />
+	    <filename name="**/*.mcmeta" />
+	    <filename name="**/*.lang" />
       </fileset>
     </jar>
   </target>
