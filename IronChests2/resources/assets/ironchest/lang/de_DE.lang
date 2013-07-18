@@ -1,0 +1,17 @@
+tile.ironchest:IRON.name=Eisenkiste
+tile.ironchest:GOLD.name=Goldkiste
+tile.ironchest:DIAMOND.name=Diamantkiste
+tile.ironchest:COPPER.name=Kufperkiste
+tile.ironchest:SILVER.name=Silberkiste
+tile.ironchest:CRYSTAL.name=Kristallkiste
+tile.ironchest:OBSIDIAN.name=Obsidiankiste
+
+item.ironchest:IRONGOLD.name=Eisen zu Goldkisten Upgrade
+item.ironchest:GOLDDIAMOND.name=Gold zu Diamantkisten Upgrade
+item.ironchest:COPPERSILVER.name=Kupfer zu Silberkisten Upgrade
+item.ironchest:SILVERGOLD.name=Silber zu Goldkisten Upgrade
+item.ironchest:COPPERIRON.name=Kupfer zu Eisenkisten Upgrade
+item.ironchest:DIAMONDCRYSTAL.name=Diamant zu Kristallkisten Upgrade
+item.ironchest:WOODIRON.name=Holz zu Eisenkisten Upgrade
+item.ironchest:WOODCOPPER.name=Holz zu Kupferkisten Upgrade
+item.ironchest:DIAMONDOBSIDIAN.name=Diamant zu Obsidiankisten Upgrade
