@@ -51,7 +51,7 @@ public enum IronChestType {
         this.rowLength = rowLength;
         this.tieredChest = tieredChest;
         this.friendlyName = friendlyName;
-        this.modelTexture = "/mods/ironchest/textures/model/" + modelTexture;
+        this.modelTexture = modelTexture;
         this.textureRow = textureRow;
         this.clazz = clazz;
         this.recipes = recipes;

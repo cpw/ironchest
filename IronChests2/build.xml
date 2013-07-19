@@ -107,7 +107,9 @@
         <mergemapper to="mcmod.info" />
       </mappedresources>
       <fileset dir="${resource.dir}" erroronmissingdir="false">
-	    <filename name="**/*.png" />
+	    <include name="**/*.png" />
+	    <include name="**/*.mcmeta" />
+	    <include name="**/*.lang" />
       </fileset>
     </jar>
   </target>

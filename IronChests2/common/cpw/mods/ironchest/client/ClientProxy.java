@@ -10,6 +10,8 @@
  ******************************************************************************/
 package cpw.mods.ironchest.client;
 
+import java.util.Map;
+
 import net.minecraft.client.renderer.ChestItemRenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
