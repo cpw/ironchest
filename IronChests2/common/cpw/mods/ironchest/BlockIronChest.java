@@ -269,6 +269,11 @@ public class BlockIronChest extends BlockContainer {
         return Container.calcRedstoneFromInventory((TileEntityIronChest) par1World.getBlockTileEntity(par2, par3, par4));
     }
 
+    @Override
+    public boolean hasComparatorInputOverride() 
+    {
+        return true;
+    }
 
     @Override
     @SideOnly(Side.CLIENT)
