@@ -1,0 +1,17 @@
+tile.ironchest:IRON.name=Železná truhla
+tile.ironchest:GOLD.name=Zlatá truhla
+tile.ironchest:DIAMOND.name=Diamantová truhla
+tile.ironchest:COPPER.name=Měděná truhla
+tile.ironchest:SILVER.name=Stříbrná truhla
+tile.ironchest:CRYSTAL.name=Krystalová truhla
+tile.ironchest:OBSIDIAN.name=Obsidiánová truhla
+
+item.ironchest:IRONGOLD.name=Vylepšení železné truhly na zlatou
+item.ironchest:GOLDDIAMOND.name=Vylepšení zlaté truhly na diamantovou
+item.ironchest:COPPERSILVER.name=Vylepšení měděné truhly na stříbrnou
+item.ironchest:SILVERGOLD.name=Vylepšení stříbrné truhly na zlatou
+item.ironchest:COPPERIRON.name=Vylepšení měděné truhly na železnou
+item.ironchest:DIAMONDCRYSTAL.name=Vylepšení diamantové truhly na krystalovou
+item.ironchest:WOODIRON.name=Vylepšení dřevěné truhly na železnou
+item.ironchest:WOODCOPPER.name=Vylepšení dřevěné truhly na měděnou
+item.ironchest:DIAMONDOBSIDIAN.name=Vylepšení diamantové truhly na obsidiánovou
