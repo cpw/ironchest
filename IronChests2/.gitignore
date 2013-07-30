@@ -1,7 +1,15 @@
+# eclipse
+bin
+
+#gradle
+build
+.gradle
+minecraft
+
+#ant and other
+/target
 *.zip
 /*.jpage
-bin/
-/target
 /build.properties
 /build
 /ironchestversion.properties
