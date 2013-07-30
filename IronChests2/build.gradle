@@ -1,0 +1,97 @@
+//import com.github.abrarsyed.gmcp.GMCP
+// this is required for adding obfuscated jar classes.
+
+buildscript {
+	repositories { mavenCentral() }
+	dependencies { classpath 'com.github.abrarsyed.gmcp:GMCP:0.6.2' }
+}
+
+// these 3 plugins are added automatically by GMCP
+//apply plugin: "java"
+//apply plugin: "eclipse"
+//apply plugin: "idea"
+apply plugin: "gmcp"
+
+group = 'cpw.mods.ironchest'
+
+// runs every build.
+def versionInfo = getVersion()
+version = versionInfo.values().join('.')
+
+archivesBaseName = 'IronChests'
+minecraft.minecraftVersion = '1.6.2'
+
+processResources{
+	exclude '**/*.xcf'
+
+	// specify a sub-filter so that it doesn't try to replace stuff in images.
+	// unfortunately it doesnt know the difference between text and binary files.
+	with {
+		exclude '**/*.png'
+		expand version: version, mcversion: minecraft.minecraftVersion
+	}
+	
+	// generate version properties file
+	doLast {
+		def file = new File(destinationDir, 'version.properties')
+		def properties = new Properties()
+		
+		properties.putAll(versionInfo)
+		properties['IronChest.build.mcversion'] = project.minecraft.minecraftVersion
+		
+		properties.store(file.newWriter(), '')
+	}
+}
+
+jar { appendix = 'universal' }
+
+task sourceJar(type: Jar) {
+	from sourceSets.main.allSource
+	appendix = 'src'
+}
+
+// has errors for some reason....
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	appendix = 'javadoc'
+	from 'build/docs/javadoc'
+}
+
+// because the normal default jar task has been modified to be obfuscated
+task deobfJar(type: Jar) {
+	from sourceSets.main.output
+	appendix = 'deobf'
+}
+
+artifacts {
+	archives sourceJar
+	archives deobfJar
+	archives javadocJar
+}
+
+// wrapper
+task wrapper(type: Wrapper){ gradleVersion = '1.6' }
+
+// version
+def getVersion()
+{
+	def out = [:]
+
+	// call git command.
+	def outStream = new ByteArrayOutputStream()
+	def result = exec {
+		executable = 'git'
+		args = ['describe', '--long']
+		//args = [ 'describe', '--long', "--match='[^(jenkins)]*'"]
+		standardOutput = outStream
+	}
+
+	def fullVersion = outStream.toString().trim()
+	def matcher = fullVersion =~ /(\d+).(\d+)-(\d+)-(.*)/
+
+	out['IronChest.build.major.number'] = matcher[0][1]
+	out['IronChest.build.minor.number'] = matcher[0][2]
+	out['IronChest.build.revision.number'] = matcher[0][3]
+	out['IronChest.build.githash'] = matcher[0][4]
+
+	return out
+}
