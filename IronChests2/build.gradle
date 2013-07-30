@@ -88,10 +88,10 @@ def getVersion()
 	def fullVersion = outStream.toString().trim()
 	def matcher = fullVersion =~ /(\d+).(\d+)-(\d+)-(.*)/
 
-	out['IronChest.build.major.number'] = matcher[0][0]
-	out['IronChest.build.minor.number'] = matcher[0][1]
-	out['IronChest.build.revision.number'] = matcher[0][2]
-	out['IronChest.build.githash'] = matcher[0][3]
+	out['IronChest.build.major.number'] = matcher[0][1]
+	out['IronChest.build.minor.number'] = matcher[0][2]
+	out['IronChest.build.revision.number'] = matcher[0][3]
+	out['IronChest.build.githash'] = matcher[0][4]
 
 	return out
 }
