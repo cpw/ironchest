@@ -1,0 +1,17 @@
+tile.ironchest:IRON.name=Jern Kiste
+tile.ironchest:GOLD.name=Guld Kiste
+tile.ironchest:DIAMOND.name=Diamand Kiste
+tile.ironchest:COPPER.name=Kobber Kiste
+tile.ironchest:SILVER.name=Sølv Kiste
+tile.ironchest:CRYSTAL.name=Krystal Kiste
+tile.ironchest:OBSIDIAN.name=Obsidian Kiste
+
+item.ironchest:IRONGOLD.name=Jern til Guld Kiste Upgradering
+item.ironchest:GOLDDIAMOND.name=Guld til Diamand Kiste Upgradering
+item.ironchest:COPPERSILVER.name=Kobber til Sølv Kiste Upgradering
+item.ironchest:SILVERGOLD.name=Sølv til Guld Kiste Upgradering
+item.ironchest:COPPERIRON.name=Kobber til Jern Kiste Upgradering
+item.ironchest:DIAMONDCRYSTAL.name=Diamand til Krystal Kiste Upgradering
+item.ironchest:WOODIRON.name=Træ til Jern Kiste Upgradering
+item.ironchest:WOODCOPPER.name=Træ til Kobber Kiste Upgradering
+item.ironchest:DIAMONDOBSIDIAN.name=Diamand til Obsidian Kiste Upgradering
