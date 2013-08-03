@@ -10,13 +10,10 @@
  ******************************************************************************/
 package cpw.mods.ironchest.client;
 
-import java.util.Map;
-
 import net.minecraft.client.renderer.ChestItemRenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.ironchest.CommonProxy;

@@ -7,19 +7,17 @@
 package cpw.mods.ironchest;
 
 import static cpw.mods.ironchest.IronChestType.COPPER;
+import static cpw.mods.ironchest.IronChestType.CRYSTAL;
 import static cpw.mods.ironchest.IronChestType.DIAMOND;
 import static cpw.mods.ironchest.IronChestType.GOLD;
 import static cpw.mods.ironchest.IronChestType.IRON;
-import static cpw.mods.ironchest.IronChestType.SILVER;
-import static cpw.mods.ironchest.IronChestType.CRYSTAL;
-import static cpw.mods.ironchest.IronChestType.WOOD;
 import static cpw.mods.ironchest.IronChestType.OBSIDIAN;
-import cpw.mods.fml.common.registry.GameRegistry;
-
+import static cpw.mods.ironchest.IronChestType.SILVER;
+import static cpw.mods.ironchest.IronChestType.WOOD;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public enum ChestChangerType {
     IRONGOLD(IRON, GOLD, "ironGoldUpgrade", "Iron to Gold Chest Upgrade", "mmm", "msm", "mmm"),
