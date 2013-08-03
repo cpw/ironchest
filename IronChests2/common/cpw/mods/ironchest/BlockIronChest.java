@@ -10,17 +10,18 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import static net.minecraftforge.common.ForgeDirection.DOWN;
+import static net.minecraftforge.common.ForgeDirection.UP;
+
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -30,13 +31,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockIronChest extends BlockContainer {
 
     private Random random;
+
+    @SideOnly(Side.CLIENT)
+    private Icon[][] icons;
 
     public BlockIronChest(int id)
     {
@@ -52,12 +57,6 @@ public class BlockIronChest extends BlockContainer {
     public TileEntity createNewTileEntity(World w)
     {
         return null;
-    }
-
-    @Override
-    public String getTextureFile()
-    {
-        return "/cpw/mods/ironchest/sprites/block_textures.png";
     }
 
     @Override
@@ -108,21 +107,17 @@ public class BlockIronChest extends BlockContainer {
 //        }
 //    }
 
-//    @Override
-//    public Icon getBlockTextureFromSideAndMetadata(int i, int j)
-//    {
-//        IronChestType typ = IronChestType.values()[j];
-//        switch (i)
-//        {
-//        case 0:
-//        case 1:
-//            return typ.getTextureRow() * 16 + 1;
-//        case 3:
-//            return typ.getTextureRow() * 16 + 2;
-//        default:
-//            return typ.getTextureRow() * 16;
-//        }
-//    }
+    @SideOnly(Side.CLIENT)
+    @Override
+    public Icon getIcon(int i, int j)
+    {
+        if (j < IronChestType.values().length)
+        {
+            IronChestType type = IronChestType.values()[j];
+            return type.getIcon(i);
+        }
+        return null;
+    }
 
     @Override
     public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int i1, float f1, float f2, float f3)
@@ -156,7 +151,7 @@ public class BlockIronChest extends BlockContainer {
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving, ItemStack itemStack)
+    public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase entityliving, ItemStack itemStack)
     {
         byte chestFacing = 0;
         int facing = MathHelper.floor_double((double) ((entityliving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
@@ -264,11 +259,48 @@ public class BlockIronChest extends BlockContainer {
        }
        return super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
+
+
     @Override
-    public int func_94328_b_(World par1World, int par2, int par3, int par4, int par5)
+    public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
     {
-        return Container.func_94526_b((TileEntityIronChest) par1World.getBlockTileEntity(par2, par3, par4));
+        return Container.calcRedstoneFromInventory((TileEntityIronChest) par1World.getBlockTileEntity(par2, par3, par4));
     }
 
 
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister)
+    {
+        for (IronChestType typ: IronChestType.values())
+        {
+            typ.makeIcons(par1IconRegister);
+        }
+    }
+
+    private static final ForgeDirection[] validRotationAxes = new ForgeDirection[] { UP, DOWN };
+    @Override
+    public ForgeDirection[] getValidRotations(World worldObj, int x, int y, int z)
+    {
+        return validRotationAxes;
+    }
+
+    @Override
+    public boolean rotateBlock(World worldObj, int x, int y, int z, ForgeDirection axis)
+    {
+        if (worldObj.isRemote)
+        {
+            return false;
+        }
+        if (axis == UP || axis == DOWN)
+        {
+            TileEntity tileEntity = worldObj.getBlockTileEntity(x, y, z);
+            if (tileEntity instanceof TileEntityIronChest) {
+                TileEntityIronChest icte = (TileEntityIronChest) tileEntity;
+                icte.rotateAround(axis);
+            }
+            return true;
+        }
+        return false;
+    }
 }

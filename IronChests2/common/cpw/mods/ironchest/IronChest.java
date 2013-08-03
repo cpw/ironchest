@@ -12,16 +12,12 @@ package cpw.mods.ironchest;
 
 import java.util.logging.Level;
 
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -29,10 +25,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[6.5,);required-after:FML@[4.7.22,)")
-@NetworkMod(channels = { "IronChest" }, versionBounds = "[5.0,)", clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[7.0,);required-after:FML@[5.0.5,)")
+@NetworkMod(channels = { "IronChest" }, versionBounds = "[5.2,)", clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class IronChest {
     public static BlockIronChest ironChestBlock;
     @SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
@@ -43,7 +38,7 @@ public class IronChest {
     public static boolean OCELOTS_SITONCHESTS = true;
     private int blockId;
 
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         Version.init(event.getVersionProperties());
@@ -63,26 +58,22 @@ public class IronChest {
         }
         finally
         {
-            cfg.save();
+            if (cfg.hasChanged())
+                cfg.save();
         }
-    }
-
-    @Init
-    public void load(FMLInitializationEvent evt)
-    {
         ironChestBlock = new BlockIronChest(blockId);
         GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
+    }
+
+    @EventHandler
+    public void load(FMLInitializationEvent evt)
+    {
         for (IronChestType typ : IronChestType.values())
         {
             GameRegistry.registerTileEntityWithAlternatives(typ.clazz, "IronChest."+typ.name(), typ.name());
-            LanguageRegistry.instance().addStringLocalization(typ.name() + ".name", "en_US", typ.friendlyName);
             proxy.registerTileEntitySpecialRenderer(typ);
         }
-        for (ChestChangerType typ : ChestChangerType.values())
-        {
-            LanguageRegistry.instance().addStringLocalization("item." + typ.itemName + ".name", "en_US", typ.descriptiveName);
-        }
-        IronChestType.generateTieredRecipes(ironChestBlock);
+        IronChestType.registerBlocksAndRecipes(ironChestBlock);
         ChestChangerType.generateRecipes();
         NetworkRegistry.instance().registerGuiHandler(instance, proxy);
         proxy.registerRenderInformation();
@@ -93,7 +84,7 @@ public class IronChest {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    @PostInit
+    @EventHandler
     public void modsLoaded(FMLPostInitializationEvent evt)
     {
     }

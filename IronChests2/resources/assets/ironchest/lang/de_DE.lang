@@ -1,0 +1,17 @@
+tile.ironchest:IRON.name=Eisentruhe
+tile.ironchest:GOLD.name=Goldtruhe
+tile.ironchest:DIAMOND.name=Diamanttruhe
+tile.ironchest:COPPER.name=Kupfertruhe
+tile.ironchest:SILVER.name=Silbertruhe
+tile.ironchest:CRYSTAL.name=Kristalltruhe
+tile.ironchest:OBSIDIAN.name=Obsidiantruhe
+
+item.ironchest:IRONGOLD.name=Eisen-zu-Goldtruhen-Upgrade
+item.ironchest:GOLDDIAMOND.name=Gold-zu-Diamanttruhen-Upgrade
+item.ironchest:COPPERSILVER.name=Kupfer-zu-Silbertruhen-Upgrade
+item.ironchest:SILVERGOLD.name=Silber-zu-Goldtruhen-Upgrade
+item.ironchest:COPPERIRON.name=Kupfer-zu-Eisentruhen-Upgrade
+item.ironchest:DIAMONDCRYSTAL.name=Diamant-zu-Kristalltruhen-Upgrade
+item.ironchest:WOODIRON.name=Holz-zu-Eisentruhen-Upgrade
+item.ironchest:WOODCOPPER.name=Holz-zu-Kupfertruhen-Upgrade
+item.ironchest:DIAMONDOBSIDIAN.name=Diamant-zu-Obsidiantruhen-Upgrade

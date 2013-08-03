@@ -12,6 +12,8 @@ package cpw.mods.ironchest;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -20,9 +22,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraftforge.common.ForgeDirection;
 
 public class TileEntityIronChest extends TileEntity implements IInventory {
-    private int ticksSinceSync;
+    private int ticksSinceSync = -1;
     public float prevLidAngle;
     public float lidAngle;
     private int numUsingPlayers;
@@ -267,15 +271,35 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     {
         super.updateEntity();
         // Resynchronize clients with the server state
-        if ((++ticksSinceSync % 20) * 4 == 0)
+        if (worldObj != null && !this.worldObj.isRemote && this.numUsingPlayers != 0 && (this.ticksSinceSync + this.xCoord + this.yCoord + this.zCoord) % 200 == 0)
         {
-            worldObj.addBlockEvent(xCoord, yCoord, zCoord, IronChest.ironChestBlock.blockID, 3, ((numUsingPlayers << 3) & 0xF8) | (facing & 0x7));
-            if (inventoryTouched)
+            this.numUsingPlayers = 0;
+            float var1 = 5.0F;
+            List var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getAABBPool().getAABB((double)((float)this.xCoord - var1), (double)((float)this.yCoord - var1), (double)((float)this.zCoord - var1), (double)((float)(this.xCoord + 1) + var1), (double)((float)(this.yCoord + 1) + var1), (double)((float)(this.zCoord + 1) + var1)));
+            Iterator var3 = var2.iterator();
+
+            while (var3.hasNext())
             {
-                inventoryTouched = false;
-                sortTopStacks();
+                EntityPlayer var4 = (EntityPlayer)var3.next();
+
+                if (var4.openContainer instanceof ContainerIronChestBase)
+                {
+                    ++this.numUsingPlayers;
+                }
             }
         }
+
+        if (worldObj != null && !worldObj.isRemote && ticksSinceSync < 0)
+        {
+            worldObj.addBlockEvent(xCoord, yCoord, zCoord, IronChest.ironChestBlock.blockID, 3, ((numUsingPlayers << 3) & 0xF8) | (facing & 0x7));
+        }
+        if (!worldObj.isRemote && inventoryTouched)
+        {
+            inventoryTouched = false;
+            sortTopStacks();
+        }
+
+        this.ticksSinceSync++;
         prevLidAngle = lidAngle;
         float f = 0.1F;
         if (numUsingPlayers > 0 && lidAngle == 0.0F)
@@ -370,6 +394,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
         block.dropContent(newSize, this, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         newEntity.setFacing(facing);
         newEntity.sortTopStacks();
+        newEntity.ticksSinceSync = -1;
         return newEntity;
     }
 
@@ -473,16 +498,20 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     }
 
     @Override
-    public boolean func_94041_b(int i, ItemStack itemstack)
+    public boolean isItemValidForSlot(int i, ItemStack itemstack)
     {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
-    public boolean func_94042_c()
+    public boolean isInvNameLocalized()
     {
-        // TODO Auto-generated method stub
         return false;
+    }
+
+    void rotateAround(ForgeDirection axis)
+    {
+        setFacing((byte)ForgeDirection.getOrientation(facing).getRotation(axis).ordinal());
+        worldObj.addBlockEvent(xCoord, yCoord, zCoord, IronChest.ironChestBlock.blockID, 2, getFacing());
     }
 }

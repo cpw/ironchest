@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.ChestItemRenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.ironchest.CommonProxy;
@@ -26,8 +25,6 @@ public class ClientProxy extends CommonProxy {
     public void registerRenderInformation()
     {
         ChestItemRenderHelper.instance = new IronChestRenderHelper();
-        MinecraftForgeClient.preloadTexture("/cpw/mods/ironchest/sprites/block_textures.png");
-        MinecraftForgeClient.preloadTexture("/cpw/mods/ironchest/sprites/item_textures.png");
     }
 
     @Override

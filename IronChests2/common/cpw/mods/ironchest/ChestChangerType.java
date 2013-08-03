@@ -7,19 +7,17 @@
 package cpw.mods.ironchest;
 
 import static cpw.mods.ironchest.IronChestType.COPPER;
+import static cpw.mods.ironchest.IronChestType.CRYSTAL;
 import static cpw.mods.ironchest.IronChestType.DIAMOND;
 import static cpw.mods.ironchest.IronChestType.GOLD;
 import static cpw.mods.ironchest.IronChestType.IRON;
-import static cpw.mods.ironchest.IronChestType.SILVER;
-import static cpw.mods.ironchest.IronChestType.CRYSTAL;
-import static cpw.mods.ironchest.IronChestType.WOOD;
 import static cpw.mods.ironchest.IronChestType.OBSIDIAN;
-import cpw.mods.fml.common.registry.GameRegistry;
-
+import static cpw.mods.ironchest.IronChestType.SILVER;
+import static cpw.mods.ironchest.IronChestType.WOOD;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public enum ChestChangerType {
     IRONGOLD(IRON, GOLD, "ironGoldUpgrade", "Iron to Gold Chest Upgrade", "mmm", "msm", "mmm"),
@@ -60,7 +58,7 @@ public enum ChestChangerType {
 
     public ItemChestChanger buildItem(Configuration cfg, int id)
     {
-        int itemId = cfg.get(Configuration.CATEGORY_ITEM, itemName, id).getInt(id);
+        int itemId = cfg.getItem(itemName, id).getInt(id);
         item = new ItemChestChanger(itemId, this);
         GameRegistry.registerItem(item, itemName);
         return item;
