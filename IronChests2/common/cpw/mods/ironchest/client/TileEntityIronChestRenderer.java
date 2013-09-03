@@ -99,7 +99,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
             int typ = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
             type = IronChestType.values()[typ];
         }
-        func_110628_a(locations.get(type));
+        bindTexture(locations.get(type));
         glPushMatrix();
         glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
         glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
