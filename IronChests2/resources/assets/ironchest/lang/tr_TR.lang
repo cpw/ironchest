@@ -1,0 +1,19 @@
+#tr_TR translated by Toltol
+
+tile.ironchest:IRON.name=Demir Sandık
+tile.ironchest:GOLD.name=Altın Sandık
+tile.ironchest:DIAMOND.name=Elmas Sandık
+tile.ironchest:COPPER.name=Bakır Sandık
+tile.ironchest:SILVER.name=Gümüş Sandık
+tile.ironchest:CRYSTAL.name=Kristal Sandık
+tile.ironchest:OBSIDIAN.name=Obsidyen Sandık
+
+item.ironchest:IRONGOLD.name=Demir Sandığı Altın Sandığa Yükselt
+item.ironchest:GOLDDIAMOND.name=Altın Sandığı Elmas Sandığa Yükselt
+item.ironchest:COPPERSILVER.name=Bakır Sandığı Gümüş Sandığa Yükselt
+item.ironchest:SILVERGOLD.name=Gümüş Sandığı Altın Sandığa Yükselt
+item.ironchest:COPPERIRON.name=Bakır Sandığı Demir Sandığa Yükselt
+item.ironchest:DIAMONDCRYSTAL.name=Elmas Sandığı Kristal Sandığa Yükselt
+item.ironchest:WOODIRON.name=Tahta Sandığı Demir Sandığa Yükselt
+item.ironchest:WOODCOPPER.name=Tahta Sandığı Bakır Sandığa Yükselt
+item.ironchest:DIAMONDOBSIDIAN.name=Elmas Sandığı Obsidyen Sandığa Yükselt
