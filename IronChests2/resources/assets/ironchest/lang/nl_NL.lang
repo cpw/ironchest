@@ -1,0 +1,19 @@
+nl_NL translated by TDarkShadowxD
+
+tile.ironchest:IRON.name=Ijzeren Kist
+tile.ironchest:GOLD.name=Gouden Kist
+tile.ironchest:DIAMOND.name=Diamanten Kist
+tile.ironchest:COPPER.name=Koperen Kist
+tile.ironchest:SILVER.name=Zilveren Kist
+tile.ironchest:CRYSTAL.name=Kristallen Kist
+tile.ironchest:OBSIDIAN.name=Obsidiaanen Kist
+
+item.ironchest:IRONGOLD.name=Ijzeren naar Gouden Kist Transformatie
+item.ironchest:GOLDDIAMOND.name=Gouden naar Diamanten Kist Transformatie
+item.ironchest:COPPERSILVER.name=Koperen naar Zilveren Kist Transformatie
+item.ironchest:SILVERGOLD.name=Zilveren naar Gouden Kist Transformatie
+item.ironchest:COPPERIRON.name=Koperen naar Ijzeren Kist Transformatie
+item.ironchest:DIAMONDCRYSTAL.name=Diamanten naar Kristallen Kist Transformatie
+item.ironchest:WOODIRON.name=Houten naar Ijzeren Kist Transformatie
+item.ironchest:WOODCOPPER.name=Houten naar Koperen Kist Transformatie
+item.ironchest:DIAMONDOBSIDIAN.name=Diamanten naar Obsidiaanen Kist Transformatie
