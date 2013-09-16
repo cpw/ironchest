@@ -20,6 +20,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.util.Icon;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -253,5 +254,12 @@ public enum IronChestType {
     public boolean acceptsStack(ItemStack itemstack)
     {
         return itemFilter == null || itemstack == null || itemstack.getItem() == itemFilter;
+    }
+    public void adornItemDrop(ItemStack item)
+    {
+        if (this == DIRTCHEST9000)
+        {
+            item.setTagInfo("dirtchest", new NBTTagByte("",(byte) 1));
+        }
     }
 }

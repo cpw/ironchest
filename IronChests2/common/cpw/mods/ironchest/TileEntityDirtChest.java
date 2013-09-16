@@ -3,6 +3,7 @@ package cpw.mods.ironchest;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
@@ -24,6 +25,21 @@ public class TileEntityDirtChest extends TileEntityIronChest {
     }
     public TileEntityDirtChest() {
         super(IronChestType.DIRTCHEST9000);
-        setInventorySlotContents(0, dirtChest9000GuideBook.copy());
+    }
+    
+    @Override
+    public void wasPlaced(EntityLivingBase entityliving, ItemStack itemStack)
+    {
+        if (!(itemStack.hasTagCompound() && itemStack.getTagCompound().getBoolean("dirtchest"))) {
+            setInventorySlotContents(0, dirtChest9000GuideBook.copy());
+        }
+    }
+    
+    @Override
+    public void removeAdornments()
+    {
+        if (chestContents[0] != null && chestContents[0].isItemEqual(dirtChest9000GuideBook)) {
+            chestContents[0] = null;
+        }
     }
 }

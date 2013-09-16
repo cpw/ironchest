@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -513,5 +514,14 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
     {
         setFacing((byte)ForgeDirection.getOrientation(facing).getRotation(axis).ordinal());
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, IronChest.ironChestBlock.blockID, 2, getFacing());
+    }
+
+    public void wasPlaced(EntityLivingBase entityliving, ItemStack itemStack)
+    {
+    }
+
+    public void removeAdornments()
+    {
+        
     }
 }
