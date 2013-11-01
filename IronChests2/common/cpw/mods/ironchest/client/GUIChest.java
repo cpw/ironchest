@@ -27,7 +27,8 @@ public class GUIChest extends GuiContainer {
         COPPER(new ResourceLocation("ironchest", "textures/gui/coppercontainer.png")),
         SILVER(new ResourceLocation("ironchest", "textures/gui/silvercontainer.png")),
         GOLD(new ResourceLocation("ironchest", "textures/gui/goldcontainer.png")),
-        DIAMOND(new ResourceLocation("ironchest", "textures/gui/diamondcontainer.png"));
+        DIAMOND(new ResourceLocation("ironchest", "textures/gui/diamondcontainer.png")),
+        DIRT(new ResourceLocation("ironchest", "textures/gui/dirtcontainer.png"));
         public final ResourceLocation location;
         private ResourceList(ResourceLocation loc) {
             this.location = loc;
@@ -40,7 +41,8 @@ public class GUIChest extends GuiContainer {
         COPPER(184, 184, ResourceList.COPPER, IronChestType.COPPER),
         SILVER(184, 238, ResourceList.SILVER, IronChestType.SILVER),
         CRYSTAL(238, 256, ResourceList.DIAMOND, IronChestType.CRYSTAL),
-        OBSIDIAN(238, 256, ResourceList.DIAMOND, IronChestType.OBSIDIAN);
+        OBSIDIAN(238, 256, ResourceList.DIAMOND, IronChestType.OBSIDIAN),
+        DIRTCHEST9000(184, 184, ResourceList.DIRT, IronChestType.DIRTCHEST9000);
 
         private int xSize;
         private int ySize;

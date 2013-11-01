@@ -13,8 +13,11 @@ package cpw.mods.ironchest;
 import static net.minecraftforge.common.ForgeDirection.DOWN;
 import static net.minecraftforge.common.ForgeDirection.UP;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import com.google.common.collect.Lists;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -83,30 +86,6 @@ public class BlockIronChest extends BlockContainer {
         return IronChestType.makeEntity(metadata);
     }
 
-//    public Icon getBlockTexture(IBlockAccess worldAccess, int i, int j, int k, int l)
-//    {
-//        int meta = worldAccess.getBlockMetadata(i, j, k);
-//        IronChestType type = IronChestType.values()[meta];
-//        TileEntity te = worldAccess.getBlockTileEntity(i, j, k);
-//        TileEntityIronChest icte = null;
-//        if (te != null && te instanceof TileEntityIronChest)
-//        {
-//            icte = (TileEntityIronChest) te;
-//        }
-//        if (l == 0 || l == 1)
-//        { // Top and Bottom
-//            return type.getTextureRow() * 16 + 1;
-//        }
-//        else if (icte != null && l == icte.getFacing())
-//        { // Front
-//            return type.getTextureRow() * 16 + 2;
-//        }
-//        else
-//        { // Back and Sides
-//            return type.getTextureRow() * 16;
-//        }
-//    }
-
     @SideOnly(Side.CLIENT)
     @Override
     public Icon getIcon(int i, int j)
@@ -119,6 +98,15 @@ public class BlockIronChest extends BlockContainer {
         return null;
     }
 
+    @Override
+    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)
+    {
+        ArrayList<ItemStack> items = Lists.newArrayList();
+        ItemStack stack = new ItemStack(this,1,metadata);
+        IronChestType.values()[IronChestType.validateMeta(metadata)].adornItemDrop(stack);
+        items.add(stack);
+        return items;
+    }
     @Override
     public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int i1, float f1, float f2, float f3)
     {
@@ -174,7 +162,9 @@ public class BlockIronChest extends BlockContainer {
         TileEntity te = world.getBlockTileEntity(i, j, k);
         if (te != null && te instanceof TileEntityIronChest)
         {
-            ((TileEntityIronChest) te).setFacing(chestFacing);
+            TileEntityIronChest teic = (TileEntityIronChest) te;
+            teic.wasPlaced(entityliving, itemStack);
+            teic.setFacing(chestFacing);
             world.markBlockForUpdate(i, j, k);
         }
     }
@@ -191,6 +181,7 @@ public class BlockIronChest extends BlockContainer {
         TileEntityIronChest tileentitychest = (TileEntityIronChest) world.getBlockTileEntity(i, j, k);
         if (tileentitychest != null)
         {
+            tileentitychest.removeAdornments();
             dropContent(0, tileentitychest, world, tileentitychest.xCoord, tileentitychest.yCoord, tileentitychest.zCoord);
         }
         super.breakBlock(world, i, j, k, i1, i2);

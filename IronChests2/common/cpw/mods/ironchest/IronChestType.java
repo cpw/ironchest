@@ -16,8 +16,11 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.util.Icon;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -32,6 +35,7 @@ public enum IronChestType {
     SILVER(72, 9, false, "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"),
     CRYSTAL(108, 12, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
     OBSIDIAN(108, 12, false, "Obsidian Chest", "obsidianchest.png", 6, Arrays.asList("obsidian"), TileEntityObsidianChest.class, "mmmm2mmmm"),
+    DIRTCHEST9000(1, 1, false, "Dirt Chest 9000", "dirtchest.png",7,Arrays.asList("dirt"), TileEntityDirtChest.class,Item.itemsList[Block.dirt.blockID],"mmmmCmmmm"),
     WOOD(0, 0, false, "", "", -1, Arrays.asList("plankWood"), null);
     int size;
     private int rowLength;
@@ -42,9 +46,15 @@ public enum IronChestType {
     public Class<? extends TileEntityIronChest> clazz;
     private String[] recipes;
     private ArrayList<String> matList;
+    private Item itemFilter;
 
     IronChestType(int size, int rowLength, boolean tieredChest, String friendlyName, String modelTexture, int textureRow, List<String> mats,
             Class<? extends TileEntityIronChest> clazz, String... recipes)
+    {
+        this(size, rowLength, tieredChest, friendlyName, modelTexture, textureRow, mats, clazz, (Item)null, recipes);
+    }
+    IronChestType(int size, int rowLength, boolean tieredChest, String friendlyName, String modelTexture, int textureRow, List<String> mats,
+            Class<? extends TileEntityIronChest> clazz, Item itemFilter, String... recipes)
     {
         this.size = size;
         this.rowLength = rowLength;
@@ -53,6 +63,7 @@ public enum IronChestType {
         this.modelTexture = modelTexture;
         this.textureRow = textureRow;
         this.clazz = clazz;
+        this.itemFilter = itemFilter;
         this.recipes = recipes;
         this.matList = new ArrayList<String>();
         matList.addAll(mats);
@@ -153,6 +164,10 @@ public enum IronChestType {
         {
             return Block.obsidian;
         }
+        else if (mat == "dirt")
+        {
+            return Block.dirt;
+        }
         return mat;
     }
 
@@ -230,4 +245,21 @@ public enum IronChestType {
 
     private static String[] sideNames = { "top", "front", "side" };
     private static int[] sideMapping = { 0, 0, 2, 1, 2, 2, 2 };
+
+    public Slot makeSlot(IInventory chestInventory, int index, int x, int y)
+    {
+        return new ValidatingSlot(chestInventory, index, x, y, this);
+    }
+
+    public boolean acceptsStack(ItemStack itemstack)
+    {
+        return itemFilter == null || itemstack == null || itemstack.getItem() == itemFilter;
+    }
+    public void adornItemDrop(ItemStack item)
+    {
+        if (this == DIRTCHEST9000)
+        {
+            item.setTagInfo("dirtchest", new NBTTagByte("",(byte) 1));
+        }
+    }
 }

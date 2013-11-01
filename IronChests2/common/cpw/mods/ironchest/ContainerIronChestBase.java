@@ -53,6 +53,10 @@ public class ContainerIronChestBase extends Container {
                     return null;
                 }
             }
+            else if (!type.acceptsStack(itemstack1))
+            {
+                return null;
+            }
             else if (!mergeItemStack(itemstack1, 0, type.size, false))
             {
                 return null;
@@ -78,13 +82,16 @@ public class ContainerIronChestBase extends Container {
 
     protected void layoutContainer(IInventory playerInventory, IInventory chestInventory, IronChestType type, int xSize, int ySize)
     {
-        for (int chestRow = 0; chestRow < type.getRowCount(); chestRow++)
-        {
-            for (int chestCol = 0; chestCol < type.getRowLength(); chestCol++)
+        if (type == IronChestType.DIRTCHEST9000) {
+            addSlotToContainer(type.makeSlot(chestInventory, 0, 12 + 4 * 18, 8 + 2 * 18));
+        } else {
+            for (int chestRow = 0; chestRow < type.getRowCount(); chestRow++)
             {
-                addSlotToContainer(new Slot(chestInventory, chestCol + chestRow * type.getRowLength(), 12 + chestCol * 18, 8 + chestRow * 18));
+                for (int chestCol = 0; chestCol < type.getRowLength(); chestCol++)
+                {
+                    addSlotToContainer(type.makeSlot(chestInventory, chestCol + chestRow * type.getRowLength(), 12 + chestCol * 18, 8 + chestRow * 18));
+                }
             }
-
         }
 
         int leftCol = (xSize - 162) / 2 + 1;
