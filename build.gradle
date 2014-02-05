@@ -100,6 +100,7 @@ artifacts {
 
 // Configure an upload task. this is setup for uploading to files.minecraftforge.net. There are other examples around
 uploadArchives {
+    dependsOn 'reobf'
     repositories {
         if (project.hasProperty("filesmaven")) {
             logger.info('Publishing to files server')
