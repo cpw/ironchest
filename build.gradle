@@ -1,3 +1,4 @@
+// This sets us up for building a forge project - you need all of these
 buildscript {
     repositories {
         mavenCentral()
@@ -15,31 +16,36 @@ buildscript {
     }
 }
 
+// Apply the forge plugin - this adds all the magic for automatically obfuscating, deobfuscating etc
 apply plugin: 'forge'
 
+// This is a simple flatdir repository for "uploadArchives" when you don't have a remote repo to target
 repositories {
     flatDir {
         name "fileRepo"
         dirs "repo"
     }
 }
-
+// IronChest uses git tagging to mark major versions. This sets up the project version to that version data
 def versionInfo = getGitVersion()
 version = "${versionInfo['IronChest.version']}"
 
-group= "cpw.mods.ironchest" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+// This is our group. I'm cpw.mods
+group= "cpw.mods" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+// This is our actual project within the group. Note: FML has "fml" here. But this is ironchest.
 archivesBaseName = "ironchest"
 
+// Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
     version = "1.7.2-10.12.0.1024"
 }
 
-logger.lifecycle "IronChest "+version
-
+// This wrangles the resources for the jar files- stuff like textures and languages
 processResources
 {
+    // we're omitting the .xcf files - they're development only
 	exclude '**/*.xcf'
-    // replace stuff in mcmod.info, nothing else
+    // we only want to do search/replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
                 
@@ -52,35 +58,42 @@ processResources
         exclude 'mcmod.info'
     }
 
-	// generate version properties file
+	// generate version.properties file from the git version data earlier
 	doLast {
 		def propsFile = new File(destinationDir, 'version.properties')
 		def properties = new Properties()
 		properties.putAll(versionInfo)
 		properties['IronChest.build.mcversion'] = project.minecraft.version
-		
 		properties.store(propsFile.newWriter(), null)
 	}
 }
 
-jar { appendix = 'universal' }
+// this sets our output jar to have a 'tag' of 'universal' on it
+// It also adds the minecraft version as a name 'appendix'
+// The result is files named <projectname>-<mcversion>-<version>-universal.jar
+jar {
+    classifier = 'universal'
+    appendix = project.minecraft.version
+}
 
+// Add in a source jar for people, should they desire to download such a thing
 task sourceJar(type: Jar) {
 	from sourceSets.main.allSource
-	appendix = 'src'
+	classifier = 'src'
 }
 
-// because the normal default jar task has been modified to be obfuscated
+// Add in an mcp named jar, for those who wish to run in a development environment (assuming mcp naming matches)
 task deobfJar(type: Jar) {
 	from sourceSets.main.output
-	appendix = 'deobf'
+	classifier = 'deobf'
 }
 
+// Tell the artifact system about our extra jars
 artifacts {
-	archives sourceJar
-	archives deobfJar
+	archives sourceJar, deobfJar
 }
 
+// Configure an upload task. this is setup for uploading to files.minecraftforge.net. There are other examples around
 uploadArchives {
     repositories {
         if (project.hasProperty("filesmaven")) {
@@ -93,6 +106,7 @@ uploadArchives {
                     authentication(userName: project.filesmaven.username, privateKey: project.filesmaven.key)
                 }
 
+                // This is just the pom data for the maven repo
                 pom {
                     groupId = project.group
                     version = project.version
@@ -142,7 +156,7 @@ uploadArchives {
     }
 }
 
-// version
+// This is a special task for pulling the version information from git and the environment (for BUILD_NUMBER)
 def getGitVersion()
 {
 	def out = [:]
