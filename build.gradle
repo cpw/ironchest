@@ -69,23 +69,28 @@ processResources
 }
 
 // this sets our output jar to have a 'tag' of 'universal' on it
-// It also adds the minecraft version as a name 'appendix'
+// It also adds the minecraft version in a custom version name
 // The result is files named <projectname>-<mcversion>-<version>-universal.jar
 jar {
     classifier = 'universal'
-    appendix = project.minecraft.version
+    version = "${project.minecraft.version}-${project.version}"
+
 }
+
+println "FISHBUM ${jar.version}"
 
 // Add in a source jar for people, should they desire to download such a thing
 task sourceJar(type: Jar) {
 	from sourceSets.main.allSource
 	classifier = 'src'
+    version = "${project.minecraft.version}-${project.version}"
 }
 
 // Add in an mcp named jar, for those who wish to run in a development environment (assuming mcp naming matches)
 task deobfJar(type: Jar) {
 	from sourceSets.main.output
 	classifier = 'deobf'
+    version = "${project.minecraft.version}-${project.version}"
 }
 
 // Tell the artifact system about our extra jars
@@ -109,7 +114,8 @@ uploadArchives {
                 // This is just the pom data for the maven repo
                 pom {
                     groupId = project.group
-                    version = project.version
+                    // Force the maven upload to use the <mcversion>-<version> syntax preferred at files
+                    version = "${project.minecraft.version}-${project.version}"
                     artifactId = project.archivesBaseName
                     project {
                         name project.archivesBaseName
@@ -150,6 +156,7 @@ uploadArchives {
             logger.info('Publishing to repo folder')
             
             mavenDeployer {
+                pom.version = "${project.minecraft.version}-${project.version}"
                 repository(url: 'file://localhost/' + project.file('repo').getAbsolutePath())
             }
         }
