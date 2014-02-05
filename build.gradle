@@ -49,9 +49,8 @@ processResources
 	doLast {
 		def propsFile = new File(destinationDir, 'version.properties')
 		def properties = new Properties()
-		
 		properties.putAll(versionInfo)
-		properties['IronChest.build.mcversion'] = project.minecraft.apiVersion
+		properties['IronChest.build.mcversion'] = project.minecraft.version
 		
 		properties.store(propsFile.newWriter(), null)
 	}
@@ -96,12 +95,12 @@ def getGitVersion()
 	def min = matcher[0][2]
 	def rev = matcher[0][3]
 	def bn = System.getProperty("BUILD_NUMBER","1")
-	out['IronChest.build.major.number'] = maj
-	out['IronChest.build.minor.number'] = min
-	out['IronChest.build.revision.number'] = rev
-	out['IronChest.build.githash'] = matcher[0][4]
-	out['IronChest.build.number' ] = bn
-	out['IronChest.version' ] = "${maj}.${min}.${rev}.${bn}"
+	out['IronChest.build.major.number'] = maj.toString()
+	out['IronChest.build.minor.number'] = min.toString()
+	out['IronChest.build.revision.number'] = rev.toString()
+	out['IronChest.build.githash'] = matcher[0][4].toString()
+	out['IronChest.build.number' ] = bn.toString()
+	out['IronChest.version' ] = "${maj}.${min}.${rev}.${bn}".toString()
 
 	return out
 }
