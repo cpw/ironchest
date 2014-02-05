@@ -1,9 +1,0 @@
-*.zip
-/*.jpage
-bin/
-/target
-/build.properties
-/build
-/ironchestversion.properties
-/version.properties
-/tmpbukkit

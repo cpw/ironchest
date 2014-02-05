@@ -1,2 +1,6 @@
-forge-client
-.metadata
+build/
+.classpath
+.project
+.gradle/
+eclipse/
+bin/

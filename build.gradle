@@ -1,0 +1,107 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+
+def versionInfo = getGitVersion()
+version = "${versionInfo['IronChest.version']}"
+
+group= "cpw.mods.ironchest" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "ironchest"
+
+minecraft {
+    version = "1.7.2-10.12.0.1024"
+}
+
+logger.lifecycle "IronChest "+version
+
+processResources
+{
+	exclude '**/*.xcf'
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+
+	// generate version properties file
+	doLast {
+		def propsFile = new File(destinationDir, 'version.properties')
+		def properties = new Properties()
+		
+		properties.putAll(versionInfo)
+		properties['IronChest.build.mcversion'] = project.minecraft.apiVersion
+		
+		properties.store(propsFile.newWriter(), null)
+	}
+}
+
+jar { appendix = 'universal' }
+
+task sourceJar(type: Jar) {
+	from sourceSets.main.allSource
+	appendix = 'src'
+}
+
+// because the normal default jar task has been modified to be obfuscated
+task deobfJar(type: Jar) {
+	from sourceSets.main.output
+	appendix = 'deobf'
+}
+
+artifacts {
+	archives sourceJar
+	archives deobfJar
+}
+
+
+// version
+def getGitVersion()
+{
+	def out = [:]
+
+	// call git command.
+	def outStream = new ByteArrayOutputStream()
+	def result = exec {
+		executable = 'git'
+		args = [ 'describe', '--long', "--match=[^(jenkins)]*"]
+		standardOutput = outStream
+	}
+
+	def fullVersion = outStream.toString().trim()
+	def matcher = fullVersion =~ /(\d+).(\d+)-(\d+)-(.*)/
+
+	def maj = matcher[0][1]
+	def min = matcher[0][2]
+	def rev = matcher[0][3]
+	def bn = System.getProperty("BUILD_NUMBER","1")
+	out['IronChest.build.major.number'] = maj
+	out['IronChest.build.minor.number'] = min
+	out['IronChest.build.revision.number'] = rev
+	out['IronChest.build.githash'] = matcher[0][4]
+	out['IronChest.build.number' ] = bn
+	out['IronChest.version' ] = "${maj}.${min}.${rev}.${bn}"
+
+	return out
+}
