@@ -17,6 +17,13 @@ buildscript {
 
 apply plugin: 'forge'
 
+repositories {
+    flatDir {
+        name "fileRepo"
+        dirs "repo"
+    }
+}
+
 def versionInfo = getGitVersion()
 version = "${versionInfo['IronChest.version']}"
 
@@ -74,6 +81,66 @@ artifacts {
 	archives deobfJar
 }
 
+uploadArchives {
+    repositories {
+        if (project.hasProperty("filesmaven")) {
+            logger.info('Publishing to files server')
+            
+            mavenDeployer {
+                configuration = configurations.deployJars
+
+                repository(url: project.filesmaven.url) {
+                    authentication(userName: project.filesmaven.username, privateKey: project.filesmaven.key)
+                }
+
+                pom {
+                    groupId = project.group
+                    version = project.version
+                    artifactId = project.archivesBaseName
+                    project {
+                        name project.archivesBaseName
+                        packaging 'jar'
+                        description 'IronChest'
+                        url 'https://github.com/cpw/IronChest'
+
+                        scm {
+                            url 'https://github.com/cpw/IronChest'
+                            connection 'scm:git:git://github.com/cpw/IronChest.git'
+                            developerConnection 'scm:git:git@github.com:cpw/IronChest.git'
+                        }
+
+                        issueManagement {
+                            system 'github'
+                            url 'https://github.com/cpw/IronChest/issues'
+                        }
+
+                        licenses {
+                            license {
+                                name 'GNU Public License (GPL), Version 3.0'
+                                url 'http://www.gnu.org/licenses/gpl-3.0.txt'
+                                distribution 'repo'
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id 'cpw'
+                                name 'cpw'
+                                roles { role 'developer' }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            logger.info('Publishing to repo folder')
+            
+            mavenDeployer {
+                repository(url: 'file://localhost/' + project.file('repo').getAbsolutePath())
+            }
+        }
+    }
+}
 
 // version
 def getGitVersion()
@@ -94,7 +161,8 @@ def getGitVersion()
 	def maj = matcher[0][1]
 	def min = matcher[0][2]
 	def rev = matcher[0][3]
-	def bn = System.getProperty("BUILD_NUMBER","1")
+	def bn = System.getenv("BUILD_NUMBER") ?: "1"
+
 	out['IronChest.build.major.number'] = maj.toString()
 	out['IronChest.build.minor.number'] = min.toString()
 	out['IronChest.build.revision.number'] = rev.toString()
