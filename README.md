@@ -1,6 +1,6 @@
 ironchest
 =========
 
-Iron Chest minecraft mod - now dormant
+Iron Chest minecraft mod. The torch has been passed to ProgWML6. See here: https://github.com/progwml6/ironchest
 
-This was the home of IronChest a GPL v3 licensed mod by cpw. It lies dormant, awaiting someone to awaken it again.
+This is the ancestral home of IronChest. A GPL v3 licensed mod by cpw.
