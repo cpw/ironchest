@@ -125,14 +125,14 @@ uploadArchives {
                         url 'https://github.com/cpw/IronChest'
 
                         scm {
-                            url 'https://github.com/cpw/IronChest'
-                            connection 'scm:git:git://github.com/cpw/IronChest.git'
-                            developerConnection 'scm:git:git@github.com:cpw/IronChest.git'
+                            url 'https://github.com/progwml6/IronChest'
+                            connection 'scm:git:git://github.com/progwml6/IronChest.git'
+                            developerConnection 'scm:git:git@github.com:progwml6/IronChest.git'
                         }
 
                         issueManagement {
                             system 'github'
-                            url 'https://github.com/cpw/IronChest/issues'
+                            url 'https://github.com/progwml6/IronChest/issues'
                         }
 
                         licenses {
