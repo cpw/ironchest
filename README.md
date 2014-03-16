@@ -1,7 +1,7 @@
 ironchest
 =========
 
-Iron Chest minecraft mod - now dormant
+Iron Chest minecraft mod
 
 a GPL v3 licensed mod by cpw
 
