@@ -49,7 +49,7 @@ public class IronChest {
         }
         catch (Exception e)
         {
-            FMLLog.log(Level.ERROR, e, "IronChest has a problem loading it's configuration");
+            FMLLog.log(Level.ERROR, e, "IronChest has a problem loading its configuration");
         }
         finally
         {
