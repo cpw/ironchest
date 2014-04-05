@@ -16,7 +16,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import invtweaks.api.container.ChestContainer;
 
+@ChestContainer(isLargeChest = true)
 public class ContainerIronChest extends Container {
     private IronChestType type;
     private EntityPlayer player;
@@ -114,5 +116,10 @@ public class ContainerIronChest extends Container {
     public EntityPlayer getPlayer()
     {
         return player;
+    }
+    
+    @ChestContainer.RowSizeCallback
+    public int getNumColumns() {
+        return type.getRowLength();
     }
 }
