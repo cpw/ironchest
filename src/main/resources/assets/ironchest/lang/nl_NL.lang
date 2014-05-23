@@ -1,0 +1,25 @@
+tile.ironchest:IRON.name=Ijzeren Kist
+tile.ironchest:GOLD.name=Gouden Kist
+tile.ironchest:DIAMOND.name=Diamanten Kist
+tile.ironchest:COPPER.name=Koperen Kist
+tile.ironchest:SILVER.name=Zilveren Kist
+tile.ironchest:CRYSTAL.name=Kristallen Kist
+tile.ironchest:OBSIDIAN.name=Obsidiaanen Kist
+tile.ironchest:DIRTCHEST9000.name=Aarden Kist 9000!
+
+item.ironchest:IRONGOLD.name=Ijzeren naar Gouden Kist Transformatie
+item.ironchest:GOLDDIAMOND.name=Gouden naar Diamanten Kist Transformatie
+item.ironchest:COPPERSILVER.name=Koperen naar Zilveren Kist Transformatie
+item.ironchest:SILVERGOLD.name=Zilveren naar Gouden Kist Transformatie
+item.ironchest:COPPERIRON.name=Koperen naar Ijzeren Kist Transformatie
+item.ironchest:DIAMONDCRYSTAL.name=Diamanten naar Kristallen Kist Transformatie
+item.ironchest:WOODIRON.name=Houten naar Ijzeren Kist Transformatie
+item.ironchest:WOODCOPPER.name=Houten naar Koperen Kist Transformatie
+item.ironchest:DIAMONDOBSIDIAN.name=Diamanten naar Obsidiaanen Kist Transformatie
+
+book.ironchest:dirtchest9000.title=Hoe gebruik je uw Aarden Kist 9000!
+book.ironchest:dirtchest9000.page1=Welkom voor uw nieuwe Aarden Kist 9000! We hopen dat je veel geluk zal beleven om uw hoop aarde te bewaren in onze stokeer faciliteit.
+book.ironchest:dirtchest9000.page2=Gebruik: Plaats simpelweg uw hoop aarde naar uw keuze in de zeer ontvankelijke gleuf en geniet van de geriefelijkheid om dat hoop aarde altijd beschikbaar tot u te hebben, wanneer dan ook!
+book.ironchest:dirtchest9000.page3=We hopen dat u heeft genoten om deze handleiding te lezen en we hopen dat u overweegt om onze producten in de toekomst te gebruiken! Met vriendelijke groeten, De Aarden Kist 9000 Handleiding Auteurs.
+book.ironchest:dirtchest9000.page4=Garantie: Deze product biedt geen enkele garantie. Uw aarde kan mogenlijk niet gestockeerd worden, het kan langzaam verdampen of het kan ook helemaal niks doen.
+book.ironchest:dirtchest9000.page5=Aarden Kist 9000 is mileuvriendelijk. Gelieve deze handleiding verantwoordlijk te ontdoen en gooi het niet zomaar in wat lava. We zouden zeer verdrietig zijn.
