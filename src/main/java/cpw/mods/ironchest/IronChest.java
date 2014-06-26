@@ -24,7 +24,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[7.0,);required-after:FML@[5.0.5,)")
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[10.10,);required-after:FML@[7.2,)")
 public class IronChest {
     public static BlockIronChest ironChestBlock;
     @SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
