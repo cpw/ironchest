@@ -37,7 +37,7 @@ archivesBaseName = "ironchest"
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.7.10_pre4-10.12.2.1143-prerelease"
+    version = "1.7.10-10.13.0.1150"
 }
 
 // This wrangles the resources for the jar files- stuff like textures and languages
