@@ -256,11 +256,20 @@ public class BlockIronChest extends BlockContainer {
        return super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
+    @Override
+    public boolean hasComparatorInputOverride() {
+        return true;
+    }
 
     @Override
     public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
     {
-        return Container.calcRedstoneFromInventory((TileEntityIronChest) par1World.getTileEntity(par2, par3, par4));
+        TileEntity te = par1World.getTileEntity(par2, par3, par4);
+        if (te instanceof IInventory)
+        {
+            return Container.calcRedstoneFromInventory((IInventory)te);
+        }
+        return 0;
     }
 
 
@@ -299,4 +308,5 @@ public class BlockIronChest extends BlockContainer {
         }
         return false;
     }
+
 }
