@@ -7,15 +7,15 @@ tile.ironchest:CRYSTAL.name=Baule di cristallo
 tile.ironchest:OBSIDIAN.name=Baule di ossidiana
 tile.ironchest:DIRTCHEST9000.name=DirtChest 9000!
 
-item.ironchest:IRONGOLD.name=Miglioramento da ferro a oro
-item.ironchest:GOLDDIAMOND.name=Miglioramento da oro a diamante
-item.ironchest:COPPERSILVER.name=Miglioramento da rame a argento
-item.ironchest:SILVERGOLD.name=Miglioramento da argento a oro
-item.ironchest:COPPERIRON.name=Miglioramento da rame a ferro
-item.ironchest:DIAMONDCRYSTAL.name=Miglioramento da diamante a cristallo
-item.ironchest:WOODIRON.name=Miglioramento da legno a ferro
-item.ironchest:WOODCOPPER.name=Miglioramento da legno a rame
-item.ironchest:DIAMONDOBSIDIAN.name=Miglioramento da diamante a ossidiana
+item.ironchest:IRONGOLD.name=Potenziamento da ferro a oro
+item.ironchest:GOLDDIAMOND.name=Potenziamento da oro a diamante
+item.ironchest:COPPERSILVER.name=Potenziamento da rame a argento
+item.ironchest:SILVERGOLD.name=Potenziamento da argento a oro
+item.ironchest:COPPERIRON.name=Potenziamento da rame a ferro
+item.ironchest:DIAMONDCRYSTAL.name=Potenziamento da diamante a cristallo
+item.ironchest:WOODIRON.name=Potenziamento da legno a ferro
+item.ironchest:WOODCOPPER.name=Potenziamento da legno a rame
+item.ironchest:DIAMONDOBSIDIAN.name=Potenziamento da diamante a ossidiana
 
 book.ironchest:dirtchest9000.title=Come usare la tua DirtChest 9000!
 book.ironchest:dirtchest9000.page1=Benvenuto alla tua nuova DirtChest 9000! Speriamo che possiate godere di molti anni felici in cui imagazzinate grandi quantità di terra nei nostri contenitori.
