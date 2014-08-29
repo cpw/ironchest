@@ -1,0 +1,25 @@
+tile.ironchest:IRON.name=Baú de Ferro
+tile.ironchest:GOLD.name=Baú de Ouro
+tile.ironchest:DIAMOND.name=Baú de Diamante
+tile.ironchest:COPPER.name=Baú de Cobre
+tile.ironchest:SILVER.name=Baú de Prata
+tile.ironchest:CRYSTAL.name=Baú Cristal
+tile.ironchest:OBSIDIAN.name=Baú de Obsidiana
+tile.ironchest:DIRTCHEST9000.name=DirtChest 9000!
+
+item.ironchest:IRONGOLD.name=Upgrade de Baú: Ferro pra Ouro
+item.ironchest:GOLDDIAMOND.name=Upgrade de Baú: Ouro pra Diamante
+item.ironchest:COPPERSILVER.name=Upgrade de Baú: Cobre pra Prata
+item.ironchest:SILVERGOLD.name=Upgrade de Baú: Prata pra Ouro
+item.ironchest:COPPERIRON.name=Upgrade de Baú: Cobre pra Ferro
+item.ironchest:DIAMONDCRYSTAL.name=Upgrade de Baú: Diamante pra Cristal
+item.ironchest:WOODIRON.name=Upgrade de Baú: Madeira pra Ferro
+item.ironchest:WOODCOPPER.name=Upgrade de Baú: Madeira pra Cobre
+item.ironchest:DIAMONDOBSIDIAN.name=Upgrade de Baú: Diamante pra Obsidiana
+
+book.ironchest:dirtchest9000.title=Como usar o seu DirtChest 9000!
+book.ironchest:dirtchest9000.page1=Seja bem-vindo ao seu DirtChest 9000! Esperamos que você aproveite muitos anos felizes guardando sua stack de terra em nosso utilitário de armazenamento.
+book.ironchest:dirtchest9000.page2=Uso: simplesmente insira a stack de terra de sua escolha no slot altamente receptivo e aproveite a grande convenciência de ter aquela terra disponível pra você, qualquer hora que você passar por esse baú!
+book.ironchest:dirtchest9000.page3=Esperamos que tenha apreciado recapitular este manual de instruções, e esperamos que você considere usar nossos produtos no futuro! Atenciosamente, os Escritores de Manual do DirtChest 9000 Incorporada.
+book.ironchest:dirtchest9000.page4=Garantia: Esse produto não tem garantia de nenhum tipo. Sua terra pode não ser armazenada, pode ser lentamente sugada para o ambiente, ou alternativamente, pode não fazer absolutamente nada.
+book.ironchest:dirtchest9000.page5=DirtChest 9000 é gentil ao meio ambiente. Por favor descarte esse guia responsavelmente, e não importa o que você faça não apenas jogue esse livro em uma poça de lava. Nós ficaríamos muito tristes.
