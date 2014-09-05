@@ -104,10 +104,6 @@ public enum IronChestType {
         return null;
     }
 
-    public static void registerTranslations()
-    {
-    }
-
     public static void registerBlocksAndRecipes(BlockIronChest blockResult)
     {
         ItemStack previous = new ItemStack(Blocks.chest);
