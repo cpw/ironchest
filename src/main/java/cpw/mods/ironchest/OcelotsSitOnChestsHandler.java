@@ -17,11 +17,8 @@ public class OcelotsSitOnChestsHandler {
             @SuppressWarnings("unchecked")
             List<EntityAITasks.EntityAITaskEntry> tasks = ocelot.tasks.taskEntries;
 
-            for (int i = 0; i < tasks.size(); i++)
-            {
-                EntityAITasks.EntityAITaskEntry task = tasks.get(i);
-                if (task.priority == 6 && (task.action instanceof EntityAIOcelotSit) && !(task.action instanceof IronChestAIOcelotSit))
-                {
+            for (EntityAITasks.EntityAITaskEntry task : tasks) {
+                if (task.priority == 6 && (task.action instanceof EntityAIOcelotSit) && !(task.action instanceof IronChestAIOcelotSit)) {
                     task.action = new IronChestAIOcelotSit(ocelot, 0.4F);
                 }
             }

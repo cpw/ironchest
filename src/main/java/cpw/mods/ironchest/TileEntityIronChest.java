@@ -280,14 +280,9 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
             float var1 = 5.0F;
             @SuppressWarnings("unchecked")
             List<EntityPlayer> var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((double)((float)this.xCoord - var1), (double)((float)this.yCoord - var1), (double)((float)this.zCoord - var1), (double)((float)(this.xCoord + 1) + var1), (double)((float)(this.yCoord + 1) + var1), (double)((float)(this.zCoord + 1) + var1)));
-            Iterator<EntityPlayer> var3 = var2.iterator();
 
-            while (var3.hasNext())
-            {
-                EntityPlayer var4 = var3.next();
-
-                if (var4.openContainer instanceof ContainerIronChest)
-                {
+            for (EntityPlayer var4 : var2) {
+                if (var4.openContainer instanceof ContainerIronChest) {
                     ++this.numUsingPlayers;
                 }
             }

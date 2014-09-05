@@ -140,27 +140,27 @@ public enum IronChestType {
 
     public static Object translateOreName(String mat)
     {
-        if (mat == "ingotIron")
+        if (mat.equals("ingotIron"))
         {
             return Items.iron_ingot;
         }
-        else if (mat == "ingotGold")
+        else if (mat.equals("ingotGold"))
         {
             return Items.gold_ingot;
         }
-        else if (mat == "gemDiamond")
+        else if (mat.equals("gemDiamond"))
         {
             return Items.diamond;
         }
-        else if (mat == "blockGlass")
+        else if (mat.equals("blockGlass"))
         {
             return Blocks.glass;
         }
-        else if (mat == "obsidian")
+        else if (mat.equals("obsidian"))
         {
             return Blocks.obsidian;
         }
-        else if (mat == "dirt")
+        else if (mat.equals("dirt"))
         {
             return Blocks.dirt;
         }
