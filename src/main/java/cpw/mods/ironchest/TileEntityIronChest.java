@@ -15,10 +15,10 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -421,7 +421,7 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
         return PacketHandler.getPacket(this);
     }
 
-    public void handlePacketData(int typeData, int[] intData)
+    public void handlePacketData(int typeData, ItemStack[] intData)
     {
         TileEntityIronChest chest = this;
         if (this.type.ordinal() != typeData)
@@ -431,46 +431,36 @@ public class TileEntityIronChest extends TileEntity implements IInventory {
         if (IronChestType.values()[typeData].isTransparent() && intData != null)
         {
             int pos = 0;
-            if (intData.length < chest.topStacks.length * 3)
-            {
-                return;
-            }
             for (int i = 0; i < chest.topStacks.length; i++)
             {
-                if (intData[pos + 2] != 0)
+                if (intData[pos] != null)
                 {
-                    Item it = Item.getItemById(intData[pos]);
-                    ItemStack is = new ItemStack(it, intData[pos + 2], intData[pos + 1]);
-                    chest.topStacks[i] = is;
+                    chest.topStacks[i] = intData[pos];
                 }
                 else
                 {
                     chest.topStacks[i] = null;
                 }
-                pos += 3;
+                pos ++;
             }
         }
     }
 
-    public int[] buildIntDataList()
+    public ItemStack[] buildItemStackDataList()
     {
         if (type.isTransparent())
         {
-            int[] sortList = new int[topStacks.length * 3];
+            ItemStack[] sortList = new ItemStack[topStacks.length];
             int pos = 0;
             for (ItemStack is : topStacks)
             {
                 if (is != null)
                 {
-                    sortList[pos++] = Item.getIdFromItem(is.getItem());
-                    sortList[pos++] = is.getItemDamage();
-                    sortList[pos++] = is.stackSize;
+                    sortList[pos++] = is;
                 }
                 else
                 {
-                    sortList[pos++] = 0;
-                    sortList[pos++] = 0;
-                    sortList[pos++] = 0;
+                    sortList[pos++] = null;
                 }
             }
             return sortList;

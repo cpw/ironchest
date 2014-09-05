@@ -10,10 +10,13 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.util.EnumMap;
+
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -85,7 +88,7 @@ public enum PacketHandler {
             {
                 TileEntityIronChest icte = (TileEntityIronChest) te;
                 icte.setFacing(msg.facing);
-                icte.handlePacketData(msg.type, msg.items);
+                icte.handlePacketData(msg.type, msg.itemStacks);
             }
         }
     }
@@ -106,7 +109,7 @@ public enum PacketHandler {
         int z;
         int type;
         int facing;
-        int[] items;
+        ItemStack[] itemStacks;
     }
 
     /**
@@ -135,14 +138,12 @@ public enum PacketHandler {
             target.writeInt(msg.z);
             int typeAndFacing = ((msg.type & 0x0F) | ((msg.facing & 0x0F) << 4)) & 0xFF;
             target.writeByte(typeAndFacing);
-            target.writeBoolean(msg.items != null);
-            if (msg.items != null)
+            target.writeBoolean(msg.itemStacks != null);
+            if (msg.itemStacks != null)
             {
-                int[] items = msg.items;
-                for (int j = 0; j < items.length; j++)
+                for (ItemStack i: msg.itemStacks)
                 {
-                    int i = items[j];
-                    target.writeInt(i);
+                    ByteBufUtils.writeItemStack(target, i);
                 }
             }
         }
@@ -157,13 +158,13 @@ public enum PacketHandler {
             msg.type = (byte)(typDat & 0xf);
             msg.facing = (byte)((typDat >> 4) & 0xf);
             boolean hasStacks = dat.readBoolean();
-            msg.items = new int[0];
+            msg.itemStacks = new ItemStack[0];
             if (hasStacks)
             {
-                msg.items = new int[24];
-                for (int i = 0; i < msg.items.length; i++)
+                msg.itemStacks = new ItemStack[8];
+                for (int i = 0; i < msg.itemStacks.length; i++)
                 {
-                    msg.items[i] = dat.readInt();
+                    msg.itemStacks[i] = ByteBufUtils.readItemStack(dat);
                 }
             }
         }
@@ -194,7 +195,7 @@ public enum PacketHandler {
         msg.z = tileEntityIronChest.zCoord;
         msg.type = tileEntityIronChest.getType().ordinal();
         msg.facing = tileEntityIronChest.getFacing();
-        msg.items = tileEntityIronChest.buildIntDataList();
+        msg.itemStacks = tileEntityIronChest.buildItemStackDataList();
         return INSTANCE.channels.get(Side.SERVER).generatePacketFrom(msg);
     }
 }
