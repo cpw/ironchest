@@ -106,7 +106,7 @@ public enum IronChestType {
 
     public static void registerBlocksAndRecipes(BlockIronChest blockResult)
     {
-        ItemStack previous = new ItemStack(Blocks.chest);
+        Object previous = "chestWood";
         for (IronChestType typ : values())
         {
             generateRecipesForType(blockResult, previous, typ);
@@ -127,7 +127,7 @@ public enum IronChestType {
                 mainMaterial = translateOreName(mat);
                 addRecipe(new ItemStack(blockResult, 1, type.ordinal()), recipeSplit,
                         'm', mainMaterial, 'P', previousTier, /* previous tier of chest */
-                        'G', Blocks.glass, 'C', Blocks.chest,
+                        'G', Blocks.glass, 'C', "chestWood",
                         '0', new ItemStack(blockResult, 1, 0), /* Iron Chest */
                         '1', new ItemStack(blockResult, 1, 1), /* Gold Chest */
                         '2', new ItemStack(blockResult, 1, 2), /* Diamond Chest */
