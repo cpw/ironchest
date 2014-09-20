@@ -127,12 +127,12 @@ public enum IronChestType {
                 mainMaterial = translateOreName(mat);
                 addRecipe(new ItemStack(blockResult, 1, type.ordinal()), recipeSplit,
                         'm', mainMaterial, 'P', previousTier, /* previous tier of chest */
-                        'G', Blocks.glass, 'C', "chestWood",
+                        'G', "blockGlass", 'C', "chestWood",
                         '0', new ItemStack(blockResult, 1, 0), /* Iron Chest */
                         '1', new ItemStack(blockResult, 1, 1), /* Gold Chest */
                         '2', new ItemStack(blockResult, 1, 2), /* Diamond Chest */
                         '3', new ItemStack(blockResult, 1, 3), /* Copper Chest */
-                        '4', new ItemStack(blockResult, 1, 4)/* Silver Chest */
+                        '4', new ItemStack(blockResult, 1, 4)  /* Silver Chest */
                 );
             }
         }
@@ -140,23 +140,7 @@ public enum IronChestType {
 
     public static Object translateOreName(String mat)
     {
-        if (mat.equals("ingotIron"))
-        {
-            return Items.iron_ingot;
-        }
-        else if (mat.equals("ingotGold"))
-        {
-            return Items.gold_ingot;
-        }
-        else if (mat.equals("gemDiamond"))
-        {
-            return Items.diamond;
-        }
-        else if (mat.equals("blockGlass"))
-        {
-            return Blocks.glass;
-        }
-        else if (mat.equals("obsidian"))
+        if (mat.equals("obsidian"))
         {
             return Blocks.obsidian;
         }
