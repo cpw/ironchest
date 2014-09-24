@@ -387,7 +387,7 @@ public class TileEntityIronChest extends TileEntity implements IUpdatePlayerList
         int newSize = newEntity.chestContents.length;
         System.arraycopy(chestContents, 0, newEntity.chestContents, 0, Math.min(newSize, chestContents.length));
         BlockIronChest block = IronChest.ironChestBlock;
-        block.dropContent(newSize, this, this.worldObj, pos);
+        //block.dropContent(newSize, this, this.worldObj, pos);
         newEntity.setFacing(facing);
         newEntity.sortTopStacks();
         newEntity.ticksSinceSync = -1;

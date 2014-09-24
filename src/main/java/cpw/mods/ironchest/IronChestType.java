@@ -20,9 +20,11 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByte;
+import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public enum IronChestType {
+public enum IronChestType implements IStringSerializable
+{
     IRON(54, 9, true, "Iron Chest", "ironchest.png", 0, Arrays.asList("ingotIron", "ingotRefinedIron"), TileEntityIronChest.class, "mmmmPmmmm", "mGmG3GmGm"),
     GOLD(81, 9, true, "Gold Chest", "goldchest.png", 1, Arrays.asList("ingotGold"), TileEntityGoldChest.class, "mmmmPmmmm", "mGmG4GmGm"),
     DIAMOND(108, 12, true, "Diamond Chest", "diamondchest.png", 2, Arrays.asList("gemDiamond"), TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"),
@@ -62,6 +64,12 @@ public enum IronChestType {
         this.recipes = recipes;
         this.matList = new ArrayList<String>();
         matList.addAll(mats);
+    }
+    
+    @Override
+    public String getID()
+    {
+        return name().toLowerCase();
     }
 
     public String getModelTexture()

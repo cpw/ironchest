@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[10.10,);required-after:FML@[7.2,)")
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:FML@[7.2,)")
 public class IronChest {
     public static BlockIronChest ironChestBlock;
     @SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
@@ -53,11 +53,11 @@ public class IronChest {
                 cfg.save();
         }*/
         ironChestBlock = new BlockIronChest();
-        GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
-        PacketHandler.INSTANCE.ordinal();
+        GameRegistry.registerBlock(ironChestBlock,/* ItemIronChest.class,*/ "BlockIronChest");
+        //PacketHandler.INSTANCE.ordinal();
     }
 
-    @EventHandler
+    /*@EventHandler
     public void load(FMLInitializationEvent evt)
     {
         for (IronChestType typ : IronChestType.values())
@@ -74,5 +74,5 @@ public class IronChest {
 //        {
 //            MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
 //        }
-    }
+    }*/
 }

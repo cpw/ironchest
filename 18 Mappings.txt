@@ -150,3 +150,6 @@ field_177961_c - z
 
 —BlockPos—
 field_177992_a - ORIGIN
+
+—IStringSerializable—
+func_176610_l - getID
