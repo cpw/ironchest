@@ -1,0 +1,17 @@
+tile.ironchest:IRON.name=Järnkista
+tile.ironchest:GOLD.name=Guldkista
+tile.ironchest:DIAMOND.name=Diamantkista
+tile.ironchest:COPPER.name=Kopparkista
+tile.ironchest:SILVER.name=Silverkista
+tile.ironchest:CRYSTAL.name=Kristallkista
+tile.ironchest:OBSIDIAN.name=Obsidiankista
+
+item.ironchest:IRONGOLD.name=Järn till Guld Kistuppgradering
+item.ironchest:GOLDDIAMOND.name=Guld till Diamant Kistuppgradering
+item.ironchest:COPPERSILVER.name=Koppar till Silver Kistuppgradering
+item.ironchest:SILVERGOLD.name=Silver till Guld Kistuppgradering
+item.ironchest:COPPERIRON.name=Koppar till Järn Kistuppgradering
+item.ironchest:DIAMONDCRYSTAL.name=Diamant till Kristal Kistuppgradering
+item.ironchest:WOODIRON.name=Trä till Järn Kistuppgradering
+item.ironchest:WOODCOPPER.name=Trä till Koppar Kistuppgradering
+item.ironchest:DIAMONDOBSIDIAN.name=Diamant till Obsidian Kistuppgradering

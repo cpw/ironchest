@@ -1,0 +1,17 @@
+tile.ironchest:IRON.name=Cofre de Hierro
+tile.ironchest:GOLD.name=Cofre de Oro
+tile.ironchest:DIAMOND.name=Cofre de Diamante
+tile.ironchest:COPPER.name=Cofre de Cobre
+tile.ironchest:SILVER.name=Cofre de Plata
+tile.ironchest:CRYSTAL.name=Cofre de Cristal
+tile.ironchest:OBSIDIAN.name=Cofre de Obsidiana
+
+item.ironchest:IRONGOLD.name=Mejora de Cofre de Hierro a Oro
+item.ironchest:GOLDDIAMOND.name=Mejora de Cofre de Oro a Diamante
+item.ironchest:COPPERSILVER.name=Mejora de Cofre de Cobre a Plata
+item.ironchest:SILVERGOLD.name=Mejora de Cofre de Plata a Oro
+item.ironchest:COPPERIRON.name=Mejora de Cofre de Cobre a Hierro
+item.ironchest:DIAMONDCRYSTAL.name=Mejora de Cofre de Diamante a Cristal
+item.ironchest:WOODIRON.name=Mejora de Cofre de Madera a Hierro
+item.ironchest:WOODCOPPER.name=Mejora de Cofre de Madera a Cobre
+item.ironchest:DIAMONDOBSIDIAN.name=Mejora de Cofre de Diamante a Obsidiana

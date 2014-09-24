@@ -1,0 +1,25 @@
+tile.ironchest:IRON.name=Eisentruhe
+tile.ironchest:GOLD.name=Goldtruhe
+tile.ironchest:DIAMOND.name=Diamanttruhe
+tile.ironchest:COPPER.name=Kupfertruhe
+tile.ironchest:SILVER.name=Silbertruhe
+tile.ironchest:CRYSTAL.name=Kristalltruhe
+tile.ironchest:OBSIDIAN.name=Obsidiantruhe
+tile.ironchest:DIRTCHEST9000.name=DirtChest 9000!
+
+item.ironchest:IRONGOLD.name=Eisen-zu-Goldtruhen-Upgrade
+item.ironchest:GOLDDIAMOND.name=Gold-zu-Diamanttruhen-Upgrade
+item.ironchest:COPPERSILVER.name=Kupfer-zu-Silbertruhen-Upgrade
+item.ironchest:SILVERGOLD.name=Silber-zu-Goldtruhen-Upgrade
+item.ironchest:COPPERIRON.name=Kupfer-zu-Eisentruhen-Upgrade
+item.ironchest:DIAMONDCRYSTAL.name=Diamant-zu-Kristalltruhen-Upgrade
+item.ironchest:WOODIRON.name=Holz-zu-Eisentruhen-Upgrade
+item.ironchest:WOODCOPPER.name=Holz-zu-Kupfertruhen-Upgrade
+item.ironchest:DIAMONDOBSIDIAN.name=Diamant-zu-Obsidiantruhen-Upgrade
+
+book.ironchest:dirtchest9000.title=Wie du deine neue DirtChest 9000 nutzt!
+book.ironchest:dirtchest9000.page1=Willkommen zu Ihrer neuen DirtChest 9000! Wir hoffen, dass Sie viele freudige Jahre genießen werden, wenn Sie Ihre Erd-Stacks in unserem nützlichen Speichergerät lagern.
+book.ironchest:dirtchest9000.page2=Nutzung: Werfen Sie einfach den Erd-Stack Ihrer Wahl in den äußerst rezeptiven Slot und genießen Sie die Annehmlichkeit, diese Erde für Sie verfügbar zu haben, jedes mal, wenn Sie diese Truhe passieren!
+book.ironchest:dirtchest9000.page3=Wir hoffen, Sie haben das Durchgehen dieser Bedienungsanleitung genossen, und hoffen, dass sie sich weiterhin entscheiden werden, in Zukunft unsere Produkte zu nutzen! Mit freundlichen Grüßen, Die DirtChest 9000 manual writers incorporated.
+book.ironchest:dirtchest9000.page4=Garantie: Dieses Produkt hat keine Garantie jeglicher Sorte. Ihre Erde könnte nicht gespeichert werden, er könnte langsam in die Umwelt gesaugt werden, oder stattdessen könnte das Produkt gar nichts machen.
+book.ironchest:dirtchest9000.page5=DirtChest 9000 ist freundlich zur Umwelt. Bitte entsorgen Sie diesen Guide verantwortungsbewusst, und tun sie nicht, was Sie immer tun und schmeißen ihn in irgendwelche Lava. Wir würden sehr traurig sein.
