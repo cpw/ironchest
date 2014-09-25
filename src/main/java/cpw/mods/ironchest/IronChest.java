@@ -29,52 +29,35 @@ public class IronChest {
     public static CommonProxy proxy;
     @Instance("IronChest")
     public static IronChest instance;
-    public static boolean CACHE_RENDER = true;
-    public static boolean OCELOTS_SITONCHESTS = true;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         Version.init(event.getVersionProperties());
         event.getModMetadata().version = Version.fullVersionString();
-       /*TODO Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
-        try
-        {
-            cfg.load();
-            ChestChangerType.buildItems(cfg);
-            CACHE_RENDER = cfg.get(Configuration.CATEGORY_GENERAL, "cacheRenderingInformation", true).getBoolean(true);
-            OCELOTS_SITONCHESTS = cfg.get(Configuration.CATEGORY_GENERAL, "ocelotsSitOnChests", true).getBoolean(true);
-        }
-        catch (Exception e)
-        {
-            FMLLog.log(Level.ERROR, e, "IronChest has a problem loading its configuration");
-        }
-        finally
-        {
-            if (cfg.hasChanged())
-                cfg.save();
-        }*/
+
+        //ChestChangerType.buildItems(cfg);
         ironChestBlock = new BlockIronChest();
         GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
-        //PacketHandler.INSTANCE.ordinal();
+        PacketHandler.INSTANCE.ordinal();
     }
 
-    /*@EventHandler
+    @EventHandler
     public void load(FMLInitializationEvent evt)
     {
         for (IronChestType typ : IronChestType.values())
         {
-            GameRegistry.registerTileEntityWithAlternatives(typ.clazz, "IronChest."+typ.name(), typ.name());
+            GameRegistry.registerTileEntityWithAlternatives(typ.clazz, "IronChest." + typ.name(), typ.name());
             proxy.registerTileEntitySpecialRenderer(typ);
         }
         //OreDictionary.registerOre("chestWood", Blocks.chest);
-        IronChestType.registerBlocksAndRecipes(ironChestBlock);
-        ChestChangerType.generateRecipes();
+        //IronChestType.registerBlocksAndRecipes(ironChestBlock);
+        //ChestChangerType.generateRecipes();
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.registerRenderInformation();
 //        if (OCELOTS_SITONCHESTS)
 //        {
 //            MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
 //        }
-    }*/
+    }
 }

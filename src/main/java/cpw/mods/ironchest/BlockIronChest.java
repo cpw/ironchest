@@ -10,23 +10,21 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 
-public class BlockIronChest extends /*BlockContainer*/Block 
+public class BlockIronChest extends BlockContainer
 {
     public static final PropertyEnum VARIANT_PROP = PropertyEnum.func_177709_a("variant", IronChestType.class);
 
@@ -52,6 +50,36 @@ public class BlockIronChest extends /*BlockContainer*/Block
     public boolean renderAsNormalBlock()
     {
         return false;
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumFacing direction, float p_180639_6_, float p_180639_7_, float p_180639_8_)
+    {
+        TileEntity te = world.getTileEntity(pos);
+
+        if (te == null || !(te instanceof TileEntityIronChest))
+        {
+            return true;
+        }
+
+        /*if (world.isSideSolid(i, j + 1, k, ForgeDirection.DOWN))
+        {
+            return true;
+        }*/
+
+        if (world.isRemote)
+        {
+            return true;
+        }
+
+        player.openGui(IronChest.instance, ((TileEntityIronChest) te).getType().ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+        return true;
+    }
+    
+    @Override
+    public TileEntity createNewTileEntity(World world, int metadata)
+    {
+        return IronChestType.makeEntity(metadata);
     }
     
     /*@Override
@@ -92,12 +120,6 @@ public class BlockIronChest extends /*BlockContainer*/Block
     }*/
 
     /*@Override
-    public TileEntity createNewTileEntity(World world, int metadata)
-    {
-        return IronChestType.makeEntity(metadata);
-    }*/
-
-    /*@Override
     public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
     {
         ArrayList<ItemStack> items = Lists.newArrayList();
@@ -105,30 +127,6 @@ public class BlockIronChest extends /*BlockContainer*/Block
         IronChestType.values()[IronChestType.validateMeta(metadata)].adornItemDrop(stack);
         items.add(stack);
         return items;
-    }*/
-    
-    /*@Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumFacing direction, float p_180639_6_, float p_180639_7_, float p_180639_8_)
-    {
-        TileEntity te = world.getTileEntity(pos);
-
-        if (te == null || !(te instanceof TileEntityIronChest))
-        {
-            return true;
-        }
-
-        /*if (world.isSideSolid(i, j + 1, k, ForgeDirection.DOWN))
-        {
-            return true;
-        }*/
-
-        /*if (world.isRemote)
-        {
-            return true;
-        }
-
-        player.openGui(IronChest.instance, ((TileEntityIronChest) te).getType().ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
-        return true;
     }*/
 
     /*@Override
