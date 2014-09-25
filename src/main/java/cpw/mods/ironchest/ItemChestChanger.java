@@ -22,17 +22,17 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemChestChanger extends Item {
-
+public class ItemChestChanger extends Item 
+{
     private ChestChangerType type;
 
     public ItemChestChanger(ChestChangerType type)
     {
-        super();
-        setMaxStackSize(1);
         this.type = type;
-        setUnlocalizedName("ironchest:"+type.name());
-        setCreativeTab(CreativeTabs.tabMisc);
+        
+        this.setMaxStackSize(1);
+        this.setUnlocalizedName("ironchest:" + type.name());
+        this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     /*@Override

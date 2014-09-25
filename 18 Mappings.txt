@@ -51,12 +51,23 @@ func_175641_c - addBlockEvent
 func_180501_a - setBlock
 func_175726_f - getChunkFromBlockCoords
 
+—Entity—
+func_174818_b - getDistanceSq
+
 —RegistryNamespaced—
 func_177775_a - addObject
 
 —IInventory—-
 func_174889_b - openInventory
 func_174886_c - closeInventory
+func_174888_l - clearInventory
+func_174887_a_ - getField
+func_174885_b - setField
+func_174890_g - getFieldCount
+func_174876_a - createContainer
+
+—IInteractionObject—
+func_174875_k - getGuiID
 
 —RenderItem—
 func_180451_a - renderEffect
@@ -171,9 +182,41 @@ func_176610_l - getID
 func_177580_d - getModelLocation
 func_177584_b - getBlockStateLocation
 func_177586_a - getModelBlockDefinition
+func_177590_d - loadItemModels
+func_177592_e - registerSubModels
+func_177596_a - getSubModels
+
+field_177608_m - itemModelGenerator
+field_177613_u - subModels
+
+—ItemModelGenerator—
+field_178398_a - LAYERS
 
 —Minecraft—
 field_175617_aL - modelManager
+
+—IWorldNamable—
+getCommandSenderName - getName
+isCustomInventoryName - hasCustomName
+getFormattedCommandSenderName - getFormattedName
+
+—LockCode-
+func_180159_b - getLock
+func_180158_b - fromNBT
+func_180157_a - toNBT
+func_180160_a - isEmpty
+
+field_180161_b - lock
+field_180162_a - EMPTY_CODE
+
+—ILockableContainer—
+func_174891_i - getLockCode
+func_174892_a - setLockCode
+func_174893_q_ - isLocked
+
+—TileEntityLockable—
+
+field_174901_a - lockCode
 
 ——————————
 FIXES

@@ -10,6 +10,8 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -18,10 +20,17 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class BlockIronChest extends BlockContainer
@@ -129,14 +138,14 @@ public class BlockIronChest extends BlockContainer
         return items;
     }*/
 
-    /*@Override
+    @Override
     public void onBlockAdded(World world, BlockPos pos, IBlockState blockState)
     {
         super.onBlockAdded(world, pos, blockState);
         world.markBlockForUpdate(pos);
-    }*/
+    }
 
-    /*@Override
+    @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState blockState, EntityLivingBase entityliving, ItemStack itemStack)
     {
         byte chestFacing = 0;
@@ -165,7 +174,7 @@ public class BlockIronChest extends BlockContainer
             teic.setFacing(chestFacing);
             world.markBlockForUpdate(pos);
         }
-    }*/
+    }
 
     /*@Override
     public int damageDropped(int i)
@@ -173,7 +182,7 @@ public class BlockIronChest extends BlockContainer
         return i;
     }*/
 
-    /*@Override
+    @Override
     public void breakBlock(World world, BlockPos pos, IBlockState blockState)
     {
         TileEntityIronChest tileentitychest = (TileEntityIronChest) world.getTileEntity(pos);
@@ -187,6 +196,8 @@ public class BlockIronChest extends BlockContainer
 
     public void dropContent(int newSize, IInventory chest, World world, BlockPos pos)
     {
+        Random random = world.rand;
+        
         for (int l = newSize; l < chest.getSizeInventory(); l++)
         {
             ItemStack itemstack = chest.getStackInSlot(l);
@@ -218,7 +229,7 @@ public class BlockIronChest extends BlockContainer
                 world.spawnEntityInWorld(entityitem);
             }
         }
-    }*/
+    }
 
     /*@Override
     public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
@@ -235,12 +246,12 @@ public class BlockIronChest extends BlockContainer
        return super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }*/
 
-    /*@Override
+    @Override
     public boolean hasComparatorInputOverride() {
         return true;
-    }*/
+    }
 
-    /*@Override
+    @Override
     public int getComparatorInputOverride(World world, BlockPos pos)
     {
         TileEntity te = world.getTileEntity(pos);
@@ -249,7 +260,7 @@ public class BlockIronChest extends BlockContainer
             return Container.calcRedstoneFromInventory((IInventory)te);
         }
         return 0;
-    }*/
+    }
 
     /*private static final ForgeDirection[] validRotationAxes = new ForgeDirection[] { UP, DOWN };
     @Override

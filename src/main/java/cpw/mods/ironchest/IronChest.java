@@ -36,7 +36,7 @@ public class IronChest {
         Version.init(event.getVersionProperties());
         event.getModMetadata().version = Version.fullVersionString();
 
-        //ChestChangerType.buildItems(cfg);
+        ChestChangerType.buildItems();
         ironChestBlock = new BlockIronChest();
         GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
         PacketHandler.INSTANCE.ordinal();

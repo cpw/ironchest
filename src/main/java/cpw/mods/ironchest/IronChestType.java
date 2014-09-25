@@ -202,30 +202,6 @@ public enum IronChestType implements IStringSerializable
         return this == OBSIDIAN;
     }
 
-    /*TODO @SideOnly(Side.CLIENT)
-    private IIcon[] icons;
-
-    @SideOnly(Side.CLIENT)
-    public void makeIcons(IIconRegister par1IconRegister)
-    {
-        if (isValidForCreativeMode())
-        {
-            icons = new IIcon[3];
-            int i = 0;
-            for (String s : sideNames)
-            {
-                icons[i++] = par1IconRegister.registerIcon(String.format("ironchest:%s_%s",name().toLowerCase(),s));
-            }
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side)
-    {
-
-        return icons[sideMapping[side]];
-    }*/
-
     private static String[] sideNames = { "top", "front", "side" };
     private static int[] sideMapping = { 0, 0, 2, 1, 2, 2, 2 };
 

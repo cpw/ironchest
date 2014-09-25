@@ -16,6 +16,8 @@ import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,10 +25,12 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IChatComponent;
 
-public class TileEntityIronChest extends TileEntity implements IUpdatePlayerListBox, IInventory {
+public class TileEntityIronChest extends TileEntityLockable implements IUpdatePlayerListBox, IInventory 
+{
     private int ticksSinceSync = -1;
     public float prevLidAngle;
     public float lidAngle;
@@ -37,6 +41,7 @@ public class TileEntityIronChest extends TileEntity implements IUpdatePlayerList
     private int facing;
     private boolean inventoryTouched;
     private boolean hadStuff;
+    private String customName;
 
     public TileEntityIronChest()
     {
@@ -65,12 +70,6 @@ public class TileEntityIronChest extends TileEntity implements IUpdatePlayerList
     public int getFacing()
     {
         return this.facing;
-    }
-
-    @Override
-    public String getCommandSenderName()
-    {
-        return type.name();
     }
 
     public IronChestType getType()
@@ -207,13 +206,39 @@ public class TileEntityIronChest extends TileEntity implements IUpdatePlayerList
         }
         markDirty();
     }
+    
+    @Override
+    public String getName()
+    {
+        return this.hasCustomName() ? this.customName : type.name();
+    }
+    
+    @Override
+    public boolean hasCustomName()
+    {
+        return this.customName != null && this.customName.length() > 0;
+    }
+    
+    public void setCustomName(String name)
+    {
+        this.customName = name;
+    }
 
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound)
     {
         super.readFromNBT(nbttagcompound);
+        
+        //10 - TAG_COMPOUND
         NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 10);
-        chestContents = new ItemStack[getSizeInventory()];
+        this.chestContents = new ItemStack[getSizeInventory()];
+        
+        //8 - TAG_STRING
+        if (nbttagcompound.hasKey("CustomName", 8))
+        {
+            this.customName = nbttagcompound.getString("CustomName");
+        }
+        
         for (int i = 0; i < nbttaglist.tagCount(); i++)
         {
             NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
@@ -245,6 +270,11 @@ public class TileEntityIronChest extends TileEntity implements IUpdatePlayerList
 
         nbttagcompound.setTag("Items", nbttaglist);
         nbttagcompound.setByte("facing", (byte)facing);
+        
+        if (this.hasCustomName())
+        {
+            nbttagcompound.setString("CustomName", this.customName);
+        }
     }
 
     @Override
@@ -387,7 +417,7 @@ public class TileEntityIronChest extends TileEntity implements IUpdatePlayerList
         int newSize = newEntity.chestContents.length;
         System.arraycopy(chestContents, 0, newEntity.chestContents, 0, Math.min(newSize, chestContents.length));
         BlockIronChest block = IronChest.ironChestBlock;
-        //block.dropContent(newSize, this, this.worldObj, pos);
+        block.dropContent(newSize, this, this.worldObj, pos);
         newEntity.setFacing(facing);
         newEntity.sortTopStacks();
         newEntity.ticksSinceSync = -1;
@@ -491,11 +521,7 @@ public class TileEntityIronChest extends TileEntity implements IUpdatePlayerList
         return type.acceptsStack(itemstack);
     }
 
-    @Override
-    public boolean isCustomInventoryName()
-    {
-        return false;
-    }
+
 
     /*void rotateAround(ForgeDirection axis)
     {
@@ -507,43 +533,41 @@ public class TileEntityIronChest extends TileEntity implements IUpdatePlayerList
     {
     }
 
-    public void removeAdornments()
-    {
+    public void removeAdornments() {}
 
+    @Override
+    public int getField(int id)
+    {
+        return 0;
     }
 
     @Override
-    public IChatComponent getFormattedCommandSenderName()
+    public void setField(int id, int value) {}
+
+    @Override
+    public int getFieldCount()
     {
-        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void clearInventory()
+    {
+        for (int i = 0; i < this.chestContents.length; ++i)
+        {
+            this.chestContents[i] = null;
+        }
+    }
+
+    @Override
+    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer player)
+    {
         return null;
     }
 
     @Override
-    public int func_174887_a_(int p_174887_1_)
+    public String getGuiID()
     {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public void func_174885_b(int p_174885_1_, int p_174885_2_)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public int func_174890_g()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public void func_174888_l()
-    {
-        // TODO Auto-generated method stub
-        
+        return "IronChest:" + type.name();
     }
 }
