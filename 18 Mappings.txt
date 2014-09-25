@@ -29,6 +29,8 @@ func_176213_c - onBlockAdded
 func_180633_a - onBlockPlacedBy
 func_180651_a - damageDropped
 func_180663_b - breakBlock
+func_180656_a - isProvidingWeakPower
+func_180642_a - onBlockPlaced
 
 —Item—
 func_180614_a - onItemUse
@@ -46,6 +48,8 @@ func_175623_d - isAirBlock
 func_175690_a - setTileEntity
 func_175689_h - markBlockForUpdate
 func_175641_c - addBlockEvent
+func_180501_a - setBlock
+func_175726_f - getChunkFromBlockCoords
 
 —RegistryNamespaced—
 func_177775_a - addObject
@@ -60,6 +64,12 @@ ESTIMATES
 
 —IBlockAccess—
 func_180495_p - getBlockState
+
+—World—
+func_175701_a - isPosInBoundaries
+
+—Chunk—
+func_177435_g - getBlockState
 
 —Block—-
 func_180661_e - createBlockState
@@ -153,3 +163,14 @@ field_177992_a - ORIGIN
 
 —IStringSerializable—
 func_176610_l - getID
+
+——————————
+FIXES
+——————————
+—GameData—
+
+    static Block findBlock(String modId, String name)
+    {
+        ResourceLocation key = new ResourceLocation(modId + ":" + name);
+        return getMain().iBlockRegistry.containsKey(key) ? getMain().iBlockRegistry.getObject(key) : null;
+    }
