@@ -58,6 +58,9 @@ func_177775_a - addObject
 func_174889_b - openInventory
 func_174886_c - closeInventory
 
+—RenderItem—
+func_180451_a - renderEffect
+
 ——————————
 ESTIMATES
 ——————————
@@ -164,6 +167,11 @@ field_177992_a - ORIGIN
 —IStringSerializable—
 func_176610_l - getID
 
+—ModelBakery—
+func_177580_d - getModelLocation
+func_177584_b - getBlockStateLocation
+func_177586_a - getModelBlockDefinition
+
 ——————————
 FIXES
 ——————————
@@ -173,4 +181,50 @@ FIXES
     {
         ResourceLocation key = new ResourceLocation(modId + ":" + name);
         return getMain().iBlockRegistry.containsKey(key) ? getMain().iBlockRegistry.getObject(key) : null;
+    }
+
+    private int registerBlock(Block block, String name, int idHint)
+    {
+        // handle ItemBlock-before-Block registrations
+        ItemBlock itemBlock = null;
+
+        for (Item item : iItemRegistry.typeSafeIterable()) // find matching ItemBlock
+        {
+            if (item instanceof ItemBlock && ((ItemBlock) item).blockInstance == block)
+            {
+                itemBlock = (ItemBlock) item;
+                break;
+            }
+        }
+
+        if (itemBlock != null) // has ItemBlock, adjust id and clear the slot already occupied by the corresponding item
+        {
+            idHint = iItemRegistry.getId(itemBlock);
+            FMLLog.fine("Found matching ItemBlock %s for Block %s at id %d", itemBlock, block, idHint);
+            freeSlot(idHint, block); // temporarily free the slot occupied by the Item for the block registration
+        }
+
+        // add
+        int blockId = iBlockRegistry.add(idHint, name, block, availabilityMap);
+
+        if (itemBlock != null) // verify
+        {
+            if (blockId != idHint) throw new IllegalStateException(String.format("Block at itemblock id %d insertion failed, got id %d.", idHint, blockId));
+            verifyItemBlockName(itemBlock);
+        }
+        
+        //Hackery added by me which probably shouldn't be done
+        Iterator iterator1 = block.getBlockState().getValidStates().iterator();
+
+        while (iterator1.hasNext())
+        {
+            IBlockState iblockstate = (IBlockState)iterator1.next();
+            int i = blockRegistry.getIDForObject(block) << 4 | block.getMetaFromBlockState(iblockstate);
+           Block.field_176229_d.func_148746_a(iblockstate, i);
+        }
+	//End hackery
+
+        useSlot(blockId);
+        ((RegistryDelegate.Delegate<Block>) block.delegate).setName(name);
+        return blockId;
     }

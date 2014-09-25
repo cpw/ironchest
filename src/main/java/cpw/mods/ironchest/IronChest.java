@@ -10,7 +10,9 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -53,7 +55,7 @@ public class IronChest {
                 cfg.save();
         }*/
         ironChestBlock = new BlockIronChest();
-        GameRegistry.registerBlock(ironChestBlock,/* ItemIronChest.class,*/ "BlockIronChest");
+        GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
         //PacketHandler.INSTANCE.ordinal();
     }
 
