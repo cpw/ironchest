@@ -1,7 +1,7 @@
 {
-    "parent": "builtin/generated”,
+    "parent": "builtin/generated",
     "textures": {
-        "layer0": “ironchest:items/copperIronUpgrade”
+        "layer0": "ironchest:items/copperIronUpgrade"
     },
     "display": {
         "thirdperson": {

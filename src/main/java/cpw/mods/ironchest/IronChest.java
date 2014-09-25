@@ -10,20 +10,31 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+
+import cpw.mods.ironchest.client.ModelHelper;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:FML@[7.2,)")
-public class IronChest {
+public class IronChest 
+{
     public static BlockIronChest ironChestBlock;
     @SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
     public static CommonProxy proxy;
@@ -36,15 +47,18 @@ public class IronChest {
         Version.init(event.getVersionProperties());
         event.getModMetadata().version = Version.fullVersionString();
 
-        ChestChangerType.buildItems();
-        ironChestBlock = new BlockIronChest();
-        GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
         PacketHandler.INSTANCE.ordinal();
     }
 
     @EventHandler
     public void load(FMLInitializationEvent evt)
     {
+        //Registration has been moved to init to account for the registration of inventory models
+        //Minecraft.getRenderItem() returns null before this stage
+        ChestChangerType.buildItems();
+        ironChestBlock = new BlockIronChest();
+        GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
+        
         for (IronChestType typ : IronChestType.values())
         {
             GameRegistry.registerTileEntityWithAlternatives(typ.clazz, "IronChest." + typ.name(), typ.name());

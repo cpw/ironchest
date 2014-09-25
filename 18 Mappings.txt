@@ -69,6 +69,11 @@ func_174876_a - createContainer
 —IInteractionObject—
 func_174875_k - getGuiID
 
+—ItemRenderer—
+func_178099_a - renderItem
+
+field_178112_h - itemRenderer
+
 —RenderItem—
 func_180451_a - renderEffect
 
@@ -185,15 +190,74 @@ func_177586_a - getModelBlockDefinition
 func_177590_d - loadItemModels
 func_177592_e - registerSubModels
 func_177596_a - getSubModels
+func_177570_a - setupModelRegistry
 
+field_177604_a - MODEL_MISSING
 field_177608_m - itemModelGenerator
 field_177613_u - subModels
+field_177605_n - modelRegistry
 
 —ItemModelGenerator—
 field_178398_a - LAYERS
 
+—RenderItem—
+func_175037_a - getItemModelMesher
+func_175048_a - loadInventoryModel
+func_175047_a - loadInventoryModel
+func_175029_a - loadInventoryModel
+func_175031_a - loadInventoryModel
+func_175041_b - loadInventoryModels
+
+field_175059_m - itemModelMesher
+
 —Minecraft—
+func_175597_ag - getItemRenderer
+func_175599_af - getRenderItem
+
 field_175617_aL - modelManager
+field_175620_Y - itemRenderer
+field_175621_X - renderItem
+field_175616_W - renderManager
+
+—GlStateManager—
+func_179094_E - pushMatrix
+func_179121_F - popMatrix
+func_179114_b - rotate
+func_179152_a - scale
+func_179139_a - scale
+func_179109_b - translate
+func_179137_b - translate
+
+—GLStateManager.BooleanState—
+func_179198_a - setDisabled
+func_179200_b - setEnabled
+
+—ItemModelMesher—
+func_178083_a - getModelManager
+func_178084_b - getItemStackDamage
+func_178081_c - getItemID
+func_178088_b - getModelForItem
+func_178089_a - getModelForItemStack
+func_178087_a - getItemTexture
+func_178082_a - getItemTexture
+func_178086_a - loadItemModel
+func_178085_b - resetModels
+func_178080_a - addItemMeshDefinition
+
+field_178090_d - modelManager
+field_178093_a - modelLocations
+field_178091_b - itemModels
+field_178092_c - itemMeshDefinitions
+
+—IBakedModel—
+func_177554_e - getTexture
+
+—ModelManager—
+func_174953_a - getModel
+func_174951_a - getDefaultModel
+
+field_174955_d - defaultModel
+field_174958_a - modelRegistry
 
 —IWorldNamable—
 getCommandSenderName - getName
