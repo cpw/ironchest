@@ -182,7 +182,7 @@ public enum IronChestType implements IStringSerializable
 
     public static int validateMeta(int i)
     {
-        if (i < values().length && values()[i].size > 0)
+        if (i < values().length && values()[i] != IronChestType.WOOD)
         {
             return i;
         }

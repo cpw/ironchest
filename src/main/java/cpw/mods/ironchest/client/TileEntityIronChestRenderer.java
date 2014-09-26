@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -34,17 +35,18 @@ import net.minecraft.util.ResourceLocation;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
-import com.google.common.primitives.SignedBytes;
 
+import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.MappableItemStackWrapper;
 import cpw.mods.ironchest.TileEntityIronChest;
 
-/*public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer {
-    @SuppressWarnings("unused")
+public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
+{
     private static Map<MappableItemStackWrapper, Integer> renderList = new HashMap<MappableItemStackWrapper, Integer>();
 
     private static Map<IronChestType, ResourceLocation> locations;
+
     static {
         Builder<IronChestType, ResourceLocation> builder = ImmutableMap.<IronChestType,ResourceLocation>builder();
         for (IronChestType typ : IronChestType.values()) {
@@ -52,22 +54,19 @@ import cpw.mods.ironchest.TileEntityIronChest;
         }
         locations = builder.build();
     }
+    
     private Random random;
-
-    @SuppressWarnings("unused")
-    private RenderBlocks renderBlocks;
-
     private RenderItem itemRenderer;
+    private ModelChest model;
 
     private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F },
             { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F }, };
-
+    
     public TileEntityIronChestRenderer()
     {
         model = new ModelChest();
         random = new Random();
-        renderBlocks = new RenderBlocks();
-        itemRenderer = new RenderItem() {
+        /*itemRenderer = new RenderItem(null, null) {
             @Override
             public byte getMiniBlockCount(ItemStack stack, byte original) {
                 return SignedBytes.saturatedCast(Math.min(stack.stackSize / 32, 15) + 1);
@@ -85,10 +84,11 @@ import cpw.mods.ironchest.TileEntityIronChest;
                 return false;
             }
         };
-        itemRenderer.setRenderManager(RenderManager.instance);
+        itemRenderer.setRenderManager(RenderManager.instance);*/
     }
 
-    /*public void render(TileEntityIronChest tile, double x, double y, double z, float partialTick) {
+    public void render(TileEntityIronChest tile, double x, double y, double z, float partialTick)
+    {
         if (tile == null) {
             return;
         }
@@ -97,13 +97,13 @@ import cpw.mods.ironchest.TileEntityIronChest;
         if (tile != null && tile.hasWorldObj()) {
             facing = tile.getFacing();
             type = tile.getType();
-            int typ = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
-            type = IronChestType.values()[typ];
+            IBlockState state = tile.getWorld().getBlockState(tile.getPos());
+            type = (IronChestType)state.getValue(BlockIronChest.VARIANT_PROP);
         }
         bindTexture(locations.get(type));
         glPushMatrix();
-        glEnable(32826 /* GL_RESCALE_NORMAL_EXT *//*);
-        /*glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
+        glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         glTranslatef((float) x, (float) y + 1.0F, (float) z + 1.0F);
         glScalef(1.0F, -1F, -1F);
         glTranslatef(0.5F, 0.5F, 0.5F);
@@ -128,10 +128,10 @@ import cpw.mods.ironchest.TileEntityIronChest;
         model.chestLid.rotateAngleX = -((lidangle * 3.141593F) / 2.0F);
         // Render the chest itself
         model.renderAll();
-        glDisable(32826 /* GL_RESCALE_NORMAL_EXT *//*);
-        /*glPopMatrix();
+        glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
+        glPopMatrix();
         glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        if (type.isTransparent() && tile.getDistanceFrom(this.field_147501_a.field_147560_j, this.field_147501_a.field_147561_k, this.field_147501_a.field_147558_l) < 128d) {
+        if (type.isTransparent() && tile.getDistanceSq(this.rendererDispatcher.field_147560_j, this.rendererDispatcher.field_147561_k, this.rendererDispatcher.field_147558_l) < 128d) {
             random.setSeed(254L);
             float shiftX;
             float shiftY;
@@ -144,9 +144,9 @@ import cpw.mods.ironchest.TileEntityIronChest;
                 blockScale = 0.85F;
             }
             glPushMatrix();
-            glDisable(2896 /* GL_LIGHTING *//*);
-            /*glTranslatef((float) x, (float) y, (float) z);
-            EntityItem customitem = new EntityItem(field_147501_a.field_147550_f);
+            glDisable(2896 /* GL_LIGHTING */);
+            glTranslatef((float) x, (float) y, (float) z);
+            EntityItem customitem = new EntityItem(this.getWorld());
             customitem.hoverStart = 0f;
             for (ItemStack item : tile.getTopItemStacks()) {
                 if (shift > shifts.length) {
@@ -165,20 +165,19 @@ import cpw.mods.ironchest.TileEntityIronChest;
                 glRotatef(timeD, 0.0F, 1.0F, 0.0F);
                 glScalef(blockScale, blockScale, blockScale);
                 customitem.setEntityItemStack(item);
-                itemRenderer.doRender(customitem, 0, 0, 0, 0, 0);
+                //itemRenderer.doRender(customitem, 0, 0, 0, 0, 0);
                 glPopMatrix();
             }
-            glEnable(2896 /* GL_LIGHTING *//*);
-            /*glPopMatrix();
+            glEnable(2896 /* GL_LIGHTING */);
+            glPopMatrix();
             glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
-
-    /*@Override
-    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float partialTick)
+    
+    @Override
+    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float partialTick, int p_180535_9_)
     {
         render((TileEntityIronChest) tileentity, x, y, z, partialTick);
     }
 
-    private ModelChest model;
-}*/
+}

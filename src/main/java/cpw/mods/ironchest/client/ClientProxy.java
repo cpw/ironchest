@@ -28,13 +28,13 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerRenderInformation()
     {        
-        //TileEntityRendererChestHelper.instance = new IronChestRenderHelper();
+        //tileEntityRendererChestHelper.instance = new IronChestRenderHelper();
     }
 
     @Override
     public void registerTileEntitySpecialRenderer(IronChestType typ)
     {
-        //ClientRegistry.bindTileEntitySpecialRenderer(typ.clazz, new TileEntityIronChestRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(typ.clazz, new TileEntityIronChestRenderer());
     }
 
     @Override
