@@ -58,6 +58,8 @@ public class IronChest
         ChestChangerType.buildItems();
         ironChestBlock = new BlockIronChest();
         GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().func_178123_a(ironChestBlock);
+        ModelHelper.loadInventoryModel(ironChestBlock, "ironchest:BlockIronChest");
         
         for (IronChestType typ : IronChestType.values())
         {

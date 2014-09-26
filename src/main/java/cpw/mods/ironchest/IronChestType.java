@@ -67,7 +67,7 @@ public enum IronChestType implements IStringSerializable
     }
     
     @Override
-    public String getID()
+    public String getName()
     {
         return name().toLowerCase();
     }
@@ -182,7 +182,7 @@ public enum IronChestType implements IStringSerializable
 
     public static int validateMeta(int i)
     {
-        if (i < values().length && values()[i] != IronChestType.WOOD)
+        if (i < values().length && values()[i].size > 0)
         {
             return i;
         }

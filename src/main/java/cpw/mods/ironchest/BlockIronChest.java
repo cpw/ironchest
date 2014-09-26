@@ -40,13 +40,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockIronChest extends BlockContainer
 {
-    public static final PropertyEnum VARIANT_PROP = PropertyEnum.func_177709_a("variant", IronChestType.class);
+    public static final PropertyEnum VARIANT_PROP = PropertyEnum.create("variant", IronChestType.class);
 
     public BlockIronChest()
     {
         super(Material.iron);
         
-        this.setDefaultBlockState(this.blockState.getBaseState().setProperty(VARIANT_PROP, IronChestType.IRON));
+        this.setDefaultBlockState(this.blockState.getBaseState().withProperty(VARIANT_PROP, IronChestType.IRON));
         
         this.setBlockBounds(0.0625F, 0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
         this.setHardness(3.0F);
@@ -64,6 +64,12 @@ public class BlockIronChest extends BlockContainer
     public boolean renderAsNormalBlock()
     {
         return false;
+    }
+    
+    @Override
+    public int getRenderType()
+    {
+        return 2;
     }
     
     @Override
@@ -112,13 +118,13 @@ public class BlockIronChest extends BlockContainer
     @Override
     public IBlockState getBlockStateFromMeta(int meta)
     {
-        return this.getDefaultBlockState().setProperty(VARIANT_PROP, IronChestType.values()[IronChestType.validateMeta(meta)]);
+        return this.getDefaultBlockState().withProperty(VARIANT_PROP, IronChestType.values()[meta]);
     }
 
     @Override
     public int getMetaFromBlockState(IBlockState blockState)
     {
-        return IronChestType.validateMeta(((IronChestType)blockState.getValue(VARIANT_PROP)).ordinal());
+        return ((IronChestType)blockState.getValue(VARIANT_PROP)).ordinal();
     }
     
     @Override
@@ -126,12 +132,6 @@ public class BlockIronChest extends BlockContainer
     {
         return new BlockState(this, new IProperty[] { VARIANT_PROP });
     }
-
-    /*@Override
-    public int getRenderType()
-    {
-        return 22;
-    }*/
 
     /*@Override
     public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)

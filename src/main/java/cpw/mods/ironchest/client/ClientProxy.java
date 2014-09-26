@@ -28,7 +28,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerRenderInformation()
     {        
-        //tileEntityRendererChestHelper.instance = new IronChestRenderHelper();
+        TileEntityRendererChestHelper.instance = new IronChestRenderHelper();
     }
 
     @Override

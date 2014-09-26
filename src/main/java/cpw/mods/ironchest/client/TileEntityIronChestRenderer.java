@@ -37,6 +37,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 
 import cpw.mods.ironchest.BlockIronChest;
+import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.MappableItemStackWrapper;
 import cpw.mods.ironchest.TileEntityIronChest;
@@ -94,12 +95,14 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
         }
         int facing = 3;
         IronChestType type = tile.getType();
-        if (tile != null && tile.hasWorldObj()) {
+        
+        if (tile != null && tile.hasWorldObj() && tile.getWorld().getBlockState(tile.getPos()).getBlock() == IronChest.ironChestBlock) {
             facing = tile.getFacing();
             type = tile.getType();
             IBlockState state = tile.getWorld().getBlockState(tile.getPos());
             type = (IronChestType)state.getValue(BlockIronChest.VARIANT_PROP);
         }
+        
         bindTexture(locations.get(type));
         glPushMatrix();
         glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
