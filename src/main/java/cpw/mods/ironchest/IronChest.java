@@ -65,8 +65,8 @@ public class IronChest
             proxy.registerTileEntitySpecialRenderer(typ);
         }
         //OreDictionary.registerOre("chestWood", Blocks.chest);
-        //IronChestType.registerBlocksAndRecipes(ironChestBlock);
-        //ChestChangerType.generateRecipes();
+        IronChestType.registerBlocksAndRecipes(ironChestBlock);
+        ChestChangerType.generateRecipes();
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.registerRenderInformation();
 //        if (OCELOTS_SITONCHESTS)

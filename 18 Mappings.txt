@@ -287,12 +287,6 @@ FIXES
 ——————————
 —GameData—
 
-    static Block findBlock(String modId, String name)
-    {
-        ResourceLocation key = new ResourceLocation(modId + ":" + name);
-        return getMain().iBlockRegistry.containsKey(key) ? getMain().iBlockRegistry.getObject(key) : null;
-    }
-
     private int registerBlock(Block block, String name, int idHint)
     {
         // handle ItemBlock-before-Block registrations
