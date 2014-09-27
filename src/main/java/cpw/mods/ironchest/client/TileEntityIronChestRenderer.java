@@ -106,7 +106,6 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
         
         bindTexture(locations.get(type));
         glPushMatrix();
-        glEnable(32826 /* GL_RESCALE_NORMAL_EXT */);
         glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         glTranslatef((float) x, (float) y + 1.0F, (float) z + 1.0F);
         glScalef(1.0F, -1F, -1F);
@@ -132,7 +131,6 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
         model.chestLid.rotateAngleX = -((lidangle * 3.141593F) / 2.0F);
         // Render the chest itself
         model.renderAll();
-        glDisable(32826 /* GL_RESCALE_NORMAL_EXT */);
         glPopMatrix();
         glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         if (type.isTransparent() && tile.getDistanceSq(this.rendererDispatcher.field_147560_j, this.rendererDispatcher.field_147561_k, this.rendererDispatcher.field_147558_l) < 128d) {
