@@ -24,7 +24,9 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
+import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -57,7 +59,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
     }
     
     private Random random;
-    private RenderItem itemRenderer;
+    private RenderEntityItem itemRenderer;
     private ModelChest model;
 
     private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F },
@@ -67,7 +69,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
     {
         model = new ModelChest();
         random = new Random();
-        /*itemRenderer = new RenderItem(null, null) {
+        itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem()); /*{
             @Override
             public byte getMiniBlockCount(ItemStack stack, byte original) {
                 return SignedBytes.saturatedCast(Math.min(stack.stackSize / 32, 15) + 1);
@@ -84,8 +86,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
             public boolean shouldSpreadItems() {
                 return false;
             }
-        };
-        itemRenderer.setRenderManager(RenderManager.instance);*/
+        };*/
     }
 
     public void render(TileEntityIronChest tile, double x, double y, double z, float partialTick)
@@ -168,7 +169,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
                 glRotatef(timeD, 0.0F, 1.0F, 0.0F);
                 glScalef(blockScale, blockScale, blockScale);
                 customitem.setEntityItemStack(item);
-                //itemRenderer.doRender(customitem, 0, 0, 0, 0, 0);
+                itemRenderer.doRender(customitem, 0, 0, 0, 0, 0);
                 glPopMatrix();
             }
             glEnable(2896 /* GL_LIGHTING */);
