@@ -13,7 +13,6 @@ package cpw.mods.ironchest;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -24,7 +23,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -181,11 +179,11 @@ public class BlockIronChest extends BlockContainer
         }
     }
 
-    /*@Override
-    public int damageDropped(int i)
+    @Override
+    public int damageDropped(IBlockState state)
     {
-        return i;
-    }*/
+        return IronChestType.validateMeta(((IronChestType)state.getValue(VARIANT_PROP)).ordinal());
+    }
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState blockState)
