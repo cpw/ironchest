@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import cpw.mods.ironchest.CommonProxy;
+import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 
@@ -28,6 +29,14 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerRenderInformation()
     {        
+        for (IronChestType chestType : IronChestType.values())
+        {
+            if (chestType != IronChestType.WOOD)
+            {
+                ModelHelper.registerBlock(IronChest.ironChestBlock, chestType.ordinal(), "ironchest:BlockIronChest");
+            }
+        }
+        
         TileEntityRendererChestHelper.instance = new IronChestRenderHelper();
     }
 

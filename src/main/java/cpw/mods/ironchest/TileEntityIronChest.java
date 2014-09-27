@@ -208,13 +208,13 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     }
     
     @Override
-    public String getName()
+    public String getCommandSenderName()
     {
-        return this.hasCustomName() ? this.customName : type.name();
+        return this.hasName() ? this.customName : type.name();
     }
     
     @Override
-    public boolean hasCustomName()
+    public boolean hasName()
     {
         return this.customName != null && this.customName.length() > 0;
     }
@@ -271,7 +271,7 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
         nbttagcompound.setTag("Items", nbttaglist);
         nbttagcompound.setByte("facing", (byte)facing);
         
-        if (this.hasCustomName())
+        if (this.hasName())
         {
             nbttagcompound.setString("CustomName", this.customName);
         }

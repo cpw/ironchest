@@ -64,7 +64,7 @@ public enum ChestChangerType {
     {
         item = new ItemChestChanger(this);
         GameRegistry.registerItem(item, itemName);
-        ModelHelper.loadInventoryModel(item, "ironchest:" + itemName);
+        ModelHelper.registerItem(item, "ironchest:" + itemName);
             
         return item;
     }

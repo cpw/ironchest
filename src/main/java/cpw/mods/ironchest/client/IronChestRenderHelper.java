@@ -36,7 +36,7 @@ public class IronChestRenderHelper extends TileEntityRendererChestHelper
     }
 
     @Override
-    public void renderChest(ItemStack itemStack)
+    public void renderByItem(ItemStack itemStack)
     {
         Block block = Block.getBlockFromItem(itemStack.getItem());
         
@@ -46,7 +46,7 @@ public class IronChestRenderHelper extends TileEntityRendererChestHelper
         }
         else
         {
-            super.renderChest(itemStack);
+            super.renderByItem(itemStack);
         }
     }
 }

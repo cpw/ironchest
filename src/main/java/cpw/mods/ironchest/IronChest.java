@@ -19,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.util.RegistrySimple;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -50,6 +51,8 @@ public class IronChest
         PacketHandler.INSTANCE.ordinal();
     }
 
+    private static boolean run = false;
+    
     @EventHandler
     public void load(FMLInitializationEvent evt)
     {
@@ -57,9 +60,9 @@ public class IronChest
         //Minecraft.getRenderItem() returns null before this stage
         ChestChangerType.buildItems();
         ironChestBlock = new BlockIronChest();
-        GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
+        RegistryHelper.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
+        
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().func_178123_a(ironChestBlock);
-        ModelHelper.loadInventoryModel(ironChestBlock, "ironchest:BlockIronChest");
         
         for (IronChestType typ : IronChestType.values())
         {
