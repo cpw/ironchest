@@ -44,7 +44,7 @@ public class BlockIronChest extends BlockContainer
     {
         super(Material.iron);
         
-        this.setDefaultBlockState(this.blockState.getBaseState().withProperty(VARIANT_PROP, IronChestType.IRON));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT_PROP, IronChestType.IRON));
         
         this.setBlockBounds(0.0625F, 0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
         this.setHardness(3.0F);
@@ -114,13 +114,13 @@ public class BlockIronChest extends BlockContainer
     }
     
     @Override
-    public IBlockState getBlockStateFromMeta(int meta)
+    public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultBlockState().withProperty(VARIANT_PROP, IronChestType.values()[meta]);
+        return this.getDefaultState().withProperty(VARIANT_PROP, IronChestType.values()[meta]);
     }
 
     @Override
-    public int getMetaFromBlockState(IBlockState blockState)
+    public int getMetaFromState(IBlockState blockState)
     {
         return ((IronChestType)blockState.getValue(VARIANT_PROP)).ordinal();
     }

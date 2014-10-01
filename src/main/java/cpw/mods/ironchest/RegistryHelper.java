@@ -49,8 +49,8 @@ public class RegistryHelper
         while (iterator.hasNext())
         {
             IBlockState iblockstate = (IBlockState)iterator.next();
-            int id = Block.blockRegistry.getIDForObject(block) << 4 | block.getMetaFromBlockState(iblockstate);
-            Block.field_176229_d.func_148746_a(iblockstate, id);
+            int id = Block.blockRegistry.getIDForObject(block) << 4 | block.getMetaFromState(iblockstate);
+            Block.BLOCK_STATE_IDS.put(iblockstate, id);
         }
         
         return block;

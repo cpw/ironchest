@@ -20,7 +20,7 @@ public class ItemIronChest extends ItemBlock
     {
         super(block);
         
-        this.setMaxDurability(0);
+        this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
 
