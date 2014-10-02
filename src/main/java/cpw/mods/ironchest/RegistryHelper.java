@@ -10,7 +10,6 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
-import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -18,17 +17,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.LoaderException;
-import net.minecraftforge.fml.common.LoaderState;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import org.apache.logging.log4j.Level;
-
-import com.google.common.collect.ObjectArrays;
 
 public class RegistryHelper 
 {
