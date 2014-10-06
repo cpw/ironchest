@@ -11,7 +11,7 @@
 package cpw.mods.ironchest.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererChestHelper;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -36,8 +36,8 @@ public class ClientProxy extends CommonProxy
                 ModelHelper.registerBlock(IronChest.ironChestBlock, chestType.ordinal(), "ironchest:BlockIronChest");
             }
         }
-        
-        TileEntityRendererChestHelper.instance = new IronChestRenderHelper();
+
+        TileEntityItemStackRenderer.instance = new IronChestRenderHelper();
     }
 
     @Override

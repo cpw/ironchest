@@ -13,7 +13,7 @@ package cpw.mods.ironchest.client;
 import java.util.Map;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererChestHelper;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 
@@ -23,7 +23,7 @@ import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 
-public class IronChestRenderHelper extends TileEntityRendererChestHelper 
+public class IronChestRenderHelper extends TileEntityItemStackRenderer
 {
     private Map<Integer, TileEntityIronChest> itemRenders = Maps.newHashMap();
 

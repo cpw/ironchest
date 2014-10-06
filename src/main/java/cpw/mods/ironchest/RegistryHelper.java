@@ -31,7 +31,7 @@ public class RegistryHelper
         block = GameRegistry.registerBlock(block, itemclass, name, itemCtorArgs);
         Item associatedItem = GameRegistry.findItem("ironchest", name);
         
-        Map itemBlockMap = (Map)ObfuscationReflectionHelper.getPrivateValue(Item.class, null, "field_179220_a");
+        Map itemBlockMap = (Map)ObfuscationReflectionHelper.getPrivateValue(Item.class, null, "BLOCK_TO_ITEM", "field_179220_a");
         
         if (!itemBlockMap.containsKey(block)) itemBlockMap.put(block, associatedItem);
         

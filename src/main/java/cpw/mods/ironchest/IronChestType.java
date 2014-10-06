@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
@@ -114,7 +115,7 @@ public enum IronChestType implements IStringSerializable
         {
             generateRecipesForType(blockResult, previous, typ);
             ItemStack chest = new ItemStack(blockResult, 1, typ.ordinal());
-            if (typ.isValidForCreativeMode()) GameRegistry.registerCustomItemStack(typ.friendlyName, chest);
+            //if (typ.isValidForCreativeMode()) GameRegistry.registerCustomItemStack(typ.friendlyName, chest);//TODO fix this!!
             if (typ.tieredChest) previous = chest;
         }
     }
@@ -151,13 +152,33 @@ public enum IronChestType implements IStringSerializable
         {
             return Blocks.dirt;
         }
+        else if (mat.equals("ingotIron"))//TODO get rid of this when forge is out
+        {
+            return Items.iron_ingot;
+        }
+        else if (mat.equals("ingotGold"))//TODO get rid of this when forge is out
+        {
+            return Items.gold_ingot;
+        }
+        else if (mat.equals("gemDiamond"))//TODO get rid of this when forge is out
+        {
+            return Items.diamond;
+        }
+        else if (mat.equals("blockGlass"))//TODO get rid of this when forge is out
+        {
+            return Blocks.glass;
+        }
+        else if(mat.equals("plankWood"))//TODO get rid of this when forge is out
+        {
+            return Blocks.planks;
+        }
         return mat;
     }
 
     public static void addRecipe(ItemStack is, Object... parts)
     {
-        //ShapedOreRecipe oreRecipe = new ShapedOreRecipe(is, parts);
-        //GameRegistry.addRecipe(oreRecipe);
+        //ShapedOreRecipe oreRecipe = new ShapedOreRecipe(is, parts);//TODO re-enable this as shaped instead use GameRegistry.addRecipe(oreRecipe);
+        //GameRegistry.addRecipe(is, parts);
     }
 
     public int getRowCount()
