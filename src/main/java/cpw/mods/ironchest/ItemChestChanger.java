@@ -10,6 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -17,6 +18,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -35,11 +38,11 @@ public class ItemChestChanger extends Item
         this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
-    /*@Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int X, int Y, int Z, int side, float hitX, float hitY, float hitZ)
+    @Override
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (world.isRemote) return false;
-        TileEntity te = world.getTileEntity(X, Y, Z);
+        TileEntity te = world.getTileEntity(pos);
         TileEntityIronChest newchest;
         if (te != null && te instanceof TileEntityIronChest)
         {
@@ -67,7 +70,7 @@ public class ItemChestChanger extends Item
             ItemStack[] chestContents = ObfuscationReflectionHelper.getPrivateValue(TileEntityChest.class, tec, 0);
             System.arraycopy(chestContents, 0, newchest.chestContents, 0, Math.min(newSize, chestContents.length));
             BlockIronChest block = IronChest.ironChestBlock;
-            block.dropContent(newSize, tec, world, tec.xCoord, tec.yCoord, tec.zCoord);
+            block.dropContent(newSize, tec, world, tec.getPos());
             newchest.setFacing((byte) tec.getBlockMetadata());
             newchest.sortTopStacks();
             for (int i = 0; i < Math.min(newSize, chestContents.length); i++)
@@ -75,24 +78,24 @@ public class ItemChestChanger extends Item
                 chestContents[i] = null;
             }
             // Clear the old block out
-            world.setBlock(X, Y, Z, Blocks.air, 0, 3);
+            world.setBlockState(pos, Blocks.air.getDefaultState(), 3);
             // Force the Chest TE to reset it's knowledge of neighbouring blocks
             tec.updateContainingBlockInfo();
             // Force the Chest TE to update any neighbours so they update next
             // tick
             tec.checkForAdjacentChests();
             // And put in our block instead
-            world.setBlock(X, Y, Z, block, newchest.getType().ordinal(), 3);
+            world.setBlockState(pos, block.getStateFromMeta(newchest.getType().ordinal()), 3);
         }
         else
         {
             return false;
         }
-        world.setTileEntity(X, Y, Z, newchest);
-        world.setBlockMetadataWithNotify(X, Y, Z, newchest.getType().ordinal(), 3);
+        world.setTileEntity(pos, newchest);
+        world.setBlockState(pos, IronChest.ironChestBlock.getStateFromMeta(newchest.getType().ordinal()), 3);
         stack.stackSize = 0;
         return true;
-    }*/
+    }
 
     public int getTargetChestOrdinal(int sourceOrdinal)
     {

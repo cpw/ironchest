@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public enum IronChestType implements IStringSerializable
 {
@@ -152,33 +153,13 @@ public enum IronChestType implements IStringSerializable
         {
             return Blocks.dirt;
         }
-        else if (mat.equals("ingotIron"))//TODO get rid of this when forge is out
-        {
-            return Items.iron_ingot;
-        }
-        else if (mat.equals("ingotGold"))//TODO get rid of this when forge is out
-        {
-            return Items.gold_ingot;
-        }
-        else if (mat.equals("gemDiamond"))//TODO get rid of this when forge is out
-        {
-            return Items.diamond;
-        }
-        else if (mat.equals("blockGlass"))//TODO get rid of this when forge is out
-        {
-            return Blocks.glass;
-        }
-        else if(mat.equals("plankWood"))//TODO get rid of this when forge is out
-        {
-            return Blocks.planks;
-        }
         return mat;
     }
 
     public static void addRecipe(ItemStack is, Object... parts)
     {
-        //ShapedOreRecipe oreRecipe = new ShapedOreRecipe(is, parts);//TODO re-enable this as shaped instead use GameRegistry.addRecipe(oreRecipe);
-        //GameRegistry.addRecipe(is, parts);
+        ShapedOreRecipe oreRecipe = new ShapedOreRecipe(is, parts);
+        GameRegistry.addRecipe(oreRecipe);
     }
 
     public int getRowCount()

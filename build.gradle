@@ -17,7 +17,7 @@ buildscript {
 }
 
 // Apply the forge plugin - this adds all the magic for automatically obfuscating, deobfuscating etc
-apply plugin: 'fml'
+apply plugin: 'forge'
 
 // This is a simple flatdir repository for "uploadArchives" when you don't have a remote repo to target
 repositories {
@@ -37,7 +37,7 @@ archivesBaseName = "ironchest"
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.8-7.10.99.1005-1.8"
+    version = "1.8-11.14.0.1239-1.8"
     mappings = 'snapshot_20140930'
 }
 
