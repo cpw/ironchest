@@ -24,10 +24,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IChatComponent;
 
 public class TileEntityIronChest extends TileEntityLockable implements IUpdatePlayerListBox, IInventory 
 {
@@ -551,7 +549,7 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     }
 
     @Override
-    public void clearInventory()
+    public void clear()
     {
         for (int i = 0; i < this.chestContents.length; ++i)
         {

@@ -37,8 +37,7 @@ archivesBaseName = "ironchest"
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.8-11.14.0.1239-1.8"
-    mappings = 'snapshot_20140930'
+    version = "1.8-11.14.0.1251-1.8"
 }
 
 // This wrangles the resources for the jar files- stuff like textures and languages
