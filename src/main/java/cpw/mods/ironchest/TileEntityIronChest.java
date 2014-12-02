@@ -26,6 +26,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumFacing;
 
 public class TileEntityIronChest extends TileEntityLockable implements IUpdatePlayerListBox, IInventory 
 {
@@ -519,13 +520,16 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
         return type.acceptsStack(itemstack);
     }
 
-
-
-    /*void rotateAround(ForgeDirection axis)
+    void rotateAround()
     {
-        setFacing((byte)ForgeDirection.getOrientation(facing).getRotation(axis).ordinal());
-        worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, IronChest.ironChestBlock, 2, getFacing());
-    }*/
+    	facing++;
+    	if(facing > EnumFacing.EAST.ordinal())
+    	{
+    		facing = EnumFacing.NORTH.ordinal();
+    	}
+        setFacing(facing);
+        worldObj.addBlockEvent(pos, IronChest.ironChestBlock, 2, facing);
+    }
 
     public void wasPlaced(EntityLivingBase entityliving, ItemStack itemStack)
     {
@@ -568,5 +572,10 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     {
         return "IronChest:" + type.name();
     }
-
+    
+    @Override
+    public boolean canRenderBreaking()
+    {
+    	return true;
+    }
 }

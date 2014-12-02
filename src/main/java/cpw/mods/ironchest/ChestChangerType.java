@@ -14,14 +14,10 @@ import static cpw.mods.ironchest.IronChestType.IRON;
 import static cpw.mods.ironchest.IronChestType.OBSIDIAN;
 import static cpw.mods.ironchest.IronChestType.SILVER;
 import static cpw.mods.ironchest.IronChestType.WOOD;
-import cpw.mods.ironchest.client.ModelHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
+import cpw.mods.ironchest.client.ModelHelper;
 
 public enum ChestChangerType {
     IRONGOLD(IRON, GOLD, "ironGoldUpgrade", "Iron to Gold Chest Upgrade", "mmm", "msm", "mmm"),

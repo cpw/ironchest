@@ -2,6 +2,8 @@ package cpw.mods.ironchest;
 
 import net.minecraft.entity.ai.EntityAIOcelotSit;
 import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 
 public class IronChestAIOcelotSit extends EntityAIOcelotSit 
 {
@@ -10,13 +12,13 @@ public class IronChestAIOcelotSit extends EntityAIOcelotSit
         super(par1EntityOcelot, par2);
     }
 
-/*    @Override
-    protected boolean func_151486_a(World world, int x, int y, int z)
+    @Override
+    protected boolean func_179488_a(World world, BlockPos pos)
     {
-        if (world.getBlock(x, y, z) == IronChest.ironChestBlock)
+        if (world.getBlockState(pos).getBlock() == IronChest.ironChestBlock)
         {
             return true;
         }
-        return super.func_151486_a(world, x, y, z);
+        return super.func_179488_a(world, pos);
     }
-*/}
+}
