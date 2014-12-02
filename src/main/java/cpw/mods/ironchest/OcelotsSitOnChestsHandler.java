@@ -5,9 +5,11 @@ import java.util.List;
 import net.minecraft.entity.ai.EntityAIOcelotSit;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-/*public class OcelotsSitOnChestsHandler {
+public class OcelotsSitOnChestsHandler {
+	
     @SubscribeEvent
     public void changeSittingTaskForOcelots(LivingEvent.LivingUpdateEvent evt)
     {
@@ -24,4 +26,4 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
             }
         }
     }
-}*/
+}

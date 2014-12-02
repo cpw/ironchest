@@ -12,6 +12,7 @@ package cpw.mods.ironchest;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -40,8 +41,6 @@ public class IronChest
         PacketHandler.INSTANCE.ordinal();
     }
 
-    private static boolean run = false;
-    
     @EventHandler
     public void load(FMLInitializationEvent evt)
     {
@@ -63,9 +62,6 @@ public class IronChest
         ChestChangerType.generateRecipes();
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.registerRenderInformation();
-//        if (OCELOTS_SITONCHESTS)
-//        {
-//            MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
-//        }
+        MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
     }
 }

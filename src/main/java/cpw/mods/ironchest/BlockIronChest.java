@@ -10,6 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -20,6 +21,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,9 +34,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.google.common.collect.Lists;
 
 public class BlockIronChest extends BlockContainer
 {
@@ -80,10 +86,10 @@ public class BlockIronChest extends BlockContainer
             return true;
         }
 
-        /*if (world.isSideSolid(i, j + 1, k, ForgeDirection.DOWN))
+        if (world.isSideSolid(pos.add(0, 1, 0), EnumFacing.DOWN))
         {
             return true;
-        }*/
+        }
 
         if (world.isRemote)
         {
@@ -131,15 +137,15 @@ public class BlockIronChest extends BlockContainer
         return new BlockState(this, new IProperty[] { VARIANT_PROP });
     }
 
-    /*@Override
-    public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
+    @Override
+    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
         ArrayList<ItemStack> items = Lists.newArrayList();
-        ItemStack stack = new ItemStack(this,1,metadata);
-        IronChestType.values()[IronChestType.validateMeta(metadata)].adornItemDrop(stack);
+        ItemStack stack = new ItemStack(this,1,getMetaFromState(state));
+        IronChestType.values()[IronChestType.validateMeta(getMetaFromState(state))].adornItemDrop(stack);
         items.add(stack);
         return items;
-    }*/
+    }
 
     @Override
     public void onBlockAdded(World world, BlockPos pos, IBlockState blockState)
@@ -234,20 +240,20 @@ public class BlockIronChest extends BlockContainer
         }
     }
 
-    /*@Override
-    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
+    @Override
+    public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion)
     {
-       TileEntity te = world.getTileEntity(x, y, z);
+       TileEntity te = world.getTileEntity(pos);
        if (te instanceof TileEntityIronChest)
        {
            TileEntityIronChest teic = (TileEntityIronChest) te;
            if (teic.getType().isExplosionResistant())
            {
-               return 10000f;
+               return 10000F;
            }
        }
-       return super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
-    }*/
+       return super.getExplosionResistance(world, pos, exploder, explosion);
+    }
 
     @Override
     public boolean hasComparatorInputOverride() {
@@ -265,30 +271,29 @@ public class BlockIronChest extends BlockContainer
         return 0;
     }
 
-    /*private static final ForgeDirection[] validRotationAxes = new ForgeDirection[] { UP, DOWN };
+    private static final EnumFacing[] validRotationAxes = new EnumFacing[] { EnumFacing.UP, EnumFacing.DOWN };
     @Override
-    public ForgeDirection[] getValidRotations(World worldObj, int x, int y, int z)
+    public EnumFacing[] getValidRotations(World worldObj, BlockPos pos)
     {
         return validRotationAxes;
     }
 
     @Override
-    public boolean rotateBlock(World worldObj, int x, int y, int z, ForgeDirection axis)
+    public boolean rotateBlock(World worldObj, BlockPos pos, EnumFacing axis)
     {
         if (worldObj.isRemote)
         {
             return false;
         }
-        if (axis == UP || axis == DOWN)
+        if (axis == EnumFacing.UP || axis == EnumFacing.DOWN)
         {
-            TileEntity tileEntity = worldObj.getTileEntity(x, y, z);
+            TileEntity tileEntity = worldObj.getTileEntity(pos);
             if (tileEntity instanceof TileEntityIronChest) {
                 TileEntityIronChest icte = (TileEntityIronChest) tileEntity;
-                icte.rotateAround(axis);
+                icte.rotateAround();
             }
             return true;
         }
         return false;
-    }*/
-
+    }
 }
