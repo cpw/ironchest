@@ -16,8 +16,10 @@ import static cpw.mods.ironchest.IronChestType.SILVER;
 import static cpw.mods.ironchest.IronChestType.WOOD;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import cpw.mods.ironchest.client.ModelHelper;
+import net.minecraftforge.fml.relauncher.Side;
 
 public enum ChestChangerType {
     IRONGOLD(IRON, GOLD, "ironGoldUpgrade", "Iron to Gold Chest Upgrade", "mmm", "msm", "mmm"),
@@ -60,8 +62,8 @@ public enum ChestChangerType {
     {
         item = new ItemChestChanger(this);
         GameRegistry.registerItem(item, itemName);
-        ModelHelper.registerItem(item, "ironchest:" + itemName);
-            
+        if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+            ModelHelper.registerItem(item, "ironchest:" + itemName);
         return item;
     }
 
