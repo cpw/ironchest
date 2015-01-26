@@ -22,6 +22,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:FML@[7.2,)")
 public class IronChest 
@@ -50,7 +52,7 @@ public class IronChest
         ironChestBlock = new BlockIronChest();
         RegistryHelper.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
         
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().func_178123_a(ironChestBlock);
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().func_178123_a(ironChestBlock);
         
         for (IronChestType typ : IronChestType.values())
         {
