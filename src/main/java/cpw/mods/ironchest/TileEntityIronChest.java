@@ -59,6 +59,16 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     {
         return chestContents;
     }
+    
+    public void setContents(ItemStack[] contents) {
+		chestContents = new ItemStack[getSizeInventory()];
+		for (int i = 0; i < contents.length; i ++) {
+            if (i < chestContents.length) {
+				chestContents[i] = contents[i];
+			}
+		}
+		inventoryTouched = true;
+	}
 
     @Override
     public int getSizeInventory()
@@ -400,27 +410,6 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     public void setFacing(int facing2)
     {
         this.facing = facing2;
-    }
-
-    public TileEntityIronChest applyUpgradeItem(ItemChestChanger itemChestChanger)
-    {
-        if (numUsingPlayers > 0)
-        {
-            return null;
-        }
-        if (!itemChestChanger.getType().canUpgrade(this.getType()))
-        {
-            return null;
-        }
-        TileEntityIronChest newEntity = IronChestType.makeEntity(itemChestChanger.getTargetChestOrdinal(getType().ordinal()));
-        int newSize = newEntity.chestContents.length;
-        System.arraycopy(chestContents, 0, newEntity.chestContents, 0, Math.min(newSize, chestContents.length));
-        BlockIronChest block = IronChest.ironChestBlock;
-        block.dropContent(newSize, this, this.worldObj, pos);
-        newEntity.setFacing(facing);
-        newEntity.sortTopStacks();
-        newEntity.ticksSinceSync = -1;
-        return newEntity;
     }
 
     public ItemStack[] getTopItemStacks()
