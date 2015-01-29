@@ -60,15 +60,18 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
         return chestContents;
     }
     
-    public void setContents(ItemStack[] contents) {
-		chestContents = new ItemStack[getSizeInventory()];
-		for (int i = 0; i < contents.length; i ++) {
-            if (i < chestContents.length) {
-				chestContents[i] = contents[i];
-			}
-		}
-		inventoryTouched = true;
-	}
+    public void setContents (ItemStack[] contents)
+    {
+        chestContents = new ItemStack[getSizeInventory()];
+        for (int i = 0; i < contents.length; i++)
+        {
+            if (i < chestContents.length)
+            {
+                chestContents[i] = contents[i];
+            }
+        }
+        inventoryTouched = true;
+    }
 
     @Override
     public int getSizeInventory()
