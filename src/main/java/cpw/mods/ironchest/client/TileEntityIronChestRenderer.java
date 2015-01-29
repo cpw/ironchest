@@ -136,7 +136,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
         GlStateManager.popMatrix();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         
-        if (type.isTransparent() && tile.getDistanceSq(this.rendererDispatcher.field_147560_j, this.rendererDispatcher.field_147561_k, this.rendererDispatcher.field_147558_l) < 128d) {
+        if (type.isTransparent() && tile.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d) {
             random.setSeed(254L);
             float shiftX;
             float shiftY;

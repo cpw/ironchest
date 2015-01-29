@@ -52,7 +52,7 @@ public class IronChest
         ironChestBlock = new BlockIronChest();
         RegistryHelper.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
         
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().func_178123_a(ironChestBlock);
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().registerBuiltInBlocks(ironChestBlock);
         
         for (IronChestType typ : IronChestType.values())
         {
