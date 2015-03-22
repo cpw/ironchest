@@ -103,8 +103,6 @@ artifacts {
 }
 
 curse {
-    dependsOn "createCurseChangelog"
-
     projectId = "228756"
     apiKey = "$System.env.curse_api_key"
     changelog = "See github for changes"
