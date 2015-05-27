@@ -22,13 +22,16 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.util.Constants;
 
-public class TileEntityIronChest extends TileEntityLockable implements IUpdatePlayerListBox, IInventory 
+public class TileEntityIronChest extends TileEntityLockable implements IUpdatePlayerListBox, IInventory
 {
     private int ticksSinceSync = -1;
     public float prevLidAngle;
@@ -37,7 +40,7 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     private IronChestType type;
     public ItemStack[] chestContents;
     private ItemStack[] topStacks;
-    private int facing;
+    private byte facing;
     private boolean inventoryTouched;
     private boolean hadStuff;
     private String customName;
@@ -59,8 +62,8 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     {
         return chestContents;
     }
-    
-    public void setContents (ItemStack[] contents)
+
+    public void setContents(ItemStack[] contents)
     {
         chestContents = new ItemStack[getSizeInventory()];
         for (int i = 0; i < contents.length; i++)
@@ -142,19 +145,18 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
             return;
         }
         hadStuff = true;
-        Arrays.sort(tempCopy, new Comparator<ItemStack>() {
+        Arrays.sort(tempCopy, new Comparator<ItemStack>()
+        {
             @Override
             public int compare(ItemStack o1, ItemStack o2)
             {
                 if (o1 == null)
                 {
                     return 1;
-                }
-                else if (o2 == null)
+                } else if (o2 == null)
                 {
                     return -1;
-                }
-                else
+                } else
                 {
                     return o2.stackSize - o1.stackSize;
                 }
@@ -201,8 +203,7 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
             }
             markDirty();
             return itemstack1;
-        }
-        else
+        } else
         {
             return null;
         }
@@ -218,19 +219,19 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
         }
         markDirty();
     }
-    
+
     @Override
     public String getName()
     {
         return this.hasCustomName() ? this.customName : type.name();
     }
-    
+
     @Override
     public boolean hasCustomName()
     {
         return this.customName != null && this.customName.length() > 0;
     }
-    
+
     public void setCustomName(String name)
     {
         this.customName = name;
@@ -240,17 +241,15 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     public void readFromNBT(NBTTagCompound nbttagcompound)
     {
         super.readFromNBT(nbttagcompound);
-        
-        //10 - TAG_COMPOUND
-        NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 10);
+
+        NBTTagList nbttaglist = nbttagcompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
         this.chestContents = new ItemStack[getSizeInventory()];
-        
-        //8 - TAG_STRING
-        if (nbttagcompound.hasKey("CustomName", 8))
+
+        if (nbttagcompound.hasKey("CustomName", Constants.NBT.TAG_STRING))
         {
             this.customName = nbttagcompound.getString("CustomName");
         }
-        
+
         for (int i = 0; i < nbttaglist.tagCount(); i++)
         {
             NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
@@ -281,8 +280,8 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
         }
 
         nbttagcompound.setTag("Items", nbttaglist);
-        nbttagcompound.setByte("facing", (byte)facing);
-        
+        nbttagcompound.setByte("facing", facing);
+
         if (this.hasCustomName())
         {
             nbttagcompound.setString("CustomName", this.customName);
@@ -306,7 +305,7 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
         {
             return false;
         }
-        return entityplayer.getDistanceSq((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D) <= 64D;
+        return entityplayer.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64D;
     }
 
     @Override
@@ -318,10 +317,12 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
             this.numUsingPlayers = 0;
             float var1 = 5.0F;
             @SuppressWarnings("unchecked")
-            List<EntityPlayer> var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB((double)((float)pos.getX() - var1), (double)((float)pos.getY() - var1), (double)((float)pos.getZ() - var1), (double)((float)(pos.getX() + 1) + var1), (double)((float)(pos.getY() + 1) + var1), (double)((float)(pos.getZ() + 1) + var1)));
+            List<EntityPlayer> var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos.getX() - var1, pos.getY() - var1, pos.getZ() - var1, pos.getX() + 1 + var1, pos.getY() + 1 + var1, pos.getZ() + 1 + var1));
 
-            for (EntityPlayer var4 : var2) {
-                if (var4.openContainer instanceof ContainerIronChest) {
+            for (EntityPlayer var4 : var2)
+            {
+                if (var4.openContainer instanceof ContainerIronChest)
+                {
                     ++this.numUsingPlayers;
                 }
             }
@@ -342,9 +343,9 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
         float f = 0.1F;
         if (numUsingPlayers > 0 && lidAngle == 0.0F)
         {
-            double d = (double) pos.getX() + 0.5D;
-            double d1 = (double) pos.getZ() + 0.5D;
-            worldObj.playSoundEffect(d, (double) pos.getY() + 0.5D, d1, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+            double d = pos.getX() + 0.5D;
+            double d1 = pos.getZ() + 0.5D;
+            worldObj.playSoundEffect(d, pos.getY() + 0.5D, d1, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
         }
         if (numUsingPlayers == 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
         {
@@ -352,8 +353,7 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
             if (numUsingPlayers > 0)
             {
                 lidAngle += f;
-            }
-            else
+            } else
             {
                 lidAngle -= f;
             }
@@ -364,9 +364,9 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
             float f2 = 0.5F;
             if (lidAngle < f2 && f1 >= f2)
             {
-                double d2 = (double) pos.getX() + 0.5D;
-                double d3 = (double) pos.getZ() + 0.5D;
-                worldObj.playSoundEffect(d2, (double) pos.getY() + 0.5D, d3, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                double d2 = pos.getX() + 0.5D;
+                double d3 = pos.getZ() + 0.5D;
+                worldObj.playSoundEffect(d2, pos.getY() + 0.5D, d3, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
             }
             if (lidAngle < 0.0F)
             {
@@ -381,12 +381,10 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
         if (i == 1)
         {
             numUsingPlayers = j;
-        }
-        else if (i == 2)
+        } else if (i == 2)
         {
             facing = (byte) j;
-        }
-        else if (i == 3)
+        } else if (i == 3)
         {
             facing = (byte) (j & 0x7);
             numUsingPlayers = (j & 0xF8) >> 3;
@@ -397,7 +395,10 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     @Override
     public void openInventory(EntityPlayer player)
     {
-        if (worldObj == null) return;
+        if (worldObj == null)
+        {
+            return;
+        }
         numUsingPlayers++;
         worldObj.addBlockEvent(pos, IronChest.ironChestBlock, 1, numUsingPlayers);
     }
@@ -405,12 +406,15 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     @Override
     public void closeInventory(EntityPlayer player)
     {
-        if (worldObj == null) return;
+        if (worldObj == null)
+        {
+            return;
+        }
         numUsingPlayers--;
         worldObj.addBlockEvent(pos, IronChest.ironChestBlock, 1, numUsingPlayers);
     }
 
-    public void setFacing(int facing2)
+    public void setFacing(byte facing2)
     {
         this.facing = facing2;
     }
@@ -436,30 +440,65 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     @Override
     public Packet getDescriptionPacket()
     {
-        return PacketHandler.getPacket(this);
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setInteger("type", getType().ordinal());
+        nbt.setByte("facing", facing);
+        ItemStack[] stacks = buildItemStackDataList();
+        if (stacks != null)
+        {
+            NBTTagList nbttaglist = new NBTTagList();
+            for (int i = 0; i < stacks.length; i++)
+            {
+                if (stacks[i] != null)
+                {
+                    NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                    nbttagcompound1.setByte("Slot", (byte) i);
+                    stacks[i].writeToNBT(nbttagcompound1);
+                    nbttaglist.appendTag(nbttagcompound1);
+                }
+            }
+            nbt.setTag("stacks", nbttaglist);
+        }
+
+        return new S35PacketUpdateTileEntity(pos, 0, nbt);
     }
 
-    public void handlePacketData(int typeData, ItemStack[] intData)
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
-        TileEntityIronChest chest = this;
-        if (this.type.ordinal() != typeData)
+        if (pkt.getTileEntityType() == 0)
         {
-            chest = updateFromMetadata(typeData);
-        }
-        if (IronChestType.values()[typeData].isTransparent() && intData != null)
-        {
-            int pos = 0;
-            for (int i = 0; i < chest.topStacks.length; i++)
+            NBTTagCompound nbt = pkt.getNbtCompound();
+            type = IronChestType.values()[nbt.getInteger("type")];
+            facing = nbt.getByte("facing");
+
+            NBTTagList tagList = nbt.getTagList("stacks", Constants.NBT.TAG_COMPOUND);
+            ItemStack[] stacks = new ItemStack[topStacks.length];
+
+            for (int i = 0; i < stacks.length; i++)
             {
-                if (intData[pos] != null)
+                NBTTagCompound nbt1 = tagList.getCompoundTagAt(i);
+                int j = nbt1.getByte("Slot") & 0xff;
+                if (j >= 0 && j < stacks.length)
                 {
-                    chest.topStacks[i] = intData[pos];
+                    stacks[j] = ItemStack.loadItemStackFromNBT(nbt1);
                 }
-                else
+            }
+
+            if (type.isTransparent() && stacks != null)
+            {
+                int pos = 0;
+                for (int i = 0; i < topStacks.length; i++)
                 {
-                    chest.topStacks[i] = null;
+                    if (stacks[pos] != null)
+                    {
+                        topStacks[i] = stacks[pos];
+                    } else
+                    {
+                        topStacks[i] = null;
+                    }
+                    pos++;
                 }
-                pos ++;
             }
         }
     }
@@ -475,8 +514,7 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
                 if (is != null)
                 {
                     sortList[pos++] = is;
-                }
-                else
+                } else
                 {
                     sortList[pos++] = null;
                 }
@@ -494,16 +532,10 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
             ItemStack var2 = this.chestContents[par1];
             this.chestContents[par1] = null;
             return var2;
-        }
-        else
+        } else
         {
             return null;
         }
-    }
-
-    public void setMaxStackSize(int size)
-    {
-
     }
 
     @Override
@@ -512,13 +544,13 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
         return type.acceptsStack(itemstack);
     }
 
-    void rotateAround()
+    public void rotateAround()
     {
-    	facing++;
-    	if(facing > EnumFacing.EAST.ordinal())
-    	{
-    		facing = EnumFacing.NORTH.ordinal();
-    	}
+        facing++;
+        if (facing > EnumFacing.EAST.ordinal())
+        {
+            facing = (byte) EnumFacing.NORTH.ordinal();
+        }
         setFacing(facing);
         worldObj.addBlockEvent(pos, IronChest.ironChestBlock, 2, facing);
     }
@@ -527,7 +559,9 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     {
     }
 
-    public void removeAdornments() {}
+    public void removeAdornments()
+    {
+    }
 
     @Override
     public int getField(int id)
@@ -536,7 +570,9 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     }
 
     @Override
-    public void setField(int id, int value) {}
+    public void setField(int id, int value)
+    {
+    }
 
     @Override
     public int getFieldCount()
@@ -564,10 +600,10 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     {
         return "IronChest:" + type.name();
     }
-    
+
     @Override
     public boolean canRenderBreaking()
     {
-    	return true;
+        return true;
     }
 }

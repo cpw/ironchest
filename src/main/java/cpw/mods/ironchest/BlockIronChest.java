@@ -49,9 +49,9 @@ public class BlockIronChest extends BlockContainer
     public BlockIronChest()
     {
         super(Material.iron);
-        
+
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT_PROP, IronChestType.IRON));
-        
+
         this.setBlockBounds(0.0625F, 0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
         this.setHardness(3.0F);
         this.setUnlocalizedName("IronChest");
@@ -69,13 +69,7 @@ public class BlockIronChest extends BlockContainer
     {
         return false;
     }
-    
-    @Override
-    public int getRenderType()
-    {
-        return 2;
-    }
-    
+
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumFacing direction, float p_180639_6_, float p_180639_7_, float p_180639_8_)
     {
@@ -99,13 +93,13 @@ public class BlockIronChest extends BlockContainer
         player.openGui(IronChest.instance, ((TileEntityIronChest) te).getType().ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
         return true;
     }
-    
+
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)
     {
         return IronChestType.makeEntity(metadata);
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
@@ -118,7 +112,7 @@ public class BlockIronChest extends BlockContainer
             }
         }
     }
-    
+
     @Override
     public IBlockState getStateFromMeta(int meta)
     {
@@ -128,9 +122,9 @@ public class BlockIronChest extends BlockContainer
     @Override
     public int getMetaFromState(IBlockState blockState)
     {
-        return ((IronChestType)blockState.getValue(VARIANT_PROP)).ordinal();
+        return ((IronChestType) blockState.getValue(VARIANT_PROP)).ordinal();
     }
-    
+
     @Override
     protected BlockState createBlockState()
     {
@@ -141,7 +135,7 @@ public class BlockIronChest extends BlockContainer
     public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
         ArrayList<ItemStack> items = Lists.newArrayList();
-        ItemStack stack = new ItemStack(this,1,getMetaFromState(state));
+        ItemStack stack = new ItemStack(this, 1, getMetaFromState(state));
         IronChestType.values()[IronChestType.validateMeta(getMetaFromState(state))].adornItemDrop(stack);
         items.add(stack);
         return items;
@@ -158,7 +152,7 @@ public class BlockIronChest extends BlockContainer
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState blockState, EntityLivingBase entityliving, ItemStack itemStack)
     {
         byte chestFacing = 0;
-        int facing = MathHelper.floor_double((double) ((entityliving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
+        int facing = MathHelper.floor_double((entityliving.rotationYaw * 4F) / 360F + 0.5D) & 3;
         if (facing == 0)
         {
             chestFacing = 2;
@@ -188,7 +182,7 @@ public class BlockIronChest extends BlockContainer
     @Override
     public int damageDropped(IBlockState state)
     {
-        return IronChestType.validateMeta(((IronChestType)state.getValue(VARIANT_PROP)).ordinal());
+        return IronChestType.validateMeta(((IronChestType) state.getValue(VARIANT_PROP)).ordinal());
     }
 
     @Override
@@ -206,7 +200,7 @@ public class BlockIronChest extends BlockContainer
     public void dropContent(int newSize, IInventory chest, World world, BlockPos pos)
     {
         Random random = world.rand;
-        
+
         for (int l = newSize; l < chest.getSizeInventory(); l++)
         {
             ItemStack itemstack = chest.getStackInSlot(l);
@@ -225,8 +219,7 @@ public class BlockIronChest extends BlockContainer
                     i1 = itemstack.stackSize;
                 }
                 itemstack.stackSize -= i1;
-                EntityItem entityitem = new EntityItem(world, (float) pos.getX() + f, (float) pos.getY() + (newSize > 0 ? 1 : 0) + f1, (float) pos.getZ() + f2,
-                        new ItemStack(itemstack.getItem(), i1, itemstack.getMetadata()));
+                EntityItem entityitem = new EntityItem(world, pos.getX() + f, (float) pos.getY() + (newSize > 0 ? 1 : 0) + f1, pos.getZ() + f2, new ItemStack(itemstack.getItem(), i1, itemstack.getMetadata()));
                 float f3 = 0.05F;
                 entityitem.motionX = (float) random.nextGaussian() * f3;
                 entityitem.motionY = (float) random.nextGaussian() * f3 + 0.2F;
@@ -243,20 +236,21 @@ public class BlockIronChest extends BlockContainer
     @Override
     public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion)
     {
-       TileEntity te = world.getTileEntity(pos);
-       if (te instanceof TileEntityIronChest)
-       {
-           TileEntityIronChest teic = (TileEntityIronChest) te;
-           if (teic.getType().isExplosionResistant())
-           {
-               return 10000F;
-           }
-       }
-       return super.getExplosionResistance(world, pos, exploder, explosion);
+        TileEntity te = world.getTileEntity(pos);
+        if (te instanceof TileEntityIronChest)
+        {
+            TileEntityIronChest teic = (TileEntityIronChest) te;
+            if (teic.getType().isExplosionResistant())
+            {
+                return 10000F;
+            }
+        }
+        return super.getExplosionResistance(world, pos, exploder, explosion);
     }
 
     @Override
-    public boolean hasComparatorInputOverride() {
+    public boolean hasComparatorInputOverride()
+    {
         return true;
     }
 
@@ -266,12 +260,13 @@ public class BlockIronChest extends BlockContainer
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof IInventory)
         {
-            return Container.calcRedstoneFromInventory((IInventory)te);
+            return Container.calcRedstoneFromInventory((IInventory) te);
         }
         return 0;
     }
 
     private static final EnumFacing[] validRotationAxes = new EnumFacing[] { EnumFacing.UP, EnumFacing.DOWN };
+
     @Override
     public EnumFacing[] getValidRotations(World worldObj, BlockPos pos)
     {
@@ -288,7 +283,8 @@ public class BlockIronChest extends BlockContainer
         if (axis == EnumFacing.UP || axis == EnumFacing.DOWN)
         {
             TileEntity tileEntity = worldObj.getTileEntity(pos);
-            if (tileEntity instanceof TileEntityIronChest) {
+            if (tileEntity instanceof TileEntityIronChest)
+            {
                 TileEntityIronChest icte = (TileEntityIronChest) tileEntity;
                 icte.rotateAround();
             }

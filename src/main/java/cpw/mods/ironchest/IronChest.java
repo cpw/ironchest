@@ -10,8 +10,6 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -21,12 +19,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:FML@[7.2,)")
-public class IronChest 
+public class IronChest
 {
     public static BlockIronChest ironChestBlock;
     @SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
@@ -39,27 +34,22 @@ public class IronChest
     {
         Version.init(event.getVersionProperties());
         event.getModMetadata().version = Version.fullVersionString();
-
-        PacketHandler.INSTANCE.ordinal();
     }
 
     @EventHandler
     public void load(FMLInitializationEvent evt)
     {
-        //Registration has been moved to init to account for the registration of inventory models
-        //Minecraft.getRenderItem() returns null before this stage
+        // Registration has been moved to init to account for the registration of inventory models
+        // Minecraft.getRenderItem() returns null before this stage
         ChestChangerType.buildItems();
         ironChestBlock = new BlockIronChest();
-        RegistryHelper.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
-        
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().registerBuiltInBlocks(ironChestBlock);
-        
+        GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
+
         for (IronChestType typ : IronChestType.values())
         {
             GameRegistry.registerTileEntityWithAlternatives(typ.clazz, "IronChest." + typ.name(), typ.name());
             proxy.registerTileEntitySpecialRenderer(typ);
         }
-        OreDictionary.registerOre("chestWood", Blocks.chest);
         IronChestType.registerBlocksAndRecipes(ironChestBlock);
         ChestChangerType.generateRecipes();
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
