@@ -10,8 +10,12 @@
  ******************************************************************************/
 package cpw.mods.ironchest.client;
 
-import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -22,20 +26,23 @@ import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 
-public class ClientProxy extends CommonProxy 
+public class ClientProxy extends CommonProxy
 {
     @Override
     public void registerRenderInformation()
-    {        
+    {
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().registerBuiltInBlocks(IronChest.ironChestBlock);
+
+        ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
         for (IronChestType chestType : IronChestType.values())
         {
             if (chestType != IronChestType.WOOD)
             {
-                ModelHelper.registerBlock(IronChest.ironChestBlock, chestType.ordinal(), "ironchest:BlockIronChest");
+                Item chestItem = Item.getItemFromBlock(IronChest.ironChestBlock);
+                mesher.register(chestItem, chestType.ordinal(), new ModelResourceLocation("ironchest:chest_" + chestType.getName().toLowerCase(), "inventory"));
+                ModelBakery.addVariantName(chestItem, "ironchest:chest_" + chestType.getName().toLowerCase());
             }
         }
-
-        TileEntityItemStackRenderer.instance = new IronChestRenderHelper();
     }
 
     @Override
@@ -57,8 +64,7 @@ public class ClientProxy extends CommonProxy
         if (te != null && te instanceof TileEntityIronChest)
         {
             return GUIChest.GUI.buildGUI(IronChestType.values()[ID], player.inventory, (TileEntityIronChest) te);
-        }
-        else
+        } else
         {
             return null;
         }
