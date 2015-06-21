@@ -1,0 +1,19 @@
+#it_IT translated by QuodQuaeris
+
+tile.ironchest:IRON.name=Cassa Di Ferro
+tile.ironchest:GOLD.name=Cassa D'Oro
+tile.ironchest:DIAMOND.name=Cassa Di Diamante
+tile.ironchest:COPPER.name=Cassa Di Rame
+tile.ironchest:SILVER.name=Cassa Di Argento
+tile.ironchest:CRYSTAL.name=Cassa Di Cristallo
+tile.ironchest:OBSIDIAN.name=Cassa Di Ossidiana
+
+item.ironchest:IRONGOLD.name=Aggiornamento Da Cassa Di Ferro a Oro
+item.ironchest:GOLDDIAMOND.name=Aggiornamento Da Cassa Di Oro A Diamante
+item.ironchest:COPPERSILVER.name=Aggiornamento Da Cassa Di Rame Ad Argento
+item.ironchest:SILVERGOLD.name=Aggiornamento Da Cassa Di Argento Ad Oro
+item.ironchest:COPPERIRON.name=Aggiornamento Da Cassa Di Rame A Ferro
+item.ironchest:DIAMONDCRYSTAL.name=Aggiornamento Da Cassa Di Diamante A Cristallo
+item.ironchest:WOODIRON.name=Aggiornamento Da Cassa Di Legno a Ferro
+item.ironchest:WOODCOPPER.name=Aggiornamento Da Cassa Di Legno A Rame
+item.ironchest:DIAMONDOBSIDIAN.name=Aggiornamento Da Cassa Di Diamante A Ossidiana
