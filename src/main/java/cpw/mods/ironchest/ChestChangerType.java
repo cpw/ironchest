@@ -47,6 +47,10 @@ public enum ChestChangerType {
         this.descriptiveName = descriptiveName;
         this.recipe = recipe;
     }
+    
+    public IronChestType getSource(){
+    	return source;
+    }
 
     public boolean canUpgrade(IronChestType from)
     {
