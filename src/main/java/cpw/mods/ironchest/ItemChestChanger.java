@@ -59,7 +59,7 @@ public class ItemChestChanger extends Item
                 chestContents = new ItemStack[((TileEntityChest) te).getSizeInventory()];
                 for (int i = 0; i < chestContents.length; i++)
                     chestContents[i] = ((TileEntityChest) te).getStackInSlot(i);
-                newchest = IronChestType.makeEntity(IronChestType.IRON.ordinal());
+                newchest = IronChestType.makeEntity(this.getTargetChestOrdinal(this.type.ordinal()));
             }
         }
 
