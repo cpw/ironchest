@@ -47,6 +47,10 @@ public enum ChestChangerType {
         this.descriptiveName = descriptiveName;
         this.recipe = recipe;
     }
+    
+    public IronChestType getSource(){
+    	return source;
+    }
 
     public boolean canUpgrade(IronChestType from)
     {
@@ -75,7 +79,7 @@ public enum ChestChangerType {
             {
                 Object targetMaterial = IronChestType.translateOreName(targetMat);
                 Object sourceMaterial = IronChestType.translateOreName(sourceMat);
-                IronChestType.addRecipe(new ItemStack(item), recipe, 'm', targetMaterial, 's', sourceMaterial, 'G', Blocks.glass, 'O', Blocks.obsidian);
+                IronChestType.addRecipe(new ItemStack(item), recipe, 'm', targetMaterial, 's', sourceMaterial, 'G', "blockGlass", 'O', Blocks.obsidian);
             }
         }
     }

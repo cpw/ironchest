@@ -10,6 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -38,6 +39,15 @@ public class ItemChestChanger extends Item
     {
         if (world.isRemote)
             return false;
+        if(this.type.canUpgrade(IronChestType.WOOD)){
+        	if(!(world.getBlockState(pos).getBlock() instanceof BlockChest)){
+        		return false;
+        	}
+        }else{
+        	if(world.getBlockState(pos) != IronChest.ironChestBlock.getStateFromMeta(IronChestType.valueOf(type.getSource().getName().toUpperCase()).ordinal())){
+        		return false;
+        	}
+        }
         TileEntity te = world.getTileEntity(pos);
         TileEntityIronChest newchest = new TileEntityIronChest();
         ItemStack[] chestContents = new ItemStack[27];
@@ -59,7 +69,7 @@ public class ItemChestChanger extends Item
                 chestContents = new ItemStack[((TileEntityChest) te).getSizeInventory()];
                 for (int i = 0; i < chestContents.length; i++)
                     chestContents[i] = ((TileEntityChest) te).getStackInSlot(i);
-                newchest = IronChestType.makeEntity(IronChestType.IRON.ordinal());
+                newchest = IronChestType.makeEntity(this.getTargetChestOrdinal(this.type.ordinal()));
             }
         }
 
