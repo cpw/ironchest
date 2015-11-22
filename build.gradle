@@ -19,8 +19,6 @@ buildscript {
 // Apply the forge plugin - this adds all the magic for automatically obfuscating, deobfuscating etc
 
 apply plugin: 'forge'
-apply plugin: "curseforge"
-
 
 // This is a simple flatdir repository for "uploadArchives" when you don't have a remote repo to target
 repositories {
@@ -101,17 +99,6 @@ task deobfJar(type: Jar) {
 artifacts {
 	archives sourceJar, deobfJar
 }
-
-curse {
-    projectId = "228756"
-    apiKey = "$System.env.curse_api_key"
-    changelog = "See github for changes"
-    releaseType = "beta"
-
-    additionalArtifact deobfJar
-    additionalArtifact sourceJar
-}
-
 
 // Configure an upload task. this is setup for uploading to files.minecraftforge.net. There are other examples around
 uploadArchives {
