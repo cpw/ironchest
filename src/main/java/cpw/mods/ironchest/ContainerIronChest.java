@@ -10,6 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -17,6 +18,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+@ChestContainer(isLargeChest = true)
 public class ContainerIronChest extends Container {
     private IronChestType type;
     private EntityPlayer player;
@@ -27,7 +29,7 @@ public class ContainerIronChest extends Container {
         chest = chestInventory;
         player = ((InventoryPlayer) playerInventory).player;
         this.type = type;
-        chestInventory.openInventory();
+        chestInventory.openInventory(player);
         layoutContainer(playerInventory, chestInventory, type, xSize, ySize);
     }
 
@@ -77,7 +79,7 @@ public class ContainerIronChest extends Container {
     public void onContainerClosed(EntityPlayer entityplayer)
     {
         super.onContainerClosed(entityplayer);
-        chest.closeInventory();
+        chest.closeInventory(entityplayer);
     }
 
     protected void layoutContainer(IInventory playerInventory, IInventory chestInventory, IronChestType type, int xSize, int ySize)
@@ -114,5 +116,10 @@ public class ContainerIronChest extends Container {
     public EntityPlayer getPlayer()
     {
         return player;
+    }
+    
+    @ChestContainer.RowSizeCallback
+    public int getNumColumns() {
+        return type.getRowLength();
     }
 }

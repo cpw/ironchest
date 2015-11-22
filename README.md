@@ -1,6 +1,10 @@
 ironchest
 =========
 
-Iron Chest minecraft mod. The torch has been passed to ProgWML6. See here: https://github.com/progwml6/ironchest
+Iron Chest minecraft mod
 
-This is the ancestral home of IronChest. A GPL v3 licensed mod by cpw.
+a GPL v3 licensed mod by cpw
+
+Currently Maintained by ProgWML6
+
+See http://files.minecraftforge.net/IronChests2/ for downloads

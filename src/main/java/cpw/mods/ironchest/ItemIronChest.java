@@ -14,24 +14,25 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemIronChest extends ItemBlock {
-
+public class ItemIronChest extends ItemBlock 
+{
     public ItemIronChest(Block block)
     {
         super(block);
-        setMaxDamage(0);
-        setHasSubtypes(true);
+        
+        this.setMaxDamage(0);
+        this.setHasSubtypes(true);
     }
 
     @Override
-    public int getMetadata(int i)
+    public int getMetadata(int meta)
     {
-        return IronChestType.validateMeta(i);
+        return IronChestType.validateMeta(meta);
     }
 
     @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
-        return "tile.ironchest:"+IronChestType.values()[itemstack.getItemDamage()].name();
+        return "tile.ironchest:" + IronChestType.values()[itemstack.getMetadata()].name();
     }
 }

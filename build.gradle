@@ -12,11 +12,12 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
 // Apply the forge plugin - this adds all the magic for automatically obfuscating, deobfuscating etc
+
 apply plugin: 'forge'
 
 // This is a simple flatdir repository for "uploadArchives" when you don't have a remote repo to target
@@ -37,7 +38,8 @@ archivesBaseName = "ironchest"
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.7.2-10.12.0.1024"
+    version = "1.8-11.14.0.1292-1.8"
+    mappings = "snapshot_20150129"
 }
 
 // This wrangles the resources for the jar files- stuff like textures and languages
@@ -125,14 +127,14 @@ uploadArchives {
                         url 'https://github.com/cpw/IronChest'
 
                         scm {
-                            url 'https://github.com/cpw/IronChest'
-                            connection 'scm:git:git://github.com/cpw/IronChest.git'
-                            developerConnection 'scm:git:git@github.com:cpw/IronChest.git'
+                            url 'https://github.com/progwml6/IronChest'
+                            connection 'scm:git:git://github.com/progwml6/IronChest.git'
+                            developerConnection 'scm:git:git@github.com:progwml6/IronChest.git'
                         }
 
                         issueManagement {
                             system 'github'
-                            url 'https://github.com/cpw/IronChest/issues'
+                            url 'https://github.com/progwml6/IronChest/issues'
                         }
 
                         licenses {

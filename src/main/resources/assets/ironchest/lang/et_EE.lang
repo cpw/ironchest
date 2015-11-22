@@ -1,0 +1,18 @@
+tile.ironchest:IRON.name=Raudkirst
+tile.ironchest:GOLD.name=Kuldkirst
+tile.ironchest:DIAMOND.name=Teemantkirst
+tile.ironchest:COPPER.name=Vaskkirst
+tile.ironchest:SILVER.name=Hõbekirst
+tile.ironchest:CRYSTAL.name=Kristallkirst
+tile.ironchest:OBSIDIAN.name=Obsidiaankirst
+tile.ironchest:DIRTCHEST9000.name=Muldkirst 9000!
+
+item.ironchest:IRONGOLD.name=Raudkirst kuld kirstuks
+item.ironchest:GOLDDIAMOND.name=Kuldkirst teemandist kirstuks
+item.ironchest:COPPERSILVER.name=Vaskkirst hõbedast kirstuks
+item.ironchest:SILVERGOLD.name=Hõbekirst kullast kirstuks
+item.ironchest:COPPERIRON.name=Vaskkirst rauast kirstuks
+item.ironchest:DIAMONDCRYSTAL.name=Teemantkirst kristallist kirstuks
+item.ironchest:WOODIRON.name=Puukirst rauast kirstuks
+item.ironchest:WOODCOPPER.name=Puukirst vasest kirstuks
+item.ironchest:DIAMONDOBSIDIAN.name=Teemantkirst obsidiaanist kirstuks

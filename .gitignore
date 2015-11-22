@@ -5,3 +5,10 @@ build/
 eclipse/
 bin/
 repo/
+/run/
+.settings/
+#IDEA files from Gradle
+.idea/
+/*.iml
+/*.ipr
+/*.iws

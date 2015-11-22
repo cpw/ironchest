@@ -8,7 +8,8 @@ package cpw.mods.ironchest;
 
 import java.util.Properties;
 
-public class Version {
+public class Version 
+{
     private static String major;
     private static String minor;
     private static String rev;

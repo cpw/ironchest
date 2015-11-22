@@ -16,8 +16,10 @@ import static cpw.mods.ironchest.IronChestType.SILVER;
 import static cpw.mods.ironchest.IronChestType.WOOD;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Configuration;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import cpw.mods.ironchest.client.ModelHelper;
+import net.minecraftforge.fml.relauncher.Side;
 
 public enum ChestChangerType {
     IRONGOLD(IRON, GOLD, "ironGoldUpgrade", "Iron to Gold Chest Upgrade", "mmm", "msm", "mmm"),
@@ -34,7 +36,7 @@ public enum ChestChangerType {
     private IronChestType target;
     public String itemName;
     public String descriptiveName;
-    private ItemChestChanger item;
+    public ItemChestChanger item;
     private String[] recipe;
 
     private ChestChangerType(IronChestType source, IronChestType target, String itemName, String descriptiveName, String... recipe)
@@ -44,6 +46,10 @@ public enum ChestChangerType {
         this.itemName = itemName;
         this.descriptiveName = descriptiveName;
         this.recipe = recipe;
+    }
+    
+    public IronChestType getSource(){
+    	return source;
     }
 
     public boolean canUpgrade(IronChestType from)
@@ -56,10 +62,12 @@ public enum ChestChangerType {
         return this.target.ordinal();
     }
 
-    public ItemChestChanger buildItem(Configuration cfg)
+    public ItemChestChanger buildItem()
     {
         item = new ItemChestChanger(this);
         GameRegistry.registerItem(item, itemName);
+        if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+            ModelHelper.registerItem(item, "ironchest:" + itemName);
         return item;
     }
 
@@ -71,16 +79,16 @@ public enum ChestChangerType {
             {
                 Object targetMaterial = IronChestType.translateOreName(targetMat);
                 Object sourceMaterial = IronChestType.translateOreName(sourceMat);
-                IronChestType.addRecipe(new ItemStack(item), recipe, 'm', targetMaterial, 's', sourceMaterial, 'G', Blocks.glass, 'O', Blocks.obsidian);
+                IronChestType.addRecipe(new ItemStack(item), recipe, 'm', targetMaterial, 's', sourceMaterial, 'G', "blockGlass", 'O', Blocks.obsidian);
             }
         }
     }
 
-    public static void buildItems(Configuration cfg)
+    public static void buildItems()
     {
         for (ChestChangerType type : values())
         {
-            type.buildItem(cfg);
+            type.buildItem();
         }
     }
 
