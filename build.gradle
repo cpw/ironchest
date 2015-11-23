@@ -1,24 +1,20 @@
 // This sets us up for building a forge project - you need all of these
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
     }
 }
-
-// Apply the forge plugin - this adds all the magic for automatically obfuscating, deobfuscating etc
-
-apply plugin: 'forge'
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
 
 // This is a simple flatdir repository for "uploadArchives" when you don't have a remote repo to target
 repositories {
@@ -38,7 +34,7 @@ archivesBaseName = "ironchest"
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.8-11.14.0.1292-1.8"
+    version = "1.8.8-11.14.4.1575-1.8.8"
     mappings = "snapshot_20150129"
 }
 
@@ -70,97 +66,61 @@ processResources
 	}
 }
 
-// this sets our output jar to have a 'tag' of 'universal' on it
-// It also adds the minecraft version in a custom version name
-// The result is files named <projectname>-<mcversion>-<version>-universal.jar
-jar {
-    classifier = 'universal'
-    version = "${project.minecraft.version}-${project.version}"
-
-}
-
-println "FISHBUM ${jar.version}"
-
-// Add in a source jar for people, should they desire to download such a thing
-task sourceJar(type: Jar) {
-	from sourceSets.main.allSource
-	classifier = 'src'
-    version = "${project.minecraft.version}-${project.version}"
-}
-
-// Add in an mcp named jar, for those who wish to run in a development environment (assuming mcp naming matches)
-task deobfJar(type: Jar) {
-	from sourceSets.main.output
-	classifier = 'deobf'
-    version = "${project.minecraft.version}-${project.version}"
-}
-
-// Tell the artifact system about our extra jars
-artifacts {
-	archives sourceJar, deobfJar
-}
-
 // Configure an upload task. this is setup for uploading to files.minecraftforge.net. There are other examples around
 uploadArchives {
-    dependsOn 'reobf'
-    repositories {
-        if (project.hasProperty("filesmaven")) {
-            logger.info('Publishing to files server')
-            
-            mavenDeployer {
-                configuration = configurations.deployJars
+    repositories.mavenDeployer {
 
-                repository(url: project.filesmaven.url) {
-                    authentication(userName: project.filesmaven.username, privateKey: project.filesmaven.key)
+        dependsOn 'build'
+
+        if (project.hasProperty('forgeMavenPass'))
+        {
+            repository(url: "http://files.minecraftforge.net/maven/manage/upload") {
+                authentication(userName: "forge", password: project.getProperty('forgeMavenPass')) // the elvis operator. look it up.
+            }
+        }
+        else
+        {
+            // local repo folder. Might wanna juset use  gradle install   if you wanans end it to maven-local
+            repository(url: 'file://localhost/' + project.file('repo').getAbsolutePath())
+        }
+        // This is just the pom data for the maven repo
+        pom {
+            groupId = project.group
+            // Force the maven upload to use the <mcversion>-<version> syntax preferred at files
+            version = "${project.minecraft.version}-${project.version}"
+            artifactId = project.archivesBaseName
+            project {
+                name project.archivesBaseName
+                packaging 'jar'
+                description 'IronChest'
+                url 'https://github.com/cpw/IronChest'
+
+                scm {
+                    url 'https://github.com/progwml6/IronChest'
+                    connection 'scm:git:git://github.com/progwml6/IronChest.git'
+                    developerConnection 'scm:git:git@github.com:progwml6/IronChest.git'
                 }
 
-                // This is just the pom data for the maven repo
-                pom {
-                    groupId = project.group
-                    // Force the maven upload to use the <mcversion>-<version> syntax preferred at files
-                    version = "${project.minecraft.version}-${project.version}"
-                    artifactId = project.archivesBaseName
-                    project {
-                        name project.archivesBaseName
-                        packaging 'jar'
-                        description 'IronChest'
-                        url 'https://github.com/cpw/IronChest'
+                issueManagement {
+                    system 'github'
+                    url 'https://github.com/progwml6/IronChest/issues'
+                }
 
-                        scm {
-                            url 'https://github.com/progwml6/IronChest'
-                            connection 'scm:git:git://github.com/progwml6/IronChest.git'
-                            developerConnection 'scm:git:git@github.com:progwml6/IronChest.git'
-                        }
-
-                        issueManagement {
-                            system 'github'
-                            url 'https://github.com/progwml6/IronChest/issues'
-                        }
-
-                        licenses {
-                            license {
-                                name 'GNU Public License (GPL), Version 3.0'
-                                url 'http://www.gnu.org/licenses/gpl-3.0.txt'
-                                distribution 'repo'
-                            }
-                        }
-
-                        developers {
-                            developer {
-                                id 'cpw'
-                                name 'cpw'
-                                roles { role 'developer' }
-                            }
-                        }
+                licenses {
+                    license {
+                        name 'GNU Public License (GPL), Version 3.0'
+                        url 'http://www.gnu.org/licenses/gpl-3.0.txt'
+                        distribution 'repo'
                     }
                 }
-            }
-        } else {
-            logger.info('Publishing to repo folder')
-            
-            mavenDeployer {
-                pom.version = "${project.minecraft.version}-${project.version}"
-                repository(url: 'file://localhost/' + project.file('repo').getAbsolutePath())
+
+                developers {
+                    developer {
+                        id 'cpw'
+                        name 'cpw'
+                        roles { role 'developer' }
+                    }
+                }
             }
         }
     }
