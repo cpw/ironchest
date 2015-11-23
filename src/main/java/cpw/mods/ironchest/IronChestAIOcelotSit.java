@@ -5,7 +5,7 @@ import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
-public class IronChestAIOcelotSit extends EntityAIOcelotSit 
+public class IronChestAIOcelotSit extends EntityAIOcelotSit
 {
     public IronChestAIOcelotSit(EntityOcelot par1EntityOcelot, float par2)
     {
@@ -13,12 +13,12 @@ public class IronChestAIOcelotSit extends EntityAIOcelotSit
     }
 
     @Override
-    protected boolean func_179488_a(World world, BlockPos pos)
+    protected boolean shouldMoveTo(World world, BlockPos pos)
     {
         if (world.getBlockState(pos).getBlock() == IronChest.ironChestBlock)
         {
             return true;
         }
-        return super.func_179488_a(world, pos);
+        return super.shouldMoveTo(world, pos);
     }
 }

@@ -25,13 +25,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.common.util.Constants;
 
-public class TileEntityIronChest extends TileEntityLockable implements IUpdatePlayerListBox, IInventory
+public class TileEntityIronChest extends TileEntityLockable implements ITickable, IInventory
 {
     private int ticksSinceSync = -1;
     public float prevLidAngle;
@@ -221,7 +221,7 @@ public class TileEntityIronChest extends TileEntityLockable implements IUpdatePl
     }
 
     @Override
-    public String getName()
+    public String getCommandSenderName()
     {
         return this.hasCustomName() ? this.customName : type.name();
     }
