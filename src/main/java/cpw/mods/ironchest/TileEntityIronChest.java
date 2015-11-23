@@ -316,7 +316,6 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         {
             this.numUsingPlayers = 0;
             float var1 = 5.0F;
-            @SuppressWarnings("unchecked")
             List<EntityPlayer> var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos.getX() - var1, pos.getY() - var1, pos.getZ() - var1, pos.getX() + 1 + var1, pos.getY() + 1 + var1, pos.getZ() + 1 + var1));
 
             for (EntityPlayer var4 : var2)
@@ -438,7 +437,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public Packet<?> getDescriptionPacket()
     {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setInteger("type", getType().ordinal());

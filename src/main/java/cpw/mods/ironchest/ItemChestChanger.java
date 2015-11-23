@@ -21,14 +21,14 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class ItemChestChanger extends Item 
+public class ItemChestChanger extends Item
 {
     private ChestChangerType type;
 
     public ItemChestChanger(ChestChangerType type)
     {
         this.type = type;
-        
+
         this.setMaxStackSize(1);
         this.setUnlocalizedName("ironchest:" + type.name());
         this.setCreativeTab(CreativeTabs.tabMisc);
@@ -40,13 +40,13 @@ public class ItemChestChanger extends Item
         if (world.isRemote)
             return false;
         if(this.type.canUpgrade(IronChestType.WOOD)){
-        	if(!(world.getBlockState(pos).getBlock() instanceof BlockChest)){
-        		return false;
-        	}
+            if(!(world.getBlockState(pos).getBlock() instanceof BlockChest)){
+                return false;
+            }
         }else{
-        	if(world.getBlockState(pos) != IronChest.ironChestBlock.getStateFromMeta(IronChestType.valueOf(type.getSource().getName().toUpperCase()).ordinal())){
-        		return false;
-        	}
+            if(world.getBlockState(pos) != IronChest.ironChestBlock.getStateFromMeta(IronChestType.valueOf(type.getSource().getName().toUpperCase()).ordinal())){
+                return false;
+            }
         }
         TileEntity te = world.getTileEntity(pos);
         TileEntityIronChest newchest = new TileEntityIronChest();

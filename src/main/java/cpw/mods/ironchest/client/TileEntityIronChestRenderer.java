@@ -13,17 +13,6 @@ package cpw.mods.ironchest.client;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelChest;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderEntityItem;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.google.common.primitives.SignedBytes;
@@ -32,8 +21,17 @@ import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelChest;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderEntityItem;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
-public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
+public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileEntityIronChest>
 {
     private static Map<IronChestType, ResourceLocation> locations;
 
@@ -44,14 +42,14 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
         }
         locations = builder.build();
     }
-    
+
     private Random random;
     private RenderEntityItem itemRenderer;
     private ModelChest model;
 
     private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F },
             { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F }, };
-    
+
     public TileEntityIronChestRenderer()
     {
         model = new ModelChest();
@@ -79,14 +77,14 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
         }
         int facing = 3;
         IronChestType type = tile.getType();
-        
+
         if (tile != null && tile.hasWorldObj() && tile.getWorld().getBlockState(tile.getPos()).getBlock() == IronChest.ironChestBlock) {
             facing = tile.getFacing();
             type = tile.getType();
             IBlockState state = tile.getWorld().getBlockState(tile.getPos());
             type = (IronChestType)state.getValue(BlockIronChest.VARIANT_PROP);
         }
-        
+
         if (breakStage >= 0)
         {
             bindTexture(DESTROY_STAGES[breakStage]);
@@ -96,10 +94,10 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
             GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
             GlStateManager.matrixMode(5888);
         } else
-        	bindTexture(locations.get(type));
+            bindTexture(locations.get(type));
         GlStateManager.pushMatrix();
         if(type == IronChestType.CRYSTAL)
-        	GlStateManager.disableCull();
+            GlStateManager.disableCull();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.translate((float) x, (float) y + 1.0F, (float) z + 1.0F);
         GlStateManager.scale(1.0F, -1F, -1F);
@@ -132,10 +130,10 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
             GlStateManager.matrixMode(5888);
         }
         if(type == IronChestType.CRYSTAL)
-        	GlStateManager.enableCull();
+            GlStateManager.enableCull();
         GlStateManager.popMatrix();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        
+
         if (type.isTransparent() && tile.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d) {
             random.setSeed(254L);
             float shiftX;
@@ -175,10 +173,9 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer
             GlStateManager.popMatrix();
         }
     }
-    
-    @Override
-    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float partialTick, int breakStage)
+
+    public void renderTileEntityAt(TileEntityIronChest tileentity, double x, double y, double z, float partialTick, int breakStage)
     {
-        render((TileEntityIronChest) tileentity, x, y, z, partialTick, breakStage);
+        render(tileentity, x, y, z, partialTick, breakStage);
     }
 }

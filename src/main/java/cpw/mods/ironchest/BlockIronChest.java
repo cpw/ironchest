@@ -44,7 +44,7 @@ import com.google.common.collect.Lists;
 
 public class BlockIronChest extends BlockContainer
 {
-    public static final PropertyEnum VARIANT_PROP = PropertyEnum.create("variant", IronChestType.class);
+    public static final PropertyEnum<IronChestType> VARIANT_PROP = PropertyEnum.create("variant", IronChestType.class);
 
     public BlockIronChest()
     {
@@ -102,7 +102,7 @@ public class BlockIronChest extends BlockContainer
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
         for (IronChestType type : IronChestType.values())
         {
@@ -128,7 +128,7 @@ public class BlockIronChest extends BlockContainer
     @Override
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] { VARIANT_PROP });
+        return new BlockState(this, new IProperty<?>[] { VARIANT_PROP });
     }
 
     @Override

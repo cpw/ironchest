@@ -9,14 +9,13 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class OcelotsSitOnChestsHandler {
-	
+
     @SubscribeEvent
     public void changeSittingTaskForOcelots(LivingEvent.LivingUpdateEvent evt)
     {
         if (evt.entityLiving.ticksExisted < 5 && evt.entityLiving instanceof EntityOcelot)
         {
             EntityOcelot ocelot = (EntityOcelot) evt.entityLiving;
-            @SuppressWarnings("unchecked")
             List<EntityAITasks.EntityAITaskEntry> tasks = ocelot.tasks.taskEntries;
 
             for (EntityAITasks.EntityAITaskEntry task : tasks) {
