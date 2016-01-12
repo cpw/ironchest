@@ -46,9 +46,9 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void registerTileEntitySpecialRenderer(IronChestType typ)
+    public <T extends TileEntityIronChest> void registerTileEntitySpecialRenderer(Class<T> type)
     {
-        ClientRegistry.bindTileEntitySpecialRenderer(typ.clazz, new TileEntityIronChestRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(type, new TileEntityIronChestRenderer(type));
     }
 
     @Override

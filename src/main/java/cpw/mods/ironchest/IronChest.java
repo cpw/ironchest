@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[11.14.4,]", acceptedMinecraftVersions="[1.8,1.8.8]")
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[11.14.4,]")
 public class IronChest
 {
     public static BlockIronChest ironChestBlock;
@@ -48,7 +48,7 @@ public class IronChest
         for (IronChestType typ : IronChestType.values())
         {
             GameRegistry.registerTileEntityWithAlternatives(typ.clazz, "IronChest." + typ.name(), typ.name());
-            proxy.registerTileEntitySpecialRenderer(typ);
+            proxy.registerTileEntitySpecialRenderer(typ.clazz);
         }
         IronChestType.registerBlocksAndRecipes(ironChestBlock);
         ChestChangerType.generateRecipes();
