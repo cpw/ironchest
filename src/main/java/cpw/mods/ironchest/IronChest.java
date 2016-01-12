@@ -10,7 +10,14 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderFireball;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -18,9 +25,14 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[11.14.4,]")
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[11.15.0,12.0]", acceptedMinecraftVersions="[1.8,1.8.9]")
 public class IronChest
 {
     public static BlockIronChest ironChestBlock;

@@ -221,7 +221,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     }
 
     @Override
-    public String getCommandSenderName()
+    public String getName()
     {
         return this.hasCustomName() ? this.customName : type.name();
     }
@@ -439,6 +439,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public Packet<?> getDescriptionPacket()
     {
+
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setInteger("type", getType().ordinal());
         nbt.setByte("facing", facing);
@@ -524,7 +525,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int par1)
+    public ItemStack removeStackFromSlot(int par1)
     {
         if (this.chestContents[par1] != null)
         {
