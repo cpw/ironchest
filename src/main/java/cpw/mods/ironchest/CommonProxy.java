@@ -22,7 +22,7 @@ public class CommonProxy implements IGuiHandler {
 
     }
 
-    public void registerTileEntitySpecialRenderer(IronChestType typ)
+    public <T extends TileEntityIronChest> void registerTileEntitySpecialRenderer(Class<T> typ)
     {
 
     }

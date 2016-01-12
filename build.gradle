@@ -34,8 +34,8 @@ archivesBaseName = "ironchest"
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.8.8-11.14.4.1576-1.8.8"
-    mappings = "snapshot_20151122"
+    version = "1.8.9-11.15.0.1689"
+    mappings = "stable_20"
     runDir = "run"
 }
 
@@ -76,7 +76,7 @@ uploadArchives {
         if (project.hasProperty('forgeMavenPass'))
         {
             repository(url: "http://files.minecraftforge.net/maven/manage/upload") {
-                authentication(userName: "forge", password: project.getProperty('forgeMavenPass')) // the elvis operator. look it up.
+                authentication(userName: project.getProperty('forgeMavenUser'), password: project.getProperty('forgeMavenPassword')) // the elvis operator. look it up.
             }
         }
         else
@@ -94,7 +94,7 @@ uploadArchives {
                 name project.archivesBaseName
                 packaging 'jar'
                 description 'IronChest'
-                url 'https://github.com/cpw/IronChest'
+                url 'https://github.com/progwml6/IronChest'
 
                 scm {
                     url 'https://github.com/progwml6/IronChest'
@@ -146,7 +146,7 @@ def getGitVersion()
 	def maj = matcher[0][1]
 	def min = matcher[0][2]
 	def rev = matcher[0][3]
-	def bn = System.getenv("BUILD_NUMBER") ?: "1"
+	def bn = System.getenv("PROMOTED_NUMBER") ?: System.getenv("BUILD_NUMBER") ?: "1"
 
 	out['IronChest.build.major.number'] = maj.toString()
 	out['IronChest.build.minor.number'] = min.toString()

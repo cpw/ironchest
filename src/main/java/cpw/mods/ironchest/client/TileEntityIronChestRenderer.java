@@ -31,7 +31,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileEntityIronChest>
+public class TileEntityIronChestRenderer<T extends TileEntityIronChest> extends TileEntitySpecialRenderer<T>
 {
     private static Map<IronChestType, ResourceLocation> locations;
 
@@ -50,7 +50,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
     private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F },
             { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F }, };
 
-    public TileEntityIronChestRenderer()
+    public TileEntityIronChestRenderer(Class<T> type)
     {
         model = new ModelChest();
         random = new Random();
