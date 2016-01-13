@@ -73,7 +73,7 @@ uploadArchives {
 
         dependsOn 'build'
 
-        if (project.hasProperty('forgeMavenPass'))
+        if (project.hasProperty('forgeMavenPassword'))
         {
             repository(url: "http://files.minecraftforge.net/maven/manage/upload") {
                 authentication(userName: project.getProperty('forgeMavenUser'), password: project.getProperty('forgeMavenPassword')) // the elvis operator. look it up.
