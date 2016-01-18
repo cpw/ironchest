@@ -11,6 +11,10 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
     }
 }
+plugins {
+    id "com.matthewprenger.cursegradle" version "1.0.7"
+}
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
@@ -38,6 +42,17 @@ minecraft {
     mappings = "stable_20"
     runDir = "run"
 }
+
+
+curseforge {
+    apiKey = project.hasProperty('curseforge_apikey') ? project.curseforge_apikey : '0'
+    project {
+        id = '228756'
+        changelog = 'Empty'
+        releaseType = 'beta'
+    }
+}
+
 
 // This wrangles the resources for the jar files- stuff like textures and languages
 processResources
