@@ -1,0 +1,25 @@
+tile.ironchest:IRON.name=Baú de Ferro
+tile.ironchest:GOLD.name=Baú de Ouro
+tile.ironchest:DIAMOND.name=Baú de Diamante
+tile.ironchest:COPPER.name=Baú de Cobre
+tile.ironchest:SILVER.name=Baú de Prata
+tile.ironchest:CRYSTAL.name=Baú de Cristal
+tile.ironchest:OBSIDIAN.name=Baú de Obsidiana
+tile.ironchest:DIRTCHEST9000.name=BaúDeSujeira 9000!
+
+item.ironchest:IRONGOLD.name=Aprimoramento de Baú de Ferro para Ouro
+item.ironchest:GOLDDIAMOND.name=Aprimoramento de Baú de Ouro para Diamante
+item.ironchest:COPPERSILVER.name=Aprimoramento de Baú de Cobre para Prata
+item.ironchest:SILVERGOLD.name=Aprimoramento de Baú de Prata para Ouro
+item.ironchest:COPPERIRON.name=Aprimoramento de Baú de Cobre para Ferro
+item.ironchest:DIAMONDCRYSTAL.name=Aprimoramento de Baú de Diamante para Cristal
+item.ironchest:WOODIRON.name=Aprimoramento de Baú de Madeira para Ferro
+item.ironchest:WOODCOPPER.name=Aprimoramento de Baú de Madeira para Cobre
+item.ironchest:DIAMONDOBSIDIAN.name=Aprimoramento de Baú de Diamante para Obsidiana
+
+book.ironchest:dirtchest9000.title=Como utilizar seu BaúDeSujeira 9000!
+book.ironchest:dirtchest9000.page1=Bem-vindo ao seu novo BaúDeSujeira 9000! Esperamos que desfrute de muitos anos felizes de armazenagem de sua pilha de sujeira em nosso utilitário de armazenamento.
+book.ironchest:dirtchest9000.page2=Uso: basta inserir o monte de sujeira de sua escolha no slot altamente receptivo e apreciar a grande conveniência de ter essa sujeira disponíveis para você, a qualquer momento que você passar pelo baú!
+book.ironchest:dirtchest9000.page3=Esperamos que tenham gostado de rever este manual de instruções, e espero que você considere o uso de nossos produtos no futuro! Atenciosamente, manual do BaúDeSujeira 9000 escritores incorporados.
+book.ironchest:dirtchest9000.page4=Garantia: Este produto não tem qualquer tipo de garantia. Sua sujeira pode não ser armazenada, pode vazar lentamente para o ambiente, ou alternativamente, pode não fazer absolutamente nada.
+book.ironchest:dirtchest9000.page5=BaúDeSujeira 9000 é bom para o meio ambiente. Elimine este guia de forma responsável, e não o que você faz apenas lançando-o em alguma lava. Ficaríamos muito triste.
