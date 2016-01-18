@@ -1,0 +1,17 @@
+tile.ironchest:IRON.name=Baú de Ferro
+tile.ironchest:GOLD.name=Baú de Ouro
+tile.ironchest:DIAMOND.name=Baú de Diamante
+tile.ironchest:COPPER.name=Baú de Cobre
+tile.ironchest:SILVER.name=Baú de Prata
+tile.ironchest:CRYSTAL.name=Baú de Cristal
+tile.ironchest:OBSIDIAN.name=Baú de Obsidiana
+
+item.ironchest:IRONGOLD.name=Upgrade de ferro para ouro
+item.ironchest:GOLDDIAMOND.name=Upgrade de ouro para diamante
+item.ironchest:COPPERSILVER.name=Upgrade de cobre para prata
+item.ironchest:SILVERGOLD.name=Upgrade de prata para outro
+item.ironchest:COPPERIRON.name=Upgrade de cobre para ferro
+item.ironchest:DIAMONDCRYSTAL.name=Upgra de diamante para cristal
+item.ironchest:WOODIRON.name=Upgrade de normal para ferro
+item.ironchest:WOODCOPPER.name=Upgrade de normal para cobre
+item.ironchest:DIAMONDOBSIDIAN.name=Upgrade de diamante para obsidiana
