@@ -27,9 +27,6 @@ repositories {
         dirs "repo"
     }
 }
-// IronChest uses git tagging to mark major versions. This sets up the project version to that version data
-def versionInfo = getGitVersion()
-version = "${versionInfo['IronChest.version']}"
 
 // This is our group. I'm cpw.mods
 group= "cpw.mods" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -43,6 +40,9 @@ minecraft {
     runDir = "run"
 }
 
+// IronChest uses git tagging to mark major versions. This sets up the project version to that version data
+def versionInfo = getGitVersion()
+version = "${project.minecraft.version}-${versionInfo['IronChest.version']}"
 
 curseforge {
     apiKey = project.hasProperty('curseforge_apikey') ? project.curseforge_apikey : '0'
@@ -103,7 +103,7 @@ uploadArchives {
         pom {
             groupId = project.group
             // Force the maven upload to use the <mcversion>-<version> syntax preferred at files
-            version = "${project.minecraft.version}-${project.version}"
+            version = "${project.version}"
             artifactId = project.archivesBaseName
             project {
                 name project.archivesBaseName
