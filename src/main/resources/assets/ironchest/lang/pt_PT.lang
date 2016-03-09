@@ -5,6 +5,7 @@ tile.ironchest:COPPER.name=Baú de Cobre
 tile.ironchest:SILVER.name=Baú de Prata
 tile.ironchest:CRYSTAL.name=Baú de Cristal
 tile.ironchest:OBSIDIAN.name=Baú de Obsidiana
+tile.ironchest:DIRTCHEST9000.name=BaúdeTerra 9000!
 
 item.ironchest:IRONGOLD.name=Melhoria de Baú de Ferro para Ouro
 item.ironchest:GOLDDIAMOND.name=Melhoria de Baú de Ouro para Diamante
@@ -15,3 +16,10 @@ item.ironchest:DIAMONDCRYSTAL.name=Melhoria de Baú de Diamante para Cristal
 item.ironchest:WOODIRON.name=Melhoria de Baú de Madeira para Ferro
 item.ironchest:WOODCOPPER.name=Melhoria de Baú de Madeira para Cobre
 item.ironchest:DIAMONDOBSIDIAN.name=Melhoria de Baú de Diamante para Obsidiana
+
+book.ironchest:dirtchest9000.title=Como usar o BaúdeTerra 9000!
+book.ironchest:dirtchest9000.page1=Bem-vindo ao seu novo BaúdeTerra 9000! Esperamos que desfrute de muitos anos de armazenamento da sua pilha de terra no nosso serviço de armazenamento.
+book.ironchest:dirtchest9000.page2=Utilização: Insira, simplesmente, uma pilha de terra à sua escolha no espaço mais recetivo e desfrute da grande conveniência de ter essa terra disponivel para si, sempre que passar pelo baú!
+book.ironchest:dirtchest9000.page3=Esperamos que tenha gostado de rever este manual de instruções, e esperamos que considere usar os nossos produtos no futuro! Atensiosamente, manual do BaúdeTerra 9000, escritores inclusive.
+book.ironchest:dirtchest9000.page4=Garantia: Este produto não tem qualquer tipo de garantia. A sua terra pode mesmo nem ser armazenada, pode ser, vagarosamente, lançada no meio ambiente, ou em alternativa, pode nem fazer nada, de todo.
+book.ironchest:dirtchest9000.page5=BaúdeTerra 9000 é amigo do meio ambiente. Por favor, disponha, responsávelmente, deste guia, e não faça o que costuma fazer e não o atire para a lava. Ficaríamos muito tristes.
