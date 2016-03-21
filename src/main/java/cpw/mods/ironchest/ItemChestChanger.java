@@ -11,14 +11,17 @@
 package cpw.mods.ironchest;
 
 import net.minecraft.block.BlockChest;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemChestChanger extends Item
@@ -35,73 +38,114 @@ public class ItemChestChanger extends Item
     }
 
     @Override
-    public boolean onItemUseFirst (ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote)
-            return false;
-        if(this.type.canUpgrade(IronChestType.WOOD)){
-            if(!(world.getBlockState(pos).getBlock() instanceof BlockChest)){
-                return false;
-            }
-        }else{
-            if(world.getBlockState(pos) != IronChest.ironChestBlock.getStateFromMeta(IronChestType.valueOf(type.getSource().getName().toUpperCase()).ordinal())){
-                return false;
+        if (worldIn.isRemote)
+        {
+            return EnumActionResult.PASS;
+        }
+        if (this.type.canUpgrade(IronChestType.WOOD))
+        {
+            if (!(worldIn.getBlockState(pos).getBlock() instanceof BlockChest))
+            {
+                return EnumActionResult.PASS;
             }
         }
-        TileEntity te = world.getTileEntity(pos);
+        else
+        {
+            if (worldIn.getBlockState(pos) != IronChest.ironChestBlock
+                    .getStateFromMeta(IronChestType.valueOf(this.type.getSource().getName().toUpperCase()).ordinal()))
+            {
+                return EnumActionResult.PASS;
+            }
+        }
+        TileEntity te = worldIn.getTileEntity(pos);
         TileEntityIronChest newchest = new TileEntityIronChest();
         ItemStack[] chestContents = new ItemStack[27];
+        int chestFacing = 0;
         if (te != null)
         {
             if (te instanceof TileEntityIronChest)
             {
                 chestContents = ((TileEntityIronChest) te).chestContents;
+                chestFacing = ((TileEntityIronChest) te).getFacing();
                 newchest = IronChestType.makeEntity(this.getTargetChestOrdinal(this.type.ordinal()));
                 if (newchest == null)
-                    return false;
+                {
+                    return EnumActionResult.PASS;
+                }
             }
             else if (te instanceof TileEntityChest)
             {
+                IBlockState chestState = worldIn.getBlockState(pos);
+                EnumFacing orientation = chestState.getValue(BlockChest.FACING);
+                if (orientation == EnumFacing.NORTH)
+                {
+                    chestFacing = 2;
+                }
+                if (orientation == EnumFacing.EAST)
+                {
+                    chestFacing = 5;
+                }
+                if (orientation == EnumFacing.SOUTH)
+                {
+                    chestFacing = 3;
+                }
+                if (orientation == EnumFacing.WEST)
+                {
+                    chestFacing = 4;
+                }
                 if (((TileEntityChest) te).numPlayersUsing > 0)
-                    return false;
-                if (!getType().canUpgrade(IronChestType.WOOD))
-                    return false;
+                {
+                    return EnumActionResult.PASS;
+                }
+                if (!this.getType().canUpgrade(IronChestType.WOOD))
+                {
+                    return EnumActionResult.PASS;
+                }
                 chestContents = new ItemStack[((TileEntityChest) te).getSizeInventory()];
                 for (int i = 0; i < chestContents.length; i++)
+                {
                     chestContents[i] = ((TileEntityChest) te).getStackInSlot(i);
+                }
                 newchest = IronChestType.makeEntity(this.getTargetChestOrdinal(this.type.ordinal()));
             }
         }
 
         te.updateContainingBlockInfo();
         if (te instanceof TileEntityChest)
+        {
             ((TileEntityChest) te).checkForAdjacentChests();
+        }
 
-        world.removeTileEntity(pos);
-        world.setBlockToAir(pos);
+        worldIn.removeTileEntity(pos);
+        worldIn.setBlockToAir(pos);
 
-        world.setTileEntity(pos, newchest);
-        world.setBlockState(pos, IronChest.ironChestBlock.getStateFromMeta(newchest.getType().ordinal()), 3);
+        IBlockState iblockstate = IronChest.ironChestBlock.getStateFromMeta(newchest.getType().ordinal());
 
-        world.markBlockForUpdate(pos);
+        worldIn.setTileEntity(pos, newchest);
+        worldIn.setBlockState(pos, iblockstate, 3);
 
-        TileEntity te2 = world.getTileEntity(pos);
+        worldIn.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
+
+        TileEntity te2 = worldIn.getTileEntity(pos);
         if (te2 instanceof TileEntityIronChest)
         {
             ((TileEntityIronChest) te2).setContents(chestContents);
+            ((TileEntityIronChest) te2).setFacing((byte) chestFacing);
         }
 
-        stack.stackSize = player.capabilities.isCreativeMode ? stack.stackSize : stack.stackSize - 1;
-        return true;
+        stack.stackSize = playerIn.capabilities.isCreativeMode ? stack.stackSize : stack.stackSize - 1;
+        return EnumActionResult.SUCCESS;
     }
 
     public int getTargetChestOrdinal(int sourceOrdinal)
     {
-        return type.getTarget();
+        return this.type.getTarget();
     }
 
     public ChestChangerType getType()
     {
-        return type;
+        return this.type;
     }
 }

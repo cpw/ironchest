@@ -12,17 +12,18 @@ package cpw.mods.ironchest;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public class CommonProxy implements IGuiHandler {
+public class CommonProxy implements IGuiHandler
+{
     public void registerRenderInformation()
     {
 
     }
 
-    public  <T extends TileEntityIronChest> void registerTileEntitySpecialRenderer(Class<T> typ)
+    public <T extends TileEntityIronChest> void registerTileEntitySpecialRenderer(Class<T> typ)
     {
 
     }

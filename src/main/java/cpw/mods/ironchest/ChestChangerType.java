@@ -14,14 +14,16 @@ import static cpw.mods.ironchest.IronChestType.IRON;
 import static cpw.mods.ironchest.IronChestType.OBSIDIAN;
 import static cpw.mods.ironchest.IronChestType.SILVER;
 import static cpw.mods.ironchest.IronChestType.WOOD;
+
+import cpw.mods.ironchest.client.ModelHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import cpw.mods.ironchest.client.ModelHelper;
 import net.minecraftforge.fml.relauncher.Side;
 
-public enum ChestChangerType {
+public enum ChestChangerType
+{
     IRONGOLD(IRON, GOLD, "ironGoldUpgrade", "Iron to Gold Chest Upgrade", "mmm", "msm", "mmm"),
     GOLDDIAMOND(GOLD, DIAMOND, "goldDiamondUpgrade", "Gold to Diamond Chest Upgrade", "GGG", "msm", "GGG"),
     COPPERSILVER(COPPER, SILVER, "copperSilverUpgrade", "Copper to Silver Chest Upgrade", "mmm", "msm", "mmm"),
@@ -47,9 +49,10 @@ public enum ChestChangerType {
         this.descriptiveName = descriptiveName;
         this.recipe = recipe;
     }
-    
-    public IronChestType getSource(){
-    	return source;
+
+    public IronChestType getSource()
+    {
+        return this.source;
     }
 
     public boolean canUpgrade(IronChestType from)
@@ -64,22 +67,25 @@ public enum ChestChangerType {
 
     public ItemChestChanger buildItem()
     {
-        item = new ItemChestChanger(this);
-        GameRegistry.registerItem(item, itemName);
-        if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-            ModelHelper.registerItem(item, "ironchest:" + itemName);
-        return item;
+        this.item = new ItemChestChanger(this);
+        GameRegistry.registerItem(this.item, this.itemName);
+        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+        {
+            ModelHelper.registerItem(this.item, "ironchest:" + this.itemName);
+        }
+        return this.item;
     }
 
     public void addRecipes()
     {
-        for (String sourceMat : source.getMatList())
+        for (String sourceMat : this.source.getMatList())
         {
-            for (String targetMat : target.getMatList())
+            for (String targetMat : this.target.getMatList())
             {
                 Object targetMaterial = IronChestType.translateOreName(targetMat);
                 Object sourceMaterial = IronChestType.translateOreName(sourceMat);
-                IronChestType.addRecipe(new ItemStack(item), recipe, 'm', targetMaterial, 's', sourceMaterial, 'G', "blockGlass", 'O', Blocks.obsidian);
+                IronChestType.addRecipe(new ItemStack(this.item), this.recipe, 'm', targetMaterial, 's', sourceMaterial, 'G', "blockGlass", 'O',
+                        Blocks.obsidian);
             }
         }
     }

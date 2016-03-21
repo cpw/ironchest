@@ -1,4 +1,5 @@
 {
+    "parent": "block/block",
     "textures": {
         "texture": "ironchest:model/goldchest"
     },
@@ -36,12 +37,5 @@
                 "east":  { "uv": [ 0,    0.25, 0.25, 1.25 ], "texture": "#texture" }
             }
         }
-    ],
-    "display": {
-        "thirdperson": {
-            "rotation": [ 0, 45, 190 ],
-            "translation": [ 0, 1.5, -2.75 ],
-            "scale": [ 0.375, 0.375, 0.375 ]
-        }
-    }
+    ]
 }

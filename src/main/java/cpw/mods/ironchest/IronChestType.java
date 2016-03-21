@@ -33,7 +33,7 @@ public enum IronChestType implements IStringSerializable
     SILVER(72, 9, false, "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"),
     CRYSTAL(108, 12, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
     OBSIDIAN(108, 12, false, "Obsidian Chest", "obsidianchest.png", 6, Arrays.asList("obsidian"), TileEntityObsidianChest.class, "mmmm2mmmm"),
-    DIRTCHEST9000(1, 1, false, "Dirt Chest 9000", "dirtchest.png",7,Arrays.asList("dirt"), TileEntityDirtChest.class,Item.getItemFromBlock(Blocks.dirt),"mmmmCmmmm"),
+    DIRTCHEST9000(1, 1, false, "Dirt Chest 9000", "dirtchest.png", 7, Arrays.asList("dirt"), TileEntityDirtChest.class, Item.getItemFromBlock(Blocks.dirt), "mmmmCmmmm"),
     WOOD(0, 0, false, "", "", -1, Arrays.asList("plankWood"), null);
     int size;
     private int rowLength;
@@ -49,8 +49,9 @@ public enum IronChestType implements IStringSerializable
     IronChestType(int size, int rowLength, boolean tieredChest, String friendlyName, String modelTexture, int textureRow, List<String> mats,
             Class<? extends TileEntityIronChest> clazz, String... recipes)
     {
-        this(size, rowLength, tieredChest, friendlyName, modelTexture, textureRow, mats, clazz, (Item)null, recipes);
+        this(size, rowLength, tieredChest, friendlyName, modelTexture, textureRow, mats, clazz, (Item) null, recipes);
     }
+
     IronChestType(int size, int rowLength, boolean tieredChest, String friendlyName, String modelTexture, int textureRow, List<String> mats,
             Class<? extends TileEntityIronChest> clazz, Item itemFilter, String... recipes)
     {
@@ -64,23 +65,23 @@ public enum IronChestType implements IStringSerializable
         this.itemFilter = itemFilter;
         this.recipes = recipes;
         this.matList = new ArrayList<String>();
-        matList.addAll(mats);
+        this.matList.addAll(mats);
     }
-    
+
     @Override
     public String getName()
     {
-        return name().toLowerCase();
+        return this.name().toLowerCase();
     }
 
     public String getModelTexture()
     {
-        return modelTexture;
+        return this.modelTexture;
     }
 
     public int getTextureRow()
     {
-        return textureRow;
+        return this.textureRow;
     }
 
     public static TileEntityIronChest makeEntity(int metadata)
@@ -115,8 +116,11 @@ public enum IronChestType implements IStringSerializable
         {
             generateRecipesForType(blockResult, previous, typ);
             ItemStack chest = new ItemStack(blockResult, 1, typ.ordinal());
-            //if (typ.isValidForCreativeMode()) GameRegistry.registerCustomItemStack(typ.friendlyName, chest);//TODO fix this!!
-            if (typ.tieredChest) previous = chest;
+            // if (typ.isValidForCreativeMode()) GameRegistry.registerCustomItemStack(typ.friendlyName, chest);//TODO fix this!!
+            if (typ.tieredChest)
+            {
+                previous = chest;
+            }
         }
     }
 
@@ -163,12 +167,12 @@ public enum IronChestType implements IStringSerializable
 
     public int getRowCount()
     {
-        return size / rowLength;
+        return this.size / this.rowLength;
     }
 
     public int getRowLength()
     {
-        return rowLength;
+        return this.rowLength;
     }
 
     public boolean isTransparent()
@@ -178,7 +182,7 @@ public enum IronChestType implements IStringSerializable
 
     public List<String> getMatList()
     {
-        return matList;
+        return this.matList;
     }
 
     public static int validateMeta(int i)
@@ -195,7 +199,7 @@ public enum IronChestType implements IStringSerializable
 
     public boolean isValidForCreativeMode()
     {
-        return validateMeta(ordinal()) == ordinal();
+        return validateMeta(this.ordinal()) == this.ordinal();
     }
 
     public boolean isExplosionResistant()
@@ -210,9 +214,9 @@ public enum IronChestType implements IStringSerializable
 
     public boolean acceptsStack(ItemStack itemstack)
     {
-        return itemFilter == null || itemstack == null || itemstack.getItem() == itemFilter;
+        return this.itemFilter == null || itemstack == null || itemstack.getItem() == this.itemFilter;
     }
-    
+
     public void adornItemDrop(ItemStack item)
     {
         if (this == DIRTCHEST9000)

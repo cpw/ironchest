@@ -10,39 +10,40 @@
  ******************************************************************************/
 package cpw.mods.ironchest.client;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.ironchest.ContainerIronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.util.ResourceLocation;
 
-public class GUIChest extends GuiContainer {
-    public enum ResourceList {
-        IRON(new ResourceLocation("ironchest", "textures/gui/ironcontainer.png")),
-        COPPER(new ResourceLocation("ironchest", "textures/gui/coppercontainer.png")),
-        SILVER(new ResourceLocation("ironchest", "textures/gui/silvercontainer.png")),
-        GOLD(new ResourceLocation("ironchest", "textures/gui/goldcontainer.png")),
-        DIAMOND(new ResourceLocation("ironchest", "textures/gui/diamondcontainer.png")),
-        DIRT(new ResourceLocation("ironchest", "textures/gui/dirtcontainer.png"));
+public class GUIChest extends GuiContainer
+{
+    public enum ResourceList
+    {
+        IRON(new ResourceLocation("ironchest", "textures/gui/ironcontainer.png")), COPPER(
+                new ResourceLocation("ironchest", "textures/gui/coppercontainer.png")), SILVER(
+                        new ResourceLocation("ironchest", "textures/gui/silvercontainer.png")), GOLD(
+                                new ResourceLocation("ironchest", "textures/gui/goldcontainer.png")), DIAMOND(
+                                        new ResourceLocation("ironchest", "textures/gui/diamondcontainer.png")), DIRT(
+                                                new ResourceLocation("ironchest", "textures/gui/dirtcontainer.png"));
         public final ResourceLocation location;
-        private ResourceList(ResourceLocation loc) {
+
+        private ResourceList(ResourceLocation loc)
+        {
             this.location = loc;
         }
     }
-    public enum GUI {
-        IRON(184, 202, ResourceList.IRON, IronChestType.IRON),
-        GOLD(184, 256, ResourceList.GOLD, IronChestType.GOLD),
-        DIAMOND(238, 256, ResourceList.DIAMOND, IronChestType.DIAMOND),
-        COPPER(184, 184, ResourceList.COPPER, IronChestType.COPPER),
-        SILVER(184, 238, ResourceList.SILVER, IronChestType.SILVER),
-        CRYSTAL(238, 256, ResourceList.DIAMOND, IronChestType.CRYSTAL),
-        OBSIDIAN(238, 256, ResourceList.DIAMOND, IronChestType.OBSIDIAN),
-        DIRTCHEST9000(184, 184, ResourceList.DIRT, IronChestType.DIRTCHEST9000);
+
+    public enum GUI
+    {
+        IRON(184, 202, ResourceList.IRON, IronChestType.IRON), GOLD(184, 256, ResourceList.GOLD, IronChestType.GOLD), DIAMOND(238, 256, ResourceList.DIAMOND,
+                IronChestType.DIAMOND), COPPER(184, 184, ResourceList.COPPER, IronChestType.COPPER), SILVER(184, 238, ResourceList.SILVER,
+                        IronChestType.SILVER), CRYSTAL(238, 256, ResourceList.DIAMOND, IronChestType.CRYSTAL), OBSIDIAN(238, 256, ResourceList.DIAMOND,
+                                IronChestType.OBSIDIAN), DIRTCHEST9000(184, 184, ResourceList.DIRT, IronChestType.DIRTCHEST9000);
 
         private int xSize;
         private int ySize;
@@ -60,7 +61,7 @@ public class GUIChest extends GuiContainer {
 
         protected Container makeContainer(IInventory player, IInventory chest)
         {
-            return new ContainerIronChest(player, chest, mainType, xSize, ySize);
+            return new ContainerIronChest(player, chest, this.mainType, this.xSize, this.ySize);
         }
 
         public static GUIChest buildGUI(IronChestType type, IInventory playerInventory, TileEntityIronChest chestInventory)
@@ -71,7 +72,7 @@ public class GUIChest extends GuiContainer {
 
     public int getRowLength()
     {
-        return type.mainType.getRowLength();
+        return this.type.mainType.getRowLength();
     }
 
     private GUI type;
@@ -90,9 +91,9 @@ public class GUIChest extends GuiContainer {
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         // new "bind tex"
-        this.mc.getTextureManager().bindTexture(type.guiResourceList.location);
-        int x = (width - xSize) / 2;
-        int y = (height - ySize) / 2;
-        drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+        this.mc.getTextureManager().bindTexture(this.type.guiResourceList.location);
+        int x = (this.width - this.xSize) / 2;
+        int y = (this.height - this.ySize) / 2;
+        this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
     }
 }

@@ -14,9 +14,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -24,11 +26,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockable;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.util.Constants;
 
 public class TileEntityIronChest extends TileEntityLockable implements ITickable, IInventory
@@ -54,32 +57,32 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     {
         super();
         this.type = type;
-        this.chestContents = new ItemStack[getSizeInventory()];
+        this.chestContents = new ItemStack[this.getSizeInventory()];
         this.topStacks = new ItemStack[8];
     }
 
     public ItemStack[] getContents()
     {
-        return chestContents;
+        return this.chestContents;
     }
 
     public void setContents(ItemStack[] contents)
     {
-        chestContents = new ItemStack[getSizeInventory()];
+        this.chestContents = new ItemStack[this.getSizeInventory()];
         for (int i = 0; i < contents.length; i++)
         {
-            if (i < chestContents.length)
+            if (i < this.chestContents.length)
             {
-                chestContents[i] = contents[i];
+                this.chestContents[i] = contents[i];
             }
         }
-        inventoryTouched = true;
+        this.inventoryTouched = true;
     }
 
     @Override
     public int getSizeInventory()
     {
-        return type.size;
+        return this.type.size;
     }
 
     public int getFacing()
@@ -89,121 +92,125 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
 
     public IronChestType getType()
     {
-        return type;
+        return this.type;
     }
 
     @Override
     public ItemStack getStackInSlot(int i)
     {
-        inventoryTouched = true;
-        return chestContents[i];
+        this.inventoryTouched = true;
+        return this.chestContents[i];
     }
 
     @Override
     public void markDirty()
     {
         super.markDirty();
-        sortTopStacks();
+        this.sortTopStacks();
     }
 
     protected void sortTopStacks()
     {
-        if (!type.isTransparent() || (worldObj != null && worldObj.isRemote))
+        if (!this.type.isTransparent() || (this.worldObj != null && this.worldObj.isRemote))
         {
             return;
         }
-        ItemStack[] tempCopy = new ItemStack[getSizeInventory()];
+        ItemStack[] tempCopy = new ItemStack[this.getSizeInventory()];
         boolean hasStuff = false;
         int compressedIdx = 0;
-        mainLoop: for (int i = 0; i < getSizeInventory(); i++)
+        mainLoop: for (int i = 0; i < this.getSizeInventory(); i++)
         {
-            if (chestContents[i] != null)
+            if (this.chestContents[i] != null)
             {
                 for (int j = 0; j < compressedIdx; j++)
                 {
-                    if (tempCopy[j].isItemEqual(chestContents[i]))
+                    if (tempCopy[j].isItemEqual(this.chestContents[i]))
                     {
-                        tempCopy[j].stackSize += chestContents[i].stackSize;
+                        tempCopy[j].stackSize += this.chestContents[i].stackSize;
                         continue mainLoop;
                     }
                 }
-                tempCopy[compressedIdx++] = chestContents[i].copy();
+                tempCopy[compressedIdx++] = this.chestContents[i].copy();
                 hasStuff = true;
             }
         }
-        if (!hasStuff && hadStuff)
+        if (!hasStuff && this.hadStuff)
         {
-            hadStuff = false;
-            for (int i = 0; i < topStacks.length; i++)
+            this.hadStuff = false;
+            for (int i = 0; i < this.topStacks.length; i++)
             {
-                topStacks[i] = null;
+                this.topStacks[i] = null;
             }
-            if (worldObj != null)
+            if (this.worldObj != null)
             {
-                worldObj.markBlockForUpdate(pos);
+                IBlockState iblockstate = this.worldObj.getBlockState(this.pos);
+                this.worldObj.notifyBlockUpdate(this.pos, iblockstate, iblockstate, 3);
             }
             return;
         }
-        hadStuff = true;
-        Arrays.sort(tempCopy, new Comparator<ItemStack>()
-        {
+        this.hadStuff = true;
+        Arrays.sort(tempCopy, new Comparator<ItemStack>() {
             @Override
             public int compare(ItemStack o1, ItemStack o2)
             {
                 if (o1 == null)
                 {
                     return 1;
-                } else if (o2 == null)
+                }
+                else if (o2 == null)
                 {
                     return -1;
-                } else
+                }
+                else
                 {
                     return o2.stackSize - o1.stackSize;
                 }
             }
         });
         int p = 0;
-        for (int i = 0; i < tempCopy.length; i++)
+        for (ItemStack element : tempCopy)
         {
-            if (tempCopy[i] != null && tempCopy[i].stackSize > 0)
+            if (element != null && element.stackSize > 0)
             {
-                topStacks[p++] = tempCopy[i];
-                if (p == topStacks.length)
+                this.topStacks[p++] = element;
+                if (p == this.topStacks.length)
                 {
                     break;
                 }
             }
         }
-        for (int i = p; i < topStacks.length; i++)
+        for (int i = p; i < this.topStacks.length; i++)
         {
-            topStacks[i] = null;
+            this.topStacks[i] = null;
         }
-        if (worldObj != null)
+        if (this.worldObj != null)
         {
-            worldObj.markBlockForUpdate(pos);
+            IBlockState iblockstate = this.worldObj.getBlockState(this.pos);
+            this.worldObj.notifyBlockUpdate(this.pos, iblockstate, iblockstate, 3);
         }
     }
 
     @Override
     public ItemStack decrStackSize(int i, int j)
     {
-        if (chestContents[i] != null)
+        if (this.chestContents[i] != null)
         {
-            if (chestContents[i].stackSize <= j)
+            if (this.chestContents[i].stackSize <= j)
             {
-                ItemStack itemstack = chestContents[i];
-                chestContents[i] = null;
-                markDirty();
+                ItemStack itemstack = this.chestContents[i];
+                this.chestContents[i] = null;
+                this.markDirty();
                 return itemstack;
             }
-            ItemStack itemstack1 = chestContents[i].splitStack(j);
-            if (chestContents[i].stackSize == 0)
+            ItemStack itemstack1 = this.chestContents[i].splitStack(j);
+            if (this.chestContents[i].stackSize == 0)
             {
-                chestContents[i] = null;
+                this.chestContents[i] = null;
             }
-            markDirty();
+            this.markDirty();
             return itemstack1;
-        } else
+        }
+        else
         {
             return null;
         }
@@ -212,18 +219,18 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public void setInventorySlotContents(int i, ItemStack itemstack)
     {
-        chestContents[i] = itemstack;
-        if (itemstack != null && itemstack.stackSize > getInventoryStackLimit())
+        this.chestContents[i] = itemstack;
+        if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit())
         {
-            itemstack.stackSize = getInventoryStackLimit();
+            itemstack.stackSize = this.getInventoryStackLimit();
         }
-        markDirty();
+        this.markDirty();
     }
 
     @Override
     public String getName()
     {
-        return this.hasCustomName() ? this.customName : type.name();
+        return this.hasCustomName() ? this.customName : this.type.name();
     }
 
     @Override
@@ -243,7 +250,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         super.readFromNBT(nbttagcompound);
 
         NBTTagList nbttaglist = nbttagcompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
-        this.chestContents = new ItemStack[getSizeInventory()];
+        this.chestContents = new ItemStack[this.getSizeInventory()];
 
         if (nbttagcompound.hasKey("CustomName", Constants.NBT.TAG_STRING))
         {
@@ -254,13 +261,13 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         {
             NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
             int j = nbttagcompound1.getByte("Slot") & 0xff;
-            if (j >= 0 && j < chestContents.length)
+            if (j >= 0 && j < this.chestContents.length)
             {
-                chestContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+                this.chestContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }
-        facing = nbttagcompound.getByte("facing");
-        sortTopStacks();
+        this.facing = nbttagcompound.getByte("facing");
+        this.sortTopStacks();
     }
 
     @Override
@@ -268,19 +275,19 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     {
         super.writeToNBT(nbttagcompound);
         NBTTagList nbttaglist = new NBTTagList();
-        for (int i = 0; i < chestContents.length; i++)
+        for (int i = 0; i < this.chestContents.length; i++)
         {
-            if (chestContents[i] != null)
+            if (this.chestContents[i] != null)
             {
                 NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Slot", (byte) i);
-                chestContents[i].writeToNBT(nbttagcompound1);
+                this.chestContents[i].writeToNBT(nbttagcompound1);
                 nbttaglist.appendTag(nbttagcompound1);
             }
         }
 
         nbttagcompound.setTag("Items", nbttaglist);
-        nbttagcompound.setByte("facing", facing);
+        nbttagcompound.setByte("facing", this.facing);
 
         if (this.hasCustomName())
         {
@@ -297,26 +304,28 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public boolean isUseableByPlayer(EntityPlayer entityplayer)
     {
-        if (worldObj == null)
+        if (this.worldObj == null)
         {
             return true;
         }
-        if (worldObj.getTileEntity(pos) != this)
+        if (this.worldObj.getTileEntity(this.pos) != this)
         {
             return false;
         }
-        return entityplayer.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64D;
+        return entityplayer.getDistanceSq(this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 64D;
     }
 
     @Override
     public void update()
     {
         // Resynchronize clients with the server state
-        if (worldObj != null && !this.worldObj.isRemote && this.numUsingPlayers != 0 && (this.ticksSinceSync + pos.getX() + pos.getY() + pos.getZ()) % 200 == 0)
+        if (this.worldObj != null && !this.worldObj.isRemote && this.numUsingPlayers != 0
+                && (this.ticksSinceSync + this.pos.getX() + this.pos.getY() + this.pos.getZ()) % 200 == 0)
         {
             this.numUsingPlayers = 0;
             float var1 = 5.0F;
-            List<EntityPlayer> var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos.getX() - var1, pos.getY() - var1, pos.getZ() - var1, pos.getX() + 1 + var1, pos.getY() + 1 + var1, pos.getZ() + 1 + var1));
+            List<EntityPlayer> var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.pos.getX() - var1, this.pos.getY() - var1,
+                    this.pos.getZ() - var1, this.pos.getX() + 1 + var1, this.pos.getY() + 1 + var1, this.pos.getZ() + 1 + var1));
 
             for (EntityPlayer var4 : var2)
             {
@@ -327,49 +336,52 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
             }
         }
 
-        if (worldObj != null && !worldObj.isRemote && ticksSinceSync < 0)
+        if (this.worldObj != null && !this.worldObj.isRemote && this.ticksSinceSync < 0)
         {
-            worldObj.addBlockEvent(pos, IronChest.ironChestBlock, 3, ((numUsingPlayers << 3) & 0xF8) | (facing & 0x7));
+            this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 3, ((this.numUsingPlayers << 3) & 0xF8) | (this.facing & 0x7));
         }
-        if (!worldObj.isRemote && inventoryTouched)
+        if (!this.worldObj.isRemote && this.inventoryTouched)
         {
-            inventoryTouched = false;
-            sortTopStacks();
+            this.inventoryTouched = false;
+            this.sortTopStacks();
         }
 
         this.ticksSinceSync++;
-        prevLidAngle = lidAngle;
+        this.prevLidAngle = this.lidAngle;
         float f = 0.1F;
-        if (numUsingPlayers > 0 && lidAngle == 0.0F)
+        if (this.numUsingPlayers > 0 && this.lidAngle == 0.0F)
         {
-            double d = pos.getX() + 0.5D;
-            double d1 = pos.getZ() + 0.5D;
-            worldObj.playSoundEffect(d, pos.getY() + 0.5D, d1, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+            double d = this.pos.getX() + 0.5D;
+            double d1 = this.pos.getZ() + 0.5D;
+            this.worldObj.playSound((EntityPlayer) null, d, this.pos.getY() + 0.5D, d1, SoundEvents.block_chest_open, SoundCategory.BLOCKS, 0.5F,
+                    this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
         }
-        if (numUsingPlayers == 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
+        if (this.numUsingPlayers == 0 && this.lidAngle > 0.0F || this.numUsingPlayers > 0 && this.lidAngle < 1.0F)
         {
-            float f1 = lidAngle;
-            if (numUsingPlayers > 0)
+            float f1 = this.lidAngle;
+            if (this.numUsingPlayers > 0)
             {
-                lidAngle += f;
-            } else
-            {
-                lidAngle -= f;
+                this.lidAngle += f;
             }
-            if (lidAngle > 1.0F)
+            else
             {
-                lidAngle = 1.0F;
+                this.lidAngle -= f;
+            }
+            if (this.lidAngle > 1.0F)
+            {
+                this.lidAngle = 1.0F;
             }
             float f2 = 0.5F;
-            if (lidAngle < f2 && f1 >= f2)
+            if (this.lidAngle < f2 && f1 >= f2)
             {
-                double d2 = pos.getX() + 0.5D;
-                double d3 = pos.getZ() + 0.5D;
-                worldObj.playSoundEffect(d2, pos.getY() + 0.5D, d3, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                double d2 = this.pos.getX() + 0.5D;
+                double d3 = this.pos.getZ() + 0.5D;
+                this.worldObj.playSound((EntityPlayer) null, d2, this.pos.getY() + 0.5D, d3, SoundEvents.block_chest_close, SoundCategory.BLOCKS, 0.5F,
+                        this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
             }
-            if (lidAngle < 0.0F)
+            if (this.lidAngle < 0.0F)
             {
-                lidAngle = 0.0F;
+                this.lidAngle = 0.0F;
             }
         }
     }
@@ -379,14 +391,16 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     {
         if (i == 1)
         {
-            numUsingPlayers = j;
-        } else if (i == 2)
+            this.numUsingPlayers = j;
+        }
+        else if (i == 2)
         {
-            facing = (byte) j;
-        } else if (i == 3)
+            this.facing = (byte) j;
+        }
+        else if (i == 3)
         {
-            facing = (byte) (j & 0x7);
-            numUsingPlayers = (j & 0xF8) >> 3;
+            this.facing = (byte) (j & 0x7);
+            this.numUsingPlayers = (j & 0xF8) >> 3;
         }
         return true;
     }
@@ -394,23 +408,23 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public void openInventory(EntityPlayer player)
     {
-        if (worldObj == null)
+        if (this.worldObj == null)
         {
             return;
         }
-        numUsingPlayers++;
-        worldObj.addBlockEvent(pos, IronChest.ironChestBlock, 1, numUsingPlayers);
+        this.numUsingPlayers++;
+        this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numUsingPlayers);
     }
 
     @Override
     public void closeInventory(EntityPlayer player)
     {
-        if (worldObj == null)
+        if (this.worldObj == null)
         {
             return;
         }
-        numUsingPlayers--;
-        worldObj.addBlockEvent(pos, IronChest.ironChestBlock, 1, numUsingPlayers);
+        this.numUsingPlayers--;
+        this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numUsingPlayers);
     }
 
     public void setFacing(byte facing2)
@@ -420,17 +434,17 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
 
     public ItemStack[] getTopItemStacks()
     {
-        return topStacks;
+        return this.topStacks;
     }
 
     public TileEntityIronChest updateFromMetadata(int l)
     {
-        if (worldObj != null && worldObj.isRemote)
+        if (this.worldObj != null && this.worldObj.isRemote)
         {
-            if (l != type.ordinal())
+            if (l != this.type.ordinal())
             {
-                worldObj.setTileEntity(pos, IronChestType.makeEntity(l));
-                return (TileEntityIronChest) worldObj.getTileEntity(pos);
+                this.worldObj.setTileEntity(this.pos, IronChestType.makeEntity(l));
+                return (TileEntityIronChest) this.worldObj.getTileEntity(this.pos);
             }
         }
         return this;
@@ -441,9 +455,9 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     {
 
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("type", getType().ordinal());
-        nbt.setByte("facing", facing);
-        ItemStack[] stacks = buildItemStackDataList();
+        nbt.setInteger("type", this.getType().ordinal());
+        nbt.setByte("facing", this.facing);
+        ItemStack[] stacks = this.buildItemStackDataList();
         if (stacks != null)
         {
             NBTTagList nbttaglist = new NBTTagList();
@@ -460,20 +474,20 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
             nbt.setTag("stacks", nbttaglist);
         }
 
-        return new S35PacketUpdateTileEntity(pos, 0, nbt);
+        return new SPacketUpdateTileEntity(this.pos, 0, nbt);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
     {
         if (pkt.getTileEntityType() == 0)
         {
             NBTTagCompound nbt = pkt.getNbtCompound();
-            type = IronChestType.values()[nbt.getInteger("type")];
-            facing = nbt.getByte("facing");
+            this.type = IronChestType.values()[nbt.getInteger("type")];
+            this.facing = nbt.getByte("facing");
 
             NBTTagList tagList = nbt.getTagList("stacks", Constants.NBT.TAG_COMPOUND);
-            ItemStack[] stacks = new ItemStack[topStacks.length];
+            ItemStack[] stacks = new ItemStack[this.topStacks.length];
 
             for (int i = 0; i < stacks.length; i++)
             {
@@ -485,17 +499,18 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
                 }
             }
 
-            if (type.isTransparent() && stacks != null)
+            if (this.type.isTransparent() && stacks != null)
             {
                 int pos = 0;
-                for (int i = 0; i < topStacks.length; i++)
+                for (int i = 0; i < this.topStacks.length; i++)
                 {
                     if (stacks[pos] != null)
                     {
-                        topStacks[i] = stacks[pos];
-                    } else
+                        this.topStacks[i] = stacks[pos];
+                    }
+                    else
                     {
-                        topStacks[i] = null;
+                        this.topStacks[i] = null;
                     }
                     pos++;
                 }
@@ -505,16 +520,17 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
 
     public ItemStack[] buildItemStackDataList()
     {
-        if (type.isTransparent())
+        if (this.type.isTransparent())
         {
-            ItemStack[] sortList = new ItemStack[topStacks.length];
+            ItemStack[] sortList = new ItemStack[this.topStacks.length];
             int pos = 0;
-            for (ItemStack is : topStacks)
+            for (ItemStack is : this.topStacks)
             {
                 if (is != null)
                 {
                     sortList[pos++] = is;
-                } else
+                }
+                else
                 {
                     sortList[pos++] = null;
                 }
@@ -532,7 +548,8 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
             ItemStack var2 = this.chestContents[par1];
             this.chestContents[par1] = null;
             return var2;
-        } else
+        }
+        else
         {
             return null;
         }
@@ -541,18 +558,18 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack)
     {
-        return type.acceptsStack(itemstack);
+        return this.type.acceptsStack(itemstack);
     }
 
     public void rotateAround()
     {
-        facing++;
-        if (facing > EnumFacing.EAST.ordinal())
+        this.facing++;
+        if (this.facing > EnumFacing.EAST.ordinal())
         {
-            facing = (byte) EnumFacing.NORTH.ordinal();
+            this.facing = (byte) EnumFacing.NORTH.ordinal();
         }
-        setFacing(facing);
-        worldObj.addBlockEvent(pos, IronChest.ironChestBlock, 2, facing);
+        this.setFacing(this.facing);
+        this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 2, this.facing);
     }
 
     public void wasPlaced(EntityLivingBase entityliving, ItemStack itemStack)
@@ -598,7 +615,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public String getGuiID()
     {
-        return "IronChest:" + type.name();
+        return "IronChest:" + this.type.name();
     }
 
     @Override

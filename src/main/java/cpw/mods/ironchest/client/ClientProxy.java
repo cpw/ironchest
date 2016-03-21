@@ -10,21 +10,22 @@
  ******************************************************************************/
 package cpw.mods.ironchest.client;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemModelMesher;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import cpw.mods.ironchest.CommonProxy;
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemModelMesher;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class ClientProxy extends CommonProxy
 {
@@ -40,7 +41,7 @@ public class ClientProxy extends CommonProxy
             {
                 Item chestItem = Item.getItemFromBlock(IronChest.ironChestBlock);
                 mesher.register(chestItem, chestType.ordinal(), new ModelResourceLocation("ironchest:chest_" + chestType.getName().toLowerCase(), "inventory"));
-                ModelBakery.addVariantName(chestItem, "ironchest:chest_" + chestType.getName().toLowerCase());
+                ModelBakery.registerItemVariants(chestItem, new ResourceLocation("ironchest:chest_" + chestType.getName().toLowerCase()));
             }
         }
     }
@@ -64,7 +65,8 @@ public class ClientProxy extends CommonProxy
         if (te != null && te instanceof TileEntityIronChest)
         {
             return GUIChest.GUI.buildGUI(IronChestType.values()[ID], player.inventory, (TileEntityIronChest) te);
-        } else
+        }
+        else
         {
             return null;
         }

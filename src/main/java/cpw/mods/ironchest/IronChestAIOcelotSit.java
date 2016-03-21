@@ -2,7 +2,7 @@ package cpw.mods.ironchest;
 
 import net.minecraft.entity.ai.EntityAIOcelotSit;
 import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class IronChestAIOcelotSit extends EntityAIOcelotSit

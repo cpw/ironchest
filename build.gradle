@@ -35,8 +35,8 @@ archivesBaseName = "ironchest"
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.8.9-11.15.0.1689"
-    mappings = "stable_20"
+    version = "1.9-12.16.0.1781-1.9"
+    mappings = "snapshot_20160319"
     runDir = "run"
 }
 
