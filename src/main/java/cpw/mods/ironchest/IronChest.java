@@ -10,6 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
+import cpw.mods.ironchest.client.IronChestEventHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -55,5 +56,7 @@ public class IronChest
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.registerRenderInformation();
         MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
+
+        MinecraftForge.EVENT_BUS.register(IronChestEventHandler.INSTANCE);
     }
 }

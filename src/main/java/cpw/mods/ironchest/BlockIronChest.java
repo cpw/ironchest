@@ -16,6 +16,7 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
+import cpw.mods.ironchest.client.IronChestTextureHandler;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -33,11 +34,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -76,6 +79,12 @@ public class BlockIronChest extends BlockContainer
     public boolean isFullCube(IBlockState state)
     {
         return false;
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
@@ -256,6 +265,22 @@ public class BlockIronChest extends BlockContainer
             }
         }
         return super.getExplosionResistance(world, pos, exploder, explosion);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean addHitEffects(IBlockState state, World worldObj, RayTraceResult target, net.minecraft.client.particle.EffectRenderer effectRenderer)
+    {
+        IronChestTextureHandler.addHitEffects(worldObj, target.getBlockPos(), target.sideHit);
+        return true;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean addDestroyEffects(World world, BlockPos pos, net.minecraft.client.particle.EffectRenderer effectRenderer)
+    {
+        IronChestTextureHandler.addDestroyEffects(world, pos, world.getBlockState(pos));
+        return true;
     }
 
     @Override
