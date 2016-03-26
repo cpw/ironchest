@@ -10,7 +10,7 @@ public class OcelotsSitOnChestsHandler
     @SubscribeEvent
     public void changeSittingTaskForOcelots(LivingEvent.LivingUpdateEvent evt)
     {
-        if (evt.entityLiving.ticksExisted < 5 && evt.entityLiving instanceof EntityOcelot)
+        if (evt.getEntityLiving().ticksExisted < 5 && evt.getEntityLiving() instanceof EntityOcelot)
         {
             // EntityOcelot ocelot = (EntityOcelot) evt.entityLiving;
             // Set<EntityAITasks.EntityAITaskEntry> tasks = ocelot.tasks.taskEntries;

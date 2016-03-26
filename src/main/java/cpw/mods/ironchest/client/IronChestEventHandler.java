@@ -12,14 +12,14 @@ public class IronChestEventHandler
     @SubscribeEvent
     public void onPreTextureStiching(TextureStitchEvent.Pre event)
     {
-        if (event.map == FMLClientHandler.instance().getClient().getTextureMapBlocks())
+        if (event.getMap() == FMLClientHandler.instance().getClient().getTextureMapBlocks())
         {
-            event.map.registerSprite(new ResourceLocation("ironchest:blocks/copperbreak"));
-            event.map.registerSprite(new ResourceLocation("ironchest:blocks/crystalbreak"));
-            event.map.registerSprite(new ResourceLocation("ironchest:blocks/diamondbreak"));
-            event.map.registerSprite(new ResourceLocation("ironchest:blocks/goldbreak"));
-            event.map.registerSprite(new ResourceLocation("ironchest:blocks/ironbreak"));
-            event.map.registerSprite(new ResourceLocation("ironchest:blocks/silverbreak"));
+            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/copperbreak"));
+            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/crystalbreak"));
+            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/diamondbreak"));
+            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/goldbreak"));
+            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/ironbreak"));
+            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/silverbreak"));
         }
     }
 }
