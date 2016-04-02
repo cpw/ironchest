@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[12.16,)", acceptedMinecraftVersions = "[1.9]")
+@Mod(modid = "IronChest", name = "Iron Chests", dependencies = "required-after:Forge@[12.16.0.1819,)", acceptedMinecraftVersions = "[1.9]")
 public class IronChest
 {
     public static BlockIronChest ironChestBlock;
