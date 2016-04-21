@@ -9,7 +9,7 @@ import net.minecraft.util.text.translation.I18n;
 
 public class TileEntityDirtChest extends TileEntityIronChest
 {
-    private static ItemStack dirtChest9000GuideBook = new ItemStack(Items.written_book);
+    private static ItemStack dirtChest9000GuideBook = new ItemStack(Items.WRITTEN_BOOK);
 
     static
     {

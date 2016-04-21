@@ -324,8 +324,9 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         {
             this.numUsingPlayers = 0;
             float var1 = 5.0F;
-            List<EntityPlayer> var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.pos.getX() - var1, this.pos.getY() - var1,
-                    this.pos.getZ() - var1, this.pos.getX() + 1 + var1, this.pos.getY() + 1 + var1, this.pos.getZ() + 1 + var1));
+            //@formatter:off
+            List<EntityPlayer> var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.pos.getX() - var1, this.pos.getY() - var1, this.pos.getZ() - var1, this.pos.getX() + 1 + var1, this.pos.getY() + 1 + var1, this.pos.getZ() + 1 + var1));
+            //@formatter:on
 
             for (EntityPlayer var4 : var2)
             {
@@ -353,8 +354,9 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         {
             double d = this.pos.getX() + 0.5D;
             double d1 = this.pos.getZ() + 0.5D;
-            this.worldObj.playSound((EntityPlayer) null, d, this.pos.getY() + 0.5D, d1, SoundEvents.block_chest_open, SoundCategory.BLOCKS, 0.5F,
-                    this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+            //@formatter:off
+            this.worldObj.playSound((EntityPlayer) null, d, this.pos.getY() + 0.5D, d1, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+            //@formatter:on
         }
         if (this.numUsingPlayers == 0 && this.lidAngle > 0.0F || this.numUsingPlayers > 0 && this.lidAngle < 1.0F)
         {
@@ -376,8 +378,9 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
             {
                 double d2 = this.pos.getX() + 0.5D;
                 double d3 = this.pos.getZ() + 0.5D;
-                this.worldObj.playSound((EntityPlayer) null, d2, this.pos.getY() + 0.5D, d3, SoundEvents.block_chest_close, SoundCategory.BLOCKS, 0.5F,
-                        this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                //@formatter:off
+                this.worldObj.playSound((EntityPlayer) null, d2, this.pos.getY() + 0.5D, d3, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                //@formatter:on
             }
             if (this.lidAngle < 0.0F)
             {

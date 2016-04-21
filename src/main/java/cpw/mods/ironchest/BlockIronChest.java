@@ -54,13 +54,13 @@ public class BlockIronChest extends BlockContainer
 
     public BlockIronChest()
     {
-        super(Material.iron);
+        super(Material.IRON);
 
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT_PROP, IronChestType.IRON));
 
         this.setHardness(3.0F);
         this.setUnlocalizedName("IronChest");
-        this.setCreativeTab(CreativeTabs.tabDecorations);
+        this.setCreativeTab(CreativeTabs.DECORATIONS);
     }
 
     @Override
@@ -88,8 +88,9 @@ public class BlockIronChest extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, ItemStack heldItem,
-            EnumFacing direction, float hitX, float hitY, float hitZ)
+    //@formatter:off
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing direction, float hitX, float hitY, float hitZ)
+    //@formatter:on
     {
         TileEntity te = world.getTileEntity(pos);
 

@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class IronChest
 {
     public static BlockIronChest ironChestBlock;
+    public static ItemIronChest ironChestItemBlock;
     @SidedProxy(clientSide = "cpw.mods.ironchest.client.ClientProxy", serverSide = "cpw.mods.ironchest.CommonProxy")
     public static CommonProxy proxy;
     @Instance("IronChest")
@@ -44,7 +45,13 @@ public class IronChest
         // Minecraft.getRenderItem() returns null before this stage
         ChestChangerType.buildItems();
         ironChestBlock = new BlockIronChest();
-        GameRegistry.registerBlock(ironChestBlock, ItemIronChest.class, "BlockIronChest");
+        ironChestItemBlock = new ItemIronChest(ironChestBlock);
+
+        ironChestBlock.setRegistryName("BlockIronChest");
+        ironChestItemBlock.setRegistryName("BlockIronChest");
+
+        GameRegistry.register(ironChestBlock);
+        GameRegistry.register(ironChestItemBlock);
 
         for (IronChestType typ : IronChestType.values())
         {

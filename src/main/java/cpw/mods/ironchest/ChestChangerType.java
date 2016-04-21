@@ -24,6 +24,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public enum ChestChangerType
 {
+    //@formatter:off
     IRONGOLD(IRON, GOLD, "ironGoldUpgrade", "Iron to Gold Chest Upgrade", "mmm", "msm", "mmm"),
     GOLDDIAMOND(GOLD, DIAMOND, "goldDiamondUpgrade", "Gold to Diamond Chest Upgrade", "GGG", "msm", "GGG"),
     COPPERSILVER(COPPER, SILVER, "copperSilverUpgrade", "Copper to Silver Chest Upgrade", "mmm", "msm", "mmm"),
@@ -33,6 +34,7 @@ public enum ChestChangerType
     WOODIRON(WOOD, IRON, "woodIronUpgrade", "Normal chest to Iron Chest Upgrade", "mmm", "msm", "mmm"),
     WOODCOPPER(WOOD, COPPER, "woodCopperUpgrade", "Normal chest to Copper Chest Upgrade", "mmm", "msm", "mmm"),
     DIAMONDOBSIDIAN(DIAMOND, OBSIDIAN, "diamondObsidianUpgrade", "Diamond to Obsidian Chest Upgrade", "mmm", "mGm", "mmm");
+    //@formatter:on
 
     private IronChestType source;
     private IronChestType target;
@@ -68,11 +70,15 @@ public enum ChestChangerType
     public ItemChestChanger buildItem()
     {
         this.item = new ItemChestChanger(this);
-        GameRegistry.registerItem(this.item, this.itemName);
+        this.item.setRegistryName(this.itemName);
+
+        GameRegistry.register(this.item);
+
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
             ModelHelper.registerItem(this.item, "ironchest:" + this.itemName);
         }
+
         return this.item;
     }
 
@@ -84,8 +90,9 @@ public enum ChestChangerType
             {
                 Object targetMaterial = IronChestType.translateOreName(targetMat);
                 Object sourceMaterial = IronChestType.translateOreName(sourceMat);
-                IronChestType.addRecipe(new ItemStack(this.item), this.recipe, 'm', targetMaterial, 's', sourceMaterial, 'G', "blockGlass", 'O',
-                        Blocks.obsidian);
+                //@formatter:off
+                IronChestType.addRecipe(new ItemStack(this.item), this.recipe, 'm', targetMaterial, 's', sourceMaterial, 'G', "blockGlass", 'O', Blocks.OBSIDIAN);
+                //@formatter:on
             }
         }
     }

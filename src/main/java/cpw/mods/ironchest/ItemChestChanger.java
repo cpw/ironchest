@@ -34,11 +34,13 @@ public class ItemChestChanger extends Item
 
         this.setMaxStackSize(1);
         this.setUnlocalizedName("ironchest:" + type.name());
-        this.setCreativeTab(CreativeTabs.tabMisc);
+        this.setCreativeTab(CreativeTabs.MISC);
     }
 
     @Override
+    //@formatter:off
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    //@formatter:on
     {
         if (worldIn.isRemote)
         {

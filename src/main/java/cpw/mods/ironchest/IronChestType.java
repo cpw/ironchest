@@ -26,6 +26,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public enum IronChestType implements IStringSerializable
 {
+    //@formatter:off
     IRON(54, 9, true, "Iron Chest", "ironchest.png", 0, Arrays.asList("ingotIron", "ingotRefinedIron"), TileEntityIronChest.class, "mmmmPmmmm", "mGmG3GmGm"),
     GOLD(81, 9, true, "Gold Chest", "goldchest.png", 1, Arrays.asList("ingotGold"), TileEntityGoldChest.class, "mmmmPmmmm", "mGmG4GmGm"),
     DIAMOND(108, 12, true, "Diamond Chest", "diamondchest.png", 2, Arrays.asList("gemDiamond"), TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"),
@@ -33,8 +34,9 @@ public enum IronChestType implements IStringSerializable
     SILVER(72, 9, false, "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"),
     CRYSTAL(108, 12, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
     OBSIDIAN(108, 12, false, "Obsidian Chest", "obsidianchest.png", 6, Arrays.asList("obsidian"), TileEntityObsidianChest.class, "mmmm2mmmm"),
-    DIRTCHEST9000(1, 1, false, "Dirt Chest 9000", "dirtchest.png", 7, Arrays.asList("dirt"), TileEntityDirtChest.class, Item.getItemFromBlock(Blocks.dirt), "mmmmCmmmm"),
+    DIRTCHEST9000(1, 1, false, "Dirt Chest 9000", "dirtchest.png", 7, Arrays.asList("dirt"), TileEntityDirtChest.class, Item.getItemFromBlock(Blocks.DIRT), "mmmmCmmmm"),
     WOOD(0, 0, false, "", "", -1, Arrays.asList("plankWood"), null);
+    //@formatter:on
     int size;
     private int rowLength;
     public String friendlyName;
@@ -133,6 +135,7 @@ public enum IronChestType implements IStringSerializable
             for (String mat : type.matList)
             {
                 mainMaterial = translateOreName(mat);
+                //@formatter:off
                 addRecipe(new ItemStack(blockResult, 1, type.ordinal()), recipeSplit,
                         'm', mainMaterial, 'P', previousTier, /* previous tier of chest */
                         'G', "blockGlass", 'C', "chestWood",
@@ -140,8 +143,9 @@ public enum IronChestType implements IStringSerializable
                         '1', new ItemStack(blockResult, 1, 1), /* Gold Chest */
                         '2', new ItemStack(blockResult, 1, 2), /* Diamond Chest */
                         '3', new ItemStack(blockResult, 1, 3), /* Copper Chest */
-                        '4', new ItemStack(blockResult, 1, 4)  /* Silver Chest */
+                        '4', new ItemStack(blockResult, 1, 4) /* Silver Chest */
                 );
+                //@formatter:on
             }
         }
     }
@@ -150,11 +154,11 @@ public enum IronChestType implements IStringSerializable
     {
         if (mat.equals("obsidian"))
         {
-            return Blocks.obsidian;
+            return Blocks.OBSIDIAN;
         }
         else if (mat.equals("dirt"))
         {
-            return Blocks.dirt;
+            return Blocks.DIRT;
         }
         return mat;
     }
