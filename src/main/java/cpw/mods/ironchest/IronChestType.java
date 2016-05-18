@@ -4,15 +4,15 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- *
+ * <p>
  * Contributors:
- *     cpw - initial API and implementation
+ * cpw - initial API and implementation
  ******************************************************************************/
 package cpw.mods.ironchest;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -21,94 +21,77 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public enum IronChestType implements IStringSerializable
 {
     //@formatter:off
-    IRON(54, 9, true, "Iron Chest", "ironchest.png", 0, Arrays.asList("ingotIron", "ingotRefinedIron"), TileEntityIronChest.class, "mmmmPmmmm", "mGmG3GmGm"),
-    GOLD(81, 9, true, "Gold Chest", "goldchest.png", 1, Arrays.asList("ingotGold"), TileEntityGoldChest.class, "mmmmPmmmm", "mGmG4GmGm"),
-    DIAMOND(108, 12, true, "Diamond Chest", "diamondchest.png", 2, Arrays.asList("gemDiamond"), TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"),
-    COPPER(45, 9, false, "Copper Chest", "copperchest.png", 3, Arrays.asList("ingotCopper"), TileEntityCopperChest.class, "mmmmCmmmm"),
-    SILVER(72, 9, false, "Silver Chest", "silverchest.png", 4, Arrays.asList("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"),
-    CRYSTAL(108, 12, true, "Crystal Chest", "crystalchest.png", 5, Arrays.asList("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
-    OBSIDIAN(108, 12, false, "Obsidian Chest", "obsidianchest.png", 6, Arrays.asList("obsidian"), TileEntityObsidianChest.class, "mmmm2mmmm"),
-    DIRTCHEST9000(1, 1, false, "Dirt Chest 9000", "dirtchest.png", 7, Arrays.asList("dirt"), TileEntityDirtChest.class, Item.getItemFromBlock(Blocks.DIRT), "mmmmCmmmm"),
-    WOOD(0, 0, false, "", "", -1, Arrays.asList("plankWood"), null);
+    IRON(54, 9, true, "ironchest.png", Arrays.asList("ingotIron", "ingotRefinedIron"), TileEntityIronChest.class, "mmmmPmmmm", "mGmG3GmGm"),
+    GOLD(81, 9, true, "goldchest.png", Collections.singleton("ingotGold"), TileEntityGoldChest.class, "mmmmPmmmm", "mGmG4GmGm"),
+    DIAMOND(108, 12, true, "diamondchest.png", Collections.singleton("gemDiamond"), TileEntityDiamondChest.class, "GGGmPmGGG", "GGGG4Gmmm"),
+    COPPER(45, 9, false, "copperchest.png", Collections.singleton("ingotCopper"), TileEntityCopperChest.class, "mmmmCmmmm"),
+    SILVER(72, 9, false, "silverchest.png", Collections.singleton("ingotSilver"), TileEntitySilverChest.class, "mmmm3mmmm", "mGmG0GmGm"),
+    CRYSTAL(108, 12, true, "crystalchest.png", Collections.singleton("blockGlass"), TileEntityCrystalChest.class, "GGGGPGGGG"),
+    OBSIDIAN(108, 12, false, "obsidianchest.png", Collections.singleton("obsidian"), TileEntityObsidianChest.class, "mmmm2mmmm"),
+    DIRTCHEST9000(1, 1, false, "dirtchest.png", Collections.singleton("dirt"), TileEntityDirtChest.class, "mmmmCmmmm"),
+    WOOD(0, 0, false, "", Collections.singleton("plankWood"), null);
     //@formatter:on
-    int size;
-    private int rowLength;
-    public String friendlyName;
-    private boolean tieredChest;
-    private String modelTexture;
-    private int textureRow;
-    public Class<? extends TileEntityIronChest> clazz;
-    private String[] recipes;
-    private ArrayList<String> matList;
-    private Item itemFilter;
 
-    IronChestType(int size, int rowLength, boolean tieredChest, String friendlyName, String modelTexture, int textureRow, List<String> mats,
-            Class<? extends TileEntityIronChest> clazz, String... recipes)
-    {
-        this(size, rowLength, tieredChest, friendlyName, modelTexture, textureRow, mats, clazz, (Item) null, recipes);
-    }
+    public static final IronChestType VALUES[] = values();
 
-    IronChestType(int size, int rowLength, boolean tieredChest, String friendlyName, String modelTexture, int textureRow, List<String> mats,
-            Class<? extends TileEntityIronChest> clazz, Item itemFilter, String... recipes)
+    public final String name;
+    public final int size;
+    public final int rowLength;
+    public final boolean tieredChest;
+    public final ResourceLocation modelTexture;
+    private String breakTexture;
+    public final Class<? extends TileEntityIronChest> clazz;
+    public final Collection<String> recipes;
+    public final Collection<String> matList;
+
+    IronChestType(int size, int rowLength, boolean tieredChest, String modelTexture, Collection<String> mats, Class<? extends TileEntityIronChest> clazz,
+            String... recipes)
     {
+        this.name = this.name().toLowerCase();
         this.size = size;
         this.rowLength = rowLength;
         this.tieredChest = tieredChest;
-        this.friendlyName = friendlyName;
-        this.modelTexture = modelTexture;
-        this.textureRow = textureRow;
+        this.modelTexture = new ResourceLocation("ironchest", "textures/model/" + modelTexture);
+        this.matList = Collections.unmodifiableCollection(mats);
         this.clazz = clazz;
-        this.itemFilter = itemFilter;
-        this.recipes = recipes;
-        this.matList = new ArrayList<String>();
-        this.matList.addAll(mats);
+        this.recipes = Collections.unmodifiableCollection(Arrays.asList(recipes));
+    }
+
+    public String getBreakTexture()
+    {
+        if (this.breakTexture == null)
+        {
+            switch (this)
+            {
+            case DIRTCHEST9000:
+            {
+                this.breakTexture = "minecraft:blocks/dirt";
+            }
+            case OBSIDIAN:
+            {
+                this.breakTexture = "minecraft:blocks/obsidian";
+            }
+            default:
+            {
+                this.breakTexture = "ironchest:blocks/" + this.getName() + "break";
+            }
+            }
+        }
+
+        return this.breakTexture;
     }
 
     @Override
     public String getName()
     {
-        return this.name().toLowerCase();
-    }
-
-    public String getModelTexture()
-    {
-        return this.modelTexture;
-    }
-
-    public int getTextureRow()
-    {
-        return this.textureRow;
-    }
-
-    public static TileEntityIronChest makeEntity(int metadata)
-    {
-        // Compatibility
-        int chesttype = validateMeta(metadata);
-        if (chesttype == metadata)
-        {
-            try
-            {
-                TileEntityIronChest te = values()[chesttype].clazz.newInstance();
-                return te;
-            }
-            catch (InstantiationException e)
-            {
-                // unpossible
-                e.printStackTrace();
-            }
-            catch (IllegalAccessException e)
-            {
-                // unpossible
-                e.printStackTrace();
-            }
-        }
-        return null;
+        return this.name;
     }
 
     public static void registerBlocksAndRecipes(BlockIronChest blockResult)
@@ -136,15 +119,12 @@ public enum IronChestType implements IStringSerializable
             {
                 mainMaterial = translateOreName(mat);
                 //@formatter:off
-                addRecipe(new ItemStack(blockResult, 1, type.ordinal()), recipeSplit,
-                        'm', mainMaterial, 'P', previousTier, /* previous tier of chest */
-                        'G', "blockGlass", 'C', "chestWood",
-                        '0', new ItemStack(blockResult, 1, 0), /* Iron Chest */
+                addRecipe(new ItemStack(blockResult, 1, type.ordinal()), recipeSplit, 'm', mainMaterial, 'P', previousTier, /* previous tier of chest */
+                        'G', "blockGlass", 'C', "chestWood", '0', new ItemStack(blockResult, 1, 0), /* Iron Chest */
                         '1', new ItemStack(blockResult, 1, 1), /* Gold Chest */
                         '2', new ItemStack(blockResult, 1, 2), /* Diamond Chest */
                         '3', new ItemStack(blockResult, 1, 3), /* Copper Chest */
-                        '4', new ItemStack(blockResult, 1, 4) /* Silver Chest */
-                );
+                        '4', new ItemStack(blockResult, 1, 4) /* Silver Chest */);
                 //@formatter:on
             }
         }
@@ -174,36 +154,14 @@ public enum IronChestType implements IStringSerializable
         return this.size / this.rowLength;
     }
 
-    public int getRowLength()
-    {
-        return this.rowLength;
-    }
-
     public boolean isTransparent()
     {
         return this == CRYSTAL;
     }
 
-    public List<String> getMatList()
-    {
-        return this.matList;
-    }
-
-    public static int validateMeta(int i)
-    {
-        if (i < values().length && values()[i].size > 0)
-        {
-            return i;
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
     public boolean isValidForCreativeMode()
     {
-        return validateMeta(this.ordinal()) == this.ordinal();
+        return true;
     }
 
     public boolean isExplosionResistant()
@@ -216,9 +174,16 @@ public enum IronChestType implements IStringSerializable
         return new ValidatingSlot(chestInventory, index, x, y, this);
     }
 
+    private static final Item DIRT_ITEM = Item.getItemFromBlock(Blocks.DIRT);
+
     public boolean acceptsStack(ItemStack itemstack)
     {
-        return this.itemFilter == null || itemstack == null || itemstack.getItem() == this.itemFilter;
+        if (this == DIRTCHEST9000)
+        {
+            return itemstack == null || itemstack.getItem() == DIRT_ITEM;
+        }
+
+        return true;
     }
 
     public void adornItemDrop(ItemStack item)
@@ -226,6 +191,31 @@ public enum IronChestType implements IStringSerializable
         if (this == DIRTCHEST9000)
         {
             item.setTagInfo("dirtchest", new NBTTagByte((byte) 1));
+        }
+    }
+
+    public TileEntityIronChest makeEntity()
+    {
+        switch (this)
+        {
+        case IRON:
+            return new TileEntityIronChest();
+        case GOLD:
+            return new TileEntityGoldChest();
+        case DIAMOND:
+            return new TileEntityDiamondChest();
+        case COPPER:
+            return new TileEntityCopperChest();
+        case SILVER:
+            return new TileEntitySilverChest();
+        case CRYSTAL:
+            return new TileEntityCrystalChest();
+        case OBSIDIAN:
+            return new TileEntityObsidianChest();
+        case DIRTCHEST9000:
+            return new TileEntityDirtChest();
+        default:
+            return null;
         }
     }
 }

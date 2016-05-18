@@ -4,9 +4,9 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- *
+ * <p>
  * Contributors:
- *     cpw - initial API and implementation
+ * cpw - initial API and implementation
  ******************************************************************************/
 package cpw.mods.ironchest;
 
@@ -26,12 +26,11 @@ import net.minecraft.world.World;
 
 public class ItemChestChanger extends Item
 {
-    private ChestChangerType type;
+    public final ChestChangerType type;
 
     public ItemChestChanger(ChestChangerType type)
     {
         this.type = type;
-
         this.setMaxStackSize(1);
         this.setUnlocalizedName("ironchest:" + type.name());
         this.setCreativeTab(CreativeTabs.MISC);
@@ -64,14 +63,14 @@ public class ItemChestChanger extends Item
         TileEntity te = worldIn.getTileEntity(pos);
         TileEntityIronChest newchest = new TileEntityIronChest();
         ItemStack[] chestContents = new ItemStack[27];
-        int chestFacing = 0;
+        EnumFacing chestFacing = EnumFacing.DOWN;
         if (te != null)
         {
             if (te instanceof TileEntityIronChest)
             {
                 chestContents = ((TileEntityIronChest) te).chestContents;
                 chestFacing = ((TileEntityIronChest) te).getFacing();
-                newchest = IronChestType.makeEntity(this.getTargetChestOrdinal(this.type.ordinal()));
+                newchest = this.type.getTarget().makeEntity();
                 if (newchest == null)
                 {
                     return EnumActionResult.PASS;
@@ -80,37 +79,23 @@ public class ItemChestChanger extends Item
             else if (te instanceof TileEntityChest)
             {
                 IBlockState chestState = worldIn.getBlockState(pos);
-                EnumFacing orientation = chestState.getValue(BlockChest.FACING);
-                if (orientation == EnumFacing.NORTH)
-                {
-                    chestFacing = 2;
-                }
-                if (orientation == EnumFacing.EAST)
-                {
-                    chestFacing = 5;
-                }
-                if (orientation == EnumFacing.SOUTH)
-                {
-                    chestFacing = 3;
-                }
-                if (orientation == EnumFacing.WEST)
-                {
-                    chestFacing = 4;
-                }
-                if (((TileEntityChest) te).numPlayersUsing > 0)
+                chestFacing = chestState.getValue(BlockChest.FACING);
+                TileEntityChest chest = (TileEntityChest) te;
+
+                if (chest.numPlayersUsing > 0)
                 {
                     return EnumActionResult.PASS;
                 }
-                if (!this.getType().canUpgrade(IronChestType.WOOD))
+                if (!this.type.canUpgrade(IronChestType.WOOD))
                 {
                     return EnumActionResult.PASS;
                 }
-                chestContents = new ItemStack[((TileEntityChest) te).getSizeInventory()];
+                chestContents = new ItemStack[chest.getSizeInventory()];
                 for (int i = 0; i < chestContents.length; i++)
                 {
-                    chestContents[i] = ((TileEntityChest) te).getStackInSlot(i);
+                    chestContents[i] = chest.getStackInSlot(i);
                 }
-                newchest = IronChestType.makeEntity(this.getTargetChestOrdinal(this.type.ordinal()));
+                newchest = this.type.getTarget().makeEntity();
             }
         }
 
@@ -134,20 +119,10 @@ public class ItemChestChanger extends Item
         if (te2 instanceof TileEntityIronChest)
         {
             ((TileEntityIronChest) te2).setContents(chestContents);
-            ((TileEntityIronChest) te2).setFacing((byte) chestFacing);
+            ((TileEntityIronChest) te2).setFacing(chestFacing);
         }
 
         stack.stackSize = playerIn.capabilities.isCreativeMode ? stack.stackSize : stack.stackSize - 1;
         return EnumActionResult.SUCCESS;
-    }
-
-    public int getTargetChestOrdinal(int sourceOrdinal)
-    {
-        return this.type.getTarget();
-    }
-
-    public ChestChangerType getType()
-    {
-        return this.type;
     }
 }

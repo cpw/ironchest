@@ -1,11 +1,12 @@
 package cpw.mods.ironchest.client;
 
+import cpw.mods.ironchest.IronChestType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class IronChestEventHandler
 {
@@ -17,12 +18,10 @@ public class IronChestEventHandler
     {
         if (event.getMap() == FMLClientHandler.instance().getClient().getTextureMapBlocks())
         {
-            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/copperbreak"));
-            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/crystalbreak"));
-            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/diamondbreak"));
-            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/goldbreak"));
-            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/ironbreak"));
-            event.getMap().registerSprite(new ResourceLocation("ironchest:blocks/silverbreak"));
+            for (IronChestType t : IronChestType.VALUES)
+            {
+                event.getMap().registerSprite(new ResourceLocation(t.getBreakTexture()));
+            }
         }
     }
 }

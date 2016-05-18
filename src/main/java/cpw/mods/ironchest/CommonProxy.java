@@ -4,9 +4,9 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- *
+ * <p>
  * Contributors:
- *     cpw - initial API and implementation
+ * cpw - initial API and implementation
  ******************************************************************************/
 package cpw.mods.ironchest;
 
@@ -20,12 +20,6 @@ public class CommonProxy implements IGuiHandler
 {
     public void registerRenderInformation()
     {
-
-    }
-
-    public <T extends TileEntityIronChest> void registerTileEntitySpecialRenderer(Class<T> typ)
-    {
-
     }
 
     @Override
@@ -48,10 +42,4 @@ public class CommonProxy implements IGuiHandler
             return null;
         }
     }
-
-    public World getClientWorld()
-    {
-        return null;
-    }
-
 }

@@ -1,11 +1,8 @@
 package cpw.mods.ironchest.client;
 
-import java.util.Map;
 import java.util.Random;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMap.Builder;
-
+import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChestType;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -15,37 +12,19 @@ import net.minecraft.client.renderer.block.model.ModelManager;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class IronChestTextureHandler
 {
-    private static Map<IronChestType, ResourceLocation> locations;
-
-    static
-    {
-        Builder<IronChestType, ResourceLocation> builder = ImmutableMap.<IronChestType, ResourceLocation> builder();
-        for (IronChestType typ : IronChestType.values())
-        {
-            if (typ != IronChestType.DIRTCHEST9000 && typ != IronChestType.OBSIDIAN)
-                builder.put(typ, new ResourceLocation("ironchest", "blocks/" + typ.getModelTexture().replace("chest", "break").replace(".png", "")));
-            else if (typ == IronChestType.DIRTCHEST9000)
-                builder.put(typ, new ResourceLocation("minecraft", "blocks/dirt"));
-            else if (typ == IronChestType.OBSIDIAN)
-                builder.put(typ, new ResourceLocation("minecraft", "blocks/obsidian"));
-        }
-        locations = builder.build();
-    }
-
     public static void addHitEffects(World world, BlockPos pos, EnumFacing side)
     {
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         state = block.getActualState(state, world, pos);
         Random rand = new Random();
-        IronChestType type = IronChestType.values()[IronChestType.validateMeta(block.getMetaFromState(state))];
+        IronChestType type = state.getValue(BlockIronChest.VARIANT_PROP);
         ModelManager modelmanager = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelManager();
 
         if (block.getRenderType(state) != EnumBlockRenderType.INVISIBLE)
@@ -96,13 +75,7 @@ public class IronChestTextureHandler
             fx.setBlockPos(pos);
             fx.multiplyVelocity(0.2F);
             fx.multipleParticleScaleBy(0.6F);
-
-            if (type != IronChestType.DIRTCHEST9000 && type != IronChestType.OBSIDIAN)
-                fx.setParticleTexture(modelmanager.getTextureMap().getAtlasSprite("ironchest:" + locations.get(type).getResourcePath()));
-            else if (type == IronChestType.DIRTCHEST9000)
-                fx.setParticleTexture(modelmanager.getTextureMap().getAtlasSprite("minecraft:" + locations.get(type).getResourcePath()));
-            else if (type == IronChestType.OBSIDIAN)
-                fx.setParticleTexture(modelmanager.getTextureMap().getAtlasSprite("minecraft:" + locations.get(type).getResourcePath()));
+            fx.setParticleTexture(modelmanager.getTextureMap().getAtlasSprite(type.getBreakTexture()));
         }
     }
 
@@ -110,7 +83,7 @@ public class IronChestTextureHandler
     {
         state = state.getBlock().getActualState(state, world, pos);
         int i = 4;
-        IronChestType type = IronChestType.values()[IronChestType.validateMeta(state.getBlock().getMetaFromState(state))];
+        IronChestType type = state.getValue(BlockIronChest.VARIANT_PROP);
         ModelManager modelmanager = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelManager();
 
         for (int j = 0; j < i; ++j)
@@ -126,12 +99,7 @@ public class IronChestTextureHandler
                             EnumParticleTypes.BLOCK_CRACK.getParticleID(), d0, d1, d2, d0 - pos.getX() - 0.5D, d1 - pos.getY() - 0.5D, d2 - pos.getZ() - 0.5D,
                             Block.getIdFromBlock(state.getBlock())));
                     fx.setBlockPos(pos);
-                    if (type != IronChestType.DIRTCHEST9000 && type != IronChestType.OBSIDIAN)
-                        fx.setParticleTexture(modelmanager.getTextureMap().getAtlasSprite("ironchest:" + locations.get(type).getResourcePath()));
-                    else if (type == IronChestType.DIRTCHEST9000)
-                        fx.setParticleTexture(modelmanager.getTextureMap().getAtlasSprite("minecraft:" + locations.get(type).getResourcePath()));
-                    else if (type == IronChestType.OBSIDIAN)
-                        fx.setParticleTexture(modelmanager.getTextureMap().getAtlasSprite("minecraft:" + locations.get(type).getResourcePath()));
+                    fx.setParticleTexture(modelmanager.getTextureMap().getAtlasSprite(type.getBreakTexture()));
                 }
             }
         }
