@@ -161,7 +161,7 @@ public enum IronChestType implements IStringSerializable
 
     public boolean isValidForCreativeMode()
     {
-        return true;
+        return this != WOOD;
     }
 
     public boolean isExplosionResistant()

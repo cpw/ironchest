@@ -50,6 +50,11 @@
         "textures": {
           "layer0": "ironchest:items/woodIronUpgrade"
         }
+      },
+      "copperironupgrade": {
+        "textures": {
+          "layer0": "ironchest:items/copperIronUpgrade"
+        }
       }
     }
   }
