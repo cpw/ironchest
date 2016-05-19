@@ -53,7 +53,7 @@ public enum ChestChangerType
     {
         return from == this.source;
     }
-    
+
     public ItemChestChanger buildItem()
     {
         this.item = new ItemChestChanger(this);

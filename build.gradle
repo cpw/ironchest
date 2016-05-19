@@ -26,6 +26,14 @@ repositories {
         name "fileRepo"
         dirs "repo"
     }
+	maven {
+        name 'DVS1 Maven FS'
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+}
+
+dependencies {
+    deobfCompile "mezz.jei:jei_1.9:3.3.3.200"
 }
 
 // This is our group. I'm cpw.mods
@@ -35,8 +43,8 @@ archivesBaseName = "ironchest"
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.9-12.16.0.1865-1.9"
-    mappings = "snapshot_20160419"
+    version = "1.9-12.16.1.1907"
+    mappings = "snapshot_20160516"
     runDir = "run"
 }
 

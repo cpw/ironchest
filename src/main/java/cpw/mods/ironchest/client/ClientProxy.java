@@ -24,7 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -40,7 +39,9 @@ public class ClientProxy extends CommonProxy
         {
             if (type != IronChestType.WOOD)
             {
+                //@formatter:off
                 ModelLoader.setCustomModelResourceLocation(chestItem, type.ordinal(), new ModelResourceLocation(chestItem.getRegistryName(), "variant=" + type.getName()));
+                //@formatter:on
             }
 
             ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
@@ -48,7 +49,9 @@ public class ClientProxy extends CommonProxy
 
         for (ChestChangerType type : ChestChangerType.VALUES)
         {
+            //@formatter:off
             ModelLoader.setCustomModelResourceLocation(type.item, 0, new ModelResourceLocation(new ResourceLocation(IronChest.MOD_ID, "ItemChestUpgrade"), "variant=" + type.itemName.toLowerCase()));
+            //@formatter:on
         }
     }
 

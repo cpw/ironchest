@@ -53,6 +53,12 @@
           "particle": "minecraft:blocks/dirt",
           "texture": "ironchest:model/dirtchest"
         }
+      },
+      "wood": {
+        "textures": {
+          "particle": "minecraft:blocks/planks_oak",
+          "texture": "minecraft:blocks/planks_oak"
+        }
       }
     }
   }

@@ -73,10 +73,17 @@ public enum IronChestType implements IStringSerializable
             case DIRTCHEST9000:
             {
                 this.breakTexture = "minecraft:blocks/dirt";
+                break;
             }
             case OBSIDIAN:
             {
                 this.breakTexture = "minecraft:blocks/obsidian";
+                break;
+            }
+            case WOOD:
+            {
+                this.breakTexture = "minecraft:blocks/planks_oak";
+                break;
             }
             default:
             {

@@ -108,7 +108,7 @@ public class ItemChestChanger extends Item
         worldIn.removeTileEntity(pos);
         worldIn.setBlockToAir(pos);
 
-        IBlockState iblockstate = IronChest.ironChestBlock.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, type.target);
+        IBlockState iblockstate = IronChest.ironChestBlock.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, this.type.target);
 
         worldIn.setTileEntity(pos, newchest);
         worldIn.setBlockState(pos, iblockstate, 3);

@@ -54,7 +54,6 @@ public class IronChest
         ChestChangerType.buildItems();
         ironChestBlock = GameRegistry.register(new BlockIronChest());
         ironChestItemBlock = GameRegistry.register(new ItemIronChest(ironChestBlock));
-        GameRegistry.register(ironChestItemBlock);
 
         for (IronChestType typ : IronChestType.VALUES)
         {
