@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = IronChest.MOD_ID, name = "Iron Chests", dependencies = "required-after:Forge@[12.16.0.1819,)", acceptedMinecraftVersions = "[1.9]")
+@Mod(modid = IronChest.MOD_ID, name = "Iron Chests", dependencies = "required-after:Forge@[12.17.0.1909,)", acceptedMinecraftVersions = "[1.9.4]")
 public class IronChest
 {
     public static final String MOD_ID = "IronChest";
