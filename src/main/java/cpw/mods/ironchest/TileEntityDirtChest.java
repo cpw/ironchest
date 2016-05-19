@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.text.translation.I18n;
 
+@SuppressWarnings("deprecation")
 public class TileEntityDirtChest extends TileEntityIronChest
 {
     private static ItemStack dirtChest9000GuideBook = new ItemStack(Items.WRITTEN_BOOK);

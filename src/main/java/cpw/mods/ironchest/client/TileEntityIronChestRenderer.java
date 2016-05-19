@@ -108,6 +108,11 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
             GlStateManager.rotate(270F, 0F, 1F, 0F);
             break;
         }
+        default:
+        {
+            GlStateManager.rotate(0F, 0F, 1F, 0F);
+            break;
+        }
         }
 
         GlStateManager.translate(-0.5F, -0.5F, -0.5F);
