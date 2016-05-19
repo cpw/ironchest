@@ -4,9 +4,9 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- *
+ * <p>
  * Contributors:
- *     cpw - initial API and implementation
+ * cpw - initial API and implementation
  ******************************************************************************/
 package cpw.mods.ironchest;
 
@@ -40,10 +40,9 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     public float prevLidAngle;
     public float lidAngle;
     private int numUsingPlayers;
-    private IronChestType type;
     public ItemStack[] chestContents;
     private ItemStack[] topStacks;
-    private byte facing;
+    private EnumFacing facing;
     private boolean inventoryTouched;
     private boolean hadStuff;
     private String customName;
@@ -56,19 +55,14 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     protected TileEntityIronChest(IronChestType type)
     {
         super();
-        this.type = type;
-        this.chestContents = new ItemStack[this.getSizeInventory()];
+        this.chestContents = new ItemStack[type.size];
         this.topStacks = new ItemStack[8];
-    }
-
-    public ItemStack[] getContents()
-    {
-        return this.chestContents;
+        this.facing = EnumFacing.NORTH;
     }
 
     public void setContents(ItemStack[] contents)
     {
-        this.chestContents = new ItemStack[this.getSizeInventory()];
+        this.chestContents = new ItemStack[this.getType().size];
         for (int i = 0; i < contents.length; i++)
         {
             if (i < this.chestContents.length)
@@ -82,17 +76,17 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public int getSizeInventory()
     {
-        return this.type.size;
+        return this.chestContents.length;
     }
 
-    public int getFacing()
+    public EnumFacing getFacing()
     {
         return this.facing;
     }
 
     public IronChestType getType()
     {
-        return this.type;
+        return this.hasWorldObj() ? this.worldObj.getBlockState(this.pos).getValue(BlockIronChest.VARIANT_PROP) : IronChestType.WOOD;
     }
 
     @Override
@@ -111,7 +105,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
 
     protected void sortTopStacks()
     {
-        if (!this.type.isTransparent() || (this.worldObj != null && this.worldObj.isRemote))
+        if (!this.getType().isTransparent() || (this.worldObj != null && this.worldObj.isRemote))
         {
             return;
         }
@@ -230,7 +224,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public String getName()
     {
-        return this.hasCustomName() ? this.customName : this.type.name();
+        return this.hasCustomName() ? this.customName : this.getType().name();
     }
 
     @Override
@@ -266,7 +260,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
                 this.chestContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }
-        this.facing = nbttagcompound.getByte("facing");
+        this.facing = EnumFacing.VALUES[nbttagcompound.getByte("facing")];
         this.sortTopStacks();
     }
 
@@ -287,7 +281,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         }
 
         nbttagcompound.setTag("Items", nbttaglist);
-        nbttagcompound.setByte("facing", this.facing);
+        nbttagcompound.setByte("facing", (byte) this.facing.ordinal());
 
         if (this.hasCustomName())
         {
@@ -339,7 +333,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
 
         if (this.worldObj != null && !this.worldObj.isRemote && this.ticksSinceSync < 0)
         {
-            this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 3, ((this.numUsingPlayers << 3) & 0xF8) | (this.facing & 0x7));
+            this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 3, ((this.numUsingPlayers << 3) & 0xF8) | (this.facing.ordinal() & 0x7));
         }
         if (!this.worldObj.isRemote && this.inventoryTouched)
         {
@@ -355,7 +349,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
             double d = this.pos.getX() + 0.5D;
             double d1 = this.pos.getZ() + 0.5D;
             //@formatter:off
-            this.worldObj.playSound((EntityPlayer) null, d, this.pos.getY() + 0.5D, d1, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+            this.worldObj.playSound(null, d, this.pos.getY() + 0.5D, d1, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
             //@formatter:on
         }
         if (this.numUsingPlayers == 0 && this.lidAngle > 0.0F || this.numUsingPlayers > 0 && this.lidAngle < 1.0F)
@@ -379,7 +373,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
                 double d2 = this.pos.getX() + 0.5D;
                 double d3 = this.pos.getZ() + 0.5D;
                 //@formatter:off
-                this.worldObj.playSound((EntityPlayer) null, d2, this.pos.getY() + 0.5D, d3, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                this.worldObj.playSound(null, d2, this.pos.getY() + 0.5D, d3, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
                 //@formatter:on
             }
             if (this.lidAngle < 0.0F)
@@ -398,11 +392,11 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         }
         else if (i == 2)
         {
-            this.facing = (byte) j;
+            this.facing = EnumFacing.VALUES[j];
         }
         else if (i == 3)
         {
-            this.facing = (byte) (j & 0x7);
+            this.facing = EnumFacing.VALUES[j & 0x7];
             this.numUsingPlayers = (j & 0xF8) >> 3;
         }
         return true;
@@ -430,7 +424,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numUsingPlayers);
     }
 
-    public void setFacing(byte facing2)
+    public void setFacing(EnumFacing facing2)
     {
         this.facing = facing2;
     }
@@ -440,26 +434,12 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         return this.topStacks;
     }
 
-    public TileEntityIronChest updateFromMetadata(int l)
-    {
-        if (this.worldObj != null && this.worldObj.isRemote)
-        {
-            if (l != this.type.ordinal())
-            {
-                this.worldObj.setTileEntity(this.pos, IronChestType.makeEntity(l));
-                return (TileEntityIronChest) this.worldObj.getTileEntity(this.pos);
-            }
-        }
-        return this;
-    }
-
     @Override
     public Packet<?> getDescriptionPacket()
     {
 
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setInteger("type", this.getType().ordinal());
-        nbt.setByte("facing", this.facing);
+        nbt.setByte("facing", (byte) this.facing.ordinal());
         ItemStack[] stacks = this.buildItemStackDataList();
         if (stacks != null)
         {
@@ -486,8 +466,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         if (pkt.getTileEntityType() == 0)
         {
             NBTTagCompound nbt = pkt.getNbtCompound();
-            this.type = IronChestType.values()[nbt.getInteger("type")];
-            this.facing = nbt.getByte("facing");
+            this.facing = EnumFacing.VALUES[nbt.getByte("facing")];
 
             NBTTagList tagList = nbt.getTagList("stacks", Constants.NBT.TAG_COMPOUND);
             ItemStack[] stacks = new ItemStack[this.topStacks.length];
@@ -502,7 +481,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
                 }
             }
 
-            if (this.type.isTransparent() && stacks != null)
+            if (this.getType().isTransparent() && stacks != null)
             {
                 int pos = 0;
                 for (int i = 0; i < this.topStacks.length; i++)
@@ -523,7 +502,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
 
     public ItemStack[] buildItemStackDataList()
     {
-        if (this.type.isTransparent())
+        if (this.getType().isTransparent())
         {
             ItemStack[] sortList = new ItemStack[this.topStacks.length];
             int pos = 0;
@@ -561,18 +540,13 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack)
     {
-        return this.type.acceptsStack(itemstack);
+        return this.getType().acceptsStack(itemstack);
     }
 
     public void rotateAround()
     {
-        this.facing++;
-        if (this.facing > EnumFacing.EAST.ordinal())
-        {
-            this.facing = (byte) EnumFacing.NORTH.ordinal();
-        }
-        this.setFacing(this.facing);
-        this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 2, this.facing);
+        this.setFacing(this.facing.rotateY());
+        this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 2, this.facing.ordinal());
     }
 
     public void wasPlaced(EntityLivingBase entityliving, ItemStack itemStack)
@@ -618,7 +592,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public String getGuiID()
     {
-        return "IronChest:" + this.type.name();
+        return "IronChest:" + this.getType().name();
     }
 
     @Override

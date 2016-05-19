@@ -1,0 +1,59 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "ironchest:chest",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "variant": {
+      "iron": {
+        "textures": {
+          "particle": "ironchest:blocks/ironbreak",
+          "texture": "ironchest:model/ironchest"
+        }
+      },
+      "gold": {
+        "textures": {
+          "particle": "ironchest:blocks/goldbreak",
+          "texture": "ironchest:model/goldchest"
+        }
+      },
+      "diamond": {
+        "textures": {
+          "particle": "ironchest:blocks/diamondbreak",
+          "texture": "ironchest:model/diamondchest"
+        }
+      },
+      "copper": {
+        "textures": {
+          "particle": "ironchest:blocks/copperbreak",
+          "texture": "ironchest:model/copperchest"
+        }
+      },
+      "silver": {
+        "textures": {
+          "particle": "ironchest:blocks/silverbreak",
+          "texture": "ironchest:model/silverchest"
+        }
+      },
+      "crystal": {
+        "textures": {
+          "particle": "ironchest:blocks/crystalbreak",
+          "texture": "ironchest:model/crystalchest"
+        }
+      },
+      "obsidian": {
+        "textures": {
+          "particle": "minecraft:blocks/obsidian",
+          "texture": "ironchest:model/obsidianchest"
+        }
+      },
+      "dirtchest9000": {
+        "textures": {
+          "particle": "minecraft:blocks/dirt",
+          "texture": "ironchest:model/dirtchest"
+        }
+      }
+    }
+  }
+}

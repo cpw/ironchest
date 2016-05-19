@@ -4,9 +4,9 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- *
+ * <p>
  * Contributors:
- *     cpw - initial API and implementation
+ * cpw - initial API and implementation
  ******************************************************************************/
 package cpw.mods.ironchest;
 
@@ -44,7 +44,7 @@ public class ContainerIronChest extends Container
     public ItemStack transferStackInSlot(EntityPlayer p, int i)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot) this.inventorySlots.get(i);
+        Slot slot = this.inventorySlots.get(i);
         if (slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();
@@ -93,9 +93,9 @@ public class ContainerIronChest extends Container
         {
             for (int chestRow = 0; chestRow < type.getRowCount(); chestRow++)
             {
-                for (int chestCol = 0; chestCol < type.getRowLength(); chestCol++)
+                for (int chestCol = 0; chestCol < type.rowLength; chestCol++)
                 {
-                    this.addSlotToContainer(type.makeSlot(chestInventory, chestCol + chestRow * type.getRowLength(), 12 + chestCol * 18, 8 + chestRow * 18));
+                    this.addSlotToContainer(type.makeSlot(chestInventory, chestCol + chestRow * type.rowLength, 12 + chestCol * 18, 8 + chestRow * 18));
                 }
             }
         }
@@ -125,6 +125,6 @@ public class ContainerIronChest extends Container
     @ChestContainer.RowSizeCallback
     public int getNumColumns()
     {
-        return this.type.getRowLength();
+        return this.type.rowLength;
     }
 }

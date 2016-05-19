@@ -6,7 +6,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class OcelotsSitOnChestsHandler
 {
-
     @SubscribeEvent
     public void changeSittingTaskForOcelots(LivingEvent.LivingUpdateEvent evt)
     {
