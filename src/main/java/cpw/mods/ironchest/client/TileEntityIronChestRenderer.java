@@ -145,7 +145,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
             float shiftZ;
             int shift = 0;
             float blockScale = 0.70F;
-            float timeD = (float) (360D * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL);
+            float timeD = (float) (360D * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) - partialTick;
             if (tile.getTopItemStacks()[1] == null)
             {
                 shift = 8;

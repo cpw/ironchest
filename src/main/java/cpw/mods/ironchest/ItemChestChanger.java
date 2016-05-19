@@ -55,7 +55,7 @@ public class ItemChestChanger extends Item
         else
         {
             if (worldIn.getBlockState(pos) != IronChest.ironChestBlock
-                    .getStateFromMeta(IronChestType.valueOf(this.type.getSource().getName().toUpperCase()).ordinal()))
+                    .getStateFromMeta(IronChestType.valueOf(this.type.source.getName().toUpperCase()).ordinal()))
             {
                 return EnumActionResult.PASS;
             }
@@ -70,7 +70,7 @@ public class ItemChestChanger extends Item
             {
                 chestContents = ((TileEntityIronChest) te).chestContents;
                 chestFacing = ((TileEntityIronChest) te).getFacing();
-                newchest = this.type.getTarget().makeEntity();
+                newchest = this.type.target.makeEntity();
                 if (newchest == null)
                 {
                     return EnumActionResult.PASS;
@@ -95,7 +95,7 @@ public class ItemChestChanger extends Item
                 {
                     chestContents[i] = chest.getStackInSlot(i);
                 }
-                newchest = this.type.getTarget().makeEntity();
+                newchest = this.type.target.makeEntity();
             }
         }
 

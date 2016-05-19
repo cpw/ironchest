@@ -35,9 +35,9 @@ public enum ChestChangerType
 
     public static final ChestChangerType[] VALUES = values();
 
-    private IronChestType source;
-    private IronChestType target;
-    public String itemName;
+    public final IronChestType source;
+    public final IronChestType target;
+    public final String itemName;
     public ItemChestChanger item;
     private String[] recipe;
 
@@ -49,21 +49,11 @@ public enum ChestChangerType
         this.recipe = recipe;
     }
 
-    public IronChestType getSource()
-    {
-        return this.source;
-    }
-
     public boolean canUpgrade(IronChestType from)
     {
         return from == this.source;
     }
-
-    public IronChestType getTarget()
-    {
-        return this.target;
-    }
-
+    
     public ItemChestChanger buildItem()
     {
         this.item = new ItemChestChanger(this);

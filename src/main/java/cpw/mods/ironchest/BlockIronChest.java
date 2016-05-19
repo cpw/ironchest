@@ -13,13 +13,11 @@ package cpw.mods.ironchest;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.ironchest.client.IronChestTextureHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -37,7 +35,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -242,27 +239,6 @@ public class BlockIronChest extends Block
             }
         }
         return super.getExplosionResistance(world, pos, exploder, explosion);
-    }
-
-    /*
-     * @Override public boolean addLandingEffects(IBlockState state, WorldServer world, BlockPos pos, IBlockState iblockstate, EntityLivingBase entity, int numberOfParticles) {
-     * IronChestTextureHandler.addDestroyEffects(world, pos, state); return true; }
-     */
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean addHitEffects(IBlockState state, World worldObj, RayTraceResult target, EffectRenderer effectRenderer)
-    {
-        IronChestTextureHandler.addHitEffects(worldObj, target.getBlockPos(), target.sideHit);
-        return true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean addDestroyEffects(World world, BlockPos pos, EffectRenderer effectRenderer)
-    {
-        IronChestTextureHandler.addDestroyEffects(world, pos, world.getBlockState(pos));
-        return true;
     }
 
     @Override

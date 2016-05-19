@@ -40,8 +40,7 @@ public class ClientProxy extends CommonProxy
         {
             if (type != IronChestType.WOOD)
             {
-                ModelLoader.setCustomModelResourceLocation(chestItem, type.ordinal(),
-                        new ModelResourceLocation(new ResourceLocation(IronChest.MOD_ID, "chest_" + type.getName()), "inventory"));
+                ModelLoader.setCustomModelResourceLocation(chestItem, type.ordinal(), new ModelResourceLocation(chestItem.getRegistryName(), "variant=" + type.getName()));
             }
 
             ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
@@ -49,11 +48,7 @@ public class ClientProxy extends CommonProxy
 
         for (ChestChangerType type : ChestChangerType.VALUES)
         {
-            if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-            {
-                ModelLoader.setCustomModelResourceLocation(type.item, 0,
-                        new ModelResourceLocation(new ResourceLocation(IronChest.MOD_ID, type.itemName), "inventory"));
-            }
+            ModelLoader.setCustomModelResourceLocation(type.item, 0, new ModelResourceLocation(new ResourceLocation(IronChest.MOD_ID, "ItemChestUpgrade"), "variant=" + type.itemName.toLowerCase()));
         }
     }
 
