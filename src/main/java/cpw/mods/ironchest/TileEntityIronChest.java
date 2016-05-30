@@ -85,7 +85,16 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
 
     public IronChestType getType()
     {
-        return this.hasWorldObj() ? this.worldObj.getBlockState(this.pos).getValue(BlockIronChest.VARIANT_PROP) : IronChestType.WOOD;
+        IronChestType type = IronChestType.WOOD;
+        if (this.hasWorldObj())
+        {
+            IBlockState state = this.worldObj.getBlockState(this.pos);
+            if (state.getBlock() == IronChest.ironChestBlock)
+            {
+                type = state.getValue(BlockIronChest.VARIANT_PROP);
+            }
+        }
+        return type;
     }
 
     @Override
