@@ -54,8 +54,9 @@ public class ItemChestChanger extends Item
         }
         else
         {
-            if (worldIn.getBlockState(pos) != IronChest.ironChestBlock
-                    .getStateFromMeta(IronChestType.valueOf(this.type.source.getName().toUpperCase()).ordinal()))
+            //@formatter:off
+            if (worldIn.getBlockState(pos) != IronChest.ironChestBlock.getStateFromMeta(IronChestType.valueOf(this.type.source.getName().toUpperCase()).ordinal()))
+            //@formatter:on
             {
                 return EnumActionResult.PASS;
             }

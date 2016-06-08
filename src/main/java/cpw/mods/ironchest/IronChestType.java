@@ -51,8 +51,9 @@ public enum IronChestType implements IStringSerializable
     public final Collection<String> recipes;
     public final Collection<String> matList;
 
-    IronChestType(int size, int rowLength, boolean tieredChest, String modelTexture, Collection<String> mats, Class<? extends TileEntityIronChest> clazz,
-            String... recipes)
+    //@formatter:off
+    IronChestType(int size, int rowLength, boolean tieredChest, String modelTexture, Collection<String> mats, Class<? extends TileEntityIronChest> clazz, String... recipes)
+    //@formatter:on
     {
         this.name = this.name().toLowerCase();
         this.size = size;
