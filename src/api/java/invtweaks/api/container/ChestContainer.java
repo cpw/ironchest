@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * A marker for containers that have a chest-like persistant storage component. Enables the Inventroy Tweaks sorting buttons for this container.
+ * A marker for containers that have a chest-like persistent storage component. Enables the Inventory Tweaks sorting buttons for this container.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
@@ -26,7 +26,7 @@ public @interface ChestContainer
     // Signature int func()
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
-    public @interface RowSizeCallback
+    @interface RowSizeCallback
     {
     }
 
@@ -34,7 +34,7 @@ public @interface ChestContainer
     // Signature int func()
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
-    public @interface IsLargeCallback
+    @interface IsLargeCallback
     {
     }
 }

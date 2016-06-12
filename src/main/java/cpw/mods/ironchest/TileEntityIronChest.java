@@ -46,6 +46,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     private boolean inventoryTouched;
     private boolean hadStuff;
     private String customName;
+    private IronChestType chestType;
 
     public TileEntityIronChest()
     {
@@ -55,6 +56,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     protected TileEntityIronChest(IronChestType type)
     {
         super();
+        this.chestType = type;
         this.chestContents = new ItemStack[type.size];
         this.topStacks = new ItemStack[8];
         this.facing = EnumFacing.NORTH;
@@ -478,27 +480,38 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public void openInventory(EntityPlayer player)
     {
-        if (this.worldObj == null)
+        if (!player.isSpectator())
         {
-            return;
+            if (this.worldObj == null)
+            {
+                return;
+            }
+
+            if (this.numPlayersUsing < 0)
+            {
+                this.numPlayersUsing = 0;
+            }
+
+            this.numPlayersUsing++;
+
+            this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numPlayersUsing);
         }
-
-        this.numPlayersUsing++;
-
-        this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numPlayersUsing);
     }
 
     @Override
     public void closeInventory(EntityPlayer player)
     {
-        if (this.worldObj == null)
+        if (!player.isSpectator())
         {
-            return;
+            if (this.worldObj == null)
+            {
+                return;
+            }
+
+            this.numPlayersUsing--;
+
+            this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numPlayersUsing);
         }
-
-        this.numPlayersUsing--;
-
-        this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numPlayersUsing);
     }
 
     public void setFacing(EnumFacing facing)
@@ -674,7 +687,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
-        return null;
+        return new ContainerIronChest(playerInventory, this, this.chestType, this.chestType.xSize, this.chestType.ySize);
     }
 
     @Override
@@ -692,6 +705,6 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public NBTTagCompound getUpdateTag()
     {
-        return writeToNBT(new NBTTagCompound());
+        return this.writeToNBT(new NBTTagCompound());
     }
 }
