@@ -64,7 +64,7 @@ public class IronChest
         ChestChangerType.generateRecipes();
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.registerRenderInformation();
-        // FIXME: MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
+        MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
         MinecraftForge.EVENT_BUS.register(IronChestEventHandler.INSTANCE);
     }
 }
