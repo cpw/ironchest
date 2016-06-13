@@ -90,7 +90,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
 
     public IronChestType getType()
     {
-        IronChestType type = IronChestType.WOOD;
+        IronChestType type = IronChestType.IRON;
 
         if (this.hasWorldObj())
         {

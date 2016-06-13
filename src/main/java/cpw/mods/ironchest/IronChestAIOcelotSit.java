@@ -7,18 +7,19 @@ import net.minecraft.world.World;
 
 public class IronChestAIOcelotSit extends EntityAIOcelotSit
 {
-    public IronChestAIOcelotSit(EntityOcelot par1EntityOcelot, float par2)
+    public IronChestAIOcelotSit(EntityOcelot ocelotIn, float speedIn)
     {
-        super(par1EntityOcelot, par2);
+        super(ocelotIn, speedIn);
     }
 
     @Override
-    protected boolean shouldMoveTo(World world, BlockPos pos)
+    protected boolean shouldMoveTo(World worldIn, BlockPos pos)
     {
-        if (world.getBlockState(pos).getBlock() == IronChest.ironChestBlock)
+        if (worldIn.getBlockState(pos).getBlock() == IronChest.ironChestBlock)
         {
             return true;
         }
-        return super.shouldMoveTo(world, pos);
+
+        return super.shouldMoveTo(worldIn, pos);
     }
 }
