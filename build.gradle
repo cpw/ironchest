@@ -37,13 +37,13 @@ dependencies {
 }
 
 // This is our group. I'm cpw.mods
-group= "cpw.mods" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "cpw.mods" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 // This is our actual project within the group. Note: FML has "fml" here. But this is ironchest.
 archivesBaseName = "ironchest"
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.10-12.18.0.1984-1.10.0"
+    version = "1.10-12.18.0.1986-1.10.0"
     mappings = "snapshot_20160623"
     runDir = "run"
 }
