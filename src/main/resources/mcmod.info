@@ -7,9 +7,7 @@
   "mcversion": "${mcversion}",
   "url": "http://www.minecraftforum.net/topic/981855-",
   "updateUrl": "",
-  "authors": [
-    "cpw"
-  ],
+  "authorList": ["cpw"],
   "credits": "By cpw, based on an original idea by Lishid",
   "logoFile": "",
   "screenshots": [
