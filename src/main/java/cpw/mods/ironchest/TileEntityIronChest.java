@@ -22,19 +22,20 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntityLockable;
+import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.util.Constants;
 
-public class TileEntityIronChest extends TileEntityLockable implements ITickable, IInventory
+public class TileEntityIronChest extends TileEntityLockableLoot implements ITickable, IInventory
 {
     private int ticksSinceSync = -1;
     public float prevLidAngle;
@@ -95,6 +96,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
         if (this.hasWorldObj())
         {
             IBlockState state = this.worldObj.getBlockState(this.pos);
+
             if (state.getBlock() == IronChest.ironChestBlock)
             {
                 type = state.getValue(BlockIronChest.VARIANT_PROP);
@@ -107,6 +109,8 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public ItemStack getStackInSlot(int index)
     {
+        this.fillWithLoot((EntityPlayer) null);
+
         this.inventoryTouched = true;
 
         return this.chestContents[index];
@@ -218,41 +222,26 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     }
 
     @Override
+    @Nullable
     public ItemStack decrStackSize(int index, int count)
     {
-        if (this.chestContents[index] != null)
+        this.fillWithLoot((EntityPlayer) null);
+
+        ItemStack itemstack = ItemStackHelper.getAndSplit(this.chestContents, index, count);
+
+        if (itemstack != null)
         {
-            if (this.chestContents[index].stackSize <= count)
-            {
-                ItemStack stack = this.chestContents[index];
-
-                this.chestContents[index] = null;
-
-                this.markDirty();
-
-                return stack;
-            }
-
-            ItemStack stack = this.chestContents[index].splitStack(count);
-
-            if (this.chestContents[index].stackSize == 0)
-            {
-                this.chestContents[index] = null;
-            }
-
             this.markDirty();
+        }
 
-            return stack;
-        }
-        else
-        {
-            return null;
-        }
+        return itemstack;
     }
 
     @Override
     public void setInventorySlotContents(int index, @Nullable ItemStack stack)
     {
+        this.fillWithLoot((EntityPlayer) null);
+
         this.chestContents[index] = stack;
 
         if (stack != null && stack.stackSize > this.getInventoryStackLimit())
@@ -285,8 +274,6 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     {
         super.readFromNBT(compound);
 
-        NBTTagList tagList = compound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
-
         this.chestContents = new ItemStack[this.getSizeInventory()];
 
         if (compound.hasKey("CustomName", Constants.NBT.TAG_STRING))
@@ -294,15 +281,20 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
             this.customName = compound.getString("CustomName");
         }
 
-        for (int i = 0; i < tagList.tagCount(); i++)
+        if (!this.checkLootAndRead(compound))
         {
-            NBTTagCompound tag = tagList.getCompoundTagAt(i);
+            NBTTagList itemList = compound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
 
-            int slot = tag.getByte("Slot") & 0xff;
-
-            if (slot >= 0 && slot < this.chestContents.length)
+            for (int itemNumber = 0; itemNumber < itemList.tagCount(); ++itemNumber)
             {
-                this.chestContents[slot] = ItemStack.loadItemStackFromNBT(tag);
+                NBTTagCompound item = itemList.getCompoundTagAt(itemNumber);
+
+                int slot = item.getByte("Slot") & 255;
+
+                if (slot >= 0 && slot < this.chestContents.length)
+                {
+                    this.chestContents[slot] = ItemStack.loadItemStackFromNBT(item);
+                }
             }
         }
 
@@ -316,23 +308,26 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     {
         super.writeToNBT(compound);
 
-        NBTTagList tagList = new NBTTagList();
-
-        for (int slot = 0; slot < this.chestContents.length; slot++)
+        if (!this.checkLootAndWrite(compound))
         {
-            if (this.chestContents[slot] != null)
+            NBTTagList itemList = new NBTTagList();
+
+            for (int slot = 0; slot < this.chestContents.length; ++slot)
             {
-                NBTTagCompound tag = new NBTTagCompound();
+                if (this.chestContents[slot] != null)
+                {
+                    NBTTagCompound tag = new NBTTagCompound();
 
-                tag.setByte("Slot", (byte) slot);
+                    tag.setByte("Slot", (byte) slot);
 
-                this.chestContents[slot].writeToNBT(tag);
+                    this.chestContents[slot].writeToNBT(tag);
 
-                tagList.appendTag(tag);
+                    itemList.appendTag(tag);
+                }
             }
-        }
 
-        compound.setTag("Items", tagList);
+            compound.setTag("Items", itemList);
+        }
 
         compound.setByte("facing", (byte) this.facing.ordinal());
 
@@ -370,7 +365,6 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     public void update()
     {
         // Resynchronizes clients with the server state
-
         //@formatter:off
         if (this.worldObj != null && !this.worldObj.isRemote && this.numPlayersUsing != 0 && (this.ticksSinceSync + this.pos.getX() + this.pos.getY() + this.pos.getZ()) % 200 == 0)
         //@formatter:on
@@ -492,9 +486,11 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
                 this.numPlayersUsing = 0;
             }
 
-            this.numPlayersUsing++;
+            ++this.numPlayersUsing;
 
             this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numPlayersUsing);
+            this.worldObj.notifyNeighborsOfStateChange(this.pos, IronChest.ironChestBlock);
+            this.worldObj.notifyNeighborsOfStateChange(this.pos.down(), IronChest.ironChestBlock);
         }
     }
 
@@ -508,9 +504,11 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
                 return;
             }
 
-            this.numPlayersUsing--;
+            --this.numPlayersUsing;
 
             this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numPlayersUsing);
+            this.worldObj.notifyNeighborsOfStateChange(this.pos, IronChest.ironChestBlock);
+            this.worldObj.notifyNeighborsOfStateChange(this.pos.down(), IronChest.ironChestBlock);
         }
     }
 
@@ -528,22 +526,30 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     public SPacketUpdateTileEntity getUpdatePacket()
     {
         NBTTagCompound compound = new NBTTagCompound();
+
         compound.setByte("facing", (byte) this.facing.ordinal());
+
         ItemStack[] stacks = this.buildItemStackDataList();
+
         if (stacks != null)
         {
-            NBTTagList tagList = new NBTTagList();
+            NBTTagList itemList = new NBTTagList();
+
             for (int slot = 0; slot < stacks.length; slot++)
             {
                 if (stacks[slot] != null)
                 {
-                    NBTTagCompound tag = new NBTTagCompound();
-                    tag.setByte("Slot", (byte) slot);
-                    stacks[slot].writeToNBT(tag);
-                    tagList.appendTag(tag);
+                    NBTTagCompound item = new NBTTagCompound();
+
+                    item.setByte("Slot", (byte) slot);
+
+                    stacks[slot].writeToNBT(item);
+
+                    itemList.appendTag(item);
                 }
             }
-            compound.setTag("stacks", tagList);
+
+            compound.setTag("stacks", itemList);
         }
 
         return new SPacketUpdateTileEntity(this.pos, 0, compound);
@@ -558,15 +564,15 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
 
             this.facing = EnumFacing.VALUES[compound.getByte("facing")];
 
-            NBTTagList tagList = compound.getTagList("stacks", Constants.NBT.TAG_COMPOUND);
+            NBTTagList itemList = compound.getTagList("stacks", Constants.NBT.TAG_COMPOUND);
 
             ItemStack[] stacks = new ItemStack[this.topStacks.length];
 
             for (int item = 0; item < stacks.length; item++)
             {
-                NBTTagCompound itemStack = tagList.getCompoundTagAt(item);
+                NBTTagCompound itemStack = itemList.getCompoundTagAt(item);
 
-                int slot = itemStack.getByte("Slot") & 0xff;
+                int slot = itemStack.getByte("Slot") & 255;
 
                 if (slot >= 0 && slot < stacks.length)
                 {
@@ -622,20 +628,12 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     }
 
     @Override
+    @Nullable
     public ItemStack removeStackFromSlot(int index)
     {
-        if (this.chestContents[index] != null)
-        {
-            ItemStack stack = this.chestContents[index];
+        this.fillWithLoot((EntityPlayer) null);
 
-            this.chestContents[index] = null;
-
-            return stack;
-        }
-        else
-        {
-            return null;
-        }
+        return ItemStackHelper.getAndRemove(this.chestContents, index);
     }
 
     @Override
@@ -647,6 +645,7 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     public void rotateAround()
     {
         this.setFacing(this.facing.rotateY());
+
         this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 2, this.facing.ordinal());
     }
 
@@ -678,6 +677,8 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public void clear()
     {
+        this.fillWithLoot((EntityPlayer) null);
+
         for (int slot = 0; slot < this.chestContents.length; ++slot)
         {
             this.chestContents[slot] = null;
@@ -687,6 +688,8 @@ public class TileEntityIronChest extends TileEntityLockable implements ITickable
     @Override
     public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
+        this.fillWithLoot((EntityPlayer) null);
+
         return new ContainerIronChest(playerInventory, this, this.chestType, this.chestType.xSize, this.chestType.ySize);
     }
 
