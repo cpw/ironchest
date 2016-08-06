@@ -1,6 +1,6 @@
 [
 {
-  "modid": "IronChest",
+  "modid": "ironchest",
   "name": "Iron Chest",
   "description": "New chests with larger sizes, with in-place upgrade items.\nThe feature chest is the crystal chest, which is transparent - some inventory contents are visible without opening the chest",
   "version": "${version}",
