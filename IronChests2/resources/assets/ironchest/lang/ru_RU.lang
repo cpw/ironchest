@@ -1,0 +1,17 @@
+tile.ironchest:IRON.name=Железный Сундук
+tile.ironchest:GOLD.name=Золотой Сундук
+tile.ironchest:DIAMOND.name=Алмазный Сундук
+tile.ironchest:COPPER.name=Медный Сундук
+tile.ironchest:SILVER.name=Серебряный Сундук
+tile.ironchest:CRYSTAL.name=Кристальный Сундук
+tile.ironchest:OBSIDIAN.name=Обсидиановый Сундук
+
+item.ironchest:IRONGOLD.name=Улучшение Сундука: Железо в Золото
+item.ironchest:GOLDDIAMOND.name=Улучшение Сундука: Золото в Алмаз
+item.ironchest:COPPERSILVER.name=Улучшение Сундука: Медь в Серебро
+item.ironchest:SILVERGOLD.name=Улучшение Сундука: Серебро в Золото
+item.ironchest:COPPERIRON.name=Улучшение Сундука: Медь в Железо
+item.ironchest:DIAMONDCRYSTAL.name=Улучшение Сундука: Алмаз в Кристал
+item.ironchest:WOODIRON.name=Улучшение Сундука: Дерево в Железо
+item.ironchest:WOODCOPPER.name=Улучшение Сундука: Дерево в Медь
+item.ironchest:DIAMONDOBSIDIAN.name=Улучшение Сундука: Алмаз в Обсидиан
