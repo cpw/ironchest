@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_1.10.2:3.7.6.232"
+    //deobfCompile "mezz.jei:jei_1.10.2:3.7.6.232"
 }
 
 // This is our group. I'm cpw.mods
@@ -43,8 +43,8 @@ archivesBaseName = "ironchest"
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.10.2-12.18.1.2014"
-    mappings = "snapshot_20160715"
+    version = "1.11-13.19.0.2130"
+    mappings = "snapshot_20161111"
     runDir = "run"
 }
 

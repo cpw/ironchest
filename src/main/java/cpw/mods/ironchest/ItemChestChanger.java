@@ -128,7 +128,7 @@ public class ItemChestChanger extends Item
             ((TileEntityIronChest) te2).setFacing(chestFacing);
         }
 
-        stack.stackSize = playerIn.capabilities.isCreativeMode ? stack.stackSize : stack.stackSize - 1;
+        stack.func_190920_e(playerIn.capabilities.isCreativeMode ? stack.func_190916_E() : stack.func_190916_E() - 1);
 
         return EnumActionResult.SUCCESS;
     }

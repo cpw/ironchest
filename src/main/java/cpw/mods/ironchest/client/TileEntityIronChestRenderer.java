@@ -188,7 +188,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                         @Override
                         public int getModelCount(ItemStack stack)
                         {
-                            return SignedBytes.saturatedCast(Math.min(stack.stackSize / 32, 15) + 1);
+                            return SignedBytes.saturatedCast(Math.min(stack.func_190916_E() / 32, 15) + 1);
                         }
 
                         @Override

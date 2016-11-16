@@ -64,7 +64,7 @@ public class ContainerIronChest extends Container
             {
                 return null;
             }
-            if (itemstack1.stackSize == 0)
+            if (itemstack1.func_190916_E() == 0)
             {
                 slot.putStack(null);
             }
