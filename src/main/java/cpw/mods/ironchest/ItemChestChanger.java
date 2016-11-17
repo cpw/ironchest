@@ -21,6 +21,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -38,17 +39,18 @@ public class ItemChestChanger extends Item
 
     @Override
     //@formatter:off
-    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand)
+    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
+    //public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand)
     //@formatter:on
     {
-        if (worldIn.isRemote)
+        if (world.isRemote)
         {
             return EnumActionResult.PASS;
         }
 
         if (this.type.canUpgrade(IronChestType.WOOD))
         {
-            if (!(worldIn.getBlockState(pos).getBlock() instanceof BlockChest))
+            if (!(world.getBlockState(pos).getBlock() instanceof BlockChest))
             {
                 return EnumActionResult.PASS;
             }
@@ -56,23 +58,23 @@ public class ItemChestChanger extends Item
         else
         {
             //@formatter:off
-            if (worldIn.getBlockState(pos) != IronChest.ironChestBlock.getStateFromMeta(IronChestType.valueOf(this.type.source.getName().toUpperCase()).ordinal()))
+            if (world.getBlockState(pos) != IronChest.ironChestBlock.getStateFromMeta(IronChestType.valueOf(this.type.source.getName().toUpperCase()).ordinal()))
             //@formatter:on
             {
                 return EnumActionResult.PASS;
             }
         }
 
-        TileEntity te = worldIn.getTileEntity(pos);
+        TileEntity te = world.getTileEntity(pos);
         TileEntityIronChest newchest = new TileEntityIronChest();
-        ItemStack[] chestContents = new ItemStack[27];
+        NonNullList<ItemStack> chestContents = NonNullList.<ItemStack> func_191197_a(27, ItemStack.field_190927_a);
         EnumFacing chestFacing = EnumFacing.DOWN;
 
         if (te != null)
         {
             if (te instanceof TileEntityIronChest)
             {
-                chestContents = ((TileEntityIronChest) te).chestContents;
+                chestContents = ((TileEntityIronChest) te).func_190576_q();
                 chestFacing = ((TileEntityIronChest) te).getFacing();
                 newchest = this.type.target.makeEntity();
                 if (newchest == null)
@@ -82,7 +84,7 @@ public class ItemChestChanger extends Item
             }
             else if (te instanceof TileEntityChest)
             {
-                IBlockState chestState = worldIn.getBlockState(pos);
+                IBlockState chestState = world.getBlockState(pos);
                 chestFacing = chestState.getValue(BlockChest.FACING);
                 TileEntityChest chest = (TileEntityChest) te;
 
@@ -94,10 +96,10 @@ public class ItemChestChanger extends Item
                 {
                     return EnumActionResult.PASS;
                 }
-                chestContents = new ItemStack[chest.getSizeInventory()];
-                for (int i = 0; i < chestContents.length; i++)
+                chestContents = NonNullList.<ItemStack> func_191197_a(chest.getSizeInventory(), ItemStack.field_190927_a);//new ItemStack[chest.getSizeInventory()];
+                for (int i = 0; i < chestContents.size(); i++)
                 {
-                    chestContents[i] = chest.getStackInSlot(i);
+                    chestContents.set(i, chest.getStackInSlot(i));
                 }
                 newchest = this.type.target.makeEntity();
             }
@@ -110,17 +112,17 @@ public class ItemChestChanger extends Item
             ((TileEntityChest) te).checkForAdjacentChests();
         }
 
-        worldIn.removeTileEntity(pos);
-        worldIn.setBlockToAir(pos);
+        world.removeTileEntity(pos);
+        world.setBlockToAir(pos);
 
         IBlockState iblockstate = IronChest.ironChestBlock.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, this.type.target);
 
-        worldIn.setTileEntity(pos, newchest);
-        worldIn.setBlockState(pos, iblockstate, 3);
+        world.setTileEntity(pos, newchest);
+        world.setBlockState(pos, iblockstate, 3);
 
-        worldIn.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
+        world.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
 
-        TileEntity te2 = worldIn.getTileEntity(pos);
+        TileEntity te2 = world.getTileEntity(pos);
 
         if (te2 instanceof TileEntityIronChest)
         {
@@ -128,7 +130,9 @@ public class ItemChestChanger extends Item
             ((TileEntityIronChest) te2).setFacing(chestFacing);
         }
 
-        stack.func_190920_e(playerIn.capabilities.isCreativeMode ? stack.func_190916_E() : stack.func_190916_E() - 1);
+        ItemStack stack = player.getHeldItem(hand);
+
+        stack.func_190920_e(player.capabilities.isCreativeMode ? stack.func_190916_E() : stack.func_190916_E() - 1);
 
         return EnumActionResult.SUCCESS;
     }

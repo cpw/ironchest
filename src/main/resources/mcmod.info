@@ -10,10 +10,8 @@
   "authorList": ["cpw"],
   "credits": "By cpw, based on an original idea by Lishid",
   "logoFile": "",
-  "screenshots": [
-  ],
+  "screenshots": [],
   "parent":"",
-  "dependencies": [
-  ]
+  "dependencies": []
 }
 ]

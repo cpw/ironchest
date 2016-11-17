@@ -10,8 +10,6 @@
  ******************************************************************************/
 package cpw.mods.ironchest;
 
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -30,6 +28,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -42,6 +41,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockIronChest extends Block
 {
     public static final PropertyEnum<IronChestType> VARIANT_PROP = PropertyEnum.create("variant", IronChestType.class);
+
     protected static final AxisAlignedBB IRON_CHEST_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
 
     public BlockIronChest()
@@ -82,27 +82,28 @@ public class BlockIronChest extends Block
 
     @Override
     //@formatter:off
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing direction, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing heldItem, float side, float hitX, float hitY)
+    //public boolean onBlockActivated(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing direction, float hitX, float hitY, float hitZ)
     //@formatter:on
     {
-        TileEntity te = world.getTileEntity(pos);
+        TileEntity te = worldIn.getTileEntity(pos);
 
         if (te == null || !(te instanceof TileEntityIronChest))
         {
             return true;
         }
 
-        if (world.isSideSolid(pos.add(0, 1, 0), EnumFacing.DOWN))
+        if (worldIn.isSideSolid(pos.add(0, 1, 0), EnumFacing.DOWN))
         {
             return true;
         }
 
-        if (world.isRemote)
+        if (worldIn.isRemote)
         {
             return true;
         }
 
-        player.openGui(IronChest.instance, ((TileEntityIronChest) te).getType().ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+        playerIn.openGui(IronChest.instance, ((TileEntityIronChest) te).getType().ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
         return true;
     }
 
@@ -120,7 +121,8 @@ public class BlockIronChest extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
+    //public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (IronChestType type : IronChestType.VALUES)
         {

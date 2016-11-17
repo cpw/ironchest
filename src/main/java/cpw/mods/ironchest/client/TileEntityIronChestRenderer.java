@@ -12,31 +12,31 @@ package cpw.mods.ironchest.client;
 
 import java.util.Random;
 
-import com.google.common.primitives.SignedBytes;
-
 import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
 public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileEntityIronChest>
 {
     private Random random;
+
     private RenderEntityItem itemRenderer;
+
     private ModelChest model;
 
     private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F },
             { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F }, };
+
     private static EntityItem customitem = new EntityItem(null);
+
     private static float halfPI = (float) (Math.PI / 2D);
 
     public TileEntityIronChestRenderer()
@@ -141,7 +141,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
         GlStateManager.popMatrix();
         GlStateManager.color(1F, 1F, 1F, 1F);
 
-        if (type.isTransparent()
+        /*if (type.isTransparent()
                 && tile.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d)
         {
             this.random.setSeed(254L);
@@ -158,7 +158,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
             }
             GlStateManager.pushMatrix();
             GlStateManager.translate((float) x, (float) y, (float) z);
-
+        
             customitem.setWorld(this.getWorld());
             customitem.hoverStart = 0F;
             for (ItemStack item : tile.getTopItemStacks())
@@ -181,7 +181,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                 GlStateManager.rotate(timeD, 0F, 1F, 0F);
                 GlStateManager.scale(blockScale, blockScale, blockScale);
                 customitem.setEntityItemStack(item);
-
+        
                 if (this.itemRenderer == null)
                 {
                     this.itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem()) {
@@ -190,13 +190,13 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                         {
                             return SignedBytes.saturatedCast(Math.min(stack.func_190916_E() / 32, 15) + 1);
                         }
-
+        
                         @Override
                         public boolean shouldBob()
                         {
                             return false;
                         }
-
+        
                         @Override
                         public boolean shouldSpreadItems()
                         {
@@ -204,13 +204,13 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                         }
                     };
                 }
-
+        
                 this.itemRenderer.doRender(customitem, 0D, 0D, 0D, 0F, partialTick);
                 GlStateManager.popMatrix();
             }
-
+        
             GlStateManager.popMatrix();
-        }
+        }*/
 
     }
 }

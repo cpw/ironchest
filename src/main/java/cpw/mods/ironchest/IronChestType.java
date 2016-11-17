@@ -42,15 +42,25 @@ public enum IronChestType implements IStringSerializable
     public static final IronChestType VALUES[] = values();
 
     public final String name;
+
     public final int size;
+
     public final int rowLength;
+
     public final boolean tieredChest;
+
     public final ResourceLocation modelTexture;
+
     private String breakTexture;
+
     public final Class<? extends TileEntityIronChest> clazz;
+
     public final Collection<String> recipes;
+
     public final Collection<String> matList;
+
     public final int xSize;
+
     public final int ySize;
 
     //@formatter:off
@@ -192,7 +202,7 @@ public enum IronChestType implements IStringSerializable
     {
         if (this == DIRTCHEST9000)
         {
-            return itemstack == null || itemstack.getItem() == DIRT_ITEM;
+            return itemstack == ItemStack.field_190927_a || itemstack.getItem() == DIRT_ITEM;
         }
 
         return true;
