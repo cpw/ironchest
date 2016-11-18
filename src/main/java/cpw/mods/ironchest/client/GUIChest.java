@@ -24,12 +24,12 @@ public class GUIChest extends GuiContainer
     public enum ResourceList
     {
         //@formatter:off
-        IRON(new ResourceLocation("ironchest", "textures/gui/ironcontainer.png")),
-        COPPER(new ResourceLocation("ironchest", "textures/gui/coppercontainer.png")),
-        SILVER(new ResourceLocation("ironchest", "textures/gui/silvercontainer.png")),
-        GOLD(new ResourceLocation("ironchest", "textures/gui/goldcontainer.png")),
-        DIAMOND(new ResourceLocation("ironchest", "textures/gui/diamondcontainer.png")),
-        DIRT(new ResourceLocation("ironchest", "textures/gui/dirtcontainer.png"));
+        IRON(new ResourceLocation("ironchest", "textures/gui/iron_container.png")),
+        COPPER(new ResourceLocation("ironchest", "textures/gui/copper_container.png")),
+        SILVER(new ResourceLocation("ironchest", "textures/gui/silver_container.png")),
+        GOLD(new ResourceLocation("ironchest", "textures/gui/gold_container.png")),
+        DIAMOND(new ResourceLocation("ironchest", "textures/gui/diamond_container.png")),
+        DIRT(new ResourceLocation("ironchest", "textures/gui/dirt_container.png"));
         //@formatter:on
         public final ResourceLocation location;
 

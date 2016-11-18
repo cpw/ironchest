@@ -28,14 +28,14 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 public enum IronChestType implements IStringSerializable
 {
     //@formatter:off
-    IRON(54, 9, true, "ironchest.png", Arrays.asList("ingotIron", "ingotRefinedIron"), TileEntityIronChest.class, 184, 202, "mmmmPmmmm", "mGmG3GmGm"),
-    GOLD(81, 9, true, "goldchest.png", Collections.singleton("ingotGold"), TileEntityGoldChest.class, 184, 256, "mmmmPmmmm", "mGmG4GmGm"),
-    DIAMOND(108, 12, true, "diamondchest.png", Collections.singleton("gemDiamond"), TileEntityDiamondChest.class, 184, 256, "GGGmPmGGG", "GGGG4Gmmm"),
-    COPPER(45, 9, false, "copperchest.png", Collections.singleton("ingotCopper"), TileEntityCopperChest.class, 184, 184, "mmmmCmmmm"),
-    SILVER(72, 9, false, "silverchest.png", Collections.singleton("ingotSilver"), TileEntitySilverChest.class, 184, 238, "mmmm3mmmm", "mGmG0GmGm"),
-    CRYSTAL(108, 12, true, "crystalchest.png", Collections.singleton("blockGlass"), TileEntityCrystalChest.class, 238, 256, "GGGGPGGGG"),
-    OBSIDIAN(108, 12, false, "obsidianchest.png", Collections.singleton("obsidian"), TileEntityObsidianChest.class, 238, 256, "mmmm2mmmm"),
-    DIRTCHEST9000(1, 1, false, "dirtchest.png", Collections.singleton("dirt"), TileEntityDirtChest.class, 184, 184, "mmmmCmmmm"),
+    IRON(54, 9, true, "iron_chest.png", Arrays.asList("ingotIron", "ingotRefinedIron"), TileEntityIronChest.class, 184, 202, "mmmmPmmmm", "mGmG3GmGm"),
+    GOLD(81, 9, true, "gold_chest.png", Collections.singleton("ingotGold"), TileEntityGoldChest.class, 184, 256, "mmmmPmmmm", "mGmG4GmGm"),
+    DIAMOND(108, 12, true, "diamond_chest.png", Collections.singleton("gemDiamond"), TileEntityDiamondChest.class, 184, 256, "GGGmPmGGG", "GGGG4Gmmm"),
+    COPPER(45, 9, false, "copper_chest.png", Collections.singleton("ingotCopper"), TileEntityCopperChest.class, 184, 184, "mmmmCmmmm"),
+    SILVER(72, 9, false, "silver_chest.png", Collections.singleton("ingotSilver"), TileEntitySilverChest.class, 184, 238, "mmmm3mmmm", "mGmG0GmGm"),
+    CRYSTAL(108, 12, true, "crystal_chest.png", Collections.singleton("blockGlass"), TileEntityCrystalChest.class, 238, 256, "GGGGPGGGG"),
+    OBSIDIAN(108, 12, false, "obsidian_chest.png", Collections.singleton("obsidian"), TileEntityObsidianChest.class, 238, 256, "mmmm2mmmm"),
+    DIRTCHEST9000(1, 1, false, "dirt_chest.png", Collections.singleton("dirt"), TileEntityDirtChest.class, 184, 184, "mmmmCmmmm"),
     WOOD(0, 0, false, "", Collections.singleton("plankWood"), null, 0, 0);
     //@formatter:on
 

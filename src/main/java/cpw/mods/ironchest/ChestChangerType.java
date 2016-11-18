@@ -22,15 +22,15 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public enum ChestChangerType
 {
     //@formatter:off
-    IRONGOLD(IRON, GOLD, "ironGoldUpgrade", "mmm", "msm", "mmm"),
-    GOLDDIAMOND(GOLD, DIAMOND, "goldDiamondUpgrade", "GGG", "msm", "GGG"),
-    COPPERSILVER(COPPER, SILVER, "copperSilverUpgrade", "mmm", "msm", "mmm"),
-    SILVERGOLD(SILVER, GOLD, "silverGoldUpgrade", "mGm", "GsG", "mGm"),
-    COPPERIRON(COPPER, IRON, "copperIronUpgrade", "mGm", "GsG", "mGm"),
-    DIAMONDCRYSTAL(DIAMOND, CRYSTAL, "diamondCrystalUpgrade", "GGG", "GOG", "GGG"),
-    WOODIRON(WOOD, IRON, "woodIronUpgrade", "mmm", "msm", "mmm"),
-    WOODCOPPER(WOOD, COPPER, "woodCopperUpgrade", "mmm", "msm", "mmm"),
-    DIAMONDOBSIDIAN(DIAMOND, OBSIDIAN, "diamondObsidianUpgrade", "mmm", "mGm", "mmm");
+    IRONGOLD(IRON, GOLD, "iron_gold_upgrade", "mmm", "msm", "mmm"),
+    GOLDDIAMOND(GOLD, DIAMOND, "gold_diamond_upgrade", "GGG", "msm", "GGG"),
+    COPPERSILVER(COPPER, SILVER, "copper_silver_upgrade", "mmm", "msm", "mmm"),
+    SILVERGOLD(SILVER, GOLD, "silver_gold_upgrade", "mGm", "GsG", "mGm"),
+    COPPERIRON(COPPER, IRON, "copper_iron_upgrade", "mGm", "GsG", "mGm"),
+    DIAMONDCRYSTAL(DIAMOND, CRYSTAL, "diamond_crystal_upgrade", "GGG", "GOG", "GGG"),
+    WOODIRON(WOOD, IRON, "wood_iron_upgrade", "mmm", "msm", "mmm"),
+    WOODCOPPER(WOOD, COPPER, "wood_copper_upgrade", "mmm", "msm", "mmm"),
+    DIAMONDOBSIDIAN(DIAMOND, OBSIDIAN, "diamond_obsidian_upgrade", "mmm", "mGm", "mmm");
     //@formatter:on
 
     public static final ChestChangerType[] VALUES = values();

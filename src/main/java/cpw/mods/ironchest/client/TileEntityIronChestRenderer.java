@@ -12,17 +12,22 @@ package cpw.mods.ironchest.client;
 
 import java.util.Random;
 
+import com.google.common.primitives.SignedBytes;
+
 import cpw.mods.ironchest.BlockIronChest;
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.IronChestType;
 import cpw.mods.ironchest.TileEntityIronChest;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 
 public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileEntityIronChest>
 {
@@ -141,7 +146,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
         GlStateManager.popMatrix();
         GlStateManager.color(1F, 1F, 1F, 1F);
 
-        /*if (type.isTransparent()
+        if (type.isTransparent()
                 && tile.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d)
         {
             this.random.setSeed(254L);
@@ -151,23 +156,28 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
             int shift = 0;
             float blockScale = 0.70F;
             float timeD = (float) (360D * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) - partialTick;
-            if (tile.getTopItemStacks()[1] == null)
+
+            if (tile.getTopItemStacks().get(1) == ItemStack.field_190927_a)
             {
                 shift = 8;
                 blockScale = 0.85F;
             }
+
             GlStateManager.pushMatrix();
             GlStateManager.translate((float) x, (float) y, (float) z);
-        
+
             customitem.setWorld(this.getWorld());
             customitem.hoverStart = 0F;
-            for (ItemStack item : tile.getTopItemStacks())
+
+            NonNullList<ItemStack> stacks = tile.getTopItemStacks();
+            for (int i = 0; i < stacks.size(); i++)
             {
+                ItemStack item = stacks.get(i);
                 if (shift > shifts.length)
                 {
                     break;
                 }
-                if (item == null)
+                if (item == ItemStack.field_190927_a)
                 {
                     shift++;
                     continue;
@@ -181,22 +191,23 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                 GlStateManager.rotate(timeD, 0F, 1F, 0F);
                 GlStateManager.scale(blockScale, blockScale, blockScale);
                 customitem.setEntityItemStack(item);
-        
+
                 if (this.itemRenderer == null)
                 {
-                    this.itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem()) {
+                    this.itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem())
+                    {
                         @Override
                         public int getModelCount(ItemStack stack)
                         {
                             return SignedBytes.saturatedCast(Math.min(stack.func_190916_E() / 32, 15) + 1);
                         }
-        
+
                         @Override
                         public boolean shouldBob()
                         {
                             return false;
                         }
-        
+
                         @Override
                         public boolean shouldSpreadItems()
                         {
@@ -204,13 +215,13 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                         }
                     };
                 }
-        
+
                 this.itemRenderer.doRender(customitem, 0D, 0D, 0D, 0F, partialTick);
                 GlStateManager.popMatrix();
             }
-        
+
             GlStateManager.popMatrix();
-        }*/
+        }
 
     }
 }

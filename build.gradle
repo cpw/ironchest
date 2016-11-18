@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    //deobfCompile "mezz.jei:jei_1.10.2:3.7.6.232"
+    deobfCompile "mezz.jei:jei_1.11:4.0.1.191"
 }
 
 // This is our group. I'm cpw.mods

@@ -1,57 +1,57 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "ironchest:chest",
+    "model": "ironchest:iron_chest",
     "transform": "forge:default-block"
   },
   "variants": {
     "variant": {
       "iron": {
         "textures": {
-          "particle": "ironchest:blocks/ironbreak",
-          "texture": "ironchest:model/ironchest"
+          "particle": "ironchest:blocks/iron_break",
+          "texture": "ironchest:model/iron_chest"
         }
       },
       "gold": {
         "textures": {
-          "particle": "ironchest:blocks/goldbreak",
-          "texture": "ironchest:model/goldchest"
+          "particle": "ironchest:blocks/gold_break",
+          "texture": "ironchest:model/gold_chest"
         }
       },
       "diamond": {
         "textures": {
-          "particle": "ironchest:blocks/diamondbreak",
-          "texture": "ironchest:model/diamondchest"
+          "particle": "ironchest:blocks/diamond_break",
+          "texture": "ironchest:model/diamond_chest"
         }
       },
       "copper": {
         "textures": {
-          "particle": "ironchest:blocks/copperbreak",
-          "texture": "ironchest:model/copperchest"
+          "particle": "ironchest:blocks/copper_break",
+          "texture": "ironchest:model/copper_chest"
         }
       },
       "silver": {
         "textures": {
-          "particle": "ironchest:blocks/silverbreak",
-          "texture": "ironchest:model/silverchest"
+          "particle": "ironchest:blocks/silver_break",
+          "texture": "ironchest:model/silver_chest"
         }
       },
       "crystal": {
         "textures": {
-          "particle": "ironchest:blocks/crystalbreak",
-          "texture": "ironchest:model/crystalchest"
+          "particle": "ironchest:blocks/crystal_break",
+          "texture": "ironchest:model/crystal_chest"
         }
       },
       "obsidian": {
         "textures": {
           "particle": "minecraft:blocks/obsidian",
-          "texture": "ironchest:model/obsidianchest"
+          "texture": "ironchest:model/obsidian_chest"
         }
       },
       "dirtchest9000": {
         "textures": {
           "particle": "minecraft:blocks/dirt",
-          "texture": "ironchest:model/dirtchest"
+          "texture": "ironchest:model/dirt_chest"
         }
       },
       "wood": {

@@ -47,7 +47,7 @@ public class BlockIronChest extends Block
     public BlockIronChest()
     {
         super(Material.IRON);
-        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, "BlockIronChest"));
+        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, "iron_chest"));
 
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT_PROP, IronChestType.IRON));
 
@@ -121,7 +121,7 @@ public class BlockIronChest extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    //public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
+    // public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (IronChestType type : IronChestType.VALUES)

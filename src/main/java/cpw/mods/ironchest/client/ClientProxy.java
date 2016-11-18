@@ -50,7 +50,7 @@ public class ClientProxy extends CommonProxy
         for (ChestChangerType type : ChestChangerType.VALUES)
         {
             //@formatter:off
-            ModelLoader.setCustomModelResourceLocation(type.item, 0, new ModelResourceLocation(new ResourceLocation(IronChest.MOD_ID, "ItemChestUpgrade"), "variant=" + type.itemName.toLowerCase()));
+            ModelLoader.setCustomModelResourceLocation(type.item, 0, new ModelResourceLocation(new ResourceLocation(IronChest.MOD_ID, "iron_chest_upgrades"), "variant=" + type.itemName.toLowerCase()));
             //@formatter:on
         }
     }

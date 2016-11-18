@@ -20,7 +20,7 @@ public class ItemIronChest extends ItemBlock
     public ItemIronChest(Block block)
     {
         super(block);
-        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, "BlockIronChest"));
+        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, "iron_chest"));
 
         this.setMaxDamage(0);
         this.setHasSubtypes(true);

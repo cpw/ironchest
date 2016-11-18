@@ -1,0 +1,56 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "variant": {
+      "copper_silver_upgrade": {
+        "textures": {
+          "layer0": "ironchest:items/copper_silver_upgrade"
+        }
+      },
+      "diamond_crystal_upgrade": {
+        "textures": {
+          "layer0": "ironchest:items/diamond_crystal_upgrade"
+        }
+      },
+      "diamond_obsidian_upgrade": {
+        "textures": {
+          "layer0": "ironchest:items/diamond_obsidian_upgrade"
+        }
+      },
+      "gold_diamond_upgrade": {
+        "textures": {
+          "layer0": "ironchest:items/gold_diamond_upgrade"
+        }
+      },
+      "iron_gold_upgrade": {
+        "textures": {
+          "layer0": "ironchest:items/iron_gold_upgrade"
+        }
+      },
+      "silver_gold_upgrade": {
+        "textures": {
+          "layer0": "ironchest:items/silver_gold_upgrade"
+        }
+      },
+      "wood_copper_upgrade": {
+        "textures": {
+          "layer0": "ironchest:items/wood_copper_upgrade"
+        }
+      },
+      "wood_iron_upgrade": {
+        "textures": {
+          "layer0": "ironchest:items/wood_iron_upgrade"
+        }
+      },
+      "copper_iron_upgrade": {
+        "textures": {
+          "layer0": "ironchest:items/copper_iron_upgrade"
+        }
+      }
+    }
+  }
+}
