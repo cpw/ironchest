@@ -66,7 +66,9 @@ public class IronChest
         for (IronChestType typ : IronChestType.VALUES)
         {
             if (typ.clazz != null)
+            {
                 GameRegistry.registerTileEntity(typ.clazz, "IronChest." + typ.name());
+            }
         }
 
         IronChestType.registerBlocksAndRecipes(ironChestBlock);

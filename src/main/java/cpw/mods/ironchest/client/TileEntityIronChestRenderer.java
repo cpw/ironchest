@@ -194,8 +194,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
 
                 if (this.itemRenderer == null)
                 {
-                    this.itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem())
-                    {
+                    this.itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem()) {
                         @Override
                         public int getModelCount(ItemStack stack)
                         {

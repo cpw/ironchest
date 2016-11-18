@@ -83,7 +83,6 @@ public class BlockIronChest extends Block
     @Override
     //@formatter:off
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing heldItem, float side, float hitX, float hitY)
-    //public boolean onBlockActivated(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing direction, float hitX, float hitY, float hitZ)
     //@formatter:on
     {
         TileEntity te = worldIn.getTileEntity(pos);
@@ -121,7 +120,6 @@ public class BlockIronChest extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    // public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (IronChestType type : IronChestType.VALUES)

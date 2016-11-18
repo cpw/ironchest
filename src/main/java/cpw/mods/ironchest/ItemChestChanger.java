@@ -40,7 +40,6 @@ public class ItemChestChanger extends Item
     @Override
     //@formatter:off
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
-    //public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand)
     //@formatter:on
     {
         if (world.isRemote)
@@ -96,7 +95,7 @@ public class ItemChestChanger extends Item
                 {
                     return EnumActionResult.PASS;
                 }
-                chestContents = NonNullList.<ItemStack> func_191197_a(chest.getSizeInventory(), ItemStack.field_190927_a);//new ItemStack[chest.getSizeInventory()];
+                chestContents = NonNullList.<ItemStack> func_191197_a(chest.getSizeInventory(), ItemStack.field_190927_a);
                 for (int i = 0; i < chestContents.size(); i++)
                 {
                     chestContents.set(i, chest.getStackInSlot(i));
