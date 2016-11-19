@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = IronChest.MOD_ID, name = "Iron Chests", dependencies = "required-after:forge@[13.19.0.2142,);", acceptedMinecraftVersions = "[1.11, 1.12)")
+@Mod(modid = IronChest.MOD_ID, name = "Iron Chests", dependencies = "required-after:forge@[13.19.0.2142,)", acceptedMinecraftVersions = "[1.11, 1.12)")
 public class IronChest
 {
     public static final String MOD_ID = "ironchest";
@@ -55,7 +55,6 @@ public class IronChest
             String minor = properties.getProperty("IronChest.build.minor.number");
             String rev = properties.getProperty("IronChest.build.revision.number");
             String build = properties.getProperty("IronChest.build.number");
-            // String mcversion = properties.getProperty("IronChest.build.mcversion");
             event.getModMetadata().version = String.format("%s.%s.%s build %s", major, minor, rev, build);
         }
 
