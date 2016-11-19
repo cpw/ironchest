@@ -66,14 +66,14 @@ public class ItemChestChanger extends Item
 
         TileEntity te = world.getTileEntity(pos);
         TileEntityIronChest newchest = new TileEntityIronChest();
-        NonNullList<ItemStack> chestContents = NonNullList.<ItemStack> func_191197_a(27, ItemStack.field_190927_a);
+        NonNullList<ItemStack> chestContents = NonNullList.<ItemStack> withSize(27, ItemStack.EMPTY);
         EnumFacing chestFacing = EnumFacing.DOWN;
 
         if (te != null)
         {
             if (te instanceof TileEntityIronChest)
             {
-                chestContents = ((TileEntityIronChest) te).func_190576_q();
+                chestContents = ((TileEntityIronChest) te).getItems();
                 chestFacing = ((TileEntityIronChest) te).getFacing();
                 newchest = this.type.target.makeEntity();
                 if (newchest == null)
@@ -95,7 +95,7 @@ public class ItemChestChanger extends Item
                 {
                     return EnumActionResult.PASS;
                 }
-                chestContents = NonNullList.<ItemStack> func_191197_a(chest.getSizeInventory(), ItemStack.field_190927_a);
+                chestContents = NonNullList.<ItemStack> withSize(chest.getSizeInventory(), ItemStack.EMPTY);
                 for (int i = 0; i < chestContents.size(); i++)
                 {
                     chestContents.set(i, chest.getStackInSlot(i));
@@ -131,7 +131,7 @@ public class ItemChestChanger extends Item
 
         ItemStack stack = player.getHeldItem(hand);
 
-        stack.func_190920_e(player.capabilities.isCreativeMode ? stack.func_190916_E() : stack.func_190916_E() - 1);
+        stack.setCount(player.capabilities.isCreativeMode ? stack.getCount() : stack.getCount() - 1);
 
         return EnumActionResult.SUCCESS;
     }

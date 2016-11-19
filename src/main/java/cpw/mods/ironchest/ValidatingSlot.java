@@ -15,8 +15,8 @@ public class ValidatingSlot extends Slot
     }
 
     @Override
-    public boolean isItemValid(ItemStack par1ItemStack)
+    public boolean isItemValid(ItemStack stack)
     {
-        return this.type.acceptsStack(par1ItemStack);
+        return this.type.acceptsStack(stack);
     }
 }

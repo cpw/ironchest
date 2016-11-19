@@ -51,26 +51,26 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
     }
 
     @Override
-    public void renderTileEntityAt(TileEntityIronChest tile, double x, double y, double z, float partialTick, int breakStage)
+    public void renderTileEntityAt(TileEntityIronChest te, double x, double y, double z, float partialTicks, int destroyStage)
     {
-        if (tile == null || tile.isInvalid())
+        if (te == null || te.isInvalid())
         {
             return;
         }
 
         EnumFacing facing = EnumFacing.SOUTH;
-        IronChestType type = tile.getType();
+        IronChestType type = te.getType();
 
-        if (tile.hasWorldObj() && tile.getWorld().getBlockState(tile.getPos()).getBlock() == IronChest.ironChestBlock)
+        if (te.hasWorld() && te.getWorld().getBlockState(te.getPos()).getBlock() == IronChest.ironChestBlock)
         {
-            facing = tile.getFacing();
-            IBlockState state = tile.getWorld().getBlockState(tile.getPos());
+            facing = te.getFacing();
+            IBlockState state = te.getWorld().getBlockState(te.getPos());
             type = state.getValue(BlockIronChest.VARIANT_PROP);
         }
 
-        if (breakStage >= 0)
+        if (destroyStage >= 0)
         {
-            this.bindTexture(DESTROY_STAGES[breakStage]);
+            this.bindTexture(DESTROY_STAGES[destroyStage]);
             GlStateManager.matrixMode(5890);
             GlStateManager.pushMatrix();
             GlStateManager.scale(4F, 4F, 1F);
@@ -121,7 +121,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
         }
 
         GlStateManager.translate(-0.5F, -0.5F, -0.5F);
-        float lidangle = tile.prevLidAngle + (tile.lidAngle - tile.prevLidAngle) * partialTick;
+        float lidangle = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
         lidangle = 1F - lidangle;
         lidangle = 1F - lidangle * lidangle * lidangle;
 
@@ -133,7 +133,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
         this.model.chestLid.rotateAngleX = -lidangle * halfPI;
         // Render the chest itself
         this.model.renderAll();
-        if (breakStage >= 0)
+        if (destroyStage >= 0)
         {
             GlStateManager.matrixMode(5890);
             GlStateManager.popMatrix();
@@ -146,8 +146,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
         GlStateManager.popMatrix();
         GlStateManager.color(1F, 1F, 1F, 1F);
 
-        if (type.isTransparent()
-                && tile.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d)
+        if (type.isTransparent() && te.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d)
         {
             this.random.setSeed(254L);
             float shiftX;
@@ -155,9 +154,9 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
             float shiftZ;
             int shift = 0;
             float blockScale = 0.70F;
-            float timeD = (float) (360D * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) - partialTick;
+            float timeD = (float) (360D * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) - partialTicks;
 
-            if (tile.getTopItemStacks().get(1) == ItemStack.field_190927_a)
+            if (te.getTopItemStacks().get(1) == ItemStack.EMPTY)
             {
                 shift = 8;
                 blockScale = 0.85F;
@@ -169,7 +168,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
             customitem.setWorld(this.getWorld());
             customitem.hoverStart = 0F;
 
-            NonNullList<ItemStack> stacks = tile.getTopItemStacks();
+            NonNullList<ItemStack> stacks = te.getTopItemStacks();
             for (int i = 0; i < stacks.size(); i++)
             {
                 ItemStack item = stacks.get(i);
@@ -177,7 +176,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                 {
                     break;
                 }
-                if (item == ItemStack.field_190927_a)
+                if (item == ItemStack.EMPTY)
                 {
                     shift++;
                     continue;
@@ -198,7 +197,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                         @Override
                         public int getModelCount(ItemStack stack)
                         {
-                            return SignedBytes.saturatedCast(Math.min(stack.func_190916_E() / 32, 15) + 1);
+                            return SignedBytes.saturatedCast(Math.min(stack.getCount() / 32, 15) + 1);
                         }
 
                         @Override
@@ -215,7 +214,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                     };
                 }
 
-                this.itemRenderer.doRender(customitem, 0D, 0D, 0D, 0F, partialTick);
+                this.itemRenderer.doRender(customitem, 0D, 0D, 0D, 0F, partialTicks);
                 GlStateManager.popMatrix();
             }
 

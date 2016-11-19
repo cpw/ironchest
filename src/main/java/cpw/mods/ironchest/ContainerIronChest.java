@@ -39,42 +39,46 @@ public class ContainerIronChest extends Container
     @Override
     public boolean canInteractWith(EntityPlayer player)
     {
-        return this.chest.isUseableByPlayer(player);
+        return this.chest.isUsableByPlayer(player);
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer p, int i)
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
-        ItemStack itemstack = ItemStack.field_190927_a;
-        Slot slot = this.inventorySlots.get(i);
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.inventorySlots.get(index);
+
         if (slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
-            if (i < this.type.size)
+
+            if (index < this.type.size)
             {
                 if (!this.mergeItemStack(itemstack1, this.type.size, this.inventorySlots.size(), true))
                 {
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
                 }
             }
             else if (!this.type.acceptsStack(itemstack1))
             {
-                return ItemStack.field_190927_a;
+                return ItemStack.EMPTY;
             }
             else if (!this.mergeItemStack(itemstack1, 0, this.type.size, false))
             {
-                return ItemStack.field_190927_a;
+                return ItemStack.EMPTY;
             }
-            if (itemstack1.func_190916_E() == 0)
+
+            if (itemstack1.isEmpty())
             {
-                slot.putStack(ItemStack.field_190927_a);
+                slot.putStack(ItemStack.EMPTY);
             }
             else
             {
                 slot.onSlotChanged();
             }
         }
+
         return itemstack;
     }
 

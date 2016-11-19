@@ -68,14 +68,14 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     {
         super();
         this.chestType = type;
-        this.chestContents = NonNullList.<ItemStack> func_191197_a(type.size, ItemStack.field_190927_a);
-        this.topStacks = NonNullList.<ItemStack> func_191197_a(8, ItemStack.field_190927_a);
+        this.chestContents = NonNullList.<ItemStack> withSize(type.size, ItemStack.EMPTY);
+        this.topStacks = NonNullList.<ItemStack> withSize(8, ItemStack.EMPTY);
         this.facing = EnumFacing.NORTH;
     }
 
     public void setContents(NonNullList<ItemStack> contents)
     {
-        this.chestContents = NonNullList.<ItemStack> func_191197_a(this.getType().size, ItemStack.field_190927_a);
+        this.chestContents = NonNullList.<ItemStack> withSize(this.getType().size, ItemStack.EMPTY);
 
         for (int i = 0; i < contents.size(); i++)
         {
@@ -108,9 +108,9 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     {
         IronChestType type = IronChestType.IRON;
 
-        if (this.hasWorldObj())
+        if (this.hasWorld())
         {
-            IBlockState state = this.worldObj.getBlockState(this.pos);
+            IBlockState state = this.world.getBlockState(this.pos);
 
             if (state.getBlock() == IronChest.ironChestBlock)
             {
@@ -128,7 +128,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         this.inventoryTouched = true;
 
-        return this.func_190576_q().get(index);
+        return this.getItems().get(index);
     }
 
     @Override
@@ -141,12 +141,12 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
     protected void sortTopStacks()
     {
-        if (!this.getType().isTransparent() || (this.worldObj != null && this.worldObj.isRemote))
+        if (!this.getType().isTransparent() || (this.world != null && this.world.isRemote))
         {
             return;
         }
 
-        NonNullList<ItemStack> tempCopy = NonNullList.<ItemStack> func_191197_a(this.getSizeInventory(), ItemStack.field_190927_a);
+        NonNullList<ItemStack> tempCopy = NonNullList.<ItemStack> withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
         boolean hasStuff = false;
 
@@ -154,13 +154,13 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         mainLoop: for (int i = 0; i < this.getSizeInventory(); i++)
         {
-            if (this.chestContents.get(i) != ItemStack.field_190927_a)
+            if (this.chestContents.get(i) != ItemStack.EMPTY)
             {
                 for (int j = 0; j < compressedIdx; j++)
                 {
                     if (tempCopy.get(j).isItemEqual(this.chestContents.get(i)))
                     {
-                        tempCopy.get(j).func_190920_e(tempCopy.get(j).func_190916_E() + this.chestContents.get(i).func_190916_E());
+                        tempCopy.get(j).setCount(tempCopy.get(j).getCount() + this.chestContents.get(i).getCount());
                         continue mainLoop;
                     }
                 }
@@ -175,13 +175,13 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
             for (int i = 0; i < this.topStacks.size(); i++)
             {
-                this.topStacks.set(i, ItemStack.field_190927_a);
+                this.topStacks.set(i, ItemStack.EMPTY);
             }
 
-            if (this.worldObj != null)
+            if (this.world != null)
             {
-                IBlockState iblockstate = this.worldObj.getBlockState(this.pos);
-                this.worldObj.notifyBlockUpdate(this.pos, iblockstate, iblockstate, 3);
+                IBlockState iblockstate = this.world.getBlockState(this.pos);
+                this.world.notifyBlockUpdate(this.pos, iblockstate, iblockstate, 3);
             }
 
             return;
@@ -203,7 +203,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
                 }
                 else
                 {
-                    return stack2.func_190916_E() - stack1.func_190916_E();
+                    return stack2.getCount() - stack1.getCount();
                 }
             }
         });
@@ -213,7 +213,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
         for (int i = 0; i < tempCopy.size(); i++)
         {
             ItemStack element = tempCopy.get(i);
-            if (element != ItemStack.field_190927_a && element.func_190916_E() > 0)
+            if (element != ItemStack.EMPTY && element.getCount() > 0)
             {
                 this.topStacks.set(p++, element);
 
@@ -226,14 +226,14 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         for (int i = p; i < this.topStacks.size(); i++)
         {
-            this.topStacks.set(i, ItemStack.field_190927_a);
+            this.topStacks.set(i, ItemStack.EMPTY);
         }
 
-        if (this.worldObj != null)
+        if (this.world != null)
         {
-            IBlockState iblockstate = this.worldObj.getBlockState(this.pos);
+            IBlockState iblockstate = this.world.getBlockState(this.pos);
 
-            this.worldObj.notifyBlockUpdate(this.pos, iblockstate, iblockstate, 3);
+            this.world.notifyBlockUpdate(this.pos, iblockstate, iblockstate, 3);
         }
     }
 
@@ -249,6 +249,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
         return this.customName != null && this.customName.length() > 0;
     }
 
+    @Override
     public void setCustomName(String name)
     {
         this.customName = name;
@@ -259,7 +260,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     {
         super.readFromNBT(compound);
 
-        this.chestContents = NonNullList.<ItemStack> func_191197_a(this.getSizeInventory(), ItemStack.field_190927_a);
+        this.chestContents = NonNullList.<ItemStack> withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
         if (compound.hasKey("CustomName", Constants.NBT.TAG_STRING))
         {
@@ -268,7 +269,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         if (!this.checkLootAndRead(compound))
         {
-            ItemStackHelper.func_191283_b(compound, this.chestContents);
+            ItemStackHelper.loadAllItems(compound, this.chestContents);
         }
 
         this.facing = EnumFacing.VALUES[compound.getByte("facing")];
@@ -283,7 +284,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         if (!this.checkLootAndWrite(compound))
         {
-            ItemStackHelper.func_191282_a(compound, this.chestContents);
+            ItemStackHelper.saveAllItems(compound, this.chestContents);
         }
 
         compound.setByte("facing", (byte) this.facing.ordinal());
@@ -303,14 +304,14 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player)
+    public boolean isUsableByPlayer(EntityPlayer player)
     {
-        if (this.worldObj == null)
+        if (this.world == null)
         {
             return true;
         }
 
-        if (this.worldObj.getTileEntity(this.pos) != this)
+        if (this.world.getTileEntity(this.pos) != this)
         {
             return false;
         }
@@ -323,7 +324,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     {
         // Resynchronizes clients with the server state
         //@formatter:off
-        if (this.worldObj != null && !this.worldObj.isRemote && this.numPlayersUsing != 0 && (this.ticksSinceSync + this.pos.getX() + this.pos.getY() + this.pos.getZ()) % 200 == 0)
+        if (this.world != null && !this.world.isRemote && this.numPlayersUsing != 0 && (this.ticksSinceSync + this.pos.getX() + this.pos.getY() + this.pos.getZ()) % 200 == 0)
         //@formatter:on
         {
             this.numPlayersUsing = 0;
@@ -331,7 +332,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
             float f = 5.0F;
 
             //@formatter:off
-            for (EntityPlayer player : this.worldObj.getEntitiesWithinAABB(EntityPlayer.class,
+            for (EntityPlayer player : this.world.getEntitiesWithinAABB(EntityPlayer.class,
                     new AxisAlignedBB(this.pos.getX() - f, this.pos.getY() - f, this.pos.getZ() - f, this.pos.getX() + 1 + f, this.pos.getY() + 1 + f, this.pos.getZ() + 1 + f)))
             //@formatter:on
             {
@@ -342,12 +343,12 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
             }
         }
 
-        if (this.worldObj != null && !this.worldObj.isRemote && this.ticksSinceSync < 0)
+        if (this.world != null && !this.world.isRemote && this.ticksSinceSync < 0)
         {
-            this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 3, ((this.numPlayersUsing << 3) & 0xF8) | (this.facing.ordinal() & 0x7));
+            this.world.addBlockEvent(this.pos, IronChest.ironChestBlock, 3, ((this.numPlayersUsing << 3) & 0xF8) | (this.facing.ordinal() & 0x7));
         }
 
-        if (!this.worldObj.isRemote && this.inventoryTouched)
+        if (!this.world.isRemote && this.inventoryTouched)
         {
             this.inventoryTouched = false;
 
@@ -367,7 +368,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
             double z = this.pos.getZ() + 0.5D;
 
             //@formatter:off
-            this.worldObj.playSound(null, x, y, z, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+            this.world.playSound(null, x, y, z, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
             //@formatter:on
         }
 
@@ -398,7 +399,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
                 double z = this.pos.getZ() + 0.5D;
 
                 //@formatter:off
-                this.worldObj.playSound(null, x, y, z, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                this.world.playSound(null, x, y, z, SoundEvents.BLOCK_CHEST_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
                 //@formatter:on
             }
 
@@ -434,7 +435,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     {
         if (!player.isSpectator())
         {
-            if (this.worldObj == null)
+            if (this.world == null)
             {
                 return;
             }
@@ -446,9 +447,9 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
             ++this.numPlayersUsing;
 
-            this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numPlayersUsing);
-            this.worldObj.notifyNeighborsOfStateChange(this.pos, IronChest.ironChestBlock, false);
-            this.worldObj.notifyNeighborsOfStateChange(this.pos.down(), IronChest.ironChestBlock, false);
+            this.world.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numPlayersUsing);
+            this.world.notifyNeighborsOfStateChange(this.pos, IronChest.ironChestBlock, false);
+            this.world.notifyNeighborsOfStateChange(this.pos.down(), IronChest.ironChestBlock, false);
         }
     }
 
@@ -457,16 +458,16 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     {
         if (!player.isSpectator())
         {
-            if (this.worldObj == null)
+            if (this.world == null)
             {
                 return;
             }
 
             --this.numPlayersUsing;
 
-            this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numPlayersUsing);
-            this.worldObj.notifyNeighborsOfStateChange(this.pos, IronChest.ironChestBlock, false);
-            this.worldObj.notifyNeighborsOfStateChange(this.pos.down(), IronChest.ironChestBlock, false);
+            this.world.addBlockEvent(this.pos, IronChest.ironChestBlock, 1, this.numPlayersUsing);
+            this.world.notifyNeighborsOfStateChange(this.pos, IronChest.ironChestBlock, false);
+            this.world.notifyNeighborsOfStateChange(this.pos.down(), IronChest.ironChestBlock, false);
         }
     }
 
@@ -490,7 +491,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
             for (int slot = 0; slot < stacks.size(); slot++)
             {
-                if (stacks.get(slot) != ItemStack.field_190927_a)
+                if (stacks.get(slot) != ItemStack.EMPTY)
                 {
                     NBTTagCompound item = new NBTTagCompound();
 
@@ -545,7 +546,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
                     }
                     else
                     {
-                        this.topStacks.set(i, ItemStack.field_190927_a);
+                        this.topStacks.set(i, ItemStack.EMPTY);
                     }
 
                     pos++;
@@ -558,7 +559,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     {
         if (this.getType().isTransparent())
         {
-            NonNullList<ItemStack> sortList = NonNullList.<ItemStack> func_191197_a(this.topStacks.size(), ItemStack.field_190927_a);
+            NonNullList<ItemStack> sortList = NonNullList.<ItemStack> withSize(this.topStacks.size(), ItemStack.EMPTY);
 
             int pos = 0;
 
@@ -571,7 +572,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
                 }
                 else
                 {
-                    sortList.set(pos++, ItemStack.field_190927_a);
+                    sortList.set(pos++, ItemStack.EMPTY);
                 }
             }
 
@@ -591,7 +592,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     {
         this.setFacing(this.facing.rotateY());
 
-        this.worldObj.addBlockEvent(this.pos, IronChest.ironChestBlock, 2, this.facing.ordinal());
+        this.world.addBlockEvent(this.pos, IronChest.ironChestBlock, 2, this.facing.ordinal());
     }
 
     public void wasPlaced(EntityLivingBase entityliving, ItemStack stack)
@@ -629,17 +630,17 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     }
 
     @Override
-    protected NonNullList<ItemStack> func_190576_q()
+    protected NonNullList<ItemStack> getItems()
     {
         return this.chestContents;
     }
 
     @Override
-    public boolean func_191420_l()
+    public boolean isEmpty()
     {
         for (ItemStack itemstack : this.chestContents)
         {
-            if (!itemstack.func_190926_b())
+            if (!itemstack.isEmpty())
             {
                 return false;
             }

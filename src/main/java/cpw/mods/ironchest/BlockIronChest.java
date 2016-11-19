@@ -150,22 +150,22 @@ public class BlockIronChest extends Block
     }
 
     @Override
-    public void onBlockAdded(World world, BlockPos pos, IBlockState blockState)
+    public void onBlockAdded(World world, BlockPos pos, IBlockState state)
     {
-        super.onBlockAdded(world, pos, blockState);
-        world.notifyBlockUpdate(pos, blockState, blockState, 3);
+        super.onBlockAdded(world, pos, state);
+        world.notifyBlockUpdate(pos, state, state, 3);
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState blockState, EntityLivingBase entityliving, ItemStack itemStack)
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-        TileEntity te = world.getTileEntity(pos);
+        TileEntity te = worldIn.getTileEntity(pos);
         if (te != null && te instanceof TileEntityIronChest)
         {
             TileEntityIronChest teic = (TileEntityIronChest) te;
-            teic.wasPlaced(entityliving, itemStack);
-            teic.setFacing(entityliving.getHorizontalFacing().getOpposite());
-            world.notifyBlockUpdate(pos, blockState, blockState, 3);
+            teic.wasPlaced(placer, stack);
+            teic.setFacing(placer.getHorizontalFacing().getOpposite());
+            worldIn.notifyBlockUpdate(pos, state, state, 3);
         }
     }
 

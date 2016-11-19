@@ -42,9 +42,9 @@ public class TileEntityDirtChest extends TileEntityIronChest
     @Override
     public void removeAdornments()
     {
-        if (this.func_190576_q().get(0) != ItemStack.field_190927_a && this.func_190576_q().get(0).isItemEqual(dirtChest9000GuideBook))
+        if (this.getItems().get(0) != ItemStack.EMPTY && this.getItems().get(0).isItemEqual(dirtChest9000GuideBook))
         {
-            this.func_190576_q().set(0, ItemStack.field_190927_a);
+            this.getItems().set(0, ItemStack.EMPTY);
         }
     }
 }
