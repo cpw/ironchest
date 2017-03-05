@@ -37,9 +37,9 @@ public class ContainerIronChest extends Container
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer player)
+    public boolean canInteractWith(EntityPlayer playerIn)
     {
-        return this.chest.isUsableByPlayer(player);
+        return this.chest.isUsableByPlayer(playerIn);
     }
 
     @Override
@@ -83,10 +83,11 @@ public class ContainerIronChest extends Container
     }
 
     @Override
-    public void onContainerClosed(EntityPlayer entityplayer)
+    public void onContainerClosed(EntityPlayer playerIn)
     {
-        super.onContainerClosed(entityplayer);
-        this.chest.closeInventory(entityplayer);
+        super.onContainerClosed(playerIn);
+
+        this.chest.closeInventory(playerIn);
     }
 
     protected void layoutContainer(IInventory playerInventory, IInventory chestInventory, IronChestType type, int xSize, int ySize)
@@ -111,8 +112,7 @@ public class ContainerIronChest extends Container
         {
             for (int playerInvCol = 0; playerInvCol < 9; playerInvCol++)
             {
-                this.addSlotToContainer(
-                        new Slot(playerInventory, playerInvCol + playerInvRow * 9 + 9, leftCol + playerInvCol * 18, ySize - (4 - playerInvRow) * 18 - 10));
+                this.addSlotToContainer(new Slot(playerInventory, playerInvCol + playerInvRow * 9 + 9, leftCol + playerInvCol * 18, ySize - (4 - playerInvRow) * 18 - 10));
             }
 
         }

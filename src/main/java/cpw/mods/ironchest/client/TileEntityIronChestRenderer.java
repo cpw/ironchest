@@ -27,7 +27,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 
 public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileEntityIronChest>
 {
@@ -81,11 +80,14 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
         {
             this.bindTexture(type.modelTexture);
         }
+
         GlStateManager.pushMatrix();
+
         if (type == IronChestType.CRYSTAL)
         {
             GlStateManager.disableCull();
         }
+
         GlStateManager.color(1F, 1F, 1F, 1F);
         GlStateManager.translate((float) x, (float) y + 1F, (float) z + 1F);
         GlStateManager.scale(1F, -1F, -1F);
@@ -121,7 +123,9 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
         }
 
         GlStateManager.translate(-0.5F, -0.5F, -0.5F);
+
         float lidangle = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
+
         lidangle = 1F - lidangle;
         lidangle = 1F - lidangle * lidangle * lidangle;
 
@@ -133,22 +137,26 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
         this.model.chestLid.rotateAngleX = -lidangle * halfPI;
         // Render the chest itself
         this.model.renderAll();
+
         if (destroyStage >= 0)
         {
             GlStateManager.matrixMode(5890);
             GlStateManager.popMatrix();
             GlStateManager.matrixMode(5888);
         }
+
         if (type == IronChestType.CRYSTAL)
         {
             GlStateManager.enableCull();
         }
+
         GlStateManager.popMatrix();
         GlStateManager.color(1F, 1F, 1F, 1F);
 
         if (type.isTransparent() && te.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d)
         {
             this.random.setSeed(254L);
+
             float shiftX;
             float shiftY;
             float shiftZ;
@@ -156,7 +164,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
             float blockScale = 0.70F;
             float timeD = (float) (360D * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) - partialTicks;
 
-            if (te.getTopItemStacks().get(1) == ItemStack.EMPTY)
+            if (te.getTopItems().get(1).isEmpty())
             {
                 shift = 8;
                 blockScale = 0.85F;
@@ -168,32 +176,35 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
             customitem.setWorld(this.getWorld());
             customitem.hoverStart = 0F;
 
-            NonNullList<ItemStack> stacks = te.getTopItemStacks();
-            for (int i = 0; i < stacks.size(); i++)
+            for (ItemStack item : te.getTopItems())
             {
-                ItemStack item = stacks.get(i);
                 if (shift > shifts.length)
                 {
                     break;
                 }
+
                 if (item == ItemStack.EMPTY)
                 {
                     shift++;
                     continue;
                 }
+
                 shiftX = shifts[shift][0];
                 shiftY = shifts[shift][1];
                 shiftZ = shifts[shift][2];
                 shift++;
+
                 GlStateManager.pushMatrix();
                 GlStateManager.translate(shiftX, shiftY, shiftZ);
                 GlStateManager.rotate(timeD, 0F, 1F, 0F);
                 GlStateManager.scale(blockScale, blockScale, blockScale);
+
                 customitem.setEntityItemStack(item);
 
                 if (this.itemRenderer == null)
                 {
-                    this.itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem()) {
+                    this.itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem())
+                    {
                         @Override
                         public int getModelCount(ItemStack stack)
                         {
@@ -215,6 +226,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                 }
 
                 this.itemRenderer.doRender(customitem, 0D, 0D, 0D, 0F, partialTicks);
+
                 GlStateManager.popMatrix();
             }
 

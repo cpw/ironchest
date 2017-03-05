@@ -77,7 +77,7 @@ public class IronChest
         MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
     }
 
-    @Mod.EventHandler
+    @EventHandler
     public void onMissingMappings(FMLMissingMappingsEvent event)
     {
         for (MissingMapping mapping : event.get())

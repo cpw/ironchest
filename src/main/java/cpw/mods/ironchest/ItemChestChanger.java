@@ -37,35 +37,37 @@ public class ItemChestChanger extends Item
         this.setCreativeTab(CreativeTabs.MISC);
     }
 
+    /**
+     * Called when a Block is right-clicked with this Item
+     */
     @Override
-    //@formatter:off
-    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
-    //@formatter:on
+    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-        if (world.isRemote)
+        ItemStack itemstack = playerIn.getHeldItem(hand);
+
+        if (worldIn.isRemote)
         {
             return EnumActionResult.PASS;
         }
 
         if (this.type.canUpgrade(IronChestType.WOOD))
         {
-            if (!(world.getBlockState(pos).getBlock() instanceof BlockChest))
+            if (!(worldIn.getBlockState(pos).getBlock() instanceof BlockChest))
             {
                 return EnumActionResult.PASS;
             }
         }
         else
         {
-            //@formatter:off
-            if (world.getBlockState(pos) != IronChest.ironChestBlock.getStateFromMeta(IronChestType.valueOf(this.type.source.getName().toUpperCase()).ordinal()))
-            //@formatter:on
+            if (worldIn.getBlockState(pos) != IronChest.ironChestBlock.getStateFromMeta(IronChestType.valueOf(this.type.source.getName().toUpperCase()).ordinal()))
             {
                 return EnumActionResult.PASS;
             }
         }
 
-        TileEntity te = world.getTileEntity(pos);
+        TileEntity te = worldIn.getTileEntity(pos);
         TileEntityIronChest newchest = new TileEntityIronChest();
+
         NonNullList<ItemStack> chestContents = NonNullList.<ItemStack> withSize(27, ItemStack.EMPTY);
         EnumFacing chestFacing = EnumFacing.DOWN;
 
@@ -76,6 +78,7 @@ public class ItemChestChanger extends Item
                 chestContents = ((TileEntityIronChest) te).getItems();
                 chestFacing = ((TileEntityIronChest) te).getFacing();
                 newchest = this.type.target.makeEntity();
+
                 if (newchest == null)
                 {
                     return EnumActionResult.PASS;
@@ -83,7 +86,7 @@ public class ItemChestChanger extends Item
             }
             else if (te instanceof TileEntityChest)
             {
-                IBlockState chestState = world.getBlockState(pos);
+                IBlockState chestState = worldIn.getBlockState(pos);
                 chestFacing = chestState.getValue(BlockChest.FACING);
                 TileEntityChest chest = (TileEntityChest) te;
 
@@ -95,11 +98,14 @@ public class ItemChestChanger extends Item
                 {
                     return EnumActionResult.PASS;
                 }
+
                 chestContents = NonNullList.<ItemStack> withSize(chest.getSizeInventory(), ItemStack.EMPTY);
+
                 for (int i = 0; i < chestContents.size(); i++)
                 {
                     chestContents.set(i, chest.getStackInSlot(i));
                 }
+
                 newchest = this.type.target.makeEntity();
             }
         }
@@ -111,17 +117,17 @@ public class ItemChestChanger extends Item
             ((TileEntityChest) te).checkForAdjacentChests();
         }
 
-        world.removeTileEntity(pos);
-        world.setBlockToAir(pos);
+        worldIn.removeTileEntity(pos);
+        worldIn.setBlockToAir(pos);
 
         IBlockState iblockstate = IronChest.ironChestBlock.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, this.type.target);
 
-        world.setTileEntity(pos, newchest);
-        world.setBlockState(pos, iblockstate, 3);
+        worldIn.setTileEntity(pos, newchest);
+        worldIn.setBlockState(pos, iblockstate, 3);
 
-        world.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
+        worldIn.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
 
-        TileEntity te2 = world.getTileEntity(pos);
+        TileEntity te2 = worldIn.getTileEntity(pos);
 
         if (te2 instanceof TileEntityIronChest)
         {
@@ -129,9 +135,10 @@ public class ItemChestChanger extends Item
             ((TileEntityIronChest) te2).setFacing(chestFacing);
         }
 
-        ItemStack stack = player.getHeldItem(hand);
-
-        stack.setCount(player.capabilities.isCreativeMode ? stack.getCount() : stack.getCount() - 1);
+        if (!playerIn.capabilities.isCreativeMode)
+        {
+            itemstack.shrink(1);
+        }
 
         return EnumActionResult.SUCCESS;
     }
