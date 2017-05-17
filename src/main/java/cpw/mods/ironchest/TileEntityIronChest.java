@@ -153,22 +153,31 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         int compressedIdx = 0;
 
-        mainLoop:
-        for (int i = 0; i < this.getSizeInventory(); i++)
+        mainLoop: for (int i = 0; i < this.getSizeInventory(); i++)
         {
-            if (this.getItems().get(i) != ItemStack.EMPTY)
+            ItemStack itemStack = this.getItems().get(i);
+
+            if (!itemStack.isEmpty())
             {
                 for (int j = 0; j < compressedIdx; j++)
                 {
-                    if (tempCopy.get(j).isItemEqual(this.getItems().get(i)))
+                    ItemStack tempCopyStack = tempCopy.get(j);
+
+                    if (ItemStack.areItemsEqual(tempCopyStack, itemStack))
                     {
-                        tempCopy.get(j).grow(this.getItems().get(i).getCount());
+                        if (itemStack.getCount() != tempCopyStack.getCount())
+                        {
+                            tempCopyStack.grow(itemStack.getCount());
+                        }
 
                         continue mainLoop;
                     }
                 }
 
-                tempCopy.set(compressedIdx++, this.getItems().get(i).copy());
+                tempCopy.set(compressedIdx, itemStack.copy());
+
+                compressedIdx++;
+
                 hasStuff = true;
             }
         }
@@ -185,6 +194,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
             if (this.world != null)
             {
                 IBlockState iblockstate = this.world.getBlockState(this.pos);
+
                 this.world.notifyBlockUpdate(this.pos, iblockstate, iblockstate, 3);
             }
 
@@ -193,16 +203,15 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         this.hadStuff = true;
 
-        Collections.sort(tempCopy, new Comparator<ItemStack>()
-        {
+        Collections.sort(tempCopy, new Comparator<ItemStack>() {
             @Override
             public int compare(ItemStack stack1, ItemStack stack2)
             {
-                if (stack1 == ItemStack.EMPTY)
+                if (stack1.isEmpty())
                 {
                     return 1;
                 }
-                else if (stack2 == ItemStack.EMPTY)
+                else if (stack2.isEmpty())
                 {
                     return -1;
                 }
@@ -217,14 +226,16 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         for (ItemStack element : tempCopy)
         {
-            if (element != ItemStack.EMPTY && element.getCount() > 0)
+            if (!element.isEmpty() && element.getCount() > 0)
             {
-                this.getTopItems().set(p++, element);
-
                 if (p == this.getTopItems().size())
                 {
                     break;
                 }
+
+                this.getTopItems().set(p, element);
+
+                p++;
             }
         }
 
@@ -327,13 +338,15 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     public void update()
     {
         // Resynchronizes clients with the server state
-        if (this.world != null && !this.world.isRemote && this.numPlayersUsing != 0 && (this.ticksSinceSync + this.pos.getX() + this.pos.getY() + this.pos.getZ()) % 200 == 0)
+        if (this.world != null && !this.world.isRemote && this.numPlayersUsing != 0
+                && (this.ticksSinceSync + this.pos.getX() + this.pos.getY() + this.pos.getZ()) % 200 == 0)
         {
             this.numPlayersUsing = 0;
 
             float f = 5.0F;
 
-            for (EntityPlayer player : this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.pos.getX() - f, this.pos.getY() - f, this.pos.getZ() - f, this.pos.getX() + 1 + f, this.pos.getY() + 1 + f, this.pos.getZ() + 1 + f)))
+            for (EntityPlayer player : this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(this.pos.getX() - f, this.pos.getY() - f,
+                    this.pos.getZ() - f, this.pos.getX() + 1 + f, this.pos.getY() + 1 + f, this.pos.getZ() + 1 + f)))
             {
                 if (player.openContainer instanceof ContainerIronChest)
                 {
@@ -504,7 +517,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
                 for (int i = 0; i < this.getTopItems().size(); i++)
                 {
-                    if (stacks.get(pos) != ItemStack.EMPTY)
+                    if (!stacks.get(pos).isEmpty())
                     {
                         this.getTopItems().set(i, stacks.get(pos));
                     }
@@ -529,14 +542,16 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
             for (ItemStack is : this.topStacks)
             {
-                if (is != null)
+                if (!is.isEmpty())
                 {
-                    sortList.set(pos++, is);
+                    sortList.set(pos, is);
                 }
                 else
                 {
-                    sortList.set(pos++, ItemStack.EMPTY);
+                    sortList.set(pos, ItemStack.EMPTY);
                 }
+
+                pos++;
             }
 
             return sortList;

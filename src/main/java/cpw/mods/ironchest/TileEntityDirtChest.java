@@ -42,7 +42,7 @@ public class TileEntityDirtChest extends TileEntityIronChest
     @Override
     public void removeAdornments()
     {
-        if (this.getItems().get(0) != ItemStack.EMPTY && this.getItems().get(0).isItemEqual(dirtChest9000GuideBook))
+        if (!this.getItems().get(0).isEmpty() && this.getItems().get(0).isItemEqual(dirtChest9000GuideBook))
         {
             this.getItems().set(0, ItemStack.EMPTY);
         }

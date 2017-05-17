@@ -202,7 +202,7 @@ public enum IronChestType implements IStringSerializable
     {
         if (this == DIRTCHEST9000)
         {
-            return itemstack == ItemStack.EMPTY || itemstack.getItem() == DIRT_ITEM;
+            return itemstack.isEmpty() || itemstack.getItem() == DIRT_ITEM;
         }
 
         return true;
