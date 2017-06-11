@@ -29,8 +29,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public enum IronShulkerBoxType implements IStringSerializable
 {
@@ -178,9 +176,9 @@ public enum IronShulkerBoxType implements IStringSerializable
 
     public static void addRecipe(ItemStack is, Object... parts)
     {
-        ShapedOreRecipe oreRecipe = new ShapedOreRecipe(is, parts);
+        //ShapedOreRecipe oreRecipe = new ShapedOreRecipe(is, parts); // TODO RE-ADD WHEN FIXED.
 
-        GameRegistry.addRecipe(oreRecipe);
+        //GameRegistry.addRecipe(oreRecipe); // TODO RE-ADD WHEN FIXED.
     }
 
     public int getRowCount()

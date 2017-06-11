@@ -101,15 +101,6 @@ public class IronShulkerBoxColoring implements IRecipe
         return itemstack3;
     }
 
-    /**
-     * Returns the size of the recipe area
-     */
-    @Override
-    public int getRecipeSize()
-    {
-        return 10;
-    }
-
     @Override
     public ItemStack getRecipeOutput()
     {
@@ -132,5 +123,17 @@ public class IronShulkerBoxColoring implements IRecipe
         }
 
         return nonnulllist;
+    }
+
+    @Override
+    public boolean func_192399_d()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean func_194133_a(int p_194133_1_, int p_194133_2_)
+    {
+        return p_194133_1_ * p_194133_2_ >= 2;
     }
 }

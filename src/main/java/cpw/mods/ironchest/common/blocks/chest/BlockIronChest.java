@@ -26,7 +26,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -137,13 +136,13 @@ public class BlockIronChest extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (IronChestType type : IronChestType.VALUES)
         {
             if (type.isValidForCreativeMode())
             {
-                list.add(new ItemStack(itemIn, 1, type.ordinal()));
+                list.add(new ItemStack(this, 1, type.ordinal()));
             }
         }
     }

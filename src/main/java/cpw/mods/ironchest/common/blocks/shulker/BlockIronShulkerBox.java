@@ -12,6 +12,8 @@ package cpw.mods.ironchest.common.blocks.shulker;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.common.ICContent;
 import cpw.mods.ironchest.common.tileentity.shulker.TileEntityIronShulkerBox;
@@ -21,6 +23,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -52,7 +55,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockIronShulkerBox extends Block
 {
     public static final PropertyEnum<IronShulkerBoxType> VARIANT_PROP = PropertyEnum.create("variant", IronShulkerBoxType.class);
+
     private final EnumDyeColor color;
+
     private EnumFacing facingDirection;
 
     public BlockIronShulkerBox(EnumDyeColor colorIn)
@@ -169,13 +174,13 @@ public class BlockIronShulkerBox extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (IronShulkerBoxType type : IronShulkerBoxType.VALUES)
         {
             if (type.isValidForCreativeMode())
             {
-                list.add(new ItemStack(itemIn, 1, type.ordinal()));
+                list.add(new ItemStack(this, 1, type.ordinal()));
             }
         }
     }
@@ -333,9 +338,9 @@ public class BlockIronShulkerBox extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced)
     {
-        super.addInformation(stack, player, tooltip, advanced);
+        super.addInformation(stack, playerIn, tooltip, advanced);
 
         NBTTagCompound nbttagcompound = stack.getTagCompound();
 

@@ -49,7 +49,7 @@ public class TileEntityIronShulkerBoxRenderer extends TileEntitySpecialRenderer<
     }
 
     @Override
-    public void renderTileEntityAt(TileEntityIronShulkerBox te, double x, double y, double z, float partialTicks, int destroyStage)
+    public void func_192841_a(TileEntityIronShulkerBox te, double x, double y, double z, float partialTicks, int destroyStage, float partial)
     {
         if (te == null || te.isInvalid())
         {
@@ -206,7 +206,8 @@ public class TileEntityIronShulkerBoxRenderer extends TileEntitySpecialRenderer<
 
                 if (this.itemRenderer == null)
                 {
-                    this.itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem()) {
+                    this.itemRenderer = new RenderEntityItem(Minecraft.getMinecraft().getRenderManager(), Minecraft.getMinecraft().getRenderItem())
+                    {
                         @Override
                         public int getModelCount(ItemStack stack)
                         {
