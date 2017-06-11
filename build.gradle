@@ -41,6 +41,9 @@ group = "cpw.mods" // http://maven.apache.org/guides/mini/guide-naming-conventio
 // This is our actual project within the group. Note: FML has "fml" here. But this is ironchest.
 archivesBaseName = "ironchest"
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
     version = "1.12-14.21.0.2321"
