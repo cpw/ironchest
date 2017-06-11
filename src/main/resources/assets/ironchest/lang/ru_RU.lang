@@ -1,17 +1,21 @@
-tile.ironchest:IRON.name=Железный сундук
-tile.ironchest:GOLD.name=Золотой сундук
-tile.ironchest:DIAMOND.name=Алмазный сундук
-tile.ironchest:COPPER.name=Медный сундук
-tile.ironchest:SILVER.name=Серебряный сундук
-tile.ironchest:CRYSTAL.name=Кристальный сундук
-tile.ironchest:OBSIDIAN.name=Обсидиановый сундук
+################
+#    Chests    #
+################
 
-item.ironchest:IRONGOLD.name=Улучшение из железного в золотой сундук
-item.ironchest:GOLDDIAMOND.name=Улучшение из золотого в алмазный сундук
-item.ironchest:COPPERSILVER.name=Улучшение из медного в серебряный сундук
-item.ironchest:SILVERGOLD.name=Улучшение из серебряного в золотой сундук
-item.ironchest:COPPERIRON.name=Улучшение из медного в железный сундук
-item.ironchest:DIAMONDCRYSTAL.name=Улучшение из алмазного в кристальный сундук
-item.ironchest:WOODIRON.name=Улучшение из деревянного в железный сундук
-item.ironchest:WOODCOPPER.name=Улучшение из деревянного в медный сундук
-item.ironchest:DIAMONDOBSIDIAN.name=Улучшение из алмазного в обсидиановый сундук
+tile.ironchest.chest.iron.name=Железный сундук
+tile.ironchest.chest.gold.name=Золотой сундук
+tile.ironchest.chest.diamond.name=Алмазный сундук
+tile.ironchest.chest.copper.name=Медный сундук
+tile.ironchest.chest.silver.name=Серебряный сундук
+tile.ironchest.chest.crystal.name=Кристальный сундук
+tile.ironchest.chest.obsidian.name=Обсидиановый сундук
+
+item.ironchest.chest.iron_gold.name=Улучшение из железного в золотой сундук
+item.ironchest.chest.gold_diamond.name=Улучшение из золотого в алмазный сундук
+item.ironchest.chest.copper_silver.name=Улучшение из медного в серебряный сундук
+item.ironchest.chest.silver_gold.name=Улучшение из серебряного в золотой сундук
+item.ironchest.chest.copper_iron.name=Улучшение из медного в железный сундук
+item.ironchest.chest.diamond_crystal.name=Улучшение из алмазного в кристальный сундук
+item.ironchest.chest.wood_iron.name=Улучшение из деревянного в железный сундук
+item.ironchest.chest.wood_copper.name=Улучшение из деревянного в медный сундук
+item.ironchest.chest.diamond_obsidian.name=Улучшение из алмазного в обсидиановый сундук

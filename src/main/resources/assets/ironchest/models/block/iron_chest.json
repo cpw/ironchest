@@ -1,7 +1,7 @@
 {
     "parent": "block/block",
     "textures": {
-        "texture": "ironchest:model/copper_chest"
+        "texture": "ironchest:model/chest/copper_chest"
     },
     "elements": [
         {   "from": [ 1, 0, 1 ],

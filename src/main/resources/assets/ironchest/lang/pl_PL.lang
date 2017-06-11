@@ -1,17 +1,21 @@
-tile.ironchest:IRON.name=Żelazna skrzynia
-tile.ironchest:GOLD.name=Złota skrzynia
-tile.ironchest:DIAMOND.name=Diamentowa skrzynia
-tile.ironchest:COPPER.name=Miedziana skrzynia
-tile.ironchest:SILVER.name=Srebrna skrzynia
-tile.ironchest:CRYSTAL.name=Kryształowa skrzynia
-tile.ironchest:OBSIDIAN.name=Obsydianowa skrzynia
+################
+#    Chests    #
+################
 
-item.ironchest:IRONGOLD.name=Ulepszenie żelaznej skrzyni na złotą
-item.ironchest:GOLDDIAMOND.name=Ulepszenie złotej skrzyni na diamentową
-item.ironchest:COPPERSILVER.name=Ulepszenie miedzianej skrzyni na srebrną
-item.ironchest:SILVERGOLD.name=Ulepszenie srebrnej skrzyni na złotą
-item.ironchest:COPPERIRON.name=Ulepszenie miedzianej skrzyni na żelazną
-item.ironchest:DIAMONDCRYSTAL.name=Ulepszenie diamentowej skrzyni na kryształową
-item.ironchest:WOODIRON.name=Ulepszenie drewnianej skrzyni na żelazną
-item.ironchest:WOODCOPPER.name=Ulepszenie drewnianej skrzyni na miedzianą
-item.ironchest:DIAMONDOBSIDIAN.name=Ulepszenie diamentowej skrzyni na obsydianową
+tile.ironchest.chest.iron.name=Żelazna skrzynia
+tile.ironchest.chest.gold.name=Złota skrzynia
+tile.ironchest.chest.diamond.name=Diamentowa skrzynia
+tile.ironchest.chest.copper.name=Miedziana skrzynia
+tile.ironchest.chest.silver.name=Srebrna skrzynia
+tile.ironchest.chest.crystal.name=Kryształowa skrzynia
+tile.ironchest.chest.obsidian.name=Obsydianowa skrzynia
+
+item.ironchest.chest.iron_gold.name=Ulepszenie żelaznej skrzyni na złotą
+item.ironchest.chest.gold_diamond.name=Ulepszenie złotej skrzyni na diamentową
+item.ironchest.chest.copper_silver.name=Ulepszenie miedzianej skrzyni na srebrną
+item.ironchest.chest.silver_gold.name=Ulepszenie srebrnej skrzyni na złotą
+item.ironchest.chest.copper_iron.name=Ulepszenie miedzianej skrzyni na żelazną
+item.ironchest.chest.diamond_crystal.name=Ulepszenie diamentowej skrzyni na kryształową
+item.ironchest.chest.wood_iron.name=Ulepszenie drewnianej skrzyni na żelazną
+item.ironchest.chest.wood_copper.name=Ulepszenie drewnianej skrzyni na miedzianą
+item.ironchest.chest.diamond_obsidian.name=Ulepszenie diamentowej skrzyni na obsydianową
