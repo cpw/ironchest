@@ -55,9 +55,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockIronShulkerBox extends Block
 {
     public static final PropertyEnum<IronShulkerBoxType> VARIANT_PROP = PropertyEnum.create("variant", IronShulkerBoxType.class);
-
     private final EnumDyeColor color;
-
     private EnumFacing facingDirection;
 
     public BlockIronShulkerBox(EnumDyeColor colorIn)
@@ -134,7 +132,7 @@ public class BlockIronShulkerBox extends Block
                 if (((TileEntityIronShulkerBox) tileentity).getAnimationStatus() == TileEntityIronShulkerBox.AnimationStatus.CLOSED)
                 {
                     //@formatter:off
-                    AxisAlignedBB axisalignedbb = FULL_BLOCK_AABB.addCoord(0.5F * enumfacing.getFrontOffsetX(), 0.5F * enumfacing.getFrontOffsetY(), 0.5F * enumfacing.getFrontOffsetZ()).contract(enumfacing.getFrontOffsetX(), enumfacing.getFrontOffsetY(), enumfacing.getFrontOffsetZ());
+                    AxisAlignedBB axisalignedbb = FULL_BLOCK_AABB.expand(0.5F * enumfacing.getFrontOffsetX(), 0.5F * enumfacing.getFrontOffsetY(), 0.5F * enumfacing.getFrontOffsetZ()).contract(enumfacing.getFrontOffsetX(), enumfacing.getFrontOffsetY(), enumfacing.getFrontOffsetZ());
                     //@formatter:on
 
                     flag = !worldIn.collidesWithAnyBlock(axisalignedbb.offset(pos.offset(enumfacing)));
@@ -338,9 +336,9 @@ public class BlockIronShulkerBox extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag advanced)
     {
-        super.addInformation(stack, playerIn, tooltip, advanced);
+        super.addInformation(stack, worldIn, tooltip, advanced);
 
         NBTTagCompound nbttagcompound = stack.getTagCompound();
 
@@ -378,9 +376,37 @@ public class BlockIronShulkerBox extends Block
 
                     if (j - i > 0)
                     {
-                    //@formatter:off
-                    tooltip.add(String.format(TextFormatting.ITALIC + I18n.translateToLocal("container.shulkerBox.more"), new Object[] {Integer.valueOf(j - i)}));
-                    //@formatter:on
+                        //@formatter:off
+                        tooltip.add(String.format(TextFormatting.ITALIC + I18n.translateToLocal("container.shulkerBox.more"), new Object[] { Integer.valueOf(j - i) }));
+                        //@formatter:on
+                    }
+                }
+                else
+                {
+                    NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack> withSize(27, ItemStack.EMPTY);
+                    ItemStackHelper.loadAllItems(nbttagcompound1, nonnulllist);
+                    int i = 0;
+                    int j = 0;
+
+                    for (ItemStack itemstack : nonnulllist)
+                    {
+                        if (!itemstack.isEmpty())
+                        {
+                            ++j;
+
+                            if (i <= 4)
+                            {
+                                ++i;
+                                tooltip.add(String.format("%s x%d", new Object[] { itemstack.getDisplayName(), Integer.valueOf(itemstack.getCount()) }));
+                            }
+                        }
+                    }
+
+                    if (j - i > 0)
+                    {
+                        //@formatter:off
+                        tooltip.add(String.format(TextFormatting.ITALIC + I18n.translateToLocal("container.shulkerBox.more"), new Object[] { Integer.valueOf(j - i) }));
+                        //@formatter:on
                     }
                 }
             }

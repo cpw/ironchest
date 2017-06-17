@@ -1,0 +1,25 @@
+{
+    "conditions": [
+        {
+            "type": "ironchest:ore_dict_entry_exists",
+            "ore": "ingotCopper"
+        }
+    ],
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "MMM",
+        "MSM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "#COPPER"
+        },
+        "S": {
+            "item": "#SHULKER_SHELL"
+        }
+    },
+    "result": {
+        "item": "ironchest:vanilla_copper_shulker_upgrade"
+    }
+}

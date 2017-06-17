@@ -1,0 +1,22 @@
+{
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "GGG",
+        "MSM",
+        "GGG"
+    ],
+    "key": {
+        "M": {
+            "item": "#DIAMOND"
+        },
+        "S": {
+            "item": "#GOLD"
+        },
+        "G": {
+            "item": "#GLASS"
+        }
+    },
+    "result": {
+        "item": "ironchest:gold_diamond_chest_upgrade"
+    }
+}

@@ -10,10 +10,6 @@
  ******************************************************************************/
 package cpw.mods.ironchest.common.blocks.chest;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
 import cpw.mods.ironchest.common.gui.chest.slot.ValidatingChestSlot;
 import cpw.mods.ironchest.common.tileentity.chest.TileEntityCopperChest;
 import cpw.mods.ironchest.common.tileentity.chest.TileEntityCrystalChest;
@@ -35,15 +31,15 @@ import net.minecraft.util.ResourceLocation;
 public enum IronChestType implements IStringSerializable
 {
     //@formatter:off
-    IRON(54, 9, true, "iron_chest.png", Arrays.asList("ingotIron", "ingotRefinedIron"), TileEntityIronChest.class, 184, 202, "mmmmPmmmm", "mGmG3GmGm"),
-    GOLD(81, 9, true, "gold_chest.png", Collections.singleton("ingotGold"), TileEntityGoldChest.class, 184, 256, "mmmmPmmmm", "mGmG4GmGm"),
-    DIAMOND(108, 12, true, "diamond_chest.png", Collections.singleton("gemDiamond"), TileEntityDiamondChest.class, 184, 256, "GGGmPmGGG", "GGGG4Gmmm"),
-    COPPER(45, 9, false, "copper_chest.png", Collections.singleton("ingotCopper"), TileEntityCopperChest.class, 184, 184, "mmmmCmmmm"),
-    SILVER(72, 9, false, "silver_chest.png", Collections.singleton("ingotSilver"), TileEntitySilverChest.class, 184, 238, "mmmm3mmmm", "mGmG0GmGm"),
-    CRYSTAL(108, 12, true, "crystal_chest.png", Collections.singleton("blockGlass"), TileEntityCrystalChest.class, 238, 256, "GGGGPGGGG"),
-    OBSIDIAN(108, 12, false, "obsidian_chest.png", Collections.singleton("obsidian"), TileEntityObsidianChest.class, 238, 256, "mmmm2mmmm"),
-    DIRTCHEST9000(1, 1, false, "dirt_chest.png", Collections.singleton("dirt"), TileEntityDirtChest.class, 184, 184, "mmmmCmmmm"),
-    WOOD(0, 0, false, "", Collections.singleton("plankWood"), null, 0, 0);
+    IRON(54, 9, true, "iron_chest.png", TileEntityIronChest.class, 184, 202),
+    GOLD(81, 9, true, "gold_chest.png", TileEntityGoldChest.class, 184, 256),
+    DIAMOND(108, 12, true, "diamond_chest.png", TileEntityDiamondChest.class, 184, 256),
+    COPPER(45, 9, false, "copper_chest.png", TileEntityCopperChest.class, 184, 184),
+    SILVER(72, 9, false, "silver_chest.png", TileEntitySilverChest.class, 184, 238),
+    CRYSTAL(108, 12, true, "crystal_chest.png", TileEntityCrystalChest.class, 238, 256),
+    OBSIDIAN(108, 12, false, "obsidian_chest.png", TileEntityObsidianChest.class, 238, 256),
+    DIRTCHEST9000(1, 1, false, "dirt_chest.png", TileEntityDirtChest.class, 184, 184),
+    WOOD(0, 0, false, "", null, 0, 0);
     //@formatter:on
 
     public static final IronChestType VALUES[] = values();
@@ -62,16 +58,12 @@ public enum IronChestType implements IStringSerializable
 
     public final Class<? extends TileEntityIronChest> clazz;
 
-    public final Collection<String> recipes;
-
-    public final Collection<String> matList;
-
     public final int xSize;
 
     public final int ySize;
 
     //@formatter:off
-    IronChestType(int size, int rowLength, boolean tieredChest, String modelTexture, Collection<String> mats, Class<? extends TileEntityIronChest> clazz, int xSize, int ySize, String... recipes)
+    IronChestType(int size, int rowLength, boolean tieredChest, String modelTexture, Class<? extends TileEntityIronChest> clazz, int xSize, int ySize)
     //@formatter:on
     {
         this.name = this.name().toLowerCase();
@@ -79,9 +71,7 @@ public enum IronChestType implements IStringSerializable
         this.rowLength = rowLength;
         this.tieredChest = tieredChest;
         this.modelTexture = new ResourceLocation("ironchest", "textures/model/chest/" + modelTexture);
-        this.matList = Collections.unmodifiableCollection(mats);
         this.clazz = clazz;
-        this.recipes = Collections.unmodifiableCollection(Arrays.asList(recipes));
         this.xSize = xSize;
         this.ySize = ySize;
     }
@@ -121,70 +111,6 @@ public enum IronChestType implements IStringSerializable
     public String getName()
     {
         return this.name;
-    }
-
-    public static void registerBlocksAndRecipes(BlockIronChest blockResult)
-    {
-        Object previous = "chestWood";
-
-        for (IronChestType typ : values())
-        {
-            generateRecipesForType(blockResult, previous, typ);
-
-            ItemStack chest = new ItemStack(blockResult, 1, typ.ordinal());
-
-            if (typ.tieredChest)
-            {
-                previous = chest;
-            }
-        }
-    }
-
-    public static void generateRecipesForType(BlockIronChest blockResult, Object previousTier, IronChestType type)
-    {
-        for (String recipe : type.recipes)
-        {
-            String[] recipeSplit = new String[] { recipe.substring(0, 3), recipe.substring(3, 6), recipe.substring(6, 9) };
-            Object mainMaterial = null;
-
-            for (String mat : type.matList)
-            {
-                mainMaterial = translateOreName(mat);
-                //@formatter:off
-                addRecipe(new ItemStack(blockResult, 1, type.ordinal()), recipeSplit,
-                        'm', mainMaterial,
-                        'P', previousTier, /* previous tier of chest */
-                        'G', "blockGlass",
-                        'C', "chestWood",
-                        '0', new ItemStack(blockResult, 1, 0), /* Iron Chest */
-                        '1', new ItemStack(blockResult, 1, 1), /* Gold Chest */
-                        '2', new ItemStack(blockResult, 1, 2), /* Diamond Chest */
-                        '3', new ItemStack(blockResult, 1, 3), /* Copper Chest */
-                        '4', new ItemStack(blockResult, 1, 4) /* Silver Chest */);
-                //@formatter:on
-            }
-        }
-    }
-
-    public static Object translateOreName(String mat)
-    {
-        if (mat.equals("obsidian"))
-        {
-            return Blocks.OBSIDIAN;
-        }
-        else if (mat.equals("dirt"))
-        {
-            return Blocks.DIRT;
-        }
-
-        return mat;
-    }
-
-    public static void addRecipe(ItemStack is, Object... parts)
-    {
-        //ShapedOreRecipe oreRecipe = new ShapedOreRecipe(is, parts); // TODO RE-ADD WHEN FIXED.
-
-        //GameRegistry.addRecipe(oreRecipe); // TODO RE-ADD WHEN FIXED.
     }
 
     public int getRowCount()

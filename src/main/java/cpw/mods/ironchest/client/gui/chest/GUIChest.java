@@ -53,8 +53,11 @@ public class GUIChest extends GuiContainer
         //@formatter:on
 
         private int xSize;
+
         private int ySize;
+
         private ResourceList guiResourceList;
+
         private IronChestType mainType;
 
         GUI(int xSize, int ySize, ResourceList guiResourceList, IronChestType mainType)
@@ -87,6 +90,20 @@ public class GUIChest extends GuiContainer
         this.allowUserInput = false;
     }
 
+    /**
+     * Draws the screen and all the components in it.
+     */
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    /**
+     * Draws the background layer of this container (behind the items).
+     */
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {

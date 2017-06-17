@@ -425,7 +425,7 @@ public class TileEntityIronShulkerBox extends TileEntityLockableLoot implements 
     public AxisAlignedBB getBoundingBox(EnumFacing facing)
     {
         //@formatter:off
-        return Block.FULL_BLOCK_AABB.addCoord(0.5F * this.getProgress(1.0F) * facing.getFrontOffsetX(), 0.5F * this.getProgress(1.0F) * facing.getFrontOffsetY(), 0.5F * this.getProgress(1.0F) * facing.getFrontOffsetZ());
+        return Block.FULL_BLOCK_AABB.expand(0.5F * this.getProgress(1.0F) * facing.getFrontOffsetX(), 0.5F * this.getProgress(1.0F) * facing.getFrontOffsetY(), 0.5F * this.getProgress(1.0F) * facing.getFrontOffsetZ());
         //@formatter:on
     }
 

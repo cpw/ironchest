@@ -1,0 +1,21 @@
+{
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "MMM",
+        "MSM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "#OBSIDIAN"
+        },
+        "S": {
+            "item": "ironchest:iron_chest",
+            "data": 2
+        }
+    },
+    "result": {
+        "item": "ironchest:iron_chest",
+        "data": 6
+    }
+}

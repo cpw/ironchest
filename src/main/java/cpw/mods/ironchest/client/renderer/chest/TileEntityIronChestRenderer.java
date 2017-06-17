@@ -51,7 +51,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
     }
 
     @Override
-    public void func_192841_a(TileEntityIronChest te, double x, double y, double z, float partialTicks, int destroyStage, float partial)
+    public void renderTileEntityAt(TileEntityIronChest te, double x, double y, double z, float partialTicks, int destroyStage, float partial)
     {
         if (te == null || te.isInvalid())
         {
@@ -200,7 +200,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
                 GlStateManager.rotate(timeD, 0F, 1F, 0F);
                 GlStateManager.scale(blockScale, blockScale, blockScale);
 
-                customitem.setEntityItemStack(item);
+                customitem.setItem(item);
 
                 if (this.itemRenderer == null)
                 {

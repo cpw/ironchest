@@ -30,7 +30,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = IronChest.MOD_ID, name = "Iron Chests", dependencies = "required-after:forge@[13.19.0.2142,)", acceptedMinecraftVersions = "[1.11, 1.12)")
+@Mod(modid = IronChest.MOD_ID, name = "Iron Chests", dependencies = "required-after:forge@[14.21.0.2333,)", acceptedMinecraftVersions = "[1.12, 1.13)")
 public class IronChest
 {
     public static final String MOD_ID = "ironchest";
@@ -78,4 +78,5 @@ public class IronChest
     {
         MissingMappingsHandler.onMissingMappings(event);
     }
+
 }

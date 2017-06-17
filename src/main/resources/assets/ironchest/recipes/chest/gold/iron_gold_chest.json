@@ -1,0 +1,21 @@
+{
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "MMM",
+        "MSM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "#GOLD"
+        },
+        "S": {
+            "item": "ironchest:iron_chest",
+            "data": 0
+        }
+    },
+    "result": {
+        "item": "ironchest:iron_chest",
+        "data": 1
+    }
+}

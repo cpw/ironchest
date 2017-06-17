@@ -1,0 +1,9 @@
+{
+    "recipes": {
+        "shulker_box": "cpw.mods.ironchest.common.crafting.ShulkerBoxRecipeFactory",
+        "shulker_box_coloring": "cpw.mods.ironchest.common.crafting.ShulkerBoxColorRecipeFactory"
+    },
+    "conditions": {
+        "ore_dict_entry_exists": "cpw.mods.ironchest.common.crafting.OreDictEntryExistsConditionFactory"
+    }
+}

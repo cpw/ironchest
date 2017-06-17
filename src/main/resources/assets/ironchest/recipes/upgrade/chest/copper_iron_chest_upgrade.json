@@ -1,0 +1,28 @@
+{
+    "conditions": [
+        {
+            "type": "ironchest:ore_dict_entry_exists",
+            "ore": "ingotCopper"
+        }
+    ],
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "MGM",
+        "GSG",
+        "MGM"
+    ],
+    "key": {
+        "M": {
+            "item": "#IRON"
+        },
+        "S": {
+            "item": "#COPPER"
+        },
+        "G": {
+            "item": "#GLASS"
+        }
+    },
+    "result": {
+        "item": "ironchest:copper_iron_chest_upgrade"
+    }
+}

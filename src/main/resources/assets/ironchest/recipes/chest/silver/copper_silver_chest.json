@@ -1,0 +1,31 @@
+{
+    "conditions": [
+        {
+            "type": "ironchest:ore_dict_entry_exists",
+            "ore": "ingotCopper"
+        },
+        {
+            "type": "ironchest:ore_dict_entry_exists",
+            "ore": "ingotSilver"
+        }
+    ],
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "MMM",
+        "MSM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "#SILVER"
+        },
+        "S": {
+            "item": "ironchest:iron_chest",
+            "data": 3
+        }
+    },
+    "result": {
+        "item": "ironchest:iron_chest",
+        "data": 4
+    }
+}

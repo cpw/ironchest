@@ -1,0 +1,20 @@
+{
+    "type": "ironchest:shulker_box",
+    "pattern": [
+        "MMM",
+        "MSM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "#IRON"
+        },
+        "S": {
+            "item": "minecraft:blue_shulker_box"
+        }
+    },
+    "result": {
+        "item": "ironchest:iron_shulker_box_blue",
+        "data": 0
+    }
+}

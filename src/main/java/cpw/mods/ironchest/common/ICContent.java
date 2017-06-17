@@ -26,7 +26,6 @@ import cpw.mods.ironchest.common.util.BehaviorDispenseIronShulkerBox;
 import cpw.mods.ironchest.common.util.CreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
-import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -36,6 +35,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ICContent
 {
+    //@formatter:off
     public static CreativeTab tabGeneral = new CreativeTab("IronChest", new ItemStack(Item.getItemFromBlock(Blocks.SLIME_BLOCK)));
 
     public static BlockIronChest ironChestBlock;
@@ -43,76 +43,45 @@ public class ICContent
     public static ItemIronChest ironChestItemBlock;
 
     public static BlockIronShulkerBox ironShulkerBoxWhiteBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxOrangeBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxMagentaBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxLightBlueBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxYellowBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxLimeBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxPinkBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxGrayBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxSilverBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxCyanBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxPurpleBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxBlueBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxBrownBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxGreenBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxRedBlock;
-
     public static BlockIronShulkerBox ironShulkerBoxBlackBlock;
 
     public static ItemIronShulkerBox ironShulkerBoxWhiteItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxOrangeItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxMagentaItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxLightBlueItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxYellowItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxLimeItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxPinkItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxGrayItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxSilverItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxCyanItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxPurpleItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxBlueItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxBrownItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxGreenItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxRedItemBlock;
-
     public static ItemIronShulkerBox ironShulkerBoxBlackItemBlock;
 
     public static final List<Block> SHULKER_BLOCKS = Lists.newArrayList();
-
     public static final List<ItemBlock> SHULKER_ITEM_BLOCKS = Lists.newArrayList();
 
     public static final List<Block> VANILLA_SHULKER_BLOCKS = Lists.newArrayList();
-
     public static final List<EnumDyeColor> VANILLA_SHULKER_COLORS = Lists.newArrayList();
+    //@formatter:on
 
     public static void preInit()
     {
@@ -129,9 +98,6 @@ public class ICContent
                 GameRegistry.registerTileEntity(typ.clazz, "IronChest." + typ.name());
             }
         }
-
-        IronChestType.registerBlocksAndRecipes(ironChestBlock);
-        ChestChangerType.generateRecipes();
         // Chests End
 
         // Shulkers Start
@@ -151,21 +117,10 @@ public class ICContent
             }
         }
 
-        for (int i = 0; i < ICContent.SHULKER_BLOCKS.size(); i++)
-        {
-            IronShulkerBoxType.registerBlocksAndRecipes((BlockIronShulkerBox) SHULKER_BLOCKS.get(i), (BlockShulkerBox) VANILLA_SHULKER_BLOCKS.get(i));
-        }
-
         for (ItemBlock block : SHULKER_ITEM_BLOCKS)
         {
             BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(block, new BehaviorDispenseIronShulkerBox());
         }
-
-        // CraftingManager.func_193372_a(new ResourceLocation("ironchests", "ironshulkerboxcoloring"), new IronShulkerBoxColoring()); // TEMP FIX FOR COLORING OF SHULKER BOXES.
-        // GameRegistry.addRecipe(new ResourceLocation("ironchests", "ironshulkerboxcoloring"), new IronShulkerBoxColoring()); // TODO RE-ADD WHEN FIXED.
-        // RecipeSorter.register(IronChest.MOD_ID, IronShulkerBoxColoring.class, Category.SHAPELESS, "after:forge:shapelessore"); // TODO: REMOVE WHEN FORGE REMOVES
-
-        ShulkerBoxChangerType.generateRecipes();
         // Shulkers End
 
         tabGeneral.setDisplayIcon(new ItemStack(ironChestBlock, 1, IronChestType.IRON.ordinal()));

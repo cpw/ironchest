@@ -1,0 +1,30 @@
+{
+    "conditions": [
+        {
+            "type": "ironchest:ore_dict_entry_exists",
+            "ore": "ingotCopper"
+        }
+    ],
+    "type": "ironchest:shulker_box",
+    "pattern": [
+        "MGM",
+        "GSG",
+        "MGM"
+    ],
+    "key": {
+        "M": {
+            "item": "#IRON"
+        },
+        "G": {
+            "item": "#GLASS"
+        },
+        "S": {
+            "item": "ironchest:iron_shulker_box_white",
+            "data": 3
+        }
+    },
+    "result": {
+        "item": "ironchest:iron_shulker_box_white",
+        "data": 0
+    }
+}

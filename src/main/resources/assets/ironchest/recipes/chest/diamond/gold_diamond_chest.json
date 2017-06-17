@@ -1,0 +1,24 @@
+{
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "GGG",
+        "MSM",
+        "GGG"
+    ],
+    "key": {
+        "M": {
+            "item": "#DIAMOND"
+        },
+        "G": {
+            "item": "#GLASS"
+        },
+        "S": {
+            "item": "ironchest:iron_chest",
+            "data": 1
+        }
+    },
+    "result": {
+        "item": "ironchest:iron_chest",
+        "data": 2
+    }
+}

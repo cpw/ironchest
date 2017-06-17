@@ -8,11 +8,11 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 plugins {
-    id "com.matthewprenger.cursegradle" version "1.0.7"
+    id "com.matthewprenger.cursegradle" version "1.0.8"
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -46,8 +46,8 @@ targetCompatibility = 1.8
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.12-14.21.0.2321"
-    mappings = "snapshot_20161220"
+    version = "1.12-14.21.0.2333"
+    mappings = "snapshot_20170616"
     runDir = "run"
 }
 

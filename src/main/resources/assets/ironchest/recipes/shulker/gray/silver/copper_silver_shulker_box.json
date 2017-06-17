@@ -1,0 +1,31 @@
+{
+    "conditions": [
+        {
+            "type": "ironchest:ore_dict_entry_exists",
+            "ore": "ingotCopper"
+        },
+        {
+            "type": "ironchest:ore_dict_entry_exists",
+            "ore": "ingotSilver"
+        }
+    ],
+    "type": "ironchest:shulker_box",
+    "pattern": [
+        "MMM",
+        "MSM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "#SILVER"
+        },
+        "S": {
+            "item": "ironchest:iron_shulker_box_gray",
+            "data": 3
+        }
+    },
+    "result": {
+        "item": "ironchest:iron_shulker_box_gray",
+        "data": 4
+    }
+}

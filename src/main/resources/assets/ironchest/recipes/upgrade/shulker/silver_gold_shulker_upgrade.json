@@ -1,0 +1,28 @@
+{
+    "conditions": [
+        {
+            "type": "ironchest:ore_dict_entry_exists",
+            "ore": "ingotSilver"
+        }
+    ],
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "MGM",
+        "GSG",
+        "MGM"
+    ],
+    "key": {
+        "M": {
+            "item": "#GOLD"
+        },
+        "S": {
+            "item": "#SILVER"
+        },
+        "G": {
+            "item": "#GLASS"
+        }
+    },
+    "result": {
+        "item": "ironchest:silver_gold_shulker_upgrade"
+    }
+}

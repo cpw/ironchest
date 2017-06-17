@@ -1,0 +1,19 @@
+{
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "GGG",
+        "GSG",
+        "GGG"
+    ],
+    "key": {
+        "G": {
+            "item": "#GLASS"
+        },
+        "S": {
+            "item": "#OBSIDIAN"
+        }
+    },
+    "result": {
+        "item": "ironchest:diamond_crystal_chest_upgrade"
+    }
+}

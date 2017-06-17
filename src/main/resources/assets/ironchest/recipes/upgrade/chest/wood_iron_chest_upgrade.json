@@ -1,0 +1,19 @@
+{
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "MMM",
+        "MSM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "#IRON"
+        },
+        "S": {
+            "item": "#PLANKS"
+        }
+    },
+    "result": {
+        "item": "ironchest:wood_iron_chest_upgrade"
+    }
+}
