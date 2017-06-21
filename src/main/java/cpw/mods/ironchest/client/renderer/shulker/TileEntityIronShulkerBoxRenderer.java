@@ -49,7 +49,7 @@ public class TileEntityIronShulkerBoxRenderer extends TileEntitySpecialRenderer<
     }
 
     @Override
-    public void renderTileEntityAt(TileEntityIronShulkerBox te, double x, double y, double z, float partialTicks, int destroyStage, float partial)
+    public void render(TileEntityIronShulkerBox te, double x, double y, double z, float partialTicks, int destroyStage, float partial)
     {
         if (te == null || te.isInvalid())
         {

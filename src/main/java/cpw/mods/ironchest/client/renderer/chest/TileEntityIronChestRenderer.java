@@ -51,7 +51,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
     }
 
     @Override
-    public void renderTileEntityAt(TileEntityIronChest te, double x, double y, double z, float partialTicks, int destroyStage, float partial)
+    public void render(TileEntityIronChest te, double x, double y, double z, float partialTicks, int destroyStage, float partial)
     {
         if (te == null || te.isInvalid())
         {
