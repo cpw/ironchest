@@ -12,58 +12,75 @@ package cpw.mods.ironchest.common.util;
 
 import javax.annotation.Nonnull;
 
-import cpw.mods.ironchest.IronChest;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
+import net.minecraftforge.event.RegistryEvent.MissingMappings;
+import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class MissingMappingsHandler
 {
-    public static void onMissingMappings(FMLMissingMappingsEvent event)
+    @SubscribeEvent
+    public void missingBlockMappings(MissingMappings<Block> event)
     {
-        for (MissingMapping mapping : event.get())
+        for (Mapping<Block> entry : event.getAllMappings())
         {
-            if (mapping.resourceLocation.getResourceDomain().equals(IronChest.MOD_ID))
-            {
-                @Nonnull
-                String path = mapping.resourceLocation.getResourcePath();
+            @Nonnull
+            String path = entry.key.getResourcePath();
 
-                replaceOldChest(path, mapping);
-
-                replaceOldUpgrades(path, mapping);
-
-                replaceNewUpgrades(path, mapping);
-            }
+            replaceOldChestBlock(path, entry);
         }
     }
 
-    private static void replaceOldChest(String path, MissingMapping mapping)
+    @SubscribeEvent
+    public void missingItemMappings(MissingMappings<Item> event)
+    {
+        for (Mapping<Item> entry : event.getAllMappings())
+        {
+            @Nonnull
+            String path = entry.key.getResourcePath();
+
+            replaceOldChestItem(path, entry);
+
+            replaceOldUpgrades(path, entry);
+
+            replaceNewUpgrades(path, entry);
+        }
+    }
+
+    private static void replaceOldChestBlock(String path, Mapping<Block> mapping)
     {
         if (path.endsWith("blockironchest"))
         {
             path = path.replace("blockironchest", "iron_chest");
-            ResourceLocation newRes = new ResourceLocation(mapping.resourceLocation.getResourceDomain(), path);
+            ResourceLocation newRes = new ResourceLocation(mapping.key.getResourceDomain(), path);
             Block block = ForgeRegistries.BLOCKS.getValue(newRes);
 
             if (block != null)
             {
-                if (mapping.type == GameRegistry.Type.BLOCK)
-                {
-                    mapping.remap(block);
-                }
-                else
-                {
-                    mapping.remap(Item.getItemFromBlock(block));
-                }
+                mapping.remap(block);
             }
         }
     }
 
-    private static void replaceOldUpgrades(String path, MissingMapping mapping)
+    private static void replaceOldChestItem(String path, Mapping<Item> mapping)
+    {
+        if (path.endsWith("blockironchest"))
+        {
+            path = path.replace("blockironchest", "iron_chest");
+            ResourceLocation newRes = new ResourceLocation(mapping.key.getResourceDomain(), path);
+            Item item = ForgeRegistries.ITEMS.getValue(newRes);
+
+            if (item != null)
+            {
+                mapping.remap(item);
+            }
+        }
+    }
+
+    private static void replaceOldUpgrades(String path, Mapping<Item> mapping)
     {
         if (path.endsWith("irongoldupgrade"))
         {
@@ -120,7 +137,7 @@ public class MissingMappingsHandler
         }
     }
 
-    private static void replaceNewUpgrades(String path, MissingMapping mapping)
+    private static void replaceNewUpgrades(String path, Mapping<Item> mapping)
     {
         if (path.endsWith("iron_gold_upgrade"))
         {
@@ -177,9 +194,9 @@ public class MissingMappingsHandler
         }
     }
 
-    private static void replaceUpgradeItem(String path, MissingMapping mapping)
+    private static void replaceUpgradeItem(String path, Mapping<Item> mapping)
     {
-        ResourceLocation newRes = new ResourceLocation(mapping.resourceLocation.getResourceDomain(), path);
+        ResourceLocation newRes = new ResourceLocation(mapping.key.getResourceDomain(), path);
         Item item = ForgeRegistries.ITEMS.getValue(newRes);
 
         if (item != null)

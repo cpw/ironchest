@@ -16,6 +16,7 @@ import cpw.mods.ironchest.common.ICContent;
 import cpw.mods.ironchest.common.blocks.shulker.BlockIronShulkerBox;
 import cpw.mods.ironchest.common.blocks.shulker.IronShulkerBoxType;
 import cpw.mods.ironchest.common.items.ShulkerBoxChangerType;
+import cpw.mods.ironchest.common.lib.BlockLists;
 import cpw.mods.ironchest.common.tileentity.shulker.TileEntityIronShulkerBox;
 import cpw.mods.ironchest.common.util.ItemTooltip;
 import net.minecraft.block.Block;
@@ -56,11 +57,11 @@ public class ItemShulkerBoxChanger extends ItemTooltip
 
                 Block ironShulkerBoxBlock = worldIn.getBlockState(ironShulkerBox.getPos()).getBlock();
 
-                for (int i = 0; i < ICContent.SHULKER_BLOCKS.size(); i++)
+                for (int i = 0; i < BlockLists.SHULKER_BLOCKS.size(); i++)
                 {
-                    if (ICContent.SHULKER_BLOCKS.get(i) == ironShulkerBoxBlock)
+                    if (BlockLists.SHULKER_BLOCKS.get(i) == ironShulkerBoxBlock)
                     {
-                        return ICContent.VANILLA_SHULKER_COLORS.get(i);
+                        return BlockLists.VANILLA_SHULKER_COLORS.get(i);
                     }
                 }
             }
@@ -70,11 +71,11 @@ public class ItemShulkerBoxChanger extends ItemTooltip
 
                 Block shulkerBoxBlock = worldIn.getBlockState(shulkerBox.getPos()).getBlock();
 
-                for (int i = 0; i < ICContent.VANILLA_SHULKER_BLOCKS.size(); i++)
+                for (int i = 0; i < BlockLists.VANILLA_SHULKER_BLOCKS.size(); i++)
                 {
-                    if (ICContent.VANILLA_SHULKER_BLOCKS.get(i) == shulkerBoxBlock)
+                    if (BlockLists.VANILLA_SHULKER_BLOCKS.get(i) == shulkerBoxBlock)
                     {
-                        return ICContent.VANILLA_SHULKER_COLORS.get(i);
+                        return BlockLists.VANILLA_SHULKER_COLORS.get(i);
                     }
                 }
             }
@@ -179,9 +180,9 @@ public class ItemShulkerBoxChanger extends ItemTooltip
 
         IBlockState iblockstate = null;
 
-        if (ICContent.SHULKER_BLOCKS.get(shulkerBoxColor.getMetadata()) != null)
+        if (BlockLists.SHULKER_BLOCKS.get(shulkerBoxColor.getMetadata()) != null)
         {
-            Block block = ICContent.SHULKER_BLOCKS.get(shulkerBoxColor.getMetadata());
+            Block block = BlockLists.SHULKER_BLOCKS.get(shulkerBoxColor.getMetadata());
 
             iblockstate = block.getDefaultState().withProperty(BlockIronShulkerBox.VARIANT_PROP, this.type.target);
         }

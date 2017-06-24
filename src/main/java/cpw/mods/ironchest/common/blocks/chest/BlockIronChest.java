@@ -15,6 +15,7 @@ import javax.annotation.Nullable;
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.common.ICContent;
 import cpw.mods.ironchest.common.tileentity.chest.TileEntityIronChest;
+import cpw.mods.ironchest.common.util.BlockNames;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -52,7 +53,7 @@ public class BlockIronChest extends Block
     {
         super(Material.IRON);
 
-        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, "iron_chest"));
+        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, BlockNames.IRON_CHEST));
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT_PROP, IronChestType.IRON));
         this.setHardness(3.0F);
         this.setUnlocalizedName("IronChest");

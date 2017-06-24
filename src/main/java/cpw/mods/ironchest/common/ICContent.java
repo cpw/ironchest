@@ -10,10 +10,9 @@
  ******************************************************************************/
 package cpw.mods.ironchest.common;
 
-import java.util.List;
-
-import com.google.common.collect.Lists;
-
+import cpw.mods.ironchest.IronChest;
+import cpw.mods.ironchest.client.renderer.chest.TileEntityIronChestRenderer;
+import cpw.mods.ironchest.client.renderer.shulker.TileEntityIronShulkerBoxRenderer;
 import cpw.mods.ironchest.common.blocks.chest.BlockIronChest;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
 import cpw.mods.ironchest.common.blocks.shulker.BlockIronShulkerBox;
@@ -22,74 +21,108 @@ import cpw.mods.ironchest.common.items.ChestChangerType;
 import cpw.mods.ironchest.common.items.ShulkerBoxChangerType;
 import cpw.mods.ironchest.common.items.chest.ItemIronChest;
 import cpw.mods.ironchest.common.items.shulker.ItemIronShulkerBox;
-import cpw.mods.ironchest.common.util.BehaviorDispenseIronShulkerBox;
+import cpw.mods.ironchest.common.lib.BlockLists;
+import cpw.mods.ironchest.common.util.BlockNames;
 import cpw.mods.ironchest.common.util.CreativeTab;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDispenser;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
+@ObjectHolder(IronChest.MOD_ID)
 public class ICContent
 {
     //@formatter:off
     public static CreativeTab tabGeneral = new CreativeTab("IronChest", new ItemStack(Item.getItemFromBlock(Blocks.SLIME_BLOCK)));
 
-    public static BlockIronChest ironChestBlock;
+    @ObjectHolder(BlockNames.IRON_CHEST)
+    public static BlockIronChest ironChestBlock = new BlockIronChest();
 
-    public static ItemIronChest ironChestItemBlock;
+    @ObjectHolder(BlockNames.IRON_CHEST)
+    public static Item ironChestItemBlock = new ItemIronChest(ironChestBlock);
 
-    public static BlockIronShulkerBox ironShulkerBoxWhiteBlock;
-    public static BlockIronShulkerBox ironShulkerBoxOrangeBlock;
-    public static BlockIronShulkerBox ironShulkerBoxMagentaBlock;
-    public static BlockIronShulkerBox ironShulkerBoxLightBlueBlock;
-    public static BlockIronShulkerBox ironShulkerBoxYellowBlock;
-    public static BlockIronShulkerBox ironShulkerBoxLimeBlock;
-    public static BlockIronShulkerBox ironShulkerBoxPinkBlock;
-    public static BlockIronShulkerBox ironShulkerBoxGrayBlock;
-    public static BlockIronShulkerBox ironShulkerBoxSilverBlock;
-    public static BlockIronShulkerBox ironShulkerBoxCyanBlock;
-    public static BlockIronShulkerBox ironShulkerBoxPurpleBlock;
-    public static BlockIronShulkerBox ironShulkerBoxBlueBlock;
-    public static BlockIronShulkerBox ironShulkerBoxBrownBlock;
-    public static BlockIronShulkerBox ironShulkerBoxGreenBlock;
-    public static BlockIronShulkerBox ironShulkerBoxRedBlock;
-    public static BlockIronShulkerBox ironShulkerBoxBlackBlock;
+    @ObjectHolder(BlockNames.WHITE_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxWhiteBlock = new BlockIronShulkerBox(EnumDyeColor.WHITE);
+    @ObjectHolder(BlockNames.ORANGE_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxOrangeBlock = new BlockIronShulkerBox(EnumDyeColor.ORANGE);
+    @ObjectHolder(BlockNames.MAGENTA_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxMagentaBlock = new BlockIronShulkerBox(EnumDyeColor.MAGENTA);
+    @ObjectHolder(BlockNames.LIGHT_BLUE_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxLightBlueBlock = new BlockIronShulkerBox(EnumDyeColor.LIGHT_BLUE);
+    @ObjectHolder(BlockNames.YELLOW_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxYellowBlock = new BlockIronShulkerBox(EnumDyeColor.YELLOW);
+    @ObjectHolder(BlockNames.LIME_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxLimeBlock = new BlockIronShulkerBox(EnumDyeColor.LIME);
+    @ObjectHolder(BlockNames.PINK_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxPinkBlock = new BlockIronShulkerBox(EnumDyeColor.PINK);
+    @ObjectHolder(BlockNames.GRAY_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxGrayBlock = new BlockIronShulkerBox(EnumDyeColor.GRAY);
+    @ObjectHolder(BlockNames.SILVER_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxSilverBlock = new BlockIronShulkerBox(EnumDyeColor.SILVER);
+    @ObjectHolder(BlockNames.CYAN_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxCyanBlock = new BlockIronShulkerBox(EnumDyeColor.CYAN);
+    @ObjectHolder(BlockNames.PURPLE_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxPurpleBlock = new BlockIronShulkerBox(EnumDyeColor.PURPLE);
+    @ObjectHolder(BlockNames.BLUE_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxBlueBlock = new BlockIronShulkerBox(EnumDyeColor.BLUE);
+    @ObjectHolder(BlockNames.BROWN_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxBrownBlock = new BlockIronShulkerBox(EnumDyeColor.BROWN);
+    @ObjectHolder(BlockNames.GREEN_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxGreenBlock = new BlockIronShulkerBox(EnumDyeColor.GREEN);
+    @ObjectHolder(BlockNames.RED_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxRedBlock = new BlockIronShulkerBox(EnumDyeColor.RED);
+    @ObjectHolder(BlockNames.BLACK_SHULKER)
+    public static BlockIronShulkerBox ironShulkerBoxBlackBlock = new BlockIronShulkerBox(EnumDyeColor.BLACK);
 
-    public static ItemIronShulkerBox ironShulkerBoxWhiteItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxOrangeItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxMagentaItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxLightBlueItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxYellowItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxLimeItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxPinkItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxGrayItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxSilverItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxCyanItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxPurpleItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxBlueItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxBrownItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxGreenItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxRedItemBlock;
-    public static ItemIronShulkerBox ironShulkerBoxBlackItemBlock;
-
-    public static final List<Block> SHULKER_BLOCKS = Lists.newArrayList();
-    public static final List<ItemBlock> SHULKER_ITEM_BLOCKS = Lists.newArrayList();
-
-    public static final List<Block> VANILLA_SHULKER_BLOCKS = Lists.newArrayList();
-    public static final List<EnumDyeColor> VANILLA_SHULKER_COLORS = Lists.newArrayList();
+    @ObjectHolder(BlockNames.WHITE_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxWhiteItemBlock = new ItemIronShulkerBox(ironShulkerBoxWhiteBlock, EnumDyeColor.WHITE);
+    @ObjectHolder(BlockNames.ORANGE_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxOrangeItemBlock = new ItemIronShulkerBox(ironShulkerBoxOrangeBlock, EnumDyeColor.ORANGE);
+    @ObjectHolder(BlockNames.MAGENTA_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxMagentaItemBlock = new ItemIronShulkerBox(ironShulkerBoxMagentaBlock, EnumDyeColor.MAGENTA);
+    @ObjectHolder(BlockNames.LIGHT_BLUE_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxLightBlueItemBlock = new ItemIronShulkerBox(ironShulkerBoxLightBlueBlock, EnumDyeColor.LIGHT_BLUE);
+    @ObjectHolder(BlockNames.YELLOW_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxYellowItemBlock = new ItemIronShulkerBox(ironShulkerBoxYellowBlock, EnumDyeColor.YELLOW);
+    @ObjectHolder(BlockNames.LIME_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxLimeItemBlock = new ItemIronShulkerBox(ironShulkerBoxLimeBlock, EnumDyeColor.LIME);
+    @ObjectHolder(BlockNames.PINK_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxPinkItemBlock = new ItemIronShulkerBox(ironShulkerBoxPinkBlock, EnumDyeColor.PINK);
+    @ObjectHolder(BlockNames.GRAY_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxGrayItemBlock = new ItemIronShulkerBox(ironShulkerBoxGrayBlock, EnumDyeColor.GRAY);
+    @ObjectHolder(BlockNames.SILVER_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxSilverItemBlock = new ItemIronShulkerBox(ironShulkerBoxSilverBlock, EnumDyeColor.SILVER);
+    @ObjectHolder(BlockNames.CYAN_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxCyanItemBlock = new ItemIronShulkerBox(ironShulkerBoxCyanBlock, EnumDyeColor.CYAN);
+    @ObjectHolder(BlockNames.PURPLE_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxPurpleItemBlock = new ItemIronShulkerBox(ironShulkerBoxPurpleBlock, EnumDyeColor.PURPLE);
+    @ObjectHolder(BlockNames.BLUE_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxBlueItemBlock = new ItemIronShulkerBox(ironShulkerBoxBlueBlock, EnumDyeColor.BLUE);
+    @ObjectHolder(BlockNames.BROWN_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxBrownItemBlock = new ItemIronShulkerBox(ironShulkerBoxBrownBlock, EnumDyeColor.BROWN);
+    @ObjectHolder(BlockNames.GREEN_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxGreenItemBlock = new ItemIronShulkerBox(ironShulkerBoxGreenBlock, EnumDyeColor.GREEN);
+    @ObjectHolder(BlockNames.RED_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxRedItemBlock = new ItemIronShulkerBox(ironShulkerBoxRedBlock, EnumDyeColor.RED);
+    @ObjectHolder(BlockNames.BLACK_SHULKER)
+    public static ItemIronShulkerBox ironShulkerBoxBlackItemBlock = new ItemIronShulkerBox(ironShulkerBoxBlackBlock, EnumDyeColor.BLACK);
     //@formatter:on
 
-    public static void preInit()
+    @SubscribeEvent
+    public void registerBlocks(Register<Block> event)
     {
         // Chests Start
-        ChestChangerType.buildItems();
-
-        ironChestBlock = GameRegistry.register(new BlockIronChest());
-        ironChestItemBlock = GameRegistry.register(new ItemIronChest(ironChestBlock));
+        event.getRegistry().register(ironChestBlock);
 
         for (IronChestType typ : IronChestType.VALUES)
         {
@@ -98,16 +131,14 @@ public class ICContent
                 GameRegistry.registerTileEntity(typ.clazz, "IronChest." + typ.name());
             }
         }
+
+        tabGeneral.setDisplayIcon(new ItemStack(ironChestBlock, 1, IronChestType.IRON.ordinal()));
         // Chests End
 
         // Shulkers Start
-        setVanillaShulkerList();
+        BlockLists.createVanillaShulkerBlockList();
 
-        ShulkerBoxChangerType.buildItems();
-
-        registerShulkerBlocks();
-
-        registerShulkerItemBlocks();
+        registerShulkerBlocks(event);
 
         for (IronShulkerBoxType typ : IronShulkerBoxType.VALUES)
         {
@@ -117,91 +148,93 @@ public class ICContent
             }
         }
 
-        for (ItemBlock block : SHULKER_ITEM_BLOCKS)
-        {
-            BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(block, new BehaviorDispenseIronShulkerBox());
-        }
+        BlockLists.createIronShulkerBlockList();
         // Shulkers End
-
-        tabGeneral.setDisplayIcon(new ItemStack(ironChestBlock, 1, IronChestType.IRON.ordinal()));
     }
 
-    private static void registerShulkerBlocks()
+    @SubscribeEvent
+    public void registerItems(Register<Item> event)
     {
-        SHULKER_BLOCKS.add(ironShulkerBoxWhiteBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.WHITE)));
-        SHULKER_BLOCKS.add(ironShulkerBoxOrangeBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.ORANGE)));
-        SHULKER_BLOCKS.add(ironShulkerBoxMagentaBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.MAGENTA)));
-        SHULKER_BLOCKS.add(ironShulkerBoxLightBlueBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.LIGHT_BLUE)));
-        SHULKER_BLOCKS.add(ironShulkerBoxYellowBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.YELLOW)));
-        SHULKER_BLOCKS.add(ironShulkerBoxLimeBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.LIME)));
-        SHULKER_BLOCKS.add(ironShulkerBoxPinkBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.PINK)));
-        SHULKER_BLOCKS.add(ironShulkerBoxGrayBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.GRAY)));
-        SHULKER_BLOCKS.add(ironShulkerBoxSilverBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.SILVER)));
-        SHULKER_BLOCKS.add(ironShulkerBoxCyanBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.CYAN)));
-        SHULKER_BLOCKS.add(ironShulkerBoxPurpleBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.PURPLE)));
-        SHULKER_BLOCKS.add(ironShulkerBoxBlueBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.BLUE)));
-        SHULKER_BLOCKS.add(ironShulkerBoxBrownBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.BROWN)));
-        SHULKER_BLOCKS.add(ironShulkerBoxGreenBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.GREEN)));
-        SHULKER_BLOCKS.add(ironShulkerBoxRedBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.RED)));
-        SHULKER_BLOCKS.add(ironShulkerBoxBlackBlock = GameRegistry.register(new BlockIronShulkerBox(EnumDyeColor.BLACK)));
+        // Chests Start
+        event.getRegistry().register(ironChestItemBlock);
+
+        ChestChangerType.buildItems(event);
+        // Chests End
+
+        // Shulkers Start
+        registerShulkerItemBlocks(event);
+
+        ShulkerBoxChangerType.buildItems(event);
+
+        BlockLists.createShulkerItemList();
+
+        BlockLists.registerBlockBehavior();
+        // Shulkers End
     }
 
-    private static void registerShulkerItemBlocks()
+    @SubscribeEvent
+    public void registerModels(ModelRegistryEvent event)
     {
-        //@formatter:off
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxWhiteItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxWhiteBlock, EnumDyeColor.WHITE)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxOrangeItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxOrangeBlock, EnumDyeColor.ORANGE)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxMagentaItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxMagentaBlock, EnumDyeColor.MAGENTA)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxLightBlueItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxLightBlueBlock, EnumDyeColor.LIGHT_BLUE)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxYellowItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxYellowBlock, EnumDyeColor.YELLOW)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxLimeItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxLimeBlock, EnumDyeColor.LIME)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxPinkItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxPinkBlock, EnumDyeColor.PINK)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxGrayItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxGrayBlock, EnumDyeColor.GRAY)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxSilverItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxSilverBlock, EnumDyeColor.SILVER)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxCyanItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxCyanBlock, EnumDyeColor.CYAN)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxPurpleItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxPurpleBlock, EnumDyeColor.PURPLE)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxBlueItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxBlueBlock, EnumDyeColor.BLUE)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxBrownItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxBrownBlock, EnumDyeColor.BROWN)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxGreenItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxGreenBlock, EnumDyeColor.GREEN)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxRedItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxRedBlock, EnumDyeColor.RED)));
-        SHULKER_ITEM_BLOCKS.add(ironShulkerBoxBlackItemBlock = GameRegistry.register(new ItemIronShulkerBox(ironShulkerBoxBlackBlock, EnumDyeColor.BLACK)));
-        //@formatter:on
+        // Chests Start
+        Item chestItem = Item.getItemFromBlock(ICContent.ironChestBlock);
+
+        for (IronChestType type : IronChestType.values())
+        {
+            if (type != IronChestType.WOOD)
+            {
+                //@formatter:off
+                ModelLoader.setCustomModelResourceLocation(chestItem, type.ordinal(), new ModelResourceLocation(chestItem.getRegistryName(), "variant=" + type.getName()));
+                //@formatter:on
+            }
+
+            ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
+        }
+
+        for (ChestChangerType type : ChestChangerType.VALUES)
+        {
+            //@formatter:off
+            ModelLoader.setCustomModelResourceLocation(type.item, 0, new ModelResourceLocation(new ResourceLocation(IronChest.MOD_ID, "iron_chest_upgrades"), "variant=" + type.itemName.toLowerCase()));
+            //@formatter:on
+        }
+        // Chests End
+
+        // Shulkers Start
+        for (Block shulker : BlockLists.SHULKER_BLOCKS)
+        {
+            Item shulkerBoxItem = Item.getItemFromBlock(shulker);
+
+            for (IronShulkerBoxType type : IronShulkerBoxType.values())
+            {
+                if (type != IronShulkerBoxType.VANILLA)
+                {
+                    //@formatter:off
+                    ModelLoader.setCustomModelResourceLocation(shulkerBoxItem, type.ordinal(), new ModelResourceLocation(shulkerBoxItem.getRegistryName(), "variant=" + type.getName()));
+                    //@formatter:on
+                }
+            }
+        }
+
+        for (IronShulkerBoxType type : IronShulkerBoxType.values())
+        {
+            ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronShulkerBoxRenderer());
+        }
+
+        for (ShulkerBoxChangerType type : ShulkerBoxChangerType.VALUES)
+        {
+            //@formatter:off
+            ModelLoader.setCustomModelResourceLocation(type.item, 0, new ModelResourceLocation(new ResourceLocation(IronChest.MOD_ID, "iron_shulker_box_upgrades"), "variant=" + type.itemName.toLowerCase()));
+            //@formatter:on
+        }
+        // Shulker End
     }
 
-    private static void setVanillaShulkerList()
+    private static void registerShulkerBlocks(Register<Block> event)
     {
-        VANILLA_SHULKER_BLOCKS.add(Blocks.WHITE_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.ORANGE_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.MAGENTA_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.LIGHT_BLUE_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.YELLOW_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.LIME_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.PINK_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.GRAY_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.SILVER_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.CYAN_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.PURPLE_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.BLUE_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.BROWN_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.GREEN_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.RED_SHULKER_BOX);
-        VANILLA_SHULKER_BLOCKS.add(Blocks.BLACK_SHULKER_BOX);
+        event.getRegistry().registerAll(ironShulkerBoxWhiteBlock, ironShulkerBoxOrangeBlock, ironShulkerBoxMagentaBlock, ironShulkerBoxLightBlueBlock, ironShulkerBoxYellowBlock, ironShulkerBoxLimeBlock, ironShulkerBoxPinkBlock, ironShulkerBoxGrayBlock, ironShulkerBoxSilverBlock, ironShulkerBoxCyanBlock, ironShulkerBoxPurpleBlock, ironShulkerBoxBlueBlock, ironShulkerBoxBrownBlock, ironShulkerBoxGreenBlock, ironShulkerBoxRedBlock, ironShulkerBoxBlackBlock);
+    }
 
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.WHITE);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.ORANGE);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.MAGENTA);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.LIGHT_BLUE);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.YELLOW);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.LIME);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.PINK);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.GRAY);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.SILVER);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.CYAN);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.PURPLE);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.BLUE);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.BROWN);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.GREEN);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.RED);
-        VANILLA_SHULKER_COLORS.add(EnumDyeColor.BLACK);
+    private static void registerShulkerItemBlocks(Register<Item> event)
+    {
+        event.getRegistry().registerAll(ironShulkerBoxWhiteItemBlock, ironShulkerBoxOrangeItemBlock, ironShulkerBoxMagentaItemBlock, ironShulkerBoxLightBlueItemBlock, ironShulkerBoxYellowItemBlock, ironShulkerBoxLimeItemBlock, ironShulkerBoxPinkItemBlock, ironShulkerBoxGrayItemBlock, ironShulkerBoxSilverItemBlock, ironShulkerBoxCyanItemBlock, ironShulkerBoxPurpleItemBlock, ironShulkerBoxBlueItemBlock, ironShulkerBoxBrownItemBlock, ironShulkerBoxGreenItemBlock, ironShulkerBoxRedItemBlock, ironShulkerBoxBlackItemBlock);
     }
 }

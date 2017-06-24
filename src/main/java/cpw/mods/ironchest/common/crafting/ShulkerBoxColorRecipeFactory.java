@@ -23,7 +23,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.common.crafting.JsonContext;
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl;
+import net.minecraftforge.registries.IForgeRegistryEntry.Impl;
 
 public class ShulkerBoxColorRecipeFactory implements IRecipeFactory
 {

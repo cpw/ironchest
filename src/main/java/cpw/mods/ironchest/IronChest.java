@@ -24,13 +24,12 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLMissingMappingsEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = IronChest.MOD_ID, name = "Iron Chests", dependencies = "required-after:forge@[14.21.0.2343,)", acceptedMinecraftVersions = "[1.12, 1.13)")
+@Mod(modid = IronChest.MOD_ID, name = "Iron Chests", dependencies = "required-after:forge@[14.21.0.2359,)", acceptedMinecraftVersions = "[1.12, 1.13)")
 public class IronChest
 {
     public static final String MOD_ID = "ironchest";
@@ -58,11 +57,13 @@ public class IronChest
             event.getModMetadata().version = String.format("%s.%s.%s build %s", major, minor, rev, build);
         }
 
-        ICContent.preInit();
+        MinecraftForge.EVENT_BUS.register(new ICContent());
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-        proxy.registerRenderInformation();
+
         MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
+
+        MinecraftForge.EVENT_BUS.register(new MissingMappingsHandler());
     }
 
     @EventHandler
@@ -71,12 +72,6 @@ public class IronChest
         int messageId = 0;
         packetHandler.registerMessage(MessageCrystalChestSync.Handler.class, MessageCrystalChestSync.class, messageId++, Side.CLIENT);
         packetHandler.registerMessage(MessageCrystalShulkerSync.Handler.class, MessageCrystalShulkerSync.class, messageId++, Side.CLIENT);
-    }
-
-    @EventHandler
-    public void onMissingMappings(FMLMissingMappingsEvent event)
-    {
-        MissingMappingsHandler.onMissingMappings(event);
     }
 
 }

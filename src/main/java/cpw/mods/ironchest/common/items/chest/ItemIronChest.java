@@ -14,6 +14,7 @@ import java.util.Locale;
 
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
+import cpw.mods.ironchest.common.util.BlockNames;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -25,7 +26,7 @@ public class ItemIronChest extends ItemBlock
     {
         super(block);
 
-        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, "iron_chest"));
+        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, BlockNames.IRON_CHEST));
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
