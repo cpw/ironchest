@@ -14,9 +14,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import cpw.mods.ironchest.IronChest;
-import cpw.mods.ironchest.common.ICContent;
 import cpw.mods.ironchest.common.blocks.chest.BlockIronChest;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
+import cpw.mods.ironchest.common.core.IronChestBlocks;
 import cpw.mods.ironchest.common.gui.chest.ContainerIronChest;
 import cpw.mods.ironchest.common.network.MessageCrystalChestSync;
 import net.minecraft.block.state.IBlockState;
@@ -120,7 +120,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
         {
             IBlockState state = this.world.getBlockState(this.pos);
 
-            if (state.getBlock() == ICContent.ironChestBlock)
+            if (state.getBlock() == IronChestBlocks.ironChestBlock)
             {
                 type = state.getValue(BlockIronChest.VARIANT_PROP);
             }
@@ -160,7 +160,8 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         int compressedIdx = 0;
 
-        mainLoop: for (int i = 0; i < this.getSizeInventory(); i++)
+        mainLoop:
+        for (int i = 0; i < this.getSizeInventory(); i++)
         {
             ItemStack itemStack = this.getItems().get(i);
 
@@ -210,7 +211,8 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         this.hadStuff = true;
 
-        Collections.sort(tempCopy, new Comparator<ItemStack>() {
+        Collections.sort(tempCopy, new Comparator<ItemStack>()
+        {
             @Override
             public int compare(ItemStack stack1, ItemStack stack2)
             {
@@ -368,7 +370,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
         if (this.world != null && !this.world.isRemote && this.ticksSinceSync < 0)
         {
-            this.world.addBlockEvent(this.pos, ICContent.ironChestBlock, 3, ((this.numPlayersUsing << 3) & 0xF8) | (this.facing.ordinal() & 0x7));
+            this.world.addBlockEvent(this.pos, IronChestBlocks.ironChestBlock, 3, ((this.numPlayersUsing << 3) & 0xF8) | (this.facing.ordinal() & 0x7));
         }
 
         if (!this.world.isRemote && this.inventoryTouched)
@@ -466,9 +468,9 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
             ++this.numPlayersUsing;
 
-            this.world.addBlockEvent(this.pos, ICContent.ironChestBlock, 1, this.numPlayersUsing);
-            this.world.notifyNeighborsOfStateChange(this.pos, ICContent.ironChestBlock, false);
-            this.world.notifyNeighborsOfStateChange(this.pos.down(), ICContent.ironChestBlock, false);
+            this.world.addBlockEvent(this.pos, IronChestBlocks.ironChestBlock, 1, this.numPlayersUsing);
+            this.world.notifyNeighborsOfStateChange(this.pos, IronChestBlocks.ironChestBlock, false);
+            this.world.notifyNeighborsOfStateChange(this.pos.down(), IronChestBlocks.ironChestBlock, false);
         }
     }
 
@@ -484,9 +486,9 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
 
             --this.numPlayersUsing;
 
-            this.world.addBlockEvent(this.pos, ICContent.ironChestBlock, 1, this.numPlayersUsing);
-            this.world.notifyNeighborsOfStateChange(this.pos, ICContent.ironChestBlock, false);
-            this.world.notifyNeighborsOfStateChange(this.pos.down(), ICContent.ironChestBlock, false);
+            this.world.addBlockEvent(this.pos, IronChestBlocks.ironChestBlock, 1, this.numPlayersUsing);
+            this.world.notifyNeighborsOfStateChange(this.pos, IronChestBlocks.ironChestBlock, false);
+            this.world.notifyNeighborsOfStateChange(this.pos.down(), IronChestBlocks.ironChestBlock, false);
         }
     }
 
@@ -554,7 +556,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     {
         this.setFacing(this.facing.rotateY());
 
-        this.world.addBlockEvent(this.pos, ICContent.ironChestBlock, 2, this.facing.ordinal());
+        this.world.addBlockEvent(this.pos, IronChestBlocks.ironChestBlock, 2, this.facing.ordinal());
     }
 
     public void wasPlaced(EntityLivingBase entityliving, ItemStack stack)

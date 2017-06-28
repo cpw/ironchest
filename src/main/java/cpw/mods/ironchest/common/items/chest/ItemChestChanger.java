@@ -12,9 +12,10 @@ package cpw.mods.ironchest.common.items.chest;
 
 import java.util.Locale;
 
-import cpw.mods.ironchest.common.ICContent;
 import cpw.mods.ironchest.common.blocks.chest.BlockIronChest;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
+import cpw.mods.ironchest.common.core.IronChestBlocks;
+import cpw.mods.ironchest.common.core.IronChestCreativeTabs;
 import cpw.mods.ironchest.common.items.ChestChangerType;
 import cpw.mods.ironchest.common.tileentity.chest.TileEntityIronChest;
 import cpw.mods.ironchest.common.util.ItemTooltip;
@@ -40,7 +41,7 @@ public class ItemChestChanger extends ItemTooltip
         this.type = type;
         this.setMaxStackSize(1);
         this.setUnlocalizedName("ironchest.chest." + type.name().toLowerCase(Locale.US));
-        this.setCreativeTab(ICContent.tabGeneral);
+        this.setCreativeTab(IronChestCreativeTabs.tabIronChests);
     }
 
     /**
@@ -68,7 +69,7 @@ public class ItemChestChanger extends ItemTooltip
         else
         {
             //@formatter:off
-            if (worldIn.getBlockState(pos) != ICContent.ironChestBlock.getStateFromMeta(IronChestType.valueOf(this.type.source.getName().toUpperCase()).ordinal()))
+            if (worldIn.getBlockState(pos) != IronChestBlocks.ironChestBlock.getStateFromMeta(IronChestType.valueOf(this.type.source.getName().toUpperCase()).ordinal()))
             //@formatter:on
             {
                 return EnumActionResult.PASS;
@@ -130,7 +131,7 @@ public class ItemChestChanger extends ItemTooltip
         worldIn.removeTileEntity(pos);
         worldIn.setBlockToAir(pos);
 
-        IBlockState iblockstate = ICContent.ironChestBlock.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, this.type.target);
+        IBlockState iblockstate = IronChestBlocks.ironChestBlock.getDefaultState().withProperty(BlockIronChest.VARIANT_PROP, this.type.target);
 
         worldIn.setTileEntity(pos, newchest);
         worldIn.setBlockState(pos, iblockstate, 3);

@@ -8,7 +8,7 @@
  * Contributors:
  * cpw - initial API and implementation
  ******************************************************************************/
-package cpw.mods.ironchest.common.crafting;
+package cpw.mods.ironchest.common.crafting.recipe;
 
 import javax.annotation.Nonnull;
 

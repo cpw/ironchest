@@ -15,7 +15,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import cpw.mods.ironchest.IronChest;
-import cpw.mods.ironchest.common.ICContent;
+import cpw.mods.ironchest.common.core.IronChestBlocks;
+import cpw.mods.ironchest.common.core.IronChestCreativeTabs;
 import cpw.mods.ironchest.common.tileentity.shulker.TileEntityIronShulkerBox;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.EnumPushReaction;
@@ -40,7 +41,6 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -55,19 +55,21 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockIronShulkerBox extends Block
 {
     public static final PropertyEnum<IronShulkerBoxType> VARIANT_PROP = PropertyEnum.create("variant", IronShulkerBoxType.class);
+
     private final EnumDyeColor color;
+
     private EnumFacing facingDirection;
 
-    public BlockIronShulkerBox(EnumDyeColor colorIn)
+    public BlockIronShulkerBox(EnumDyeColor colorIn, String nameIn)
     {
         super(Material.IRON);
 
         this.color = colorIn;
-        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, "iron_shulker_box_" + colorIn.getName()));
+        this.setRegistryName(nameIn);
         this.setUnlocalizedName("IronShulkerBox" + colorIn.getName());
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT_PROP, IronShulkerBoxType.IRON));
         this.setHardness(3.0F);
-        this.setCreativeTab(ICContent.tabGeneral);
+        this.setCreativeTab(IronChestCreativeTabs.tabIronChests);
     }
 
     /**
@@ -459,38 +461,38 @@ public class BlockIronShulkerBox extends Block
         switch (colorIn)
         {
         case WHITE:
-            return ICContent.ironShulkerBoxWhiteBlock;
+            return IronChestBlocks.ironShulkerBoxWhiteBlock;
         case ORANGE:
-            return ICContent.ironShulkerBoxOrangeBlock;
+            return IronChestBlocks.ironShulkerBoxOrangeBlock;
         case MAGENTA:
-            return ICContent.ironShulkerBoxMagentaBlock;
+            return IronChestBlocks.ironShulkerBoxMagentaBlock;
         case LIGHT_BLUE:
-            return ICContent.ironShulkerBoxLightBlueBlock;
+            return IronChestBlocks.ironShulkerBoxLightBlueBlock;
         case YELLOW:
-            return ICContent.ironShulkerBoxYellowBlock;
+            return IronChestBlocks.ironShulkerBoxYellowBlock;
         case LIME:
-            return ICContent.ironShulkerBoxLimeBlock;
+            return IronChestBlocks.ironShulkerBoxLimeBlock;
         case PINK:
-            return ICContent.ironShulkerBoxPinkBlock;
+            return IronChestBlocks.ironShulkerBoxPinkBlock;
         case GRAY:
-            return ICContent.ironShulkerBoxGrayBlock;
+            return IronChestBlocks.ironShulkerBoxGrayBlock;
         case SILVER:
-            return ICContent.ironShulkerBoxSilverBlock;
+            return IronChestBlocks.ironShulkerBoxSilverBlock;
         case CYAN:
-            return ICContent.ironShulkerBoxCyanBlock;
+            return IronChestBlocks.ironShulkerBoxCyanBlock;
         case PURPLE:
         default:
-            return ICContent.ironShulkerBoxPurpleBlock;
+            return IronChestBlocks.ironShulkerBoxPurpleBlock;
         case BLUE:
-            return ICContent.ironShulkerBoxBlueBlock;
+            return IronChestBlocks.ironShulkerBoxBlueBlock;
         case BROWN:
-            return ICContent.ironShulkerBoxBrownBlock;
+            return IronChestBlocks.ironShulkerBoxBrownBlock;
         case GREEN:
-            return ICContent.ironShulkerBoxGreenBlock;
+            return IronChestBlocks.ironShulkerBoxGreenBlock;
         case RED:
-            return ICContent.ironShulkerBoxRedBlock;
+            return IronChestBlocks.ironShulkerBoxRedBlock;
         case BLACK:
-            return ICContent.ironShulkerBoxBlackBlock;
+            return IronChestBlocks.ironShulkerBoxBlackBlock;
         }
     }
 

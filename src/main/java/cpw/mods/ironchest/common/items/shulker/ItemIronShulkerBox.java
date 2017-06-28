@@ -12,13 +12,11 @@ package cpw.mods.ironchest.common.items.shulker;
 
 import java.util.Locale;
 
-import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.common.blocks.shulker.IronShulkerBoxType;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 public class ItemIronShulkerBox extends ItemBlock
 {
@@ -28,7 +26,7 @@ public class ItemIronShulkerBox extends ItemBlock
     {
         super(block);
 
-        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, "iron_shulker_box_" + colorIn.getName()));
+        this.setRegistryName(block.getRegistryName());
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
         this.setMaxStackSize(1);

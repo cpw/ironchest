@@ -174,4 +174,4 @@ item.ironchest.shulker_box.diamond_obsidian.tooltip=Used to upgrade a Diamond Sh
 #    GUIs    #
 ##############
 
-itemGroup.IronChest=Iron Chests
+itemGroup.ironchest=Iron Chests

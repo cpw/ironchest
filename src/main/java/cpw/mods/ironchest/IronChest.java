@@ -13,7 +13,7 @@ package cpw.mods.ironchest;
 import java.util.Properties;
 
 import cpw.mods.ironchest.common.CommonProxy;
-import cpw.mods.ironchest.common.ICContent;
+import cpw.mods.ironchest.common.lib.BlockLists;
 import cpw.mods.ironchest.common.network.MessageCrystalChestSync;
 import cpw.mods.ironchest.common.network.MessageCrystalShulkerSync;
 import cpw.mods.ironchest.common.util.MissingMappingsHandler;
@@ -57,8 +57,6 @@ public class IronChest
             event.getModMetadata().version = String.format("%s.%s.%s build %s", major, minor, rev, build);
         }
 
-        MinecraftForge.EVENT_BUS.register(new ICContent());
-
         proxy.preInit();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
@@ -74,6 +72,8 @@ public class IronChest
         int messageId = 0;
         packetHandler.registerMessage(MessageCrystalChestSync.Handler.class, MessageCrystalChestSync.class, messageId++, Side.CLIENT);
         packetHandler.registerMessage(MessageCrystalShulkerSync.Handler.class, MessageCrystalShulkerSync.class, messageId++, Side.CLIENT);
+
+        BlockLists.createShulkerItemList();
     }
 
 }

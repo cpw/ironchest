@@ -12,9 +12,9 @@ package cpw.mods.ironchest.common.items.shulker;
 
 import java.util.Locale;
 
-import cpw.mods.ironchest.common.ICContent;
 import cpw.mods.ironchest.common.blocks.shulker.BlockIronShulkerBox;
 import cpw.mods.ironchest.common.blocks.shulker.IronShulkerBoxType;
+import cpw.mods.ironchest.common.core.IronChestCreativeTabs;
 import cpw.mods.ironchest.common.items.ShulkerBoxChangerType;
 import cpw.mods.ironchest.common.lib.BlockLists;
 import cpw.mods.ironchest.common.tileentity.shulker.TileEntityIronShulkerBox;
@@ -44,7 +44,7 @@ public class ItemShulkerBoxChanger extends ItemTooltip
 
         this.setMaxStackSize(1);
         this.setUnlocalizedName("ironchest.shulker_box." + type.name().toLowerCase(Locale.US));
-        this.setCreativeTab(ICContent.tabGeneral);
+        this.setCreativeTab(IronChestCreativeTabs.tabIronChests);
     }
 
     public EnumDyeColor getColorFromTileEntity(TileEntity te, World worldIn)

@@ -12,13 +12,10 @@ package cpw.mods.ironchest.common.items.chest;
 
 import java.util.Locale;
 
-import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
-import cpw.mods.ironchest.common.util.BlockNames;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 public class ItemIronChest extends ItemBlock
 {
@@ -26,7 +23,7 @@ public class ItemIronChest extends ItemBlock
     {
         super(block);
 
-        this.setRegistryName(new ResourceLocation(IronChest.MOD_ID, BlockNames.IRON_CHEST));
+        this.setRegistryName(block.getRegistryName());
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }

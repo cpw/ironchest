@@ -18,7 +18,7 @@ import static cpw.mods.ironchest.common.blocks.chest.IronChestType.WOOD;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
 import cpw.mods.ironchest.common.items.chest.ItemChestChanger;
 import net.minecraft.item.Item;
-import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public enum ChestChangerType
 {
@@ -56,22 +56,22 @@ public enum ChestChangerType
         return from == this.source;
     }
 
-    public ItemChestChanger buildItem(Register<Item> event)
+    public ItemChestChanger buildItem(IForgeRegistry<Item> itemRegistry)
     {
         this.item = new ItemChestChanger(this);
 
         this.item.setRegistryName(this.itemName);
 
-        event.getRegistry().register(this.item);
+        itemRegistry.register(this.item);
 
         return this.item;
     }
 
-    public static void buildItems(Register<Item> event)
+    public static void buildItems(IForgeRegistry<Item> itemRegistry)
     {
         for (ChestChangerType type : VALUES)
         {
-            type.buildItem(event);
+            type.buildItem(itemRegistry);
         }
     }
 }

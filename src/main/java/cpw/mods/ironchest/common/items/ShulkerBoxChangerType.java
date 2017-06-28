@@ -18,7 +18,7 @@ import static cpw.mods.ironchest.common.blocks.shulker.IronShulkerBoxType.VANILL
 import cpw.mods.ironchest.common.blocks.shulker.IronShulkerBoxType;
 import cpw.mods.ironchest.common.items.shulker.ItemShulkerBoxChanger;
 import net.minecraft.item.Item;
-import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public enum ShulkerBoxChangerType
 {
@@ -56,22 +56,22 @@ public enum ShulkerBoxChangerType
         return from == this.source;
     }
 
-    public ItemShulkerBoxChanger buildItem(Register<Item> event)
+    public ItemShulkerBoxChanger buildItem(IForgeRegistry<Item> itemRegistry)
     {
         this.item = new ItemShulkerBoxChanger(this);
 
         this.item.setRegistryName(this.itemName);
 
-        event.getRegistry().register(this.item);
+        itemRegistry.register(this.item);
 
         return this.item;
     }
 
-    public static void buildItems(Register<Item> event)
+    public static void buildItems(IForgeRegistry<Item> itemRegistry)
     {
         for (ShulkerBoxChangerType type : VALUES)
         {
-            type.buildItem(event);
+            type.buildItem(itemRegistry);
         }
     }
 }

@@ -14,9 +14,9 @@ import java.util.Random;
 
 import com.google.common.primitives.SignedBytes;
 
-import cpw.mods.ironchest.common.ICContent;
 import cpw.mods.ironchest.common.blocks.chest.BlockIronChest;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
+import cpw.mods.ironchest.common.core.IronChestBlocks;
 import cpw.mods.ironchest.common.tileentity.chest.TileEntityIronChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -61,7 +61,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
         EnumFacing facing = EnumFacing.SOUTH;
         IronChestType type = te.getType();
 
-        if (te.hasWorld() && te.getWorld().getBlockState(te.getPos()).getBlock() == ICContent.ironChestBlock)
+        if (te.hasWorld() && te.getWorld().getBlockState(te.getPos()).getBlock() == IronChestBlocks.ironChestBlock)
         {
             facing = te.getFacing();
             IBlockState state = te.getWorld().getBlockState(te.getPos());

@@ -10,7 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest.common.ai;
 
-import cpw.mods.ironchest.common.ICContent;
+import cpw.mods.ironchest.common.core.IronChestBlocks;
 import cpw.mods.ironchest.common.tileentity.chest.TileEntityIronChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -42,7 +42,7 @@ public class IronChestAIOcelotSit extends EntityAIOcelotSit
             IBlockState iblockstate = worldIn.getBlockState(pos);
             Block block = iblockstate.getBlock();
 
-            if (block == ICContent.ironChestBlock)
+            if (block == IronChestBlocks.ironChestBlock)
             {
                 TileEntity tileentity = worldIn.getTileEntity(pos);
 

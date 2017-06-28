@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import cpw.mods.ironchest.common.ICContent;
+import cpw.mods.ironchest.common.core.IronChestBlocks;
 import cpw.mods.ironchest.common.util.BehaviorDispenseIronShulkerBox;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
@@ -62,42 +62,46 @@ public class BlockLists
 
     public static void createIronShulkerBlockList()
     {
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxWhiteBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxOrangeBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxMagentaBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxLightBlueBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxYellowBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxLimeBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxPinkBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxGrayBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxSilverBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxCyanBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxPurpleBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxBlueBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxBrownBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxGreenBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxRedBlock);
-        SHULKER_BLOCKS.add(ICContent.ironShulkerBoxBlackBlock);
+        BlockLists.createVanillaShulkerBlockList();
+
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxWhiteBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxOrangeBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxMagentaBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxLightBlueBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxYellowBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxLimeBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxPinkBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxGrayBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxSilverBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxCyanBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxPurpleBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxBlueBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxBrownBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxGreenBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxRedBlock);
+        SHULKER_BLOCKS.add(IronChestBlocks.ironShulkerBoxBlackBlock);
     }
 
     public static void createShulkerItemList()
     {
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxWhiteItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxOrangeItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxMagentaItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxLightBlueItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxYellowItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxLimeItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxPinkItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxGrayItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxSilverItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxCyanItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxPurpleItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxBlueItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxBrownItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxGreenItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxRedItemBlock);
-        SHULKER_ITEM_BLOCKS.add(ICContent.ironShulkerBoxBlackItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxWhiteItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxOrangeItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxMagentaItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxLightBlueItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxYellowItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxLimeItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxPinkItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxGrayItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxSilverItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxCyanItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxPurpleItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxBlueItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxBrownItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxGreenItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxRedItemBlock);
+        SHULKER_ITEM_BLOCKS.add(IronChestBlocks.ironShulkerBoxBlackItemBlock);
+
+        BlockLists.registerBlockBehavior();
     }
 
     public static void registerBlockBehavior()
