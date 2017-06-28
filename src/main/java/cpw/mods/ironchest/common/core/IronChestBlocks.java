@@ -32,7 +32,7 @@ public class IronChestBlocks
 
     //@formatter:off
     @ObjectHolder(BlockNames.WHITE_SHULKER)
-    public static final BlockIronShulkerBox ironShulkerBoxWhiteBlock = null;
+    public static BlockIronShulkerBox ironShulkerBoxWhiteBlock;
     @ObjectHolder(BlockNames.ORANGE_SHULKER)
     public static BlockIronShulkerBox ironShulkerBoxOrangeBlock;
     @ObjectHolder(BlockNames.MAGENTA_SHULKER)
