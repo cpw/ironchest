@@ -59,6 +59,8 @@ public class IronChest
 
         MinecraftForge.EVENT_BUS.register(new ICContent());
 
+        proxy.preInit();
+
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
 
         MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());

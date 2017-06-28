@@ -11,8 +11,6 @@
 package cpw.mods.ironchest.common;
 
 import cpw.mods.ironchest.IronChest;
-import cpw.mods.ironchest.client.renderer.chest.TileEntityIronChestRenderer;
-import cpw.mods.ironchest.client.renderer.shulker.TileEntityIronShulkerBoxRenderer;
 import cpw.mods.ironchest.common.blocks.chest.BlockIronChest;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
 import cpw.mods.ironchest.common.blocks.shulker.BlockIronShulkerBox;
@@ -34,7 +32,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -186,8 +183,6 @@ public class ICContent
                 ModelLoader.setCustomModelResourceLocation(chestItem, type.ordinal(), new ModelResourceLocation(chestItem.getRegistryName(), "variant=" + type.getName()));
                 //@formatter:on
             }
-
-            ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
         }
 
         for (ChestChangerType type : ChestChangerType.VALUES)
@@ -212,11 +207,6 @@ public class ICContent
                     //@formatter:on
                 }
             }
-        }
-
-        for (IronShulkerBoxType type : IronShulkerBoxType.values())
-        {
-            ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronShulkerBoxRenderer());
         }
 
         for (ShulkerBoxChangerType type : ShulkerBoxChangerType.VALUES)

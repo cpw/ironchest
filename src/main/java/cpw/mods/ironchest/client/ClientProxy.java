@@ -12,6 +12,8 @@ package cpw.mods.ironchest.client;
 
 import cpw.mods.ironchest.client.gui.chest.GUIChest;
 import cpw.mods.ironchest.client.gui.shulker.GUIShulkerChest;
+import cpw.mods.ironchest.client.renderer.chest.TileEntityIronChestRenderer;
+import cpw.mods.ironchest.client.renderer.shulker.TileEntityIronShulkerBoxRenderer;
 import cpw.mods.ironchest.common.CommonProxy;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
 import cpw.mods.ironchest.common.blocks.shulker.IronShulkerBoxType;
@@ -22,12 +24,27 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy
 {
+    @Override
+    public void preInit()
+    {
+        for (IronChestType type : IronChestType.values())
+        {
+            ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
+        }
+
+        for (IronShulkerBoxType type : IronShulkerBoxType.values())
+        {
+            ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronShulkerBoxRenderer());
+        }
+    }
+
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
