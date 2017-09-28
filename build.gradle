@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_1.12:4.7.0.+"
+    deobfCompile "mezz.jei:jei_1.12.2:4.7.+"
 }
 
 // This is our group. I'm cpw.mods
@@ -46,8 +46,8 @@ targetCompatibility = 1.8
 
 // Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.12-14.21.0.2375"
-    mappings = "snapshot_20170627"
+    version = "1.12.2-14.23.0.2493"
+    mappings = "snapshot_20170927"
     runDir = "run"
 }
 
