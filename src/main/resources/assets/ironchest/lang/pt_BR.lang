@@ -1,25 +1,177 @@
-tile.ironchest:IRON.name=Baú de Ferro
-tile.ironchest:GOLD.name=Baú de Ouro
-tile.ironchest:DIAMOND.name=Baú de Diamante
-tile.ironchest:COPPER.name=Baú de Cobre
-tile.ironchest:SILVER.name=Baú de Prata
-tile.ironchest:CRYSTAL.name=Baú de Cristal
-tile.ironchest:OBSIDIAN.name=Baú de Obsidiana
-tile.ironchest:DIRTCHEST9000.name=BaúDeSujeira 9000!
+################
+#    Chests    #
+################
 
-item.ironchest:IRONGOLD.name=Aprimoramento de Baú de Ferro para Ouro
-item.ironchest:GOLDDIAMOND.name=Aprimoramento de Baú de Ouro para Diamante
-item.ironchest:COPPERSILVER.name=Aprimoramento de Baú de Cobre para Prata
-item.ironchest:SILVERGOLD.name=Aprimoramento de Baú de Prata para Ouro
-item.ironchest:COPPERIRON.name=Aprimoramento de Baú de Cobre para Ferro
-item.ironchest:DIAMONDCRYSTAL.name=Aprimoramento de Baú de Diamante para Cristal
-item.ironchest:WOODIRON.name=Aprimoramento de Baú de Madeira para Ferro
-item.ironchest:WOODCOPPER.name=Aprimoramento de Baú de Madeira para Cobre
-item.ironchest:DIAMONDOBSIDIAN.name=Aprimoramento de Baú de Diamante para Obsidiana
+tile.ironchest.chest.iron.name=Baú de Ferro
+tile.ironchest.chest.gold.name=Baú de Ouro
+tile.ironchest.chest.diamond.name=Baú de Diamante
+tile.ironchest.chest.copper.name=Baú de Cobre
+tile.ironchest.chest.silver.name=Baú de Prata
+tile.ironchest.chest.crystal.name=Baú de Cristal
+tile.ironchest.chest.obsidian.name=Baú de Obsidiana
+tile.ironchest.chest.dirtchest9000.name=BaúDeSujeira 9000!
 
-book.ironchest:dirtchest9000.title=Como utilizar seu BaúDeSujeira 9000!
-book.ironchest:dirtchest9000.page1=Bem-vindo ao seu novo BaúDeSujeira 9000! Esperamos que desfrute de muitos anos felizes de armazenagem de sua pilha de sujeira em nosso utilitário de armazenamento.
-book.ironchest:dirtchest9000.page2=Uso: basta inserir o monte de sujeira de sua escolha no slot altamente receptivo e apreciar a grande conveniência de ter essa sujeira disponíveis para você, a qualquer momento que você passar pelo baú!
-book.ironchest:dirtchest9000.page3=Esperamos que tenham gostado de rever este manual de instruções, e espero que você considere o uso de nossos produtos no futuro! Atenciosamente, manual do BaúDeSujeira 9000 escritores incorporados.
-book.ironchest:dirtchest9000.page4=Garantia: Este produto não tem qualquer tipo de garantia. Sua sujeira pode não ser armazenada, pode vazar lentamente para o ambiente, ou alternativamente, pode não fazer absolutamente nada.
-book.ironchest:dirtchest9000.page5=BaúDeSujeira 9000 é bom para o meio ambiente. Elimine este guia de forma responsável, e não o que você faz apenas lançando-o em alguma lava. Ficaríamos muito triste.
+item.ironchest.chest.iron_gold.name=Aprimoramento de Baú de Ferro para Ouro
+item.ironchest.chest.gold_diamond.name=Aprimoramento de Baú de Ouro para Diamante
+item.ironchest.chest.copper_silver.name=Aprimoramento de Baú de Cobre para Prata
+item.ironchest.chest.silver_gold.name=Aprimoramento de Baú de Prata para Ouro
+item.ironchest.chest.copper_iron.name=Aprimoramento de Baú de Cobre para Ferro
+item.ironchest.chest.diamond_crystal.name=Aprimoramento de Baú de Diamante para Cristal
+item.ironchest.chest.wood_iron.name=Aprimoramento de Baú de Madeira para Ferro
+item.ironchest.chest.wood_copper.name=Aprimoramento de Baú de Madeira para Cobre
+item.ironchest.chest.diamond_obsidian.name=Aprimoramento de Baú de Diamante para Obsidiana
+
+book.ironchest.dirtchest9000.title=Como utilizar seu BaúDeSujeira 9000!
+book.ironchest.dirtchest9000.page1=Bem-vindo ao seu novo BaúDeSujeira 9000! Esperamos que desfrute de muitos anos felizes de armazenagem de sua pilha de sujeira em nosso utilitário de armazenamento.
+book.ironchest.dirtchest9000.page2=Uso: basta inserir o monte de sujeira de sua escolha no slot altamente receptivo e apreciar a grande conveniência de ter essa sujeira disponíveis para você, a qualquer momento que você passar pelo baú!
+book.ironchest.dirtchest9000.page3=Esperamos que tenham gostado de rever este manual de instruções, e espero que você considere o uso de nossos produtos no futuro! Atenciosamente, manual do BaúDeSujeira 9000 escritores incorporados.
+book.ironchest.dirtchest9000.page4=Garantia: Este produto não tem qualquer tipo de garantia. Sua sujeira pode não ser armazenada, pode vazar lentamente para o ambiente, ou alternativamente, pode não fazer absolutamente nada.
+book.ironchest.dirtchest9000.page5=BaúDeSujeira 9000 é bom para o meio ambiente. Elimine este guia de forma responsável, e não o que você faz apenas lançando-o em alguma lava. Ficaríamos muito triste.
+
+#######################
+#    Shulker Boxes    #
+#######################
+
+tile.ironchest.shulker_box.iron.white.name=Baú Shulker Branco de Ferro
+tile.ironchest.shulker_box.iron.orange.name=Baú Shulker Laranjado de Ferro
+tile.ironchest.shulker_box.iron.magenta.name=Baú Shulker Lilás de Ferro
+tile.ironchest.shulker_box.iron.light_blue.name=Baú Shulker Azul Claro de Ferro
+tile.ironchest.shulker_box.iron.yellow.name=Baú Shulker Amarelo de Ferro
+tile.ironchest.shulker_box.iron.lime.name=Baú Shulker Verde-limão de Ferro
+tile.ironchest.shulker_box.iron.pink.name=Baú Shulker Rosa de Ferro
+tile.ironchest.shulker_box.iron.gray.name=Baú Shulker Cinza de Ferro
+tile.ironchest.shulker_box.iron.silver.name=Baú Shulker Cinza Claro de Ferro
+tile.ironchest.shulker_box.iron.cyan.name=Baú Shulker Ciano de Ferro
+tile.ironchest.shulker_box.iron.purple.name=Baú Shulker Roxo de Ferro
+tile.ironchest.shulker_box.iron.blue.name=Baú Shulker Azul de Ferro
+tile.ironchest.shulker_box.iron.brown.name=Baú Shulker Marrom de Ferro
+tile.ironchest.shulker_box.iron.green.name=Baú Shulker Verde de Ferro
+tile.ironchest.shulker_box.iron.red.name=Baú Shulker Vermelho de Ferro
+tile.ironchest.shulker_box.iron.black.name=Baú Shulker Preto de Ferro
+
+tile.ironchest.shulker_box.gold.white.name=Baú Shulker Branco de Ouro 
+tile.ironchest.shulker_box.gold.orange.name=Baú Shulker Laranjado de Ouro 
+tile.ironchest.shulker_box.gold.magenta.name=Baú Shulker Lilás de Ouro 
+tile.ironchest.shulker_box.gold.light_blue.name=Baú Shulker Azul Claro de Ouro
+tile.ironchest.shulker_box.gold.yellow.name=Baú Shulker Amarelo de Ouro
+tile.ironchest.shulker_box.gold.lime.name=Baú Shulker Verde-limão de Ouro
+tile.ironchest.shulker_box.gold.pink.name=Baú Shulker Rosa e de Ouro
+tile.ironchest.shulker_box.gold.gray.name=Baú Shulker Cinza de Ouro
+tile.ironchest.shulker_box.gold.silver.name=Baú Shulker Cinza Claro de Ouro 
+tile.ironchest.shulker_box.gold.cyan.name=Baú Shulker Ciano de Ouro
+tile.ironchest.shulker_box.gold.purple.name=Baú Shulker Roxo de Ouro
+tile.ironchest.shulker_box.gold.blue.name=Baú Shulker Azul de Ouro
+tile.ironchest.shulker_box.gold.brown.name=Baú Shulker Marrom de Ouro
+tile.ironchest.shulker_box.gold.green.name=Baú Shulker Verde de Ouro
+tile.ironchest.shulker_box.gold.red.name=Baú Shulker Vermelho de Ouro
+tile.ironchest.shulker_box.gold.black.name=Baú Shulker Preto de Ouro
+
+tile.ironchest.shulker_box.diamond.white.name=Baú Shulker Branco de Diamante
+tile.ironchest.shulker_box.diamond.orange.name=Baú Shulker Laranjado de Diamante
+tile.ironchest.shulker_box.diamond.magenta.name=Baú Shulker Lilás de Diamante
+tile.ironchest.shulker_box.diamond.light_blue.name=Baú Shulker Azul Claro de Diamante
+tile.ironchest.shulker_box.diamond.yellow.name=Baú Shulker Amarelo de Diamante
+tile.ironchest.shulker_box.diamond.lime.name=Baú Shulker Verde-limão de Diamante
+tile.ironchest.shulker_box.diamond.pink.name=Baú Shulker Rosa de Diamante
+tile.ironchest.shulker_box.diamond.gray.name=Baú Shulker Cinza de Diamante
+tile.ironchest.shulker_box.diamond.silver.name=Baú Shulker Cinza Claro de Diamante
+tile.ironchest.shulker_box.diamond.cyan.name=Baú Shulker Ciano de Diamante
+tile.ironchest.shulker_box.diamond.purple.name=Baú Shulker Roxo de Diamante
+tile.ironchest.shulker_box.diamond.blue.name=Baú Shulker Azul de Diamante
+tile.ironchest.shulker_box.diamond.brown.name=Baú Shulker Marrom de Diamante
+tile.ironchest.shulker_box.diamond.green.name=Baú Shulker Verde de Diamante
+tile.ironchest.shulker_box.diamond.red.name=Baú Shulker Vermelho de Diamante
+tile.ironchest.shulker_box.diamond.black.name=Baú Shulker Preto de Diamante
+
+tile.ironchest.shulker_box.copper.white.name=Baú Shulker Branco de Cobre
+tile.ironchest.shulker_box.copper.orange.name=Baú Shulker Laranjado de Cobre
+tile.ironchest.shulker_box.copper.magenta.name=Baú Shulker Lilás de Cobre
+tile.ironchest.shulker_box.copper.light_blue.name=Baú Shulker Azul Claro de Cobre
+tile.ironchest.shulker_box.copper.yellow.name=Baú Shulker Amarelo de Cobre
+tile.ironchest.shulker_box.copper.lime.name=Baú Shulker Verde-limão de Cobre
+tile.ironchest.shulker_box.copper.pink.name=Baú Shulker Rosa de Cobre
+tile.ironchest.shulker_box.copper.gray.name=Baú Shulker Cinza de Cobre
+tile.ironchest.shulker_box.copper.silver.name=Baú Shulker Cinza Claro de Cobre
+tile.ironchest.shulker_box.copper.cyan.name=Baú Shulker Ciano de Cobre
+tile.ironchest.shulker_box.copper.purple.name=Baú Shulker Roxo de Cobre
+tile.ironchest.shulker_box.copper.blue.name=Baú Shulker Azul de Cobre
+tile.ironchest.shulker_box.copper.brown.name=Baú Shulker Marrom de Cobre
+tile.ironchest.shulker_box.copper.green.name=Baú Shulker Verde de Cobre
+tile.ironchest.shulker_box.copper.red.name=Baú Shulker Vermelho de Cobre
+tile.ironchest.shulker_box.copper.black.name=Baú Shulker Preto de Cobre
+
+tile.ironchest.shulker_box.silver.white.name=Baú Shulker Branco de Prata
+tile.ironchest.shulker_box.silver.orange.name=Baú Shulker Laranjado de Prata
+tile.ironchest.shulker_box.silver.magenta.name=Baú Shulker Lilás de Prata
+tile.ironchest.shulker_box.silver.light_blue.name=Baú Shulker Azul Claro de Prata
+tile.ironchest.shulker_box.silver.yellow.name=Baú Shulker Amarelo de Prata
+tile.ironchest.shulker_box.silver.lime.name=Baú Shulker Verde-limão de Prata
+tile.ironchest.shulker_box.silver.pink.name=Baú Shulker Rosa de Prata
+tile.ironchest.shulker_box.silver.gray.name=Baú Shulker Cinza de Prata
+tile.ironchest.shulker_box.silver.silver.name=Baú Shulker Cinza Claro de Prata
+tile.ironchest.shulker_box.silver.cyan.name=Baú Shulker Ciano de Prata
+tile.ironchest.shulker_box.silver.purple.name=Baú Shulker Roxo de Prata
+tile.ironchest.shulker_box.silver.blue.name=Baú Shulker Azul de Prata
+tile.ironchest.shulker_box.silver.brown.name=Baú Shulker Marrom de Prata
+tile.ironchest.shulker_box.silver.green.name=Baú Shulker Verde de Prata
+tile.ironchest.shulker_box.silver.red.name=Baú Shulker Vermelho de Prata
+tile.ironchest.shulker_box.silver.black.name=Baú Shulker Preto de Prata
+
+tile.ironchest.shulker_box.crystal.white.name=Baú Shulker Branco de Cristal
+tile.ironchest.shulker_box.crystal.orange.name=Baú Shulker Laranjado de Cristal
+tile.ironchest.shulker_box.crystal.magenta.name=Baú Shulker Lilás de Cristal
+tile.ironchest.shulker_box.crystal.light_blue.name=Baú Shulker Azul Claro de Cristal
+tile.ironchest.shulker_box.crystal.yellow.name=Baú Shulker Amarelo de Cristal
+tile.ironchest.shulker_box.crystal.lime.name=Baú Shulker Verde-limão de Cristal
+tile.ironchest.shulker_box.crystal.pink.name=Baú Shulker Rosa de Cristal
+tile.ironchest.shulker_box.crystal.gray.name=Baú Shulker Cinza de Cristal
+tile.ironchest.shulker_box.crystal.silver.name=Baú Shulker Cinza Claro de Cristal
+tile.ironchest.shulker_box.crystal.cyan.name=Baú Shulker Ciano de Cristal
+tile.ironchest.shulker_box.crystal.purple.name=Baú Shulker Roxo de Cristal
+tile.ironchest.shulker_box.crystal.blue.name=Baú Shulker Azul de Cristal
+tile.ironchest.shulker_box.crystal.brown.name=Baú Shulker Marrom de Cristal
+tile.ironchest.shulker_box.crystal.green.name=Baú Shulker Verde de Cristal
+tile.ironchest.shulker_box.crystal.red.name=Baú Shulker Vermelho de Cristal
+tile.ironchest.shulker_box.crystal.black.name=Baú Shulker Preto de Cristal
+
+tile.ironchest.shulker_box.obsidian.white.name=Baú Shulker Branco de Obsidiana
+tile.ironchest.shulker_box.obsidian.orange.name=Baú Shulker Laranjado de Obsidiana
+tile.ironchest.shulker_box.obsidian.magenta.name=Baú Shulker Lilás de Obsidiana
+tile.ironchest.shulker_box.obsidian.light_blue.name=Baú Shulker Azul Claro de Obsidiana
+tile.ironchest.shulker_box.obsidian.yellow.name=Baú Shulker Amarelo de Obsidiana
+tile.ironchest.shulker_box.obsidian.lime.name=Baú Shulker Verde-limão de Obsidiana
+tile.ironchest.shulker_box.obsidian.pink.name=Baú Shulker Rosa de Obsidiana
+tile.ironchest.shulker_box.obsidian.gray.name=Baú Shulker Cinza de Obsidiana
+tile.ironchest.shulker_box.obsidian.silver.name=Baú Shulker Cinza Claro de Obsidiana
+tile.ironchest.shulker_box.obsidian.cyan.name=Baú Shulker Ciano de Obsidiana
+tile.ironchest.shulker_box.obsidian.purple.name=Baú Shulker Roxo de Obsidiana
+tile.ironchest.shulker_box.obsidian.blue.name=Baú Shulker Azul de Obsidiana
+tile.ironchest.shulker_box.obsidian.brown.name=Baú Shulker Marrom de Obsidiana
+tile.ironchest.shulker_box.obsidian.green.name=Baú Shulker Verde de Obsidiana
+tile.ironchest.shulker_box.obsidian.red.name=Baú Shulker Vermelho de Obsidiana
+tile.ironchest.shulker_box.obsidian.black.name=Baú Shulker Preto de Obsidiana
+
+item.ironchest.shulker_box.iron_gold.name=Melhoria de Baú Shulker de Ferro para Ouro
+item.ironchest.shulker_box.iron_gold.tooltip=Usado para melhorar um Baú Shulker de Ferro para um de Ouro\nA cor do Baú Shulker permanece a mesma.
+item.ironchest.shulker_box.gold_diamond.name=Melhoria de Baú Shulker de Ouro para Diamante
+item.ironchest.shulker_box.gold_diamond.tooltip=Usado para melhorar um Baú Shulker de Ouro para um de Diamante\nA cor do Baú Shulker permanece a mesma.
+item.ironchest.shulker_box.copper_silver.name=Melhoria de Baú Shulker de Cobre para Prata
+item.ironchest.shulker_box.copper_silver.tooltip=Usado para melhorar um Baú Shulker de Cobre para um de Prata\nA cor do Baú Shulker permanece a mesma.
+item.ironchest.shulker_box.silver_gold.name=Melhoria de Baú Shulker de Prata para Ouro
+item.ironchest.shulker_box.silver_gold.tooltip=Usado para melhorar um Baú Shulker de Prata para um de Ouro\nA cor do Baú Shulker permanece a mesma.
+item.ironchest.shulker_box.copper_iron.name=Melhoria de Baú Shulker de Cobre para Ferro
+item.ironchest.shulker_box.copper_iron.tooltip=Usado para melhorar um Baú Shulker de Cobre para um de Ferro\nA cor do Baú Shulker permanece a mesma.
+item.ironchest.shulker_box.diamond_crystal.name=Melhoria de Baú Shulker de Diamante para Cristal
+item.ironchest.shulker_box.diamond_crystal.tooltip=Usado para melhorar um Baú Shulker de Diamante para um de Cristal\nA cor do Baú Shulker permanece a mesma.
+item.ironchest.shulker_box.vanilla_iron.name=Melhoria de Baú Shulker Padrão para Ferro
+item.ironchest.shulker_box.vanilla_iron.tooltip=Usado para melhorar um Baú Shulker Padrão para um de Ferro\nA cor do Baú Shulker permanece a mesma.
+item.ironchest.shulker_box.vanilla_copper.name=Melhoria de Baú Shulker Padrão para Cobre
+item.ironchest.shulker_box.vanilla_copper.tooltip=Usado para melhorar um Baú Shulker Padrão para um de Cobre\nA cor do Baú Shulker permanece a mesma.
+item.ironchest.shulker_box.diamond_obsidian.name=Melhoria de Baú Shulker de Diamante para Obsidiana
+item.ironchest.shulker_box.diamond_obsidian.tooltip=Usado para melhorar um Baú Shulker de Diamante para um de Obsidiana\nA cor do Baú Shulker permanece a mesma.
+
+##############
+#    GUIs    #
+##############
+
+itemGroup.ironchest=Iron Chests
