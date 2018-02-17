@@ -11,8 +11,8 @@
     ],
     "type": "forge:ore_shaped",
     "pattern": [
-        "MMM",
         "MSM",
+        "MMM",
         "MMM"
     ],
     "key": {

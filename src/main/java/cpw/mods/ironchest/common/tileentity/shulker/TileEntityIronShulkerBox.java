@@ -43,6 +43,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.datafix.FixTypes;
+import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
@@ -185,7 +188,8 @@ public class TileEntityIronShulkerBox extends TileEntityLockableLoot implements 
 
         int compressedIdx = 0;
 
-        mainLoop: for (int i = 0; i < this.getSizeInventory(); i++)
+        mainLoop:
+        for (int i = 0; i < this.getSizeInventory(); i++)
         {
             ItemStack itemStack = this.getItems().get(i);
 
@@ -228,7 +232,8 @@ public class TileEntityIronShulkerBox extends TileEntityLockableLoot implements 
 
         this.hadStuff = true;
 
-        Collections.sort(tempCopy, new Comparator<ItemStack>() {
+        Collections.sort(tempCopy, new Comparator<ItemStack>()
+        {
             @Override
             public int compare(ItemStack stack1, ItemStack stack2)
             {
@@ -791,5 +796,10 @@ public class TileEntityIronShulkerBox extends TileEntityLockableLoot implements 
     public static enum AnimationStatus
     {
         CLOSED, OPENING, OPENED, CLOSING;
+    }
+
+    public static void registerFixesShulkerBox(DataFixer fixer)
+    {
+        fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityIronShulkerBox.class, new String[] { "Items" }));
     }
 }

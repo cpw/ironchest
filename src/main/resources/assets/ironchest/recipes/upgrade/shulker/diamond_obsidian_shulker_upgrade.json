@@ -1,8 +1,8 @@
 {
     "type": "forge:ore_shaped",
     "pattern": [
-        "MMM",
         "MGM",
+        "MMM",
         "MMM"
     ],
     "key": {

@@ -7,8 +7,8 @@
     ],
     "type": "forge:ore_shaped",
     "pattern": [
-        "MGM",
-        "GSG",
+        "MSM",
+        "GGG",
         "MGM"
     ],
     "key": {

@@ -35,6 +35,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.datafix.FixTypes;
+import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
@@ -629,5 +632,10 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     public void receiveMessageFromServer(NonNullList<ItemStack> topStacks)
     {
         this.topStacks = topStacks;
+    }
+
+    public static void registerFixesChest(DataFixer fixer)
+    {
+        fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityIronChest.class, new String[] { "Items" }));
     }
 }

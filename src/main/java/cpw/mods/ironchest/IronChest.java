@@ -16,9 +16,13 @@ import cpw.mods.ironchest.common.CommonProxy;
 import cpw.mods.ironchest.common.lib.BlockLists;
 import cpw.mods.ironchest.common.network.MessageCrystalChestSync;
 import cpw.mods.ironchest.common.network.MessageCrystalShulkerSync;
+import cpw.mods.ironchest.common.tileentity.chest.TileEntityIronChest;
+import cpw.mods.ironchest.common.tileentity.shulker.TileEntityIronShulkerBox;
 import cpw.mods.ironchest.common.util.MissingMappingsHandler;
 import cpw.mods.ironchest.common.util.OcelotsSitOnChestsHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.CompoundDataFixer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -74,6 +78,15 @@ public class IronChest
         packetHandler.registerMessage(MessageCrystalShulkerSync.Handler.class, MessageCrystalShulkerSync.class, messageId++, Side.CLIENT);
 
         BlockLists.createShulkerItemList();
+
+        registerDataFixes();
     }
 
+    public void registerDataFixes()
+    {
+        CompoundDataFixer dataFixer = FMLCommonHandler.instance().getDataFixer();
+
+        TileEntityIronChest.registerFixesChest(dataFixer);
+        TileEntityIronShulkerBox.registerFixesShulkerBox(dataFixer);
+    }
 }

@@ -1,9 +1,9 @@
 {
     "type": "forge:ore_shaped",
     "pattern": [
-        "GGG",
-        "MSM",
-        "GGG"
+        "GMG",
+        "GSG",
+        "GMG"
     ],
     "key": {
         "M": {
