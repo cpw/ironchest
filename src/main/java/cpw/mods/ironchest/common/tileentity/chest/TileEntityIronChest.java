@@ -593,7 +593,9 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     @Override
     public NBTTagCompound getUpdateTag()
     {
-        return this.writeToNBT(new NBTTagCompound());
+        NBTTagCompound compound = super.getUpdateTag();
+        compound.setByte("facing", (byte) this.facing.ordinal());
+        return compound;
     }
 
     @Override
