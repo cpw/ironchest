@@ -34,6 +34,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -777,9 +778,35 @@ public class TileEntityIronShulkerBox extends TileEntityLockableLoot implements 
         this.destroyedByCreativePlayer = destoryedByCreativeUser;
     }
 
-    public boolean shouldDrop()
+    public boolean shouldDropInBreakBlock()
     {
-        return !this.isDestroyedByCreativePlayer() || !this.isEmpty() || this.hasCustomName() || this.lootTable != null;
+        return this.isDestroyedByCreativePlayer() && (!this.isEmpty() || this.hasCustomName() || this.lootTable != null);
+    }
+
+    public ItemStack getDrop(IBlockState state, boolean inBreakBlock) {
+        BlockIronShulkerBox block = (BlockIronShulkerBox) state.getBlock();
+        if (!isCleared() && (!inBreakBlock || shouldDropInBreakBlock()))
+        {
+            if (!beenUpgraded())
+            {
+                ItemStack itemstack = new ItemStack(Item.getItemFromBlock(block), 1, state.getValue(BlockIronShulkerBox.VARIANT_PROP).ordinal());
+                NBTTagCompound nbttagcompound = new NBTTagCompound();
+                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+
+                nbttagcompound.setTag("BlockEntityTag", saveToNbt(nbttagcompound1));
+                itemstack.setTagCompound(nbttagcompound);
+
+                if (hasCustomName())
+                {
+                    itemstack.setStackDisplayName(getName());
+
+                    setCustomName("");
+                }
+
+                return itemstack;
+            }
+        }
+        return ItemStack.EMPTY;
     }
 
     protected void sendTopStacksPacket()

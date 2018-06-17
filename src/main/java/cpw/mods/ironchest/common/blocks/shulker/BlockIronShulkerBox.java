@@ -261,6 +261,40 @@ public class BlockIronShulkerBox extends Block
         return state.getValue(VARIANT_PROP).ordinal();
     }
 
+    /**
+     * Called when a player removes a block.  This is responsible for
+     * actually destroying the block, and the block is intact at time of call.
+     * This is called regardless of whether the player can harvest the block or
+     * not.
+     *
+     * Return true if the block is actually destroyed.
+     *
+     * Note: When used in multiplayer, this is called on both client and
+     * server sides!
+     *
+     * @param state The current state.
+     * @param world The current world
+     * @param player The player damaging the block, may be null
+     * @param pos Block position in world
+     * @param willHarvest True if Block.harvestBlock will be called after this, if the return in true.
+     *        Can be useful to delay the destruction of tile entities till after harvestBlock
+     * @return True if the block is actually destroyed.
+     */
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest)
+    {
+        return willHarvest || super.removedByPlayer(state, world, pos, player, false);
+    }
+
+    /**
+     * Spawns the block's drops in the world. By the time this is called the Block has possibly been set to air via
+     * Block.removedByPlayer
+     */
+    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack)
+    {
+        super.harvestBlock(worldIn, player, pos, state, te, stack);
+        worldIn.setBlockToAir(pos);
+    }
+
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
     {
@@ -271,11 +305,26 @@ public class BlockIronShulkerBox extends Block
     }
 
     /**
-     * Spawns this Block's drops into the World as EntityItems.
+     * This gets a complete list of items dropped from this block.
+     *
+     * @param drops add all items this block drops to this drops list
+     * @param world The current world
+     * @param pos Block position in world
+     * @param state Current state
+     * @param fortune Breakers fortune level
      */
-    @Override
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
+        TileEntity tileentity = world.getTileEntity(pos);
+
+        if (tileentity instanceof TileEntityIronShulkerBox)
+        {
+            ItemStack itemstack = ((TileEntityIronShulkerBox) tileentity).getDrop(state, false);
+            if(!itemstack.isEmpty())
+            {
+                drops.add(itemstack);
+            }
+        }
     }
 
     /**
@@ -288,28 +337,10 @@ public class BlockIronShulkerBox extends Block
 
         if (tileentity instanceof TileEntityIronShulkerBox)
         {
-            TileEntityIronShulkerBox tileentityironshulkerbox = (TileEntityIronShulkerBox) tileentity;
-
-            if (!tileentityironshulkerbox.isCleared() && tileentityironshulkerbox.shouldDrop())
+            ItemStack itemstack = ((TileEntityIronShulkerBox) tileentity).getDrop(state, true);
+            if(!itemstack.isEmpty())
             {
-                if (!tileentityironshulkerbox.beenUpgraded())
-                {
-                    ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this), 1, state.getValue(VARIANT_PROP).ordinal());
-                    NBTTagCompound nbttagcompound = new NBTTagCompound();
-                    NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-
-                    nbttagcompound.setTag("BlockEntityTag", ((TileEntityIronShulkerBox) tileentity).saveToNbt(nbttagcompound1));
-                    itemstack.setTagCompound(nbttagcompound);
-
-                    if (tileentityironshulkerbox.hasCustomName())
-                    {
-                        itemstack.setStackDisplayName(tileentityironshulkerbox.getName());
-
-                        tileentityironshulkerbox.setCustomName("");
-                    }
-
-                    spawnAsEntity(worldIn, pos, itemstack);
-                }
+                spawnAsEntity(worldIn, pos, itemstack);
             }
 
             worldIn.updateComparatorOutputLevel(pos, state.getBlock());
