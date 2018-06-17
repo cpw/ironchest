@@ -4,6 +4,6 @@
         "shulker_box_coloring": "cpw.mods.ironchest.common.crafting.recipe.ShulkerBoxColorRecipeFactory"
     },
     "conditions": {
-        "ore_dict_entry_exists": "cpw.mods.ironchest.common.crafting.condition.OreDictEntryExistsConditionFactory"
+        "is_option_enabled": "cpw.mods.ironchest.common.crafting.condition.IsConfigOptionEnabledConditionFactory"
     }
 }

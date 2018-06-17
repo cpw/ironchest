@@ -1,8 +1,8 @@
 {
     "conditions": [
         {
-            "type": "ironchest:ore_dict_entry_exists",
-            "ore": "ingotCopper"
+            "type": "ironchest:is_option_enabled",
+            "config_setting": "enableShulkerBoxRecipes"
         }
     ],
     "type": "forge:ore_shaped",

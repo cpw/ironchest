@@ -33,7 +33,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -280,6 +279,7 @@ public class BlockIronShulkerBox extends Block
      *        Can be useful to delay the destruction of tile entities till after harvestBlock
      * @return True if the block is actually destroyed.
      */
+    @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest)
     {
         return willHarvest || super.removedByPlayer(state, world, pos, player, false);
@@ -289,6 +289,7 @@ public class BlockIronShulkerBox extends Block
      * Spawns the block's drops in the world. By the time this is called the Block has possibly been set to air via
      * Block.removedByPlayer
      */
+    @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack)
     {
         super.harvestBlock(worldIn, player, pos, state, te, stack);
@@ -313,6 +314,7 @@ public class BlockIronShulkerBox extends Block
      * @param state Current state
      * @param fortune Breakers fortune level
      */
+    @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
         TileEntity tileentity = world.getTileEntity(pos);
@@ -320,7 +322,7 @@ public class BlockIronShulkerBox extends Block
         if (tileentity instanceof TileEntityIronShulkerBox)
         {
             ItemStack itemstack = ((TileEntityIronShulkerBox) tileentity).getDrop(state, false);
-            if(!itemstack.isEmpty())
+            if (!itemstack.isEmpty())
             {
                 drops.add(itemstack);
             }
@@ -338,7 +340,7 @@ public class BlockIronShulkerBox extends Block
         if (tileentity instanceof TileEntityIronShulkerBox)
         {
             ItemStack itemstack = ((TileEntityIronShulkerBox) tileentity).getDrop(state, true);
-            if(!itemstack.isEmpty())
+            if (!itemstack.isEmpty())
             {
                 spawnAsEntity(worldIn, pos, itemstack);
             }

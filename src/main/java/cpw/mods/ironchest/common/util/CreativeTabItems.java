@@ -2,6 +2,7 @@ package cpw.mods.ironchest.common.util;
 
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
 import cpw.mods.ironchest.common.blocks.shulker.IronShulkerBoxType;
+import cpw.mods.ironchest.common.config.Config;
 import cpw.mods.ironchest.common.core.IronChestBlocks;
 import cpw.mods.ironchest.common.items.ChestChangerType;
 import cpw.mods.ironchest.common.items.ShulkerBoxChangerType;
@@ -22,9 +23,12 @@ public class CreativeTabItems
             subItems.add(new ItemStack(type.item));
         }
 
-        for (ShulkerBoxChangerType type : ShulkerBoxChangerType.VALUES)
+        if (Config.addShulkerBoxesToCreative)
         {
-            subItems.add(new ItemStack(type.item));
+            for (ShulkerBoxChangerType type : ShulkerBoxChangerType.VALUES)
+            {
+                subItems.add(new ItemStack(type.item));
+            }
         }
 
         for (IronChestType type : IronChestType.VALUES)
@@ -35,13 +39,16 @@ public class CreativeTabItems
             }
         }
 
-        for (Block shulker : BlockLists.SHULKER_BLOCKS)
+        if (Config.addShulkerBoxesToCreative)
         {
-            for (IronShulkerBoxType type : IronShulkerBoxType.VALUES)
+            for (Block shulker : BlockLists.SHULKER_BLOCKS)
             {
-                if (type.isValidForCreativeMode())
+                for (IronShulkerBoxType type : IronShulkerBoxType.VALUES)
                 {
-                    subItems.add(new ItemStack(shulker, 1, type.ordinal()));
+                    if (type.isValidForCreativeMode())
+                    {
+                        subItems.add(new ItemStack(shulker, 1, type.ordinal()));
+                    }
                 }
             }
         }

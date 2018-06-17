@@ -26,7 +26,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class MessageCrystalShulkerSync implements IMessage
 {
     int dimension;
+
     BlockPos pos;
+
     private NonNullList<ItemStack> topStacks;
 
     public MessageCrystalShulkerSync(TileEntityIronShulkerBox tile, NonNullList<ItemStack> stack)

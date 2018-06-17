@@ -1,10 +1,4 @@
 {
-    "conditions": [
-        {
-            "type": "ironchest:ore_dict_entry_exists",
-            "ore": "ingotSilver"
-        }
-    ],
     "type": "forge:ore_shaped",
     "pattern": [
         "MGM",

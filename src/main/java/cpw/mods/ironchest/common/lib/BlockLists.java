@@ -57,7 +57,6 @@ public class BlockLists
         VANILLA_SHULKER_COLORS.add(EnumDyeColor.GREEN);
         VANILLA_SHULKER_COLORS.add(EnumDyeColor.RED);
         VANILLA_SHULKER_COLORS.add(EnumDyeColor.BLACK);
-
     }
 
     public static void createIronShulkerBlockList()

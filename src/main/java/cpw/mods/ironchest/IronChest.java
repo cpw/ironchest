@@ -13,6 +13,7 @@ package cpw.mods.ironchest;
 import java.util.Properties;
 
 import cpw.mods.ironchest.common.CommonProxy;
+import cpw.mods.ironchest.common.config.Config;
 import cpw.mods.ironchest.common.lib.BlockLists;
 import cpw.mods.ironchest.common.network.MessageCrystalChestSync;
 import cpw.mods.ironchest.common.network.MessageCrystalShulkerSync;
@@ -61,6 +62,8 @@ public class IronChest
             event.getModMetadata().version = String.format("%s.%s.%s build %s", major, minor, rev, build);
         }
 
+        Config.load(event);
+
         proxy.preInit();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
@@ -79,7 +82,7 @@ public class IronChest
 
         BlockLists.createShulkerItemList();
 
-        registerDataFixes();
+        this.registerDataFixes();
     }
 
     public void registerDataFixes()
