@@ -1,0 +1,177 @@
+###############
+#    Lādes    #
+###############
+
+tile.ironchest.chest.iron.name=Dzels Lāde
+tile.ironchest.chest.gold.name=Zelta Lāde
+tile.ironchest.chest.diamond.name=Dimanta Lāde
+tile.ironchest.chest.copper.name=Vara Lāde
+tile.ironchest.chest.silver.name=Sudraba Lāde
+tile.ironchest.chest.crystal.name=Kristāla Lāde
+tile.ironchest.chest.obsidian.name=Obsidiāna Lāde
+tile.ironchest.chest.dirtchest9000.name=ZemesLāde 9000!
+
+item.ironchest.chest.iron_gold.name=Dzels uz Zelta Lādes Uzlabojums
+item.ironchest.chest.gold_diamond.name=Zelta uz Dimanta Lādes Uzlabojums
+item.ironchest.chest.copper_silver.name=Vara uz Sudraba Lādes Uzlabojums
+item.ironchest.chest.silver_gold.name=Sudraba uz Zelta Lādes Uzlabojums
+item.ironchest.chest.copper_iron.name=Vara uz Dzels Lādes Uzlabojums
+item.ironchest.chest.diamond_crystal.name=Dimanta uz Kristāla Lādes Uzlabojums
+item.ironchest.chest.wood_iron.name=Wood uz Dzels Lādes Uzlabojums
+item.ironchest.chest.wood_copper.name=Wood uz Vara Lādes Uzlabojums
+item.ironchest.chest.diamond_obsidian.name=Dimanta uz Obsidiāna Lādes Uzlabojums
+
+book.ironchest.dirtchest9000.title=Kā izmantot savu ZemesLādi 9000!
+book.ironchest.dirtchest9000.page1="Sveicināti savā jaunajā ZemesLādē 9000! Mēs ceram ka Jūs izbaudīsiem daudzus laimīgus gadus glabājot savu zemes kaudzi šajā glabātuvē."
+book.ironchest.dirtchest9000.page2="Lietošanas instrukcija: vienkārši ielieciet zemes kaudzi pēc savas izvēles šajā ļoti izstrādātajā vietnē un izbaudiet izdevību katru reizi ejot garām šai lādei, izņemt un ielikt Jūsu zemi!"
+book.ironchest.dirtchest9000.page3="Mēs ceram ka Jūs izbaudījāt lasīt šo instrukciju, un ceram ka apsvērsiet citus mūsu produktus tuvākajā nākotnē! Mīļi sveicieni no ZemesLāde 9000 instrukcijas rakstītājiem."
+book.ironchest.dirtchest9000.page4="Garantija: Šim produktam nav garantijas. Jūsu zeme var netikt noglabāta, tā var mazliet izbirt un piesārņot vidi, vai alternatīvi, var vispār nekas nenotikt."
+book.ironchest.dirtchest9000.page5="ZemesLāde 9000 rūpējas par vidi. Lūdzu atbrīvojaties no šīs grāmatas atbildīgi, un dariet visu atskaitot iemest to lavā. Mēs būtu ļoti bēdīgi par to."
+
+########################
+#    Šulkera Kastes    #
+########################
+
+tile.ironchest.shulker_box.iron.white.name=Balta Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.orange.name=Oranža Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.magenta.name=Purpura Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.light_blue.name=Gaiši Zila Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.yellow.name=Dzeltena Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.lime.name=Laima Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.pink.name=Rozā Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.gray.name=Pelēka Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.silver.name=Gaiši pelēka Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.cyan.name=Zilganzaļa Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.purple.name=Violeta Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.blue.name=Zila Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.brown.name=Brūna Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.green.name=Zaļa Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.red.name=Sarkana Dzels Šulkera Kaste
+tile.ironchest.shulker_box.iron.black.name=Melna Dzels Šulkera Kaste
+
+tile.ironchest.shulker_box.gold.white.name=Balta Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.orange.name=Oranža Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.magenta.name=Purpura Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.light_blue.name=Gaiši Zila Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.yellow.name=Dzeltena Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.lime.name=Laima Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.pink.name=Rozā Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.gray.name=Pelēka Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.silver.name=Gaiši pelēka Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.cyan.name=Zilganzaļa Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.purple.name=Violeta Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.blue.name=Zila Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.brown.name=Brūna Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.green.name=Zaļa Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.red.name=Sarkana Zelta Šulkera Kaste
+tile.ironchest.shulker_box.gold.black.name=Melna Zelta Šulkera Kaste
+
+tile.ironchest.shulker_box.diamond.white.name=Balta Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.orange.name=Oranža Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.magenta.name=Purpura Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.light_blue.name=Gaiši Zila Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.yellow.name=Dzeltena Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.lime.name=Laima Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.pink.name=Rozā Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.gray.name=Pelēka Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.silver.name=Gaiši pelēka Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.cyan.name=Zilganzaļa Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.purple.name=Violeta Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.blue.name=Zila Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.brown.name=Brūna Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.green.name=Zaļa Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.red.name=Sarkana Dimanta Šulkera Kaste
+tile.ironchest.shulker_box.diamond.black.name=Melna Dimanta Šulkera Kaste
+
+tile.ironchest.shulker_box.copper.white.name=Balta Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.orange.name=Oranža Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.magenta.name=Purpura Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.light_blue.name=Gaiši Zila Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.yellow.name=Dzeltena Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.lime.name=Laima Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.pink.name=Rozā Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.gray.name=Pelēka Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.silver.name=Gaiši pelēka Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.cyan.name=Zilganzaļa Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.purple.name=Violeta Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.blue.name=Zila Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.brown.name=Brūna Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.green.name=Zaļa Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.red.name=Sarkana Vara Šulkera Kaste
+tile.ironchest.shulker_box.copper.black.name=Melna Vara Šulkera Kaste
+
+tile.ironchest.shulker_box.silver.white.name=Balta Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.orange.name=Oranža Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.magenta.name=Purpura Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.light_blue.name=Gaiši Zila Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.yellow.name=Dzeltena Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.lime.name=Laima Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.pink.name=Rozā Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.gray.name=Pelēka Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.silver.name=Gaiši pelēka Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.cyan.name=Zilganzaļa Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.purple.name=Violeta Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.blue.name=Zila Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.brown.name=Brūna Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.green.name=Zaļa Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.red.name=Sarkana Sudraba Šulkera Kaste
+tile.ironchest.shulker_box.silver.black.name=Melna Sudraba Šulkera Kaste
+
+tile.ironchest.shulker_box.crystal.white.name=Balta Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.orange.name=Oranža Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.magenta.name=Purpura Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.light_blue.name=Gaiši Zila Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.yellow.name=Dzeltena Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.lime.name=Laima Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.pink.name=Rozā Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.gray.name=Pelēka Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.silver.name=Gaiši pelēka Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.cyan.name=Zilganzaļa Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.purple.name=Violeta Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.blue.name=Zila Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.brown.name=Brūna Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.green.name=Zaļa Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.red.name=Sarkana Kristāla Šulkera Kaste
+tile.ironchest.shulker_box.crystal.black.name=Melna Kristāla Šulkera Kaste
+
+tile.ironchest.shulker_box.obsidian.white.name=Balta Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.orange.name=Oranža Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.magenta.name=Purpura Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.light_blue.name=Gaiši Zila Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.yellow.name=Dzeltena Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.lime.name=Laima Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.pink.name=Rozā Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.gray.name=Pelēka Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.silver.name=Gaiši pelēka Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.cyan.name=Zilganzaļa Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.purple.name=Violeta Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.blue.name=Zila Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.brown.name=Brūna Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.green.name=Zaļa Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.red.name=Sarkana Obsidiāna Šulkera Kaste
+tile.ironchest.shulker_box.obsidian.black.name=Melna Obsidiāna Šulkera Kaste
+
+item.ironchest.shulker_box.iron_gold.name=Dzels uz Zelta Šulkera Kastes Uzlabojums
+item.ironchest.shulker_box.iron_gold.tooltip=Pārvērš Dzels Šulkera Kasti uz Zelta Šulkera Kasti\nTavas Šulkera Kastes krāsa paliks tāda pati.
+item.ironchest.shulker_box.gold_diamond.name=Zelta uz Dimanta Šulkera Kastes Uzlabojums
+item.ironchest.shulker_box.gold_diamond.tooltip=Pārvērš Zelta Šulkera Kasti uz Dimanta Šulkera Kasti\nTavas Šulkera Kastes krāsa paliks tāda pati.
+item.ironchest.shulker_box.copper_silver.name=Vara uz Sudraba Šulkera Kastes Uzlabojums
+item.ironchest.shulker_box.copper_silver.tooltip=Pārvērš Vara Šulkera Kasti uz Sudraba Šulkera Kasti\nTavas Šulkera Kastes krāsa paliks tāda pati.
+item.ironchest.shulker_box.silver_gold.name=Sudraba uz Zelta Šulkera Kastes Uzlabojums
+item.ironchest.shulker_box.silver_gold.tooltip=Pārvērš Sudraba Šulkera Kasti uz Zelta Šulkera Kasti\nTavas Šulkera Kastes krāsa paliks tāda pati.
+item.ironchest.shulker_box.copper_iron.name=Vara uz Dzels Šulkera Kastes Uzlabojums
+item.ironchest.shulker_box.copper_iron.tooltip=Pārvērš Vara Šulkera Kasti uz Dzels Šulkera Kasti\nTavas Šulkera Kastes krāsa paliks tāda pati.
+item.ironchest.shulker_box.diamond_crystal.name=Dimanta uz Kristāla Šulkera Kastes Uzlabojums
+item.ironchest.shulker_box.diamond_crystal.tooltip=Pārvērš Dimanta Šulkera Kasti uz Kristāla Šulkera Kasti\nTavas Šulkera Kastes krāsa paliks tāda pati.
+item.ironchest.shulker_box.vanilla_iron.name=Vanilla uz Dzels Šulkera Kastes Uzlabojums
+item.ironchest.shulker_box.vanilla_iron.tooltip=Pārvērš Vanilla Šulkera Kasti uz Dzels Šulkera Kasti\nTavas Šulkera Kastes krāsa paliks tāda pati.
+item.ironchest.shulker_box.vanilla_copper.name=Vanilla uz Vara Šulkera Kastes Uzlabojums
+item.ironchest.shulker_box.vanilla_copper.tooltip=Pārvērš Vanilla Šulkera Kasti uz Vara Šulkera Kasti\nTavas Šulkera Kastes krāsa paliks tāda pati.
+item.ironchest.shulker_box.diamond_obsidian.name=Dimanta uz Obsidiāna Šulkera Kastes Uzlabojums
+item.ironchest.shulker_box.diamond_obsidian.tooltip=Pārvērš Dimanta Šulkera Kasti uz Obsidiāna Šulkera Kasti\nTavas Šulkera Kastes krāsa paliks tāda pati.
+
+##############
+#    GUIs    #
+##############
+
+itemGroup.ironchest=Dzels Lādes
