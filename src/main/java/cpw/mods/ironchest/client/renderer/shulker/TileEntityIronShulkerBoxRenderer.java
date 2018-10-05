@@ -181,7 +181,7 @@ public class TileEntityIronShulkerBoxRenderer extends TileEntitySpecialRenderer<
 
             for (ItemStack item : te.getTopItems())
             {
-                if (shift > shifts.length)
+                if (shift > shifts.length || shift > 8)
                 {
                     break;
                 }

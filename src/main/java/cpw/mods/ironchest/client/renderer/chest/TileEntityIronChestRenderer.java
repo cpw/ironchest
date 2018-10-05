@@ -37,7 +37,16 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
     private ModelChest model;
 
     //@formatter:off
-    private static float[][] shifts = { { 0.3F, 0.45F, 0.3F }, { 0.7F, 0.45F, 0.3F }, { 0.3F, 0.45F, 0.7F }, { 0.7F, 0.45F, 0.7F }, { 0.3F, 0.1F, 0.3F }, { 0.7F, 0.1F, 0.3F }, { 0.3F, 0.1F, 0.7F }, { 0.7F, 0.1F, 0.7F }, { 0.5F, 0.32F, 0.5F } };
+    private static float[][] shifts = { 
+            { 0.3F, 0.45F, 0.3F }, 
+            { 0.7F, 0.45F, 0.3F }, 
+            { 0.3F, 0.45F, 0.7F }, 
+            { 0.7F, 0.45F, 0.7F }, 
+            { 0.3F, 0.1F, 0.3F }, 
+            { 0.7F, 0.1F, 0.3F }, 
+            { 0.3F, 0.1F, 0.7F }, 
+            { 0.7F, 0.1F, 0.7F }, 
+            { 0.5F, 0.32F, 0.5F } };
     //@formatter:on
 
     private static EntityItem customitem = new EntityItem(null);
@@ -179,7 +188,7 @@ public class TileEntityIronChestRenderer extends TileEntitySpecialRenderer<TileE
 
             for (ItemStack item : te.getTopItems())
             {
-                if (shift > shifts.length)
+                if (shift > shifts.length || shift > 8)
                 {
                     break;
                 }
