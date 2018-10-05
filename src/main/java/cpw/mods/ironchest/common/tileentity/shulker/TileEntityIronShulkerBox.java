@@ -20,6 +20,7 @@ import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.common.blocks.shulker.BlockIronShulkerBox;
 import cpw.mods.ironchest.common.blocks.shulker.IronShulkerBoxType;
 import cpw.mods.ironchest.common.gui.shulker.ContainerIronShulkerBox;
+import cpw.mods.ironchest.common.lib.ICShulkerInventoryHandler;
 import cpw.mods.ironchest.common.network.MessageCrystalShulkerSync;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockShulkerBox;
@@ -48,9 +49,12 @@ import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityIronShulkerBox extends TileEntityLockableLoot implements ITickable, ISidedInventory
 {
@@ -75,12 +79,19 @@ public class TileEntityIronShulkerBox extends TileEntityLockableLoot implements 
     private boolean hadStuff;
 
     private boolean hasBeenCleared;
+
     private int openCount;
+
     private AnimationStatus animationStatus;
+
     private float progress;
+
     private float progressOld;
+
     private EnumDyeColor color;
+
     private boolean destroyedByCreativePlayer;
+
     private boolean hasBeenUpgraded;
 
     /** The Variant of the Shulker Box (Not Color) */
@@ -783,7 +794,8 @@ public class TileEntityIronShulkerBox extends TileEntityLockableLoot implements 
         return this.isDestroyedByCreativePlayer() && (!this.isEmpty() || this.hasCustomName() || this.lootTable != null);
     }
 
-    public ItemStack getDrop(IBlockState state, boolean inBreakBlock) {
+    public ItemStack getDrop(IBlockState state, boolean inBreakBlock)
+    {
         BlockIronShulkerBox block = (BlockIronShulkerBox) state.getBlock();
         if (!isCleared() && (!inBreakBlock || shouldDropInBreakBlock()))
         {
@@ -830,5 +842,24 @@ public class TileEntityIronShulkerBox extends TileEntityLockableLoot implements 
     public static void registerFixesShulkerBox(DataFixer fixer)
     {
         fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityIronShulkerBox.class, new String[] { "Items" }));
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return true;
+        return super.hasCapability(capability, facing);
+    }
+
+    IItemHandler insertionHandler = new ICShulkerInventoryHandler(this.getType().size, this);
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return (T) insertionHandler;
+        return super.getCapability(capability, facing);
     }
 }

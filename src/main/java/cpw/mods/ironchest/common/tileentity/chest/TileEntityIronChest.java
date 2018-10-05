@@ -18,6 +18,7 @@ import cpw.mods.ironchest.common.blocks.chest.BlockIronChest;
 import cpw.mods.ironchest.common.blocks.chest.IronChestType;
 import cpw.mods.ironchest.common.core.IronChestBlocks;
 import cpw.mods.ironchest.common.gui.chest.ContainerIronChest;
+import cpw.mods.ironchest.common.lib.ICChestInventoryHandler;
 import cpw.mods.ironchest.common.network.MessageCrystalChestSync;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -39,8 +40,11 @@ import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityIronChest extends TileEntityLockableLoot implements ITickable
 {
@@ -639,5 +643,24 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
     public static void registerFixesChest(DataFixer fixer)
     {
         fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityIronChest.class, new String[] { "Items" }));
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return true;
+        return super.hasCapability(capability, facing);
+    }
+
+    IItemHandler insertionHandler = new ICChestInventoryHandler(this.getType().size, this);
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return (T) insertionHandler;
+        return super.getCapability(capability, facing);
     }
 }
