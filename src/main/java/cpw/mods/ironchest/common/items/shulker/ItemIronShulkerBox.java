@@ -42,6 +42,15 @@ public class ItemIronShulkerBox extends ItemBlock
     @Override
     public String getUnlocalizedName(ItemStack itemstack)
     {
-        return "tile.ironchest.shulker_box." + IronShulkerBoxType.VALUES[itemstack.getMetadata()].name().toLowerCase(Locale.US) + "." + this.colorName;
+        int meta = itemstack.getMetadata();
+
+        if (meta < IronShulkerBoxType.VALUES.length)
+        {
+            return "tile.ironchest.shulker_box." + IronShulkerBoxType.VALUES[itemstack.getMetadata()].name().toLowerCase(Locale.US) + "." + this.colorName;
+        }
+        else
+        {
+            return super.getUnlocalizedName(itemstack);
+        }
     }
 }
