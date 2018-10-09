@@ -653,14 +653,20 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements ITick
         return super.hasCapability(capability, facing);
     }
 
-    IItemHandler insertionHandler = new ICChestInventoryHandler(this.getType().size, this);
+    private IItemHandler itemHandler;
+
+    @Override
+    protected IItemHandler createUnSidedHandler()
+    {
+        return new ICChestInventoryHandler(this);
+    }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing)
     {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            return (T) insertionHandler;
+            return (T) (itemHandler == null ? (itemHandler = createUnSidedHandler()) : itemHandler);
         return super.getCapability(capability, facing);
     }
 }

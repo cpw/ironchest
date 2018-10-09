@@ -11,71 +11,43 @@ package cpw.mods.ironchest.common.lib;
 import javax.annotation.Nonnull;
 
 import cpw.mods.ironchest.common.tileentity.chest.TileEntityIronChest;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class ICChestInventoryHandler implements IItemHandlerModifiable
 {
-    int slots;
-
     TileEntityIronChest inv;
 
-    int slotOffset;
-
-    boolean[] canInsert;
-
-    boolean[] canExtract;
-
-    public ICChestInventoryHandler(int slots, TileEntityIronChest inventory, int slotOffset, boolean[] canInsert, boolean[] canExtract)
+    public ICChestInventoryHandler(TileEntityIronChest inventory)
     {
-        this.slots = slots;
         this.inv = inventory;
-        this.slotOffset = slotOffset;
-        this.canInsert = canInsert;
-        this.canExtract = canExtract;
-    }
-
-    public ICChestInventoryHandler(int slots, TileEntityIronChest inventory)
-    {
-        this(slots, inventory, 0, new boolean[slots], new boolean[slots]);
-        for (int i = 0; i < slots; i++)
-            this.canExtract[i] = this.canInsert[i] = true;
-    }
-
-    public ICChestInventoryHandler(int slots, TileEntityIronChest inventory, int slotOffset, boolean canInsert, boolean canExtract)
-    {
-        this(slots, inventory, slotOffset, new boolean[slots], new boolean[slots]);
-        for (int i = 0; i < slots; i++)
-        {
-            this.canInsert[i] = canInsert;
-            this.canExtract[i] = canExtract;
-        }
     }
 
     @Override
     public int getSlots()
     {
-        return slots;
+        return this.inv.getSizeInventory();
     }
 
     @Override
     public ItemStack getStackInSlot(int slot)
     {
-        return this.inv.getItems().get(this.slotOffset + slot);
+        return this.inv.getStackInSlot(slot);
     }
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate)
     {
-        if (!canInsert[slot] || stack.isEmpty())
+        if (stack.isEmpty())
             return stack;
         stack = stack.copy();
 
-        if (!inv.isItemValidForSlot(this.slotOffset + slot, stack))
+        if (!inv.isItemValidForSlot(slot, stack))
             return stack;
 
-        int offsetSlot = this.slotOffset + slot;
+        int offsetSlot = slot;
         ItemStack currentStack = inv.getItems().get(offsetSlot);
 
         if (currentStack.isEmpty())
@@ -144,10 +116,10 @@ public class ICChestInventoryHandler implements IItemHandlerModifiable
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate)
     {
-        if (!canExtract[slot] || amount == 0)
+        if (amount == 0)
             return ItemStack.EMPTY;
 
-        int offsetSlot = this.slotOffset + slot;
+        int offsetSlot = slot;
         ItemStack currentStack = inv.getItems().get(offsetSlot);
 
         if (currentStack.isEmpty())
@@ -172,13 +144,18 @@ public class ICChestInventoryHandler implements IItemHandlerModifiable
     @Override
     public int getSlotLimit(int slot)
     {
-        return 64;
+        return getInv().getInventoryStackLimit();
     }
 
     @Override
     public void setStackInSlot(int slot, @Nonnull ItemStack stack)
     {
-        inv.getItems().set(this.slotOffset + slot, stack);
+        inv.getItems().set(slot, stack);
         inv.markDirty();
+    }
+
+    public IInventory getInv()
+    {
+        return inv;
     }
 }
