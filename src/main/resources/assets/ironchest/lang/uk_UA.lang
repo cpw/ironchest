@@ -1,0 +1,177 @@
+################
+#    Chests    #
+################
+
+tile.ironchest.chest.iron.name=Залізна скриня
+tile.ironchest.chest.gold.name=Золота скриня
+tile.ironchest.chest.diamond.name=Діамантова скриня
+tile.ironchest.chest.copper.name=Мідна скриня
+tile.ironchest.chest.silver.name=Срібна скриня
+tile.ironchest.chest.crystal.name=Кришталева скриня
+tile.ironchest.chest.obsidian.name=Обсидіанова скриня
+tile.ironchest.chest.dirtchest9000.name=Замлесхрон 9000!
+
+item.ironchest.chest.iron_gold.name=Доробка залізної скрині до золотої
+item.ironchest.chest.gold_diamond.name=Доробка золотої скрині до діамантової
+item.ironchest.chest.copper_silver.name=Доробка мідної скрині до срібної
+item.ironchest.chest.silver_gold.name=Доробка срібної скрині до золотої
+item.ironchest.chest.copper_iron.name=Доробка мідної скрині до залізної
+item.ironchest.chest.diamond_crystal.name=Доробка діамантової скрині до кришталевої
+item.ironchest.chest.wood_iron.name=Доробка деревʼяної скрині до залізної
+item.ironchest.chest.wood_copper.name=Доробка деревʼяної скрині до мідної
+item.ironchest.chest.diamond_obsidian.name=Доробка діамантової скрині до обсидіанової
+
+book.ironchest.dirtchest9000.title=Посібник до Замлесхрону 9000!
+book.ironchest.dirtchest9000.page1="Вітайте новий Замлесхрон 9000! Ми сподіваємось, що ви будете тримати довгі роки свою землю у нашому пристрої для зберігання."
+book.ironchest.dirtchest9000.page2="Використання: просто покладіть на обраний стак землі до високопродуктивної комірки та насолоджуйтесь зручністю доступу до землі кожного разу, як ви проходите повз скриню!"
+book.ironchest.dirtchest9000.page3="Сподіваємось Вам сподобалась дана інструкція, та будете і надалі користуватися нашими продуктами! З повагою, автори посібника Замлесхрону 9000."
+book.ironchest.dirtchest9000.page4="Гарантія: Цей продукт надається без жодної гарантії. Ваша земля може зберігатися, може повільно просочуватися назовні, чи навпаки, нічого не трапиться."
+book.ironchest.dirtchest9000.page5="Замлесхрон 9000 є екологічно чистим. Будь ласка, утилізуйте цей посібник відповідально, а не як зазвичай, кидаючи у лаву. В іншому випадку ми засмутимося."
+
+#######################
+#    Shulker Boxes    #
+#######################
+
+tile.ironchest.shulker_box.iron.white.name=Біла залізна коробка шалкера
+tile.ironchest.shulker_box.iron.orange.name=Руда залізна коробка шалкера
+tile.ironchest.shulker_box.iron.magenta.name=Фіолетова залізна коробка шалкера
+tile.ironchest.shulker_box.iron.light_blue.name=Світло-синя залізна коробка шалкера
+tile.ironchest.shulker_box.iron.yellow.name=Жовта залізна коробка шалкера
+tile.ironchest.shulker_box.iron.lime.name=Лаймова залізна коробка шалкера
+tile.ironchest.shulker_box.iron.pink.name=Рожева залізна коробка шалкера
+tile.ironchest.shulker_box.iron.gray.name=Сіра залізна коробка шалкера
+tile.ironchest.shulker_box.iron.silver.name=Світло-сіра залізна коробка шалкера
+tile.ironchest.shulker_box.iron.cyan.name=Блакитна залізна коробка шалкера
+tile.ironchest.shulker_box.iron.purple.name=Пурпурна залізна коробка шалкера
+tile.ironchest.shulker_box.iron.blue.name=Синя залізна коробка шалкера
+tile.ironchest.shulker_box.iron.brown.name=Коричнева залізна коробка шалкера
+tile.ironchest.shulker_box.iron.green.name=Зелена залізна коробка шалкера
+tile.ironchest.shulker_box.iron.red.name=Червона залізна коробка шалкера
+tile.ironchest.shulker_box.iron.black.name=Чорна залізна коробка шалкера
+
+tile.ironchest.shulker_box.gold.white.name=Біла золота коробка шалкера
+tile.ironchest.shulker_box.gold.orange.name=Руда золота коробка шалкера
+tile.ironchest.shulker_box.gold.magenta.name=Фіолетова золота коробка шалкера
+tile.ironchest.shulker_box.gold.light_blue.name=Світло-синя залізна коробка шалкера
+tile.ironchest.shulker_box.gold.yellow.name=Жовта золота коробка шалкера
+tile.ironchest.shulker_box.gold.lime.name=Лаймова золота коробка шалкера
+tile.ironchest.shulker_box.gold.pink.name=Рожева золота коробка шалкера
+tile.ironchest.shulker_box.gold.gray.name=Сіра золота коробка шалкера
+tile.ironchest.shulker_box.gold.silver.name=Світло-сіра золота коробка шалкера
+tile.ironchest.shulker_box.gold.cyan.name=Блакитна золота коробка шалкера
+tile.ironchest.shulker_box.gold.purple.name=Пурпурна золота коробка шалкера
+tile.ironchest.shulker_box.gold.blue.name=Синя залізна коробка шалкера
+tile.ironchest.shulker_box.gold.brown.name=Коричнева золота коробка шалкера
+tile.ironchest.shulker_box.gold.green.name=Зелена золота коробка шалкера
+tile.ironchest.shulker_box.gold.red.name=Червона золота коробка шалкера
+tile.ironchest.shulker_box.gold.black.name=Чорна золота коробка шалкера
+
+tile.ironchest.shulker_box.diamond.white.name=Біла діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.orange.name=Руда діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.magenta.name=Фіолетова діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.light_blue.name=Світло-синя діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.yellow.name=Жовта діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.lime.name=Лаймова діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.pink.name=Рожева діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.gray.name=Сіра діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.silver.name=Світло-сіра діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.cyan.name=Блакитна діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.purple.name=Пурпурна діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.blue.name=Синя діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.brown.name=Коричнева діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.green.name=Зелена діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.red.name=Червона діамантова коробка шалкера
+tile.ironchest.shulker_box.diamond.black.name=Чорна діамантова коробка шалкера
+
+tile.ironchest.shulker_box.copper.white.name=Біла мідна коробка шалкера
+tile.ironchest.shulker_box.copper.orange.name=Руда мідна коробка шалкера
+tile.ironchest.shulker_box.copper.magenta.name=Фіолетова мідна коробка шалкера
+tile.ironchest.shulker_box.copper.light_blue.name=Світло-синя мідна коробка шалкера
+tile.ironchest.shulker_box.copper.yellow.name=Жовта мідна коробка шалкера
+tile.ironchest.shulker_box.copper.lime.name=Лаймова мідна коробка шалкера
+tile.ironchest.shulker_box.copper.pink.name=Рожева мідна коробка шалкера
+tile.ironchest.shulker_box.copper.gray.name=Сіра мідна коробка шалкера
+tile.ironchest.shulker_box.copper.silver.name=Світло-сіра мідна коробка шалкера
+tile.ironchest.shulker_box.copper.cyan.name=Блакитна мідна коробка шалкера
+tile.ironchest.shulker_box.copper.purple.name=Пурпурна мідна коробка шалкера
+tile.ironchest.shulker_box.copper.blue.name=Синя мідна коробка шалкера
+tile.ironchest.shulker_box.copper.brown.name=Коричнева мідна коробка шалкера
+tile.ironchest.shulker_box.copper.green.name=Зелена мідна коробка шалкера
+tile.ironchest.shulker_box.copper.red.name=Червона мідна коробка шалкера
+tile.ironchest.shulker_box.copper.black.name=Чорна мідна коробка шалкера
+
+tile.ironchest.shulker_box.silver.white.name=Біла срібна коробка шалкера
+tile.ironchest.shulker_box.silver.orange.name=Руда срібна коробка шалкера
+tile.ironchest.shulker_box.silver.magenta.name=Фіолетова срібна коробка шалкера
+tile.ironchest.shulker_box.silver.light_blue.name=Світло-синя срібна коробка шалкера
+tile.ironchest.shulker_box.silver.yellow.name=Жовта срібна коробка шалкера
+tile.ironchest.shulker_box.silver.lime.name=Лаймова срібна коробка шалкера
+tile.ironchest.shulker_box.silver.pink.name=Рожева срібна коробка шалкера
+tile.ironchest.shulker_box.silver.gray.name=Сіра срібна коробка шалкера
+tile.ironchest.shulker_box.silver.silver.name=Світло-сіра срібна коробка шалкера
+tile.ironchest.shulker_box.silver.cyan.name=Блакитна срібна коробка шалкера
+tile.ironchest.shulker_box.silver.purple.name=Пурпурна срібна коробка шалкера
+tile.ironchest.shulker_box.silver.blue.name=Синя срібна коробка шалкера
+tile.ironchest.shulker_box.silver.brown.name=Коричнева срібна коробка шалкера
+tile.ironchest.shulker_box.silver.green.name=Зелена срібна коробка шалкера
+tile.ironchest.shulker_box.silver.red.name=Червона срібна коробка шалкера
+tile.ironchest.shulker_box.silver.black.name=Чорна срібна коробка шалкера
+
+tile.ironchest.shulker_box.crystal.white.name=Біла кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.orange.name=Руда кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.magenta.name=Фіолетова кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.light_blue.name=Світло-синя кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.yellow.name=Жовта кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.lime.name=Лаймова кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.pink.name=Рожева кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.gray.name=Сіра кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.silver.name=Світло-сіра кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.cyan.name=Блакитна кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.purple.name=Пурпурна кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.blue.name=Синя кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.brown.name=Коричнева кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.green.name=Зелена кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.red.name=Червона кришталева коробка шалкера
+tile.ironchest.shulker_box.crystal.black.name=Чорна кришталева коробка шалкера
+
+tile.ironchest.shulker_box.obsidian.white.name=Біла обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.orange.name=Руда обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.magenta.name=Фіолетова обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.light_blue.name=Світло-синя обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.yellow.name=Жовта обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.lime.name=Лаймова обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.pink.name=Рожева обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.gray.name=Сіра обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.silver.name=Світло-сіра обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.cyan.name=Блакитна обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.purple.name=Пурпурна обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.blue.name=Синя обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.brown.name=Коричнева обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.green.name=Зелена обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.red.name=Червона обсидіанова коробка шалкера
+tile.ironchest.shulker_box.obsidian.black.name=Чорна обсидіанова коробка шалкера
+
+item.ironchest.shulker_box.iron_gold.name=Доробка залізної коробки шалкера до золотої
+item.ironchest.shulker_box.iron_gold.tooltip=Використовується для доробки залізної коробки шалкера до золотої\nКолір коробки лишається той самий.
+item.ironchest.shulker_box.gold_diamond.name=Доробка золотої коробки шалкера до діамантової
+item.ironchest.shulker_box.gold_diamond.tooltip=Використовується для доробки золотої коробки шалкера до діамантової\nКолір коробки лишається той самий.
+item.ironchest.shulker_box.copper_silver.name=Доробка мідної коробки шалкера до срібної
+item.ironchest.shulker_box.copper_silver.tooltip=Використовується для доробки мідної коробки шалкера до срібної\nКолір коробки лишається той самий.
+item.ironchest.shulker_box.silver_gold.name=Доробка срібної коробки шалкера до золотої
+item.ironchest.shulker_box.silver_gold.tooltip=Використовується для доробки срібної коробки шалкера до золотої\nКолір коробки лишається той самий.
+item.ironchest.shulker_box.copper_iron.name=Доробка мідної коробки шалкера до залізної
+item.ironchest.shulker_box.copper_iron.tooltip=Використовується для доробки мідної коробки шалкера до залізної\nКолір коробки лишається той самий.
+item.ironchest.shulker_box.diamond_crystal.name=Доробка діамантової коробки шалкера до кришталевої
+item.ironchest.shulker_box.diamond_crystal.tooltip=Використовується для доробки діамантової коробки шалкера до кришталевої\nКолір коробки лишається той самий.
+item.ironchest.shulker_box.vanilla_iron.name=Доробка звичайної коробки шалкера до залізної
+item.ironchest.shulker_box.vanilla_iron.tooltip=Використовується для доробки звичайної коробки шалкера до залізної\nКолір коробки лишається той самий.
+item.ironchest.shulker_box.vanilla_copper.name=Доробка звичайної коробки шалкера до мідної
+item.ironchest.shulker_box.vanilla_copper.tooltip=Використовується для доробки звичайної коробки шалкера до мідної\nКолір коробки лишається той самий.
+item.ironchest.shulker_box.diamond_obsidian.name=Доробка діамантової коробки шалкера до обсидіанової
+item.ironchest.shulker_box.diamond_obsidian.tooltip=Використовується для доробки діамантової коробки шалкера до обсидіанової\nКолір коробки лишається той самий.
+
+##############
+#    GUIs    #
+##############
+
+itemGroup.ironchest=Залізні скрині
