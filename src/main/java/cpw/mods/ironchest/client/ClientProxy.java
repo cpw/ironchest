@@ -36,12 +36,14 @@ public class ClientProxy extends CommonProxy
     {
         for (IronChestType type : IronChestType.values())
         {
-            ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
+            if (type.clazz != null)
+                ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
         }
 
         for (IronShulkerBoxType type : IronShulkerBoxType.values())
         {
-            ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronShulkerBoxRenderer());
+            if (type.clazz != null)
+                ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronShulkerBoxRenderer());
         }
     }
 
