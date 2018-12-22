@@ -1,9 +1,0 @@
-{
-    "recipes": {
-        "shulker_box": "cpw.mods.ironchest.common.crafting.recipe.ShulkerBoxRecipeFactory",
-        "shulker_box_coloring": "cpw.mods.ironchest.common.crafting.recipe.ShulkerBoxColorRecipeFactory"
-    },
-    "conditions": {
-        "is_option_enabled": "cpw.mods.ironchest.common.crafting.condition.IsConfigOptionEnabledConditionFactory"
-    }
-}
