@@ -71,14 +71,14 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements IChes
     {
         super(typeIn);
         this.chestType = chestTypeIn;
-        this.chestContents = NonNullList.<ItemStack> withSize(chestTypeIn.size, ItemStack.EMPTY);
+        this.chestContents = NonNullList.<ItemStack>withSize(chestTypeIn.size, ItemStack.EMPTY);
 
     }
 
     @Override
     public void setItems(NonNullList<ItemStack> contents)
     {
-        this.chestContents = NonNullList.<ItemStack> withSize(this.getIronChestType().size, ItemStack.EMPTY);
+        this.chestContents = NonNullList.<ItemStack>withSize(this.getIronChestType().size, ItemStack.EMPTY);
 
         for (int i = 0; i < contents.size(); i++)
         {
@@ -139,7 +139,8 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements IChes
         {
             this.numPlayersUsing = 0;
 
-            for (EntityPlayer entityplayer : this.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(i - 5.0F, j - 5.0F, k - 5.0F, i + 1 + 5.0F, j + 1 + 5.0F, k + 1 + 5.0F)))
+            for (EntityPlayer entityplayer : this.world
+                    .getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(i - 5.0F, j - 5.0F, k - 5.0F, i + 1 + 5.0F, j + 1 + 5.0F, k + 1 + 5.0F)))
             {
                 if (entityplayer.openContainer instanceof ContainerIronChest)
                 {
@@ -205,7 +206,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements IChes
     {
         super.read(compound);
 
-        this.chestContents = NonNullList.<ItemStack> withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        this.chestContents = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
         if (!this.checkLootAndRead(compound))
         {

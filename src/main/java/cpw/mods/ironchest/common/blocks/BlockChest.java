@@ -10,8 +10,6 @@
  ******************************************************************************/
 package cpw.mods.ironchest.common.blocks;
 
-import javax.annotation.Nullable;
-
 import cpw.mods.ironchest.common.tileentity.TileEntityIronChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -45,6 +43,8 @@ import net.minecraft.world.ILockableContainer;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 public abstract class BlockChest extends Block implements ITileEntityProvider
 {

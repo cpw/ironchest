@@ -17,23 +17,23 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class ClientProxy extends ServerProxy
 {
-	public ClientProxy()
-	{
+    public ClientProxy()
+    {
 
-	}
+    }
 
-	@Override
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void preInit()
-	{
-		System.out.println("hello");
-		super.preInit();
-		for (IronChestType type : IronChestType.values())
-		{
-			if (type.clazz != null)
-			{
-				ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
-			}
-		}
-	}
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void preInit()
+    {
+        System.out.println("hello");
+        super.preInit();
+        for (IronChestType type : IronChestType.values())
+        {
+            if (type.clazz != null)
+            {
+                ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
+            }
+        }
+    }
 }

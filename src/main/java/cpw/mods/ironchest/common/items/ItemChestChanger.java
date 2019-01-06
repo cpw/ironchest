@@ -73,7 +73,7 @@ public class ItemChestChanger extends ItemTooltip
 
         ITextComponent customname = null;
 
-        NonNullList<ItemStack> chestContents = NonNullList.<ItemStack> withSize(27, ItemStack.EMPTY);
+        NonNullList<ItemStack> chestContents = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
         EnumFacing chestFacing = EnumFacing.NORTH;
 
         if (te != null)
@@ -108,7 +108,7 @@ public class ItemChestChanger extends ItemTooltip
                     return EnumActionResult.PASS;
                 }
 
-                chestContents = NonNullList.<ItemStack> withSize(chest.getSizeInventory(), ItemStack.EMPTY);
+                chestContents = NonNullList.<ItemStack>withSize(chest.getSizeInventory(), ItemStack.EMPTY);
 
                 for (int i = 0; i < chestContents.size(); i++)
                 {

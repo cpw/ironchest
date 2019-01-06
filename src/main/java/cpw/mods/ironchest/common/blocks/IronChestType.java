@@ -65,7 +65,8 @@ public enum IronChestType implements IStringSerializable
 
     public final String itemName;
 
-    IronChestType(int size, int rowLength, boolean tieredChest, String modelTexture, Class<? extends TileEntityIronChest> clazz, int xSize, int ySize, String itemName)
+    IronChestType(int size, int rowLength, boolean tieredChest, String modelTexture, Class<? extends TileEntityIronChest> clazz, int xSize, int ySize,
+            String itemName)
     {
         this.name = this.name().toLowerCase();
         this.size = size;
@@ -126,24 +127,24 @@ public enum IronChestType implements IStringSerializable
     {
         switch (resourceLocation.toString())
         {
-        case BlockNames.IRON_CHEST:
-            return IRON;
-        case BlockNames.GOLD_CHEST:
-            return GOLD;
-        case BlockNames.DIAMOND_CHEST:
-            return DIAMOND;
-        case BlockNames.COPPER_CHEST:
-            return COPPER;
-        case BlockNames.SILVER_CHEST:
-            return SILVER;
-        case BlockNames.CRYSTAL_CHEST:
-            return CRYSTAL;
-        case BlockNames.OBSIDIAN_CHEST:
-            return OBSIDIAN;
-        case BlockNames.DIRT_CHEST:
-            return DIRTCHEST9000;
-        default:
-            return WOOD;
+            case BlockNames.IRON_CHEST:
+                return IRON;
+            case BlockNames.GOLD_CHEST:
+                return GOLD;
+            case BlockNames.DIAMOND_CHEST:
+                return DIAMOND;
+            case BlockNames.COPPER_CHEST:
+                return COPPER;
+            case BlockNames.SILVER_CHEST:
+                return SILVER;
+            case BlockNames.CRYSTAL_CHEST:
+                return CRYSTAL;
+            case BlockNames.OBSIDIAN_CHEST:
+                return OBSIDIAN;
+            case BlockNames.DIRT_CHEST:
+                return DIRTCHEST9000;
+            default:
+                return WOOD;
         }
     }
 
@@ -151,24 +152,24 @@ public enum IronChestType implements IStringSerializable
     {
         switch (type)
         {
-        case IRON:
-            return IronChestBlocks.ironChestBlock.getDefaultState();
-        case GOLD:
-            return IronChestBlocks.goldChestBlock.getDefaultState();
-        case DIAMOND:
-            return IronChestBlocks.diamondChestBlock.getDefaultState();
-        case COPPER:
-            return IronChestBlocks.copperChestBlock.getDefaultState();
-        case SILVER:
-            return IronChestBlocks.silverChestBlock.getDefaultState();
-        case CRYSTAL:
-            return IronChestBlocks.crystalChestBlock.getDefaultState();
-        case OBSIDIAN:
-            return IronChestBlocks.obsidianChestBlock.getDefaultState();
-        case DIRTCHEST9000:
-            return IronChestBlocks.dirtChestBlock.getDefaultState();
-        default:
-            return null;
+            case IRON:
+                return IronChestBlocks.ironChestBlock.getDefaultState();
+            case GOLD:
+                return IronChestBlocks.goldChestBlock.getDefaultState();
+            case DIAMOND:
+                return IronChestBlocks.diamondChestBlock.getDefaultState();
+            case COPPER:
+                return IronChestBlocks.copperChestBlock.getDefaultState();
+            case SILVER:
+                return IronChestBlocks.silverChestBlock.getDefaultState();
+            case CRYSTAL:
+                return IronChestBlocks.crystalChestBlock.getDefaultState();
+            case OBSIDIAN:
+                return IronChestBlocks.obsidianChestBlock.getDefaultState();
+            case DIRTCHEST9000:
+                return IronChestBlocks.dirtChestBlock.getDefaultState();
+            default:
+                return null;
         }
     }
 
@@ -176,24 +177,24 @@ public enum IronChestType implements IStringSerializable
     {
         switch (this)
         {
-        case IRON:
-            return new TileEntityIronChest();
-        case GOLD:
-            return new TileEntityGoldChest();
-        case DIAMOND:
-            return new TileEntityDiamondChest();
-        case COPPER:
-            return new TileEntityCopperChest();
-        case SILVER:
-            return new TileEntitySilverChest();
-        case CRYSTAL:
-            return new TileEntityCrystalChest();
-        case OBSIDIAN:
-            return new TileEntityObsidianChest();
-        case DIRTCHEST9000:
-            return new TileEntityDirtChest();
-        default:
-            return null;
+            case IRON:
+                return new TileEntityIronChest();
+            case GOLD:
+                return new TileEntityGoldChest();
+            case DIAMOND:
+                return new TileEntityDiamondChest();
+            case COPPER:
+                return new TileEntityCopperChest();
+            case SILVER:
+                return new TileEntitySilverChest();
+            case CRYSTAL:
+                return new TileEntityCrystalChest();
+            case OBSIDIAN:
+                return new TileEntityObsidianChest();
+            case DIRTCHEST9000:
+                return new TileEntityDirtChest();
+            default:
+                return null;
         }
     }
 }

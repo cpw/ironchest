@@ -10,14 +10,14 @@
  ******************************************************************************/
 package cpw.mods.ironchest.common.tileentity;
 
-import java.util.Collections;
-import java.util.Comparator;
-
 import cpw.mods.ironchest.common.blocks.IronChestType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+
+import java.util.Collections;
+import java.util.Comparator;
 
 public class TileEntityCrystalChest extends TileEntityIronChest
 {
@@ -33,7 +33,7 @@ public class TileEntityCrystalChest extends TileEntityIronChest
     public TileEntityCrystalChest()
     {
         super(IronChestEntityType.CRYSTAL_CHEST, IronChestType.CRYSTAL);
-        this.topStacks = NonNullList.<ItemStack> withSize(8, ItemStack.EMPTY);
+        this.topStacks = NonNullList.<ItemStack>withSize(8, ItemStack.EMPTY);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class TileEntityCrystalChest extends TileEntityIronChest
             return;
         }
 
-        NonNullList<ItemStack> tempCopy = NonNullList.<ItemStack> withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        NonNullList<ItemStack> tempCopy = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
         boolean hasStuff = false;
 
@@ -192,7 +192,7 @@ public class TileEntityCrystalChest extends TileEntityIronChest
     {
         if (this.getIronChestType().isTransparent())
         {
-            NonNullList<ItemStack> sortList = NonNullList.<ItemStack> withSize(this.getTopItems().size(), ItemStack.EMPTY);
+            NonNullList<ItemStack> sortList = NonNullList.<ItemStack>withSize(this.getTopItems().size(), ItemStack.EMPTY);
 
             int pos = 0;
 
@@ -213,7 +213,7 @@ public class TileEntityCrystalChest extends TileEntityIronChest
             return sortList;
         }
 
-        return NonNullList.<ItemStack> withSize(this.getTopItems().size(), ItemStack.EMPTY);
+        return NonNullList.<ItemStack>withSize(this.getTopItems().size(), ItemStack.EMPTY);
     }
 
     protected void sendTopStacksPacket()

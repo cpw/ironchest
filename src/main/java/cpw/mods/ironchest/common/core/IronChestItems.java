@@ -30,7 +30,9 @@ public class IronChestItems
     public void registerItems()
     {
         // Chest Start
-        GameRegistry.findRegistry(Item.class).registerAll(ironToGoldUpgrade, goldToDiamondUpgrade, copperToSilverUpgrade, silverToGoldUpgrade, copperToIronUpgrade, diamondToCrystalUpgrade, woodToIronUpgrade, woodToCopperUpgrade, diamondToObsidianUpgrade);
+        GameRegistry.findRegistry(Item.class)
+                .registerAll(ironToGoldUpgrade, goldToDiamondUpgrade, copperToSilverUpgrade, silverToGoldUpgrade, copperToIronUpgrade, diamondToCrystalUpgrade,
+                        woodToIronUpgrade, woodToCopperUpgrade, diamondToObsidianUpgrade);
         // Chest End
     }
 

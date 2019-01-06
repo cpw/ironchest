@@ -61,14 +61,18 @@ public class IronChestBlocks
     public void registerBlocks()
     {
         // Chest Start
-        GameRegistry.findRegistry(Block.class).registerAll(ironChestBlock, goldChestBlock, diamondChestBlock, copperChestBlock, silverChestBlock, crystalChestBlock, obsidianChestBlock, dirtChestBlock);
+        GameRegistry.findRegistry(Block.class)
+                .registerAll(ironChestBlock, goldChestBlock, diamondChestBlock, copperChestBlock, silverChestBlock, crystalChestBlock, obsidianChestBlock,
+                        dirtChestBlock);
         // Chest End
     }
 
     public void registerItems()
     {
         // Chest Start
-        GameRegistry.findRegistry(Item.class).registerAll(ironChestItemBlock, goldChestItemBlock, diamondChestItemBlock, copperChestItemBlock, silverChestItemBlock, crystalChestItemBlock, obsidianChestItemBlock, dirtChestItemBlock);
+        GameRegistry.findRegistry(Item.class)
+                .registerAll(ironChestItemBlock, goldChestItemBlock, diamondChestItemBlock, copperChestItemBlock, silverChestItemBlock, crystalChestItemBlock,
+                        obsidianChestItemBlock, dirtChestItemBlock);
         // Chest End
     }
 

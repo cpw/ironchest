@@ -10,10 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest.client.renderer;
 
-import java.util.Random;
-
 import com.google.common.primitives.SignedBytes;
-
 import cpw.mods.ironchest.common.blocks.BlockChest;
 import cpw.mods.ironchest.common.blocks.BlockIronChest;
 import cpw.mods.ironchest.common.blocks.IronChestType;
@@ -30,6 +27,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+
+import java.util.Random;
 
 public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> extends TileEntityRenderer<T>
 {
@@ -66,7 +65,9 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
         GlStateManager.enableDepthTest();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
-        IBlockState iblockstate = tileEntityIn.hasWorld() ? tileEntityIn.getBlockState() : (IBlockState) IronChestBlocks.ironChestBlock.getDefaultState().with(BlockIronChest.FACING, EnumFacing.SOUTH);
+        IBlockState iblockstate = tileEntityIn.hasWorld() ?
+                tileEntityIn.getBlockState() :
+                (IBlockState) IronChestBlocks.ironChestBlock.getDefaultState().with(BlockIronChest.FACING, EnumFacing.SOUTH);
         IronChestType chesttype = IronChestType.IRON;
         IronChestType typeNew = BlockChest.getTypeFromBlock(iblockstate.getBlock());
 
@@ -131,7 +132,8 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
             GlStateManager.matrixMode(5888);
         }
 
-        if (chesttype.isTransparent() && tileEntityIn.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d)
+        if (chesttype.isTransparent()
+                && tileEntityIn.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d)
         {
             this.random.setSeed(254L);
 

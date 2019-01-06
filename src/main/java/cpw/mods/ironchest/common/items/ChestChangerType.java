@@ -10,6 +10,11 @@
  ******************************************************************************/
 package cpw.mods.ironchest.common.items;
 
+import cpw.mods.ironchest.common.blocks.IronChestType;
+import cpw.mods.ironchest.common.core.IronChestCreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraftforge.registries.IForgeRegistry;
+
 import static cpw.mods.ironchest.common.blocks.IronChestType.COPPER;
 import static cpw.mods.ironchest.common.blocks.IronChestType.CRYSTAL;
 import static cpw.mods.ironchest.common.blocks.IronChestType.DIAMOND;
@@ -18,11 +23,6 @@ import static cpw.mods.ironchest.common.blocks.IronChestType.IRON;
 import static cpw.mods.ironchest.common.blocks.IronChestType.OBSIDIAN;
 import static cpw.mods.ironchest.common.blocks.IronChestType.SILVER;
 import static cpw.mods.ironchest.common.blocks.IronChestType.WOOD;
-
-import cpw.mods.ironchest.common.blocks.IronChestType;
-import cpw.mods.ironchest.common.core.IronChestCreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraftforge.registries.IForgeRegistry;
 
 public enum ChestChangerType
 {
