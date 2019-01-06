@@ -1,24 +1,25 @@
-// This sets us up for building a forge project - you need all of these
 buildscript {
     repositories {
+        mavenLocal()
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+        mavenCentral()
+    }
+    // This is only here while i'm activly developing FG, Remind me to remove when we publically release
+    configurations {
+        classpath.resolutionStrategy {
+            cacheDynamicVersionsFor 10, 'seconds'
+            cacheChangingModulesFor 0, 'seconds'
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-plugins {
-    id "com.matthewprenger.cursegradle" version "1.0.9"
-}
-
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
+//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'maven'
 apply plugin: 'eclipse'
-apply plugin: 'idea'
 
 // This is a simple flatdir repository for "uploadArchives" when you don't have a remote repo to target
 repositories {
@@ -32,38 +33,58 @@ repositories {
     }
 }
 
-dependencies {
-    deobfCompile "mezz.jei:jei_1.12.2:4.10.+"
-}
-
 // This is our group. I'm cpw.mods
 group = "cpw.mods" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 // This is our actual project within the group. Note: FML has "fml" here. But this is ironchest.
 archivesBaseName = "ironchest"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
 
-// Setup the forge minecraft plugin data. Specify the preferred forge/minecraft version here
 minecraft {
-    version = "1.12.2-14.23.4.2708"
-    mappings = "snapshot_20180616"
-    runDir = "run"
+    mappings channel: 'snapshot', version: mappings_version
+
+    // default run configurations.
+    // these can be tweaked, removed, or duplicated as needed.
+    runConfig {
+        name= "Minecraft Client"
+        main= "net.minecraftforge.userdev.UserdevLauncher"
+        ideaModuleName = "${project.name}_main"
+        workingDirectory = project.file("run").canonicalPath
+        environment "target", "fmluserdevclient"
+        environment "assetDirectory", downloadAssets.output.absolutePath
+        environment "FORGE_VERSION", forge_version
+        environment "FORGE_GROUP", forge_group
+        environment "MCP_VERSION", mappings_version
+        environment "MC_VERSION", minecraft_version
+        environment "MOD_CLASSES", "${sourceSets.main.output.resourcesDir}${File.pathSeparator}${sourceSets.main.output.classesDirs.join(File.pathSeparator)}"
+    }
+
+    runConfig {
+        name= "Minecraft Server"
+        main= "net.minecraftforge.userdev.UserdevLauncher"
+        ideaModuleName = "${project.name}_main"
+        workingDirectory = project.file("run").canonicalPath
+        environment "target", "fmluserdevserver"
+        environment "assetDirectory", downloadAssets.output.absolutePath
+        environment "FORGE_VERSION", forge_version
+        environment "FORGE_GROUP", forge_group
+        environment "MCP_VERSION", mappings_version
+        environment "MC_VERSION", minecraft_version
+        environment "MOD_CLASSES", "${sourceSets.main.output.resourcesDir}${File.pathSeparator}${sourceSets.main.output.classesDirs.join(File.pathSeparator)}"
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge.test:userdev:' + minecraft_version + '-' + forge_version
+    compile 'net.minecraftforge.test:forge:' + minecraft_version + '-' + forge_version + ':launcher'
 }
 
 // IronChest uses git tagging to mark major versions. This sets up the project version to that version data
 def versionInfo = getGitVersion()
-version = "${project.minecraft.version}-${versionInfo['IronChest.version']}"
-
-curseforge {
-    apiKey = project.hasProperty('curseforge_apikey') ? project.curseforge_apikey : '0'
-    project {
-        id = '228756'
-        changelog = 'Empty'
-        releaseType = 'beta'
-    }
-}
-
+version = minecraft_version + "-${versionInfo['IronChest.version']}"
 
 // This wrangles the resources for the jar files- stuff like textures and languages
 processResources
@@ -72,15 +93,15 @@ processResources
 	exclude '**/*.xcf'
     // we only want to do search/replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+        include 'META_INF/mods.toml'
                 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version':project.version, 'mcversion':minecraft_version
     }
         
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        exclude 'META_INF/mods.toml'
     }
 
 	// generate version.properties file from the git version data earlier
@@ -88,7 +109,7 @@ processResources
 		def propsFile = new File(destinationDir, 'version.properties')
 		def properties = new Properties()
 		properties.putAll(versionInfo)
-		properties['IronChest.build.mcversion'] = project.minecraft.version
+		properties['IronChest.build.mcversion'] = minecraft_version
 		properties.store(propsFile.newWriter(), null)
 	}
 }
