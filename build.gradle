@@ -27,7 +27,7 @@ repositories {
         name "fileRepo"
         dirs "repo"
     }
-	maven {
+    maven {
         name 'DVS1 Maven FS'
         url 'http://dvs1.progwml6.com/files/maven'
     }
@@ -49,8 +49,8 @@ minecraft {
     // default run configurations.
     // these can be tweaked, removed, or duplicated as needed.
     runConfig {
-        name= "Minecraft Client"
-        main= "net.minecraftforge.userdev.UserdevLauncher"
+        name = "Minecraft Client"
+        main = "net.minecraftforge.userdev.UserdevLauncher"
         ideaModuleName = "${project.name}_main"
         workingDirectory = project.file("run").canonicalPath
         environment "target", "fmluserdevclient"
@@ -63,8 +63,8 @@ minecraft {
     }
 
     runConfig {
-        name= "Minecraft Server"
-        main= "net.minecraftforge.userdev.UserdevLauncher"
+        name = "Minecraft Server"
+        main = "net.minecraftforge.userdev.UserdevLauncher"
         ideaModuleName = "${project.name}_main"
         workingDirectory = project.file("run").canonicalPath
         environment "target", "fmluserdevserver"
@@ -87,47 +87,43 @@ def versionInfo = getGitVersion()
 version = minecraft_version + "-${versionInfo['IronChest.version']}"
 
 // This wrangles the resources for the jar files- stuff like textures and languages
-processResources
-{
+processResources {
     // we're omitting the .xcf files - they're development only
-	exclude '**/*.xcf'
+    exclude '**/*.xcf'
     // we only want to do search/replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
-        include 'META_INF/mods.toml'
-                
+        include 'META-INF/mods.toml'
+
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':minecraft_version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'META_INF/mods.toml'
+        expand 'version': project.version, 'mcversion': minecraft_version
     }
 
-	// generate version.properties file from the git version data earlier
-	doLast {
-		def propsFile = new File(destinationDir, 'version.properties')
-		def properties = new Properties()
-		properties.putAll(versionInfo)
-		properties['IronChest.build.mcversion'] = minecraft_version
-		properties.store(propsFile.newWriter(), null)
-	}
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'META-INF/mods.toml'
+    }
+
+    // generate version.properties file from the git version data earlier
+    doLast {
+        def propsFile = new File(destinationDir, 'version.properties')
+        def properties = new Properties()
+        properties.putAll(versionInfo)
+        properties['IronChest.build.mcversion'] = minecraft_version
+        properties.store(propsFile.newWriter(), null)
+    }
 }
 
 // Configure an upload task. this is setup for uploading to files.minecraftforge.net. There are other examples around
 uploadArchives {
     repositories.mavenDeployer {
-
         dependsOn 'build'
 
-        if (project.hasProperty('forgeMavenPassword'))
-        {
+        if (project.hasProperty('forgeMavenPassword')) {
             repository(url: "http://files.minecraftforge.net/maven/manage/upload") {
-                authentication(userName: project.getProperty('forgeMavenUser'), password: project.getProperty('forgeMavenPassword')) // the elvis operator. look it up.
+                authentication(userName: project.getProperty('forgeMavenUser'), password: project.getProperty('forgeMavenPassword'))
+                // the elvis operator. look it up.
             }
-        }
-        else
-        {
+        } else {
             // local repo folder. Might wanna juset use  gradle install   if you wanans end it to maven-local
             repository(url: 'file://localhost/' + project.file('repo').getAbsolutePath())
         }
@@ -175,32 +171,31 @@ uploadArchives {
 }
 
 // This is a special task for pulling the version information from git and the environment (for BUILD_NUMBER)
-def getGitVersion()
-{
-	def out = [:]
+def getGitVersion() {
+    def out = [:]
 
-	// call git command.
-	def outStream = new ByteArrayOutputStream()
-	def result = exec {
-		executable = 'git'
-		args = [ 'describe', '--long', "--match=[^(jenkins)]*"]
-		standardOutput = outStream
-	}
+    // call git command.
+    def outStream = new ByteArrayOutputStream()
+    def result = exec {
+        executable = 'git'
+        args = ['describe', '--long', "--match=[^(jenkins)]*"]
+        standardOutput = outStream
+    }
 
-	def fullVersion = outStream.toString().trim()
-	def matcher = fullVersion =~ /(\d+).(\d+)-(\d+)-(.*)/
+    def fullVersion = outStream.toString().trim()
+    def matcher = fullVersion =~ /(\d+).(\d+)-(\d+)-(.*)/
 
-	def maj = matcher[0][1]
-	def min = matcher[0][2]
-	def rev = matcher[0][3]
-	def bn = System.getenv("PROMOTED_NUMBER") ?: System.getenv("BUILD_NUMBER") ?: "1"
+    def maj = matcher[0][1]
+    def min = matcher[0][2]
+    def rev = matcher[0][3]
+    def bn = System.getenv("PROMOTED_NUMBER") ?: System.getenv("BUILD_NUMBER") ?: "1"
 
-	out['IronChest.build.major.number'] = maj.toString()
-	out['IronChest.build.minor.number'] = min.toString()
-	out['IronChest.build.revision.number'] = rev.toString()
-	out['IronChest.build.githash'] = matcher[0][4].toString()
-	out['IronChest.build.number' ] = bn.toString()
-	out['IronChest.version' ] = "${maj}.${min}.${rev}.${bn}".toString()
+    out['IronChest.build.major.number'] = maj.toString()
+    out['IronChest.build.minor.number'] = min.toString()
+    out['IronChest.build.revision.number'] = rev.toString()
+    out['IronChest.build.githash'] = matcher[0][4].toString()
+    out['IronChest.build.number'] = bn.toString()
+    out['IronChest.version'] = "${maj}.${min}.${rev}.${bn}".toString()
 
-	return out
+    return out
 }

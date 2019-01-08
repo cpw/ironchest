@@ -41,10 +41,10 @@ public class ItemChestChanger extends ItemTooltip
     @Override
     public EnumActionResult onItemUseFirst(ItemStack stack, ItemUseContext context)
     {
-        EntityPlayer entityplayer = context.getPlayer();
-        BlockPos blockpos = context.getPos();
+        EntityPlayer entityPlayer = context.getPlayer();
+        BlockPos blockPos = context.getPos();
         World world = context.getWorld();
-        ItemStack itemstack = context.getItem();
+        ItemStack itemStack = context.getItem();
 
         if (world.isRemote)
         {
@@ -53,56 +53,55 @@ public class ItemChestChanger extends ItemTooltip
 
         if (this.type.canUpgrade(IronChestType.WOOD))
         {
-            if (!(world.getBlockState(blockpos).getBlock() instanceof net.minecraft.block.BlockChest))
+            if (!(world.getBlockState(blockPos).getBlock() instanceof net.minecraft.block.BlockChest))
             {
                 return EnumActionResult.PASS;
             }
         }
         else
         {
-            //@formatter:off
-            if (world.getBlockState(blockpos).getBlock().getDefaultState() != IronChestType.get(this.type.source))
-            //@formatter:on
+            if (world.getBlockState(blockPos).getBlock().getDefaultState() != IronChestType.get(this.type.source))
             {
                 return EnumActionResult.PASS;
             }
         }
 
-        TileEntity te = world.getTileEntity(blockpos);
-        TileEntityIronChest newchest = new TileEntityIronChest();
+        TileEntity tileEntity = world.getTileEntity(blockPos);
+        TileEntityIronChest newChest = new TileEntityIronChest();
 
-        ITextComponent customname = null;
+        ITextComponent customName = null;
 
         NonNullList<ItemStack> chestContents = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
         EnumFacing chestFacing = EnumFacing.NORTH;
 
-        if (te != null)
+        if (tileEntity != null)
         {
-            if (te instanceof TileEntityIronChest)
+            if (tileEntity instanceof TileEntityIronChest)
             {
-                TileEntityIronChest chest = (TileEntityIronChest) te;
-                IBlockState chestState = world.getBlockState(blockpos);
+                TileEntityIronChest chest = (TileEntityIronChest) tileEntity;
+                IBlockState chestState = world.getBlockState(blockPos);
 
                 chestContents = chest.getItems();
                 chestFacing = chestState.get(BlockChest.FACING);
-                customname = chest.getCustomName();
-                newchest = this.type.target.makeEntity();
+                customName = chest.getCustomName();
+                newChest = this.type.target.makeEntity();
 
-                if (newchest == null)
+                if (newChest == null)
                 {
                     return EnumActionResult.PASS;
                 }
             }
-            else if (te instanceof TileEntityChest)
+            else if (tileEntity instanceof TileEntityChest)
             {
-                IBlockState chestState = world.getBlockState(blockpos);
+                IBlockState chestState = world.getBlockState(blockPos);
                 chestFacing = chestState.get(net.minecraft.block.BlockChest.FACING);
-                TileEntityChest chest = (TileEntityChest) te;
+                TileEntityChest chest = (TileEntityChest) tileEntity;
 
-                if (TileEntityChest.getPlayersUsing(world, blockpos) > 0)
+                if (TileEntityChest.getPlayersUsing(world, blockPos) > 0)
                 {
                     return EnumActionResult.PASS;
                 }
+
                 if (!this.type.canUpgrade(IronChestType.WOOD))
                 {
                     return EnumActionResult.PASS;
@@ -110,51 +109,46 @@ public class ItemChestChanger extends ItemTooltip
 
                 chestContents = NonNullList.<ItemStack>withSize(chest.getSizeInventory(), ItemStack.EMPTY);
 
-                for (int i = 0; i < chestContents.size(); i++)
+                for (int slot = 0; slot < chestContents.size(); slot++)
                 {
-                    chestContents.set(i, chest.getStackInSlot(i));
+                    chestContents.set(slot, chest.getStackInSlot(slot));
                 }
 
-                customname = chest.getCustomName();
+                customName = chest.getCustomName();
 
-                newchest = this.type.target.makeEntity();
+                newChest = this.type.target.makeEntity();
             }
         }
 
-        te.updateContainingBlockInfo();
+        tileEntity.updateContainingBlockInfo();
 
-        //if (te instanceof TileEntityChest)
-        //{
-        //    ((TileEntityChest) te).checkForAdjacentChests();
-        //}
+        world.removeTileEntity(blockPos);
+        world.removeBlock(blockPos);
 
-        world.removeTileEntity(blockpos);
-        world.removeBlock(blockpos);
+        IBlockState iBlockState = IronChestType.get(this.type.target).with(BlockIronChest.FACING, chestFacing);
 
-        IBlockState iblockstate = IronChestType.get(this.type.target).with(BlockIronChest.FACING, chestFacing);
+        System.out.println(iBlockState);
 
-        System.out.println(iblockstate);
+        world.setTileEntity(blockPos, newChest);
+        world.setBlockState(blockPos, iBlockState, 3);
 
-        world.setTileEntity(blockpos, newchest);
-        world.setBlockState(blockpos, iblockstate, 3);
+        world.notifyBlockUpdate(blockPos, iBlockState, iBlockState, 3);
 
-        world.notifyBlockUpdate(blockpos, iblockstate, iblockstate, 3);
+        TileEntity tileEntity2 = world.getTileEntity(blockPos);
 
-        TileEntity te2 = world.getTileEntity(blockpos);
-
-        if (te2 instanceof TileEntityIronChest)
+        if (tileEntity2 instanceof TileEntityIronChest)
         {
-            if (customname != null)
+            if (customName != null)
             {
-                ((TileEntityIronChest) te2).setCustomName(customname);
+                ((TileEntityIronChest) tileEntity2).setCustomName(customName);
             }
 
-            ((TileEntityIronChest) te2).setItems(chestContents);
+            ((TileEntityIronChest) tileEntity2).setItems(chestContents);
         }
 
-        if (!entityplayer.abilities.isCreativeMode)
+        if (!entityPlayer.abilities.isCreativeMode)
         {
-            itemstack.shrink(1);
+            itemStack.shrink(1);
         }
 
         return EnumActionResult.SUCCESS;

@@ -34,6 +34,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.INameable;
+import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -52,17 +53,23 @@ public abstract class BlockChest extends Block implements ITileEntityProvider
 
     protected static final VoxelShape IRON_CHEST_SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
 
-    public IronChestType type;
+    private final IronChestType type;
 
-    public BlockChest(Builder properties, IronChestType type)
+    public BlockChest(Builder builderIn, IronChestType typeIn)
     {
-        super(properties);
+        super(builderIn);
 
-        this.setDefaultState(((this.stateContainer.getBaseState()).with(FACING, EnumFacing.NORTH)));
+        this.type = typeIn;
 
-        this.type = type;
+        this.setDefaultState((IBlockState) ((IBlockState) this.stateContainer.getBaseState()).with(FACING, EnumFacing.NORTH));
 
         this.setRegistryName(new ResourceLocation(type.itemName));
+    }
+
+    @Override
+    public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos)
+    {
+        return IRON_CHEST_SHAPE;
     }
 
     @Override
@@ -96,12 +103,6 @@ public abstract class BlockChest extends Block implements ITileEntityProvider
         EnumFacing enumfacing = context.getPlacementHorizontalFacing().getOpposite();
 
         return this.getDefaultState().with(FACING, enumfacing);
-    }
-
-    @Override
-    public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos)
-    {
-        return IRON_CHEST_SHAPE;
     }
 
     @Override
@@ -216,7 +217,13 @@ public abstract class BlockChest extends Block implements ITileEntityProvider
     @Override
     public IBlockState rotate(IBlockState state, Rotation rot)
     {
-        return state.with(FACING, rot.rotate(state.get(FACING)));
+        return (IBlockState) state.with(FACING, rot.rotate((EnumFacing) state.get(FACING)));
+    }
+
+    @Override
+    public IBlockState mirror(IBlockState state, Mirror mirrorIn)
+    {
+        return state.rotate(mirrorIn.toRotation((EnumFacing) state.get(FACING)));
     }
 
     @Override
@@ -251,5 +258,4 @@ public abstract class BlockChest extends Block implements ITileEntityProvider
     {
         return this.type;
     }
-
 }

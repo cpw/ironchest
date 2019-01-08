@@ -38,8 +38,8 @@ public class IronChestAIOcelotSit extends EntityAIOcelotSit
         }
         else
         {
-            IBlockState iblockstate = worldIn.getBlockState(pos);
-            Block block = iblockstate.getBlock();
+            IBlockState iBlockState = worldIn.getBlockState(pos);
+            Block block = iBlockState.getBlock();
 
             if (block instanceof BlockChest)
             {

@@ -45,8 +45,6 @@ public enum IronChestType implements IStringSerializable
     WOOD(0, 0, false, "", null, 0, 0, null);
     //@formatter:on
 
-    public static final IronChestType VALUES[] = values();
-
     public final String name;
 
     public final int size;
@@ -93,16 +91,6 @@ public enum IronChestType implements IStringSerializable
     public boolean isTransparent()
     {
         return this == CRYSTAL;
-    }
-
-    public boolean isValidForCreativeMode()
-    {
-        return this != WOOD;
-    }
-
-    public boolean isExplosionResistant()
-    {
-        return this == OBSIDIAN;
     }
 
     public Slot makeSlot(IInventory chestInventory, int index, int x, int y)

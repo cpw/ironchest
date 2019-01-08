@@ -23,90 +23,76 @@ import cpw.mods.ironchest.common.items.ItemChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class IronChestBlocks
 {
-    //@formatter:off
-    public static BlockChest ironChestBlock = new BlockIronChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F));
-    public static Item ironChestItemBlock = new ItemChest(ironChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS));
+    public static BlockChest ironChestBlock;
 
-    public static BlockChest goldChestBlock = new BlockGoldChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F));
-    public static Item goldChestItemBlock = new ItemChest(goldChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS));
+    public static Item ironChestItemBlock;
 
-    public static BlockChest diamondChestBlock = new BlockDiamondChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F));
-    public static Item diamondChestItemBlock = new ItemChest(diamondChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS));
+    public static BlockChest goldChestBlock;
 
-    public static BlockChest copperChestBlock = new BlockCopperChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F));
-    public static Item copperChestItemBlock = new ItemChest(copperChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS));
+    public static Item goldChestItemBlock;
 
-    public static BlockChest silverChestBlock = new BlockSilverChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F));
-    public static Item silverChestItemBlock = new ItemChest(silverChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS));
+    public static BlockChest diamondChestBlock;
 
-    public static BlockChest crystalChestBlock = new BlockCrystalChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F));
-    public static Item crystalChestItemBlock = new ItemChest(crystalChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS));
-    
-    public static BlockChest obsidianChestBlock = new BlockObsidianChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F));
-    public static Item obsidianChestItemBlock = new ItemChest(obsidianChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS));
+    public static Item diamondChestItemBlock;
 
-    public static BlockChest dirtChestBlock = new BlockDirtChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F));
-    public static Item dirtChestItemBlock = new ItemChest(dirtChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS));
-    //@formatter:on
+    public static BlockChest copperChestBlock;
+
+    public static Item copperChestItemBlock;
+
+    public static BlockChest silverChestBlock;
+
+    public static Item silverChestItemBlock;
+
+    public static BlockChest crystalChestBlock;
+
+    public static Item crystalChestItemBlock;
+
+    public static BlockChest obsidianChestBlock;
+
+    public static Item obsidianChestItemBlock;
+
+    public static BlockChest dirtChestBlock;
+
+    public static Item dirtChestItemBlock;
 
     public IronChestBlocks()
     {
 
     }
 
-    public void registerBlocks()
-    {
-        // Chest Start
-        GameRegistry.findRegistry(Block.class)
-                .registerAll(ironChestBlock, goldChestBlock, diamondChestBlock, copperChestBlock, silverChestBlock, crystalChestBlock, obsidianChestBlock,
-                        dirtChestBlock);
-        // Chest End
-    }
-
-    public void registerItems()
-    {
-        // Chest Start
-        GameRegistry.findRegistry(Item.class)
-                .registerAll(ironChestItemBlock, goldChestItemBlock, diamondChestItemBlock, copperChestItemBlock, silverChestItemBlock, crystalChestItemBlock,
-                        obsidianChestItemBlock, dirtChestItemBlock);
-        // Chest End
-    }
-
-    /*@SubscribeEvent
-    public static void registerBlocks(final Register<Block> event)
-    {
-        System.out.println("hello from registerBlocks");
-        IForgeRegistry<Block> blockRegistry = event.getRegistry();
-    
-        // Chest Start
-        for (IronChestType type : IronChestType.values())
-        {
-            if (type.itemName != null)
-            {
-                blockRegistry.register(new BlockIronChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F), type, type.itemName));
-            }
-        }
-        // Chest End
-    }
-    
     @SubscribeEvent
-    public static void registerItems(final Register<Item> event)
+    public void registerBlocks(final RegistryEvent.Register<Block> event)
     {
-        System.out.println("hello from registerItems");
+        IForgeRegistry<Block> blockRegistry = event.getRegistry();
+
+        blockRegistry.register(ironChestBlock = new BlockIronChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+        blockRegistry.register(goldChestBlock = new BlockGoldChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+        blockRegistry.register(diamondChestBlock = new BlockDiamondChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+        blockRegistry.register(copperChestBlock = new BlockCopperChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+        blockRegistry.register(silverChestBlock = new BlockSilverChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+        blockRegistry.register(crystalChestBlock = new BlockCrystalChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+        blockRegistry.register(obsidianChestBlock = new BlockObsidianChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+        blockRegistry.register(dirtChestBlock = new BlockDirtChest(Block.Builder.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+    }
+
+    @SubscribeEvent
+    public void registerItems(final RegistryEvent.Register<Item> event)
+    {
         IForgeRegistry<Item> itemRegistry = event.getRegistry();
-    
-        // Chest Start
-        for (IronChestType type : IronChestType.values())
-        {
-            if (type != IronChestType.WOOD)
-            {
-                itemRegistry.register(new ItemChest(type.block, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
-            }
-        }
-        // Chest End
-    }*/
+
+        itemRegistry.register(ironChestItemBlock = new ItemChest(ironChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
+        itemRegistry.register(goldChestItemBlock = new ItemChest(goldChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
+        itemRegistry.register(diamondChestItemBlock = new ItemChest(diamondChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
+        itemRegistry.register(copperChestItemBlock = new ItemChest(copperChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
+        itemRegistry.register(silverChestItemBlock = new ItemChest(silverChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
+        itemRegistry.register(crystalChestItemBlock = new ItemChest(crystalChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
+        itemRegistry.register(obsidianChestItemBlock = new ItemChest(obsidianChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
+        itemRegistry.register(dirtChestItemBlock = new ItemChest(dirtChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
+    }
 }

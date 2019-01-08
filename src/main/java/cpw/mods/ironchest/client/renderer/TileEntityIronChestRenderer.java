@@ -12,7 +12,6 @@ package cpw.mods.ironchest.client.renderer;
 
 import com.google.common.primitives.SignedBytes;
 import cpw.mods.ironchest.common.blocks.BlockChest;
-import cpw.mods.ironchest.common.blocks.BlockIronChest;
 import cpw.mods.ironchest.common.blocks.IronChestType;
 import cpw.mods.ironchest.common.core.IronChestBlocks;
 import cpw.mods.ironchest.common.tileentity.TileEntityCrystalChest;
@@ -67,7 +66,7 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
         GlStateManager.depthMask(true);
         IBlockState iblockstate = tileEntityIn.hasWorld() ?
                 tileEntityIn.getBlockState() :
-                (IBlockState) IronChestBlocks.ironChestBlock.getDefaultState().with(BlockIronChest.FACING, EnumFacing.SOUTH);
+                (IBlockState) IronChestBlocks.ironChestBlock.getDefaultState().with(BlockChest.FACING, EnumFacing.NORTH);
         IronChestType chesttype = IronChestType.IRON;
         IronChestType typeNew = BlockChest.getTypeFromBlock(iblockstate.getBlock());
 
@@ -101,7 +100,7 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
         GlStateManager.translatef((float) x, (float) y + 1.0F, (float) z + 1.0F);
         GlStateManager.scalef(1.0F, -1.0F, -1.0F);
 
-        float f = iblockstate.get(BlockIronChest.FACING).getHorizontalAngle();
+        float f = iblockstate.get(BlockChest.FACING).getHorizontalAngle();
         if (Math.abs(f) > 1.0E-5D)
         {
             GlStateManager.translatef(0.5F, 0.5F, 0.5F);

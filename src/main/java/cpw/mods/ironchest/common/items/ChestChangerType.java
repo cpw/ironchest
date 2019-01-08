@@ -10,9 +10,11 @@
  ******************************************************************************/
 package cpw.mods.ironchest.common.items;
 
+import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.common.blocks.IronChestType;
 import cpw.mods.ironchest.common.core.IronChestCreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import static cpw.mods.ironchest.common.blocks.IronChestType.COPPER;
@@ -38,44 +40,21 @@ public enum ChestChangerType
     DIAMOND_OBSIDIAN(DIAMOND, OBSIDIAN, "diamond_obsidian_chest_upgrade");
     //@formatter:on
 
-    public static final ChestChangerType[] VALUES = values();
-
     public final IronChestType source;
 
     public final IronChestType target;
 
-    public final String itemName;
-
-    public ItemChestChanger item;
+    public final ResourceLocation itemName;
 
     ChestChangerType(IronChestType source, IronChestType target, String itemName)
     {
         this.source = source;
         this.target = target;
-        this.itemName = itemName;
+        this.itemName = new ResourceLocation(IronChest.MOD_ID, itemName);
     }
 
     public boolean canUpgrade(IronChestType from)
     {
         return from == this.source;
-    }
-
-    public ItemChestChanger buildItem(IForgeRegistry<Item> itemRegistry)
-    {
-        this.item = new ItemChestChanger((new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS).maxStackSize(1), this);
-
-        this.item.setRegistryName(this.itemName);
-
-        itemRegistry.register(this.item);
-
-        return this.item;
-    }
-
-    public static void buildItems(IForgeRegistry<Item> itemRegistry)
-    {
-        for (ChestChangerType type : VALUES)
-        {
-            type.buildItem(itemRegistry);
-        }
     }
 }

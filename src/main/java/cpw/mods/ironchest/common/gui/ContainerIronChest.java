@@ -43,31 +43,31 @@ public class ContainerIronChest extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
-        ItemStack itemstack = ItemStack.EMPTY;
+        ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
+            ItemStack itemStack1 = slot.getStack();
+            itemStack = itemStack1.copy();
 
             if (index < this.type.size)
             {
-                if (!this.mergeItemStack(itemstack1, this.type.size, this.inventorySlots.size(), true))
+                if (!this.mergeItemStack(itemStack1, this.type.size, this.inventorySlots.size(), true))
                 {
                     return ItemStack.EMPTY;
                 }
             }
-            else if (!this.type.acceptsStack(itemstack1))
+            else if (!this.type.acceptsStack(itemStack1))
             {
                 return ItemStack.EMPTY;
             }
-            else if (!this.mergeItemStack(itemstack1, 0, this.type.size, false))
+            else if (!this.mergeItemStack(itemStack1, 0, this.type.size, false))
             {
                 return ItemStack.EMPTY;
             }
 
-            if (itemstack1.isEmpty())
+            if (itemStack1.isEmpty())
             {
                 slot.putStack(ItemStack.EMPTY);
             }
@@ -77,7 +77,7 @@ public class ContainerIronChest extends Container
             }
         }
 
-        return itemstack;
+        return itemStack;
     }
 
     protected void layoutContainer(IInventory playerInventory, IInventory chestInventory, IronChestType type, int xSize, int ySize)

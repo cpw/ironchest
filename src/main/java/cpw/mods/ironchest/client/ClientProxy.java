@@ -26,8 +26,8 @@ public class ClientProxy extends ServerProxy
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void preInit()
     {
-        System.out.println("hello");
         super.preInit();
+
         for (IronChestType type : IronChestType.values())
         {
             if (type.clazz != null)

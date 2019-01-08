@@ -21,7 +21,7 @@ import java.util.HashSet;
 public class OcelotsSitOnChestsHandler
 {
     @SubscribeEvent
-    public void changeSittingTaskForOcelots(LivingUpdateEvent evt)
+    public void changeSittingTaskForOcelots(final LivingUpdateEvent evt)
     {
         if (evt.getEntityLiving().ticksExisted < 5 && evt.getEntityLiving() instanceof EntityOcelot)
         {

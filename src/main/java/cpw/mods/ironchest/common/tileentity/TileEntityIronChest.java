@@ -72,7 +72,6 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements IChes
         super(typeIn);
         this.chestType = chestTypeIn;
         this.chestContents = NonNullList.<ItemStack>withSize(chestTypeIn.size, ItemStack.EMPTY);
-
     }
 
     @Override
@@ -124,8 +123,6 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements IChes
     public void markDirty()
     {
         super.markDirty();
-
-        //this.sortTopStacks();
     }
 
     @Override
