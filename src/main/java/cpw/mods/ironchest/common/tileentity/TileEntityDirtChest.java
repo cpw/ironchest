@@ -11,6 +11,7 @@
 package cpw.mods.ironchest.common.tileentity;
 
 import cpw.mods.ironchest.common.blocks.IronChestType;
+import cpw.mods.ironchest.common.core.IronChestBlocks;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
@@ -24,26 +25,20 @@ public class TileEntityDirtChest extends TileEntityIronChest
 {
     private static ItemStack dirtChest9000GuideBook = new ItemStack(Items.WRITTEN_BOOK);
 
-    static
-    {
-        dirtChest9000GuideBook.setTagInfo("author", new NBTTagString("cpw"));
-        dirtChest9000GuideBook.setTagInfo("title", new NBTTagString(I18n.format("book.ironchest.dirtchest9000.title")));
-        NBTTagList pages = new NBTTagList();
-        pages.add(new NBTTagString(ITextComponent.Serializer.toJson(new TextComponentString(I18n.format("book.ironchest.dirtchest9000.page1")))));
-        pages.add(new NBTTagString(ITextComponent.Serializer.toJson(new TextComponentString(I18n.format("book.ironchest.dirtchest9000.page2")))));
-        pages.add(new NBTTagString(ITextComponent.Serializer.toJson(new TextComponentString(I18n.format("book.ironchest.dirtchest9000.page3")))));
-        pages.add(new NBTTagString(ITextComponent.Serializer.toJson(new TextComponentString(I18n.format("book.ironchest.dirtchest9000.page4")))));
-        pages.add(new NBTTagString(ITextComponent.Serializer.toJson(new TextComponentString(I18n.format("book.ironchest.dirtchest9000.page5")))));
-        dirtChest9000GuideBook.setTagInfo("pages", pages);
-    }
+    private static boolean bookDataCreated = false;
 
     public TileEntityDirtChest()
     {
-        super(IronChestEntityType.DIRT_CHEST, IronChestType.DIRTCHEST9000);
+        super(IronChestEntityType.DIRT_CHEST, IronChestType.DIRTCHEST9000, IronChestBlocks.dirtChestBlock);
+
+        if (!bookDataCreated)
+        {
+            createBookData();
+        }
     }
 
     @Override
-    public void wasPlaced(EntityLivingBase entityliving, ItemStack itemStack)
+    public void wasPlaced(EntityLivingBase entityLivingBase, ItemStack itemStack)
     {
         if (!(itemStack.hasTag() && itemStack.getTag().getBoolean("dirtchest")))
         {
@@ -58,5 +53,23 @@ public class TileEntityDirtChest extends TileEntityIronChest
         {
             this.getItems().set(0, ItemStack.EMPTY);
         }
+    }
+
+    public static void createBookData()
+    {
+        dirtChest9000GuideBook.setTagInfo("author", new NBTTagString("cpw"));
+
+        dirtChest9000GuideBook.setTagInfo("title", new NBTTagString(I18n.format("book.ironchest.dirtchest9000.title")));
+
+        NBTTagList pages = new NBTTagList();
+        pages.add(new NBTTagString(ITextComponent.Serializer.toJson(new TextComponentString(I18n.format("book.ironchest.dirtchest9000.page1")))));
+        pages.add(new NBTTagString(ITextComponent.Serializer.toJson(new TextComponentString(I18n.format("book.ironchest.dirtchest9000.page2")))));
+        pages.add(new NBTTagString(ITextComponent.Serializer.toJson(new TextComponentString(I18n.format("book.ironchest.dirtchest9000.page3")))));
+        pages.add(new NBTTagString(ITextComponent.Serializer.toJson(new TextComponentString(I18n.format("book.ironchest.dirtchest9000.page4")))));
+        pages.add(new NBTTagString(ITextComponent.Serializer.toJson(new TextComponentString(I18n.format("book.ironchest.dirtchest9000.page5")))));
+
+        dirtChest9000GuideBook.setTagInfo("pages", pages);
+
+        bookDataCreated = true;
     }
 }

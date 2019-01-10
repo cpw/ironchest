@@ -13,8 +13,8 @@ package cpw.mods.ironchest.client.renderer;
 import com.google.common.primitives.SignedBytes;
 import cpw.mods.ironchest.common.blocks.BlockChest;
 import cpw.mods.ironchest.common.blocks.IronChestType;
-import cpw.mods.ironchest.common.core.IronChestBlocks;
 import cpw.mods.ironchest.common.tileentity.TileEntityCrystalChest;
+import cpw.mods.ironchest.common.tileentity.TileEntityIronChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -64,15 +64,18 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
         GlStateManager.enableDepthTest();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
-        IBlockState iblockstate = tileEntityIn.hasWorld() ?
-                tileEntityIn.getBlockState() :
-                (IBlockState) IronChestBlocks.ironChestBlock.getDefaultState().with(BlockChest.FACING, EnumFacing.NORTH);
-        IronChestType chesttype = IronChestType.IRON;
-        IronChestType typeNew = BlockChest.getTypeFromBlock(iblockstate.getBlock());
+
+        TileEntityIronChest tileEntity = (TileEntityIronChest) tileEntityIn;
+
+        IBlockState iBlockState = tileEntity.hasWorld() ?
+                tileEntity.getBlockState() :
+                (IBlockState) tileEntity.getBlockToUse().getDefaultState().with(BlockChest.FACING, EnumFacing.SOUTH);
+        IronChestType chestType = IronChestType.IRON;
+        IronChestType typeNew = BlockChest.getTypeFromBlock(iBlockState.getBlock());
 
         if (typeNew != null)
         {
-            chesttype = typeNew;
+            chestType = typeNew;
         }
 
         if (destroyStage >= 0)
@@ -86,12 +89,12 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
         }
         else
         {
-            this.bindTexture(chesttype.modelTexture);
+            this.bindTexture(chestType.modelTexture);
         }
 
         GlStateManager.pushMatrix();
 
-        if (chesttype == IronChestType.CRYSTAL)
+        if (chestType == IronChestType.CRYSTAL)
         {
             GlStateManager.disableCull();
         }
@@ -100,7 +103,7 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
         GlStateManager.translatef((float) x, (float) y + 1.0F, (float) z + 1.0F);
         GlStateManager.scalef(1.0F, -1.0F, -1.0F);
 
-        float f = iblockstate.get(BlockChest.FACING).getHorizontalAngle();
+        float f = iBlockState.get(BlockChest.FACING).getHorizontalAngle();
         if (Math.abs(f) > 1.0E-5D)
         {
             GlStateManager.translatef(0.5F, 0.5F, 0.5F);
@@ -108,7 +111,7 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
             GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
         }
 
-        if (chesttype.isTransparent())
+        if (chestType.isTransparent())
         {
             GlStateManager.scalef(1F, 0.99F, 1F);
         }
@@ -116,7 +119,7 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
         this.rotateChestLid(tileEntityIn, partialTicks, model);
         model.renderAll();
 
-        if (chesttype == IronChestType.CRYSTAL)
+        if (chestType == IronChestType.CRYSTAL)
         {
             GlStateManager.enableCull();
         }
@@ -131,8 +134,8 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
             GlStateManager.matrixMode(5888);
         }
 
-        if (chesttype.isTransparent()
-                && tileEntityIn.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d)
+        if (chestType.isTransparent()
+                && tileEntity.getDistanceSq(this.rendererDispatcher.entityX, this.rendererDispatcher.entityY, this.rendererDispatcher.entityZ) < 128d)
         {
             this.random.setSeed(254L);
 
@@ -143,7 +146,7 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
             float blockScale = 0.70F;
             float timeD = (float) (360D * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) - partialTicks;
 
-            if (((TileEntityCrystalChest) tileEntityIn).getTopItems().get(1).isEmpty())
+            if (((TileEntityCrystalChest) tileEntity).getTopItems().get(1).isEmpty())
             {
                 shift = 8;
                 blockScale = 0.85F;
@@ -155,7 +158,7 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
             customitem.setWorld(this.getWorld());
             customitem.hoverStart = 0F;
 
-            for (ItemStack item : ((TileEntityCrystalChest) tileEntityIn).getTopItems())
+            for (ItemStack item : ((TileEntityCrystalChest) tileEntity).getTopItems())
             {
                 if (shift > shifts.length || shift > 8)
                 {

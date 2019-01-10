@@ -6,6 +6,7 @@ build/
 eclipse/
 bin/
 repo/
+out/
 /run/
 .settings/
 #IDEA files from Gradle

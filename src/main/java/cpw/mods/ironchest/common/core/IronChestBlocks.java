@@ -10,6 +10,7 @@
  ******************************************************************************/
 package cpw.mods.ironchest.common.core;
 
+import cpw.mods.ironchest.client.renderer.TileEntityIronChestItemRenderer;
 import cpw.mods.ironchest.common.blocks.BlockChest;
 import cpw.mods.ironchest.common.blocks.BlockCopperChest;
 import cpw.mods.ironchest.common.blocks.BlockCrystalChest;
@@ -23,12 +24,15 @@ import cpw.mods.ironchest.common.items.ItemChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.Builder;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class IronChestBlocks
 {
+    public static Builder itemBuilder;
+
     public static BlockChest ironChestBlock;
 
     public static Item ironChestItemBlock;
@@ -86,13 +90,15 @@ public class IronChestBlocks
     {
         IForgeRegistry<Item> itemRegistry = event.getRegistry();
 
-        itemRegistry.register(ironChestItemBlock = new ItemChest(ironChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
-        itemRegistry.register(goldChestItemBlock = new ItemChest(goldChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
-        itemRegistry.register(diamondChestItemBlock = new ItemChest(diamondChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
-        itemRegistry.register(copperChestItemBlock = new ItemChest(copperChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
-        itemRegistry.register(silverChestItemBlock = new ItemChest(silverChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
-        itemRegistry.register(crystalChestItemBlock = new ItemChest(crystalChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
-        itemRegistry.register(obsidianChestItemBlock = new ItemChest(obsidianChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
-        itemRegistry.register(dirtChestItemBlock = new ItemChest(dirtChestBlock, (new Item.Builder()).group(IronChestCreativeTabs.IRON_CHESTS)));
+        itemBuilder = (new Builder()).group(IronChestCreativeTabs.IRON_CHESTS).setTEISR(() -> TileEntityIronChestItemRenderer::new);
+
+        itemRegistry.register(ironChestItemBlock = new ItemChest(ironChestBlock, itemBuilder));
+        itemRegistry.register(goldChestItemBlock = new ItemChest(goldChestBlock, itemBuilder));
+        itemRegistry.register(diamondChestItemBlock = new ItemChest(diamondChestBlock, itemBuilder));
+        itemRegistry.register(copperChestItemBlock = new ItemChest(copperChestBlock, itemBuilder));
+        itemRegistry.register(silverChestItemBlock = new ItemChest(silverChestBlock, itemBuilder));
+        itemRegistry.register(crystalChestItemBlock = new ItemChest(crystalChestBlock, itemBuilder));
+        itemRegistry.register(obsidianChestItemBlock = new ItemChest(obsidianChestBlock, itemBuilder));
+        itemRegistry.register(dirtChestItemBlock = new ItemChest(dirtChestBlock, itemBuilder));
     }
 }

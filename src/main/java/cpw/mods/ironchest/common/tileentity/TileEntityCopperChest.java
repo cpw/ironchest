@@ -11,11 +11,12 @@
 package cpw.mods.ironchest.common.tileentity;
 
 import cpw.mods.ironchest.common.blocks.IronChestType;
+import cpw.mods.ironchest.common.core.IronChestBlocks;
 
 public class TileEntityCopperChest extends TileEntityIronChest
 {
     public TileEntityCopperChest()
     {
-        super(IronChestEntityType.COPPER_CHEST, IronChestType.COPPER);
+        super(IronChestEntityType.COPPER_CHEST, IronChestType.COPPER, IronChestBlocks.copperChestBlock);
     }
 }

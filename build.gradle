@@ -45,40 +45,35 @@ compileJava {
 
 minecraft {
     mappings channel: 'snapshot', version: mappings_version
-
-    // default run configurations.
-    // these can be tweaked, removed, or duplicated as needed.
-    runConfig {
-        name = "Minecraft Client"
-        main = "net.minecraftforge.userdev.UserdevLauncher"
-        ideaModuleName = "${project.name}_main"
-        workingDirectory = project.file("run").canonicalPath
-        environment "target", "fmluserdevclient"
-        environment "assetDirectory", downloadAssets.output.absolutePath
-        environment "FORGE_VERSION", forge_version
-        environment "FORGE_GROUP", forge_group
-        environment "MCP_VERSION", mappings_version
-        environment "MC_VERSION", minecraft_version
-        environment "MOD_CLASSES", "${sourceSets.main.output.resourcesDir}${File.pathSeparator}${sourceSets.main.output.classesDirs.join(File.pathSeparator)}"
-    }
-
-    runConfig {
-        name = "Minecraft Server"
-        main = "net.minecraftforge.userdev.UserdevLauncher"
-        ideaModuleName = "${project.name}_main"
-        workingDirectory = project.file("run").canonicalPath
-        environment "target", "fmluserdevserver"
-        environment "assetDirectory", downloadAssets.output.absolutePath
-        environment "FORGE_VERSION", forge_version
-        environment "FORGE_GROUP", forge_group
-        environment "MCP_VERSION", mappings_version
-        environment "MC_VERSION", minecraft_version
-        environment "MOD_CLASSES", "${sourceSets.main.output.resourcesDir}${File.pathSeparator}${sourceSets.main.output.classesDirs.join(File.pathSeparator)}"
+    
+    runs {
+        client = {
+            main "net.minecraftforge.userdev.UserdevLauncher"
+            workingDirectory = project.file("run").canonicalPath
+            environment "target", "fmluserdevclient"
+            environment "assetDirectory", downloadAssets.output.absolutePath
+            environment "FORGE_VERSION", forge_version
+            environment "FORGE_GROUP", forge_group
+            environment "MCP_VERSION", mappings_version
+            environment "MC_VERSION", minecraft_version
+            environment "MOD_CLASSES", "${sourceSets.main.output.resourcesDir}${File.pathSeparator}${sourceSets.main.output.classesDirs.join(File.pathSeparator)}"
+        }
+        server = {
+            main "net.minecraftforge.userdev.UserdevLauncher"
+            workingDirectory = project.file("run").canonicalPath
+            environment "target", "fmluserdevserver"
+            environment "assetDirectory", downloadAssets.output.absolutePath
+            environment "FORGE_VERSION", forge_version
+            environment "FORGE_GROUP", forge_group
+            environment "MCP_VERSION", mappings_version
+            environment "MC_VERSION", minecraft_version
+            environment "MOD_CLASSES", "${sourceSets.main.output.resourcesDir}${File.pathSeparator}${sourceSets.main.output.classesDirs.join(File.pathSeparator)}"
+        }
     }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge.test:userdev:' + minecraft_version + '-' + forge_version
+    minecraft 'net.minecraftforge.test:forge:' + minecraft_version + '-' + forge_version
     compile 'net.minecraftforge.test:forge:' + minecraft_version + '-' + forge_version + ':launcher'
 }
 

@@ -13,6 +13,7 @@ package cpw.mods.ironchest.common.tileentity;
 import cpw.mods.ironchest.common.blocks.BlockChest;
 import cpw.mods.ironchest.common.blocks.BlockIronChest;
 import cpw.mods.ironchest.common.blocks.IronChestType;
+import cpw.mods.ironchest.common.core.IronChestBlocks;
 import cpw.mods.ironchest.common.gui.ContainerIronChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -61,17 +62,19 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements IChes
     private int ticksSinceSync;
 
     private IronChestType chestType;
+    private Block blockToUse;
 
     public TileEntityIronChest()
     {
-        this(IronChestEntityType.IRON_CHEST, IronChestType.IRON);
+        this(IronChestEntityType.IRON_CHEST, IronChestType.IRON, IronChestBlocks.ironChestBlock);
     }
 
-    protected TileEntityIronChest(TileEntityType<?> typeIn, IronChestType chestTypeIn)
+    protected TileEntityIronChest(TileEntityType<?> typeIn, IronChestType chestTypeIn, Block blockToUseIn)
     {
         super(typeIn);
         this.chestType = chestTypeIn;
         this.chestContents = NonNullList.<ItemStack>withSize(chestTypeIn.size, ItemStack.EMPTY);
+        this.blockToUse = blockToUseIn;
     }
 
     @Override
@@ -362,5 +365,10 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements IChes
         }
 
         return 0;
+    }
+
+    public Block getBlockToUse()
+    {
+        return this.blockToUse;
     }
 }

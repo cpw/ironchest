@@ -107,30 +107,6 @@ public class IronChestEntityType
         IronChestEntityType.OBSIDIAN_CHEST = (TileEntityType<?>) e.getValue(new ResourceLocation("ironchest", "obsidian_chest"));
     }
 
-    /*
-    @SubscribeEvent
-    public void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> e)
-    {
-        System.out.println("hello from onTileEntityRegistry");
-        IronChestEntityType.IRON_CHEST = registerTileEntityType(e.getRegistry(), register("iron_chest", TileEntityType.Builder.create(TileEntityIronChest::new)), "iron_chest");
-        IronChestEntityType.GOLD_CHEST = registerTileEntityType(e.getRegistry(), register("gold_chest", TileEntityType.Builder.create(TileEntityGoldChest::new)), "gold_chest");
-        IronChestEntityType.DIAMOND_CHEST = registerTileEntityType(e.getRegistry(), register("diamond_chest", TileEntityType.Builder.create(TileEntityDiamondChest::new)), "diamond_chest");
-        IronChestEntityType.CRYSTAL_CHEST = registerTileEntityType(e.getRegistry(), register("crystal_chest", TileEntityType.Builder.create(TileEntityCrystalChest::new)), "crystal_chest");
-        IronChestEntityType.DIRT_CHEST = registerTileEntityType(e.getRegistry(), register("dirt_chest", TileEntityType.Builder.create(TileEntityDirtChest::new)), "dirt_chest");
-        IronChestEntityType.COPPER_CHEST = registerTileEntityType(e.getRegistry(), register("copper_chest", TileEntityType.Builder.create(TileEntityCopperChest::new)), "copper_chest");
-        IronChestEntityType.SILVER_CHEST = registerTileEntityType(e.getRegistry(), register("silver_chest", TileEntityType.Builder.create(TileEntitySilverChest::new)), "silver_chest");
-        IronChestEntityType.OBSIDIAN_CHEST = registerTileEntityType(e.getRegistry(), register("obsidian_chest", TileEntityType.Builder.create(TileEntityObsidianChest::new)), "obsidian_chest");
-    
-        IronChestEntityType.IRON_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "iron_chest"));
-        IronChestEntityType.GOLD_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "gold_chest"));
-        IronChestEntityType.DIAMOND_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "diamond_chest"));
-        IronChestEntityType.CRYSTAL_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "crystal_chest"));
-        IronChestEntityType.DIRT_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "dirt_chest"));
-        IronChestEntityType.COPPER_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "copper_chest"));
-        IronChestEntityType.SILVER_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "silver_chest"));
-        IronChestEntityType.OBSIDIAN_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "obsidian_chest"));
-    }*/
-
     protected static <T extends TileEntityType<?>> T registerTileEntityType(IForgeRegistry<TileEntityType<?>> registry, T tileEntityType, String name)
     {
         register(registry, tileEntityType, new ResourceLocation("ironchest", name));
@@ -160,7 +136,7 @@ public class IronChestEntityType
             }
         }
 
-        TileEntityType<T> tileentitytype = builder.build(type);
-        return tileentitytype;
+        TileEntityType<T> tileEntityType = builder.build(type);
+        return tileEntityType;
     }
 }

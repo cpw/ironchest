@@ -11,6 +11,7 @@
 package cpw.mods.ironchest.common.tileentity;
 
 import cpw.mods.ironchest.common.blocks.IronChestType;
+import cpw.mods.ironchest.common.core.IronChestBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -32,7 +33,7 @@ public class TileEntityCrystalChest extends TileEntityIronChest
 
     public TileEntityCrystalChest()
     {
-        super(IronChestEntityType.CRYSTAL_CHEST, IronChestType.CRYSTAL);
+        super(IronChestEntityType.CRYSTAL_CHEST, IronChestType.CRYSTAL, IronChestBlocks.crystalChestBlock);
         this.topStacks = NonNullList.<ItemStack>withSize(8, ItemStack.EMPTY);
     }
 
