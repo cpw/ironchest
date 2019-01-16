@@ -12,6 +12,7 @@ package cpw.mods.ironchest.common.tileentity;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
+import cpw.mods.ironchest.IronChest;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -20,7 +21,7 @@ import net.minecraft.util.datafix.DataFixesManager;
 import net.minecraft.util.datafix.TypeReferences;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -47,64 +48,29 @@ public class IronChestEntityType
 
     }
 
-    @SuppressWarnings("unchecked")
-    public void registerTileEntities()
+    @Mod.EventBusSubscriber(modid = IronChest.MOD_ID)
+    public static class Registration
     {
-        IForgeRegistry e = GameRegistry.findRegistry(TileEntityType.class);
-        registerTileEntityType(e, register("iron_chest", TileEntityType.Builder.create(TileEntityIronChest::new)), "iron_chest");
-        registerTileEntityType(e, register("gold_chest", TileEntityType.Builder.create(TileEntityGoldChest::new)), "gold_chest");
-        registerTileEntityType(e, register("diamond_chest", TileEntityType.Builder.create(TileEntityDiamondChest::new)), "diamond_chest");
-        registerTileEntityType(e, register("crystal_chest", TileEntityType.Builder.create(TileEntityCrystalChest::new)), "crystal_chest");
-        registerTileEntityType(e, register("dirt_chest", TileEntityType.Builder.create(TileEntityDirtChest::new)), "dirt_chest");
-        registerTileEntityType(e, register("copper_chest", TileEntityType.Builder.create(TileEntityCopperChest::new)), "copper_chest");
-        registerTileEntityType(e, register("silver_chest", TileEntityType.Builder.create(TileEntitySilverChest::new)), "silver_chest");
-        registerTileEntityType(e, register("obsidian_chest", TileEntityType.Builder.create(TileEntityObsidianChest::new)), "obsidian_chest");
-    }
-
-    @SubscribeEvent
-    public void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> e)
-    {
-        System.out.println("hello from onTileEntityRegistry");
-        IronChestEntityType.IRON_CHEST = registerTileEntityType(e.getRegistry(),
-                register("iron_chest", TileEntityType.Builder.create(TileEntityIronChest::new)), "iron_chest");
-        IronChestEntityType.GOLD_CHEST = registerTileEntityType(e.getRegistry(),
-                register("gold_chest", TileEntityType.Builder.create(TileEntityGoldChest::new)), "gold_chest");
-        IronChestEntityType.DIAMOND_CHEST = registerTileEntityType(e.getRegistry(),
-                register("diamond_chest", TileEntityType.Builder.create(TileEntityDiamondChest::new)), "diamond_chest");
-        IronChestEntityType.CRYSTAL_CHEST = registerTileEntityType(e.getRegistry(),
-                register("crystal_chest", TileEntityType.Builder.create(TileEntityCrystalChest::new)), "crystal_chest");
-        IronChestEntityType.DIRT_CHEST = registerTileEntityType(e.getRegistry(),
-                register("dirt_chest", TileEntityType.Builder.create(TileEntityDirtChest::new)), "dirt_chest");
-        IronChestEntityType.COPPER_CHEST = registerTileEntityType(e.getRegistry(),
-                register("copper_chest", TileEntityType.Builder.create(TileEntityCopperChest::new)), "copper_chest");
-        IronChestEntityType.SILVER_CHEST = registerTileEntityType(e.getRegistry(),
-                register("silver_chest", TileEntityType.Builder.create(TileEntitySilverChest::new)), "silver_chest");
-        IronChestEntityType.OBSIDIAN_CHEST = registerTileEntityType(e.getRegistry(),
-                register("obsidian_chest", TileEntityType.Builder.create(TileEntityObsidianChest::new)), "obsidian_chest");
-
-        IronChestEntityType.IRON_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "iron_chest"));
-        IronChestEntityType.GOLD_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "gold_chest"));
-        IronChestEntityType.DIAMOND_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "diamond_chest"));
-        IronChestEntityType.CRYSTAL_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "crystal_chest"));
-        IronChestEntityType.DIRT_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "dirt_chest"));
-        IronChestEntityType.COPPER_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "copper_chest"));
-        IronChestEntityType.SILVER_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "silver_chest"));
-        IronChestEntityType.OBSIDIAN_CHEST = e.getRegistry().getValue(new ResourceLocation("ironchest", "obsidian_chest"));
-    }
-
-    @SuppressWarnings("unchecked")
-    public void createEntries()
-    {
-        IForgeRegistry<?> e = GameRegistry.findRegistry(TileEntityType.class);
-
-        IronChestEntityType.IRON_CHEST = (TileEntityType<?>) e.getValue(new ResourceLocation("ironchest", "iron_chest"));
-        IronChestEntityType.GOLD_CHEST = (TileEntityType<?>) e.getValue(new ResourceLocation("ironchest", "gold_chest"));
-        IronChestEntityType.DIAMOND_CHEST = (TileEntityType<?>) e.getValue(new ResourceLocation("ironchest", "diamond_chest"));
-        IronChestEntityType.CRYSTAL_CHEST = (TileEntityType<?>) e.getValue(new ResourceLocation("ironchest", "crystal_chest"));
-        IronChestEntityType.DIRT_CHEST = (TileEntityType<?>) e.getValue(new ResourceLocation("ironchest", "dirt_chest"));
-        IronChestEntityType.COPPER_CHEST = (TileEntityType<?>) e.getValue(new ResourceLocation("ironchest", "copper_chest"));
-        IronChestEntityType.SILVER_CHEST = (TileEntityType<?>) e.getValue(new ResourceLocation("ironchest", "silver_chest"));
-        IronChestEntityType.OBSIDIAN_CHEST = (TileEntityType<?>) e.getValue(new ResourceLocation("ironchest", "obsidian_chest"));
+        @SubscribeEvent
+        public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> e)
+        {
+            IronChestEntityType.IRON_CHEST = registerTileEntityType(e.getRegistry(),
+                    register("iron_chest", TileEntityType.Builder.create(TileEntityIronChest::new)), "iron_chest");
+            IronChestEntityType.GOLD_CHEST = registerTileEntityType(e.getRegistry(),
+                    register("gold_chest", TileEntityType.Builder.create(TileEntityGoldChest::new)), "gold_chest");
+            IronChestEntityType.DIAMOND_CHEST = registerTileEntityType(e.getRegistry(),
+                    register("diamond_chest", TileEntityType.Builder.create(TileEntityDiamondChest::new)), "diamond_chest");
+            IronChestEntityType.CRYSTAL_CHEST = registerTileEntityType(e.getRegistry(),
+                    register("crystal_chest", TileEntityType.Builder.create(TileEntityCrystalChest::new)), "crystal_chest");
+            IronChestEntityType.DIRT_CHEST = registerTileEntityType(e.getRegistry(),
+                    register("dirt_chest", TileEntityType.Builder.create(TileEntityDirtChest::new)), "dirt_chest");
+            IronChestEntityType.COPPER_CHEST = registerTileEntityType(e.getRegistry(),
+                    register("copper_chest", TileEntityType.Builder.create(TileEntityCopperChest::new)), "copper_chest");
+            IronChestEntityType.SILVER_CHEST = registerTileEntityType(e.getRegistry(),
+                    register("silver_chest", TileEntityType.Builder.create(TileEntitySilverChest::new)), "silver_chest");
+            IronChestEntityType.OBSIDIAN_CHEST = registerTileEntityType(e.getRegistry(),
+                    register("obsidian_chest", TileEntityType.Builder.create(TileEntityObsidianChest::new)), "obsidian_chest");
+        }
     }
 
     protected static <T extends TileEntityType<?>> T registerTileEntityType(IForgeRegistry<TileEntityType<?>> registry, T tileEntityType, String name)

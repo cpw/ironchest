@@ -62,6 +62,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements IChes
     private int ticksSinceSync;
 
     private IronChestType chestType;
+
     private Block blockToUse;
 
     public TileEntityIronChest()

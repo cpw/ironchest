@@ -30,11 +30,6 @@ public class TileEntityDirtChest extends TileEntityIronChest
     public TileEntityDirtChest()
     {
         super(IronChestEntityType.DIRT_CHEST, IronChestType.DIRTCHEST9000, IronChestBlocks.dirtChestBlock);
-
-        if (!bookDataCreated)
-        {
-            createBookData();
-        }
     }
 
     @Override
@@ -43,6 +38,11 @@ public class TileEntityDirtChest extends TileEntityIronChest
         if (!(itemStack.hasTag() && itemStack.getTag().getBoolean("dirtchest")))
         {
             this.setInventorySlotContents(0, dirtChest9000GuideBook.copy());
+        }
+
+        if (!bookDataCreated)
+        {
+            createBookData();
         }
     }
 

@@ -12,10 +12,14 @@ package cpw.mods.ironchest.common.tileentity;
 
 import cpw.mods.ironchest.common.blocks.IronChestType;
 import cpw.mods.ironchest.common.core.IronChestBlocks;
+import cpw.mods.ironchest.common.network.PacketHandler;
+import cpw.mods.ironchest.common.network.packets.PacketTopStackSyncChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -219,10 +223,22 @@ public class TileEntityCrystalChest extends TileEntityIronChest
 
     protected void sendTopStacksPacket()
     {
-        //NonNullList<ItemStack> stacks = this.buildItemStackDataList();
-        //@formatter:off
-        //IronChest.packetHandler.sendToAllAround(new MessageCrystalChestSync(this, stacks), new TargetPoint(world.provider.getDimension(), getPos().getX(), getPos().getY(), getPos().getZ(), 128));
-        //@formatter:on
+        NonNullList<ItemStack> stacks = this.buildItemStackDataList();
+
+        for (EntityPlayerMP player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
+        {
+            if (player.dimension == world.getDimension().getId())
+            {
+                double d4 = getPos().getX() - player.posX;
+                double d5 = getPos().getY() - player.posY;
+                double d6 = getPos().getZ() - player.posZ;
+
+                if (d4 * d4 + d5 * d5 + d6 * d6 < 16384)
+                {
+                    PacketHandler.sendTo(new PacketTopStackSyncChest(this.getWorld().getDimension().getId(), this.getPos(), stacks), player);
+                }
+            }
+        }
     }
 
     public void receiveMessageFromServer(NonNullList<ItemStack> topStacks)

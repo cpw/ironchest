@@ -127,8 +127,6 @@ public class ItemChestChanger extends ItemTooltip
 
         IBlockState iBlockState = IronChestType.get(this.type.target).with(BlockIronChest.FACING, chestFacing);
 
-        System.out.println(iBlockState);
-
         world.setTileEntity(blockPos, newChest);
         world.setBlockState(blockPos, iBlockState, 3);
 

@@ -13,6 +13,8 @@ package cpw.mods.ironchest.client;
 import cpw.mods.ironchest.client.renderer.TileEntityIronChestRenderer;
 import cpw.mods.ironchest.common.ServerProxy;
 import cpw.mods.ironchest.common.blocks.IronChestType;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class ClientProxy extends ServerProxy
@@ -35,5 +37,11 @@ public class ClientProxy extends ServerProxy
                 ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
             }
         }
+    }
+
+    @Override
+    public World getClientWorld()
+    {
+        return Minecraft.getInstance().world;
     }
 }

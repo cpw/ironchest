@@ -12,10 +12,7 @@ package cpw.mods.ironchest.common.items;
 
 import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.common.blocks.IronChestType;
-import cpw.mods.ironchest.common.core.IronChestCreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import static cpw.mods.ironchest.common.blocks.IronChestType.COPPER;
 import static cpw.mods.ironchest.common.blocks.IronChestType.CRYSTAL;

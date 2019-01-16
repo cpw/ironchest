@@ -38,43 +38,23 @@ group = "cpw.mods" // http://maven.apache.org/guides/mini/guide-naming-conventio
 // This is our actual project within the group. Note: FML has "fml" here. But this is ironchest.
 archivesBaseName = "ironchest"
 
-sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
-
 minecraft {
     mappings channel: 'snapshot', version: mappings_version
     
     runs {
         client = {
-            main "net.minecraftforge.userdev.UserdevLauncher"
             workingDirectory = project.file("run").canonicalPath
-            environment "target", "fmluserdevclient"
-            environment "assetDirectory", downloadAssets.output.absolutePath
-            environment "FORGE_VERSION", forge_version
-            environment "FORGE_GROUP", forge_group
-            environment "MCP_VERSION", mappings_version
-            environment "MC_VERSION", minecraft_version
-            environment "MOD_CLASSES", "${sourceSets.main.output.resourcesDir}${File.pathSeparator}${sourceSets.main.output.classesDirs.join(File.pathSeparator)}"
+            source sourceSets.main
         }
         server = {
-            main "net.minecraftforge.userdev.UserdevLauncher"
             workingDirectory = project.file("run").canonicalPath
-            environment "target", "fmluserdevserver"
-            environment "assetDirectory", downloadAssets.output.absolutePath
-            environment "FORGE_VERSION", forge_version
-            environment "FORGE_GROUP", forge_group
-            environment "MCP_VERSION", mappings_version
-            environment "MC_VERSION", minecraft_version
-            environment "MOD_CLASSES", "${sourceSets.main.output.resourcesDir}${File.pathSeparator}${sourceSets.main.output.classesDirs.join(File.pathSeparator)}"
+            source sourceSets.main
         }
     }
 }
 
 dependencies {
     minecraft 'net.minecraftforge.test:forge:' + minecraft_version + '-' + forge_version
-    compile 'net.minecraftforge.test:forge:' + minecraft_version + '-' + forge_version + ':launcher'
 }
 
 // IronChest uses git tagging to mark major versions. This sets up the project version to that version data

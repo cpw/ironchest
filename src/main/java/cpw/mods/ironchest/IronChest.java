@@ -14,9 +14,7 @@ import cpw.mods.ironchest.client.ClientProxy;
 import cpw.mods.ironchest.common.ServerProxy;
 import cpw.mods.ironchest.common.ai.OcelotsSitOnChestsHandler;
 import cpw.mods.ironchest.common.blocks.BlockChest;
-import cpw.mods.ironchest.common.core.IronChestBlocks;
-import cpw.mods.ironchest.common.core.IronChestItems;
-import cpw.mods.ironchest.common.tileentity.IronChestEntityType;
+import cpw.mods.ironchest.common.network.PacketHandler;
 import cpw.mods.ironchest.common.util.BlockNames;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +22,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreRegistrationEvent;
 import net.minecraftforge.fml.javafmlmod.FMLModLoadingContext;
 
 @Mod(value = IronChest.MOD_ID)
@@ -38,19 +36,14 @@ public class IronChest
 
     public static ServerProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
-    public IronChestEntityType ironChestEntityType = new IronChestEntityType();
-
     public IronChest()
     {
         instance = this;
         FMLModLoadingContext.get().getModEventBus().addListener(this::preInit);
         MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
-        MinecraftForge.EVENT_BUS.register(new IronChestBlocks());
-        MinecraftForge.EVENT_BUS.register(new IronChestItems());
-        MinecraftForge.EVENT_BUS.register(new IronChestEntityType());
     }
 
-    private void preInit(final FMLPreInitializationEvent event)
+    private void preInit(final FMLPreRegistrationEvent event)
     {
         proxy.preInit();
 
@@ -59,8 +52,7 @@ public class IronChest
             debugPrints();
         }
 
-        ironChestEntityType.registerTileEntities();
-        ironChestEntityType.createEntries();
+        PacketHandler.register();
     }
 
     private void debugPrints()
