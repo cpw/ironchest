@@ -22,7 +22,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLPreRegistrationEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLModLoadingContext;
 
 @Mod(value = IronChest.MOD_ID)
@@ -43,7 +43,7 @@ public class IronChest
         MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
     }
 
-    private void preInit(final FMLPreRegistrationEvent event)
+    private void preInit(final FMLCommonSetupEvent event)
     {
         proxy.preInit();
 
