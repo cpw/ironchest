@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"MMM",
+		"MSM",
+		"MMM"
+	],
+	"key": {
+		"M": {
+			"constant": "ironchest:copper"
+		},
+		"S": {
+			"constant": "ironchest:chest"
+		}
+	},
+	"result": {
+		"item": "ironchest:copper_chest"
+	}
+}

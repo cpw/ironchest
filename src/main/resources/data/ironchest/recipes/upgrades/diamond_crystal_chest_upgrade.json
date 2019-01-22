@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "GGG",
+        "GSG",
+        "GGG"
+    ],
+    "key": {
+        "G": {
+            "constant": "ironchest:glass"
+        },
+        "S": {
+            "constant": "ironchest:obsidian"
+        }
+    },
+    "result": {
+        "item": "ironchest:diamond_crystal_chest_upgrade"
+    }
+}

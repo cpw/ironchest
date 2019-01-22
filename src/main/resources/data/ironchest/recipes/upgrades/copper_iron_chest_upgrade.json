@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "MGM",
+        "GSG",
+        "MGM"
+    ],
+    "key": {
+        "M": {
+            "constant": "ironchest:iron"
+        },
+        "S": {
+            "constant": "ironchest:copper"
+        },
+        "G": {
+            "constant": "ironchest:glass"
+        }
+    },
+    "result": {
+        "item": "ironchest:copper_iron_chest_upgrade"
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "MMM",
+        "MSM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "constant": "ironchest:silver"
+        },
+        "S": {
+            "constant": "ironchest:copper"
+        }
+    },
+    "result": {
+        "item": "ironchest:copper_silver_chest_upgrade"
+    }
+}

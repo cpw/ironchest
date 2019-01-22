@@ -10,8 +10,8 @@
  ******************************************************************************/
 package cpw.mods.ironchest.common.items;
 
-import cpw.mods.ironchest.IronChest;
 import cpw.mods.ironchest.common.blocks.IronChestType;
+import cpw.mods.ironchest.common.util.ItemNames;
 import net.minecraft.util.ResourceLocation;
 
 import static cpw.mods.ironchest.common.blocks.IronChestType.COPPER;
@@ -26,15 +26,15 @@ import static cpw.mods.ironchest.common.blocks.IronChestType.WOOD;
 public enum ChestChangerType
 {
     //@formatter:off
-    IRON_GOLD(IRON, GOLD, "iron_gold_chest_upgrade"),
-    GOLD_DIAMOND(GOLD, DIAMOND, "gold_diamond_chest_upgrade"),
-    COPPER_SILVER(COPPER, SILVER, "copper_silver_chest_upgrade"),
-    SILVER_GOLD(SILVER, GOLD, "silver_gold_chest_upgrade"),
-    COPPER_IRON(COPPER, IRON, "copper_iron_chest_upgrade"),
-    DIAMOND_CRYSTAL(DIAMOND, CRYSTAL, "diamond_crystal_chest_upgrade"),
-    WOOD_IRON(WOOD, IRON, "wood_iron_chest_upgrade"),
-    WOOD_COPPER(WOOD, COPPER, "wood_copper_chest_upgrade"),
-    DIAMOND_OBSIDIAN(DIAMOND, OBSIDIAN, "diamond_obsidian_chest_upgrade");
+    IRON_GOLD(IRON, GOLD, ItemNames.IRON_GOLD_UPGRADE),
+    GOLD_DIAMOND(GOLD, DIAMOND, ItemNames.GOLD_DIAMOND_UPGRADE),
+    COPPER_SILVER(COPPER, SILVER, ItemNames.COPPER_SILVER_UPGRADE),
+    SILVER_GOLD(SILVER, GOLD, ItemNames.SILVER_GOLD_UPGRADE),
+    COPPER_IRON(COPPER, IRON, ItemNames.COPPER_IRON_UPGRADE),
+    DIAMOND_CRYSTAL(DIAMOND, CRYSTAL, ItemNames.DIAMOND_CRYSTAL_UPGRADE),
+    WOOD_IRON(WOOD, IRON, ItemNames.WOOD_IRON_UPGRADE),
+    WOOD_COPPER(WOOD, COPPER, ItemNames.WOOD_COPPER_UPGRADE),
+    DIAMOND_OBSIDIAN(DIAMOND, OBSIDIAN, ItemNames.DIAMOND_OBSIDIAN_UPGRADE);
     //@formatter:on
 
     public final IronChestType source;
@@ -47,7 +47,7 @@ public enum ChestChangerType
     {
         this.source = source;
         this.target = target;
-        this.itemName = new ResourceLocation(IronChest.MOD_ID, itemName);
+        this.itemName = new ResourceLocation(itemName);
     }
 
     public boolean canUpgrade(IronChestType from)

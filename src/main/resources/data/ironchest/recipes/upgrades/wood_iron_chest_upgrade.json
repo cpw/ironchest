@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "MMM",
+        "MSM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "constant": "ironchest:iron"
+        },
+        "S": {
+            "constant": "ironchest:planks"
+        }
+    },
+    "result": {
+        "item": "ironchest:wood_iron_chest_upgrade"
+    }
+}

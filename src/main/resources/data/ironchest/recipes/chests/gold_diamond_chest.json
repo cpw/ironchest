@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GGG",
+		"MSM",
+		"GGG"
+	],
+	"key": {
+		"M": {
+			"constant": "ironchest:diamond"
+		},
+		"G": {
+			"constant": "ironchest:glass"
+		},
+		"S": {
+			"item": "ironchest:gold_chest"
+		}
+	},
+	"result": {
+		"item": "ironchest:diamond_chest"
+	}
+}

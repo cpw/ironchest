@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"MMM",
+		"MSM",
+		"MMM"
+	],
+	"key": {
+		"M": {
+			"constant": "ironchest:dirt"
+		},
+		"S": {
+			"constant": "ironchest:chest"
+		}
+	},
+	"result": {
+		"item": "ironchest:dirt_chest"
+	}
+}
