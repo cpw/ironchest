@@ -27,11 +27,4 @@ public class BlockIronChest extends BlockChest
     {
         return new TileEntityIronChest();
     }
-
-    @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn)
-    {
-        return new TileEntityIronChest();
-    }
-
 }

@@ -11,7 +11,6 @@
 package cpw.mods.ironchest.common.tileentity;
 
 import cpw.mods.ironchest.common.blocks.BlockChest;
-import cpw.mods.ironchest.common.blocks.BlockIronChest;
 import cpw.mods.ironchest.common.blocks.IronChestType;
 import cpw.mods.ironchest.common.core.IronChestBlocks;
 import cpw.mods.ironchest.common.gui.ContainerIronChest;
@@ -291,7 +290,7 @@ public class TileEntityIronChest extends TileEntityLockableLoot implements IChes
     {
         Block block = this.getBlockState().getBlock();
 
-        if (block instanceof BlockIronChest)
+        if (block instanceof BlockChest)
         {
             this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
             this.world.notifyNeighborsOfStateChange(this.pos, block);

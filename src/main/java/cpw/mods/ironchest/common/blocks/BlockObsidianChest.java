@@ -27,10 +27,4 @@ public class BlockObsidianChest extends BlockChest
     {
         return new TileEntityObsidianChest();
     }
-
-    @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn)
-    {
-        return new TileEntityObsidianChest();
-    }
 }

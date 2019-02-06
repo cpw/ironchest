@@ -27,10 +27,4 @@ public class BlockCopperChest extends BlockChest
     {
         return new TileEntityCopperChest();
     }
-
-    @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn)
-    {
-        return new TileEntityCopperChest();
-    }
 }

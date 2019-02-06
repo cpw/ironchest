@@ -42,10 +42,4 @@ public class BlockDirtChest extends BlockChest
     {
         return new TileEntityDirtChest();
     }
-
-    @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn)
-    {
-        return new TileEntityDirtChest();
-    }
 }

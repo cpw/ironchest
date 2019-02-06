@@ -27,10 +27,4 @@ public class BlockSilverChest extends BlockChest
     {
         return new TileEntitySilverChest();
     }
-
-    @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn)
-    {
-        return new TileEntitySilverChest();
-    }
 }

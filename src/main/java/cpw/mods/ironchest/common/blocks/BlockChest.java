@@ -47,7 +47,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-public abstract class BlockChest extends Block implements ITileEntityProvider
+public abstract class BlockChest extends Block
 {
     public static final DirectionProperty FACING = BlockHorizontal.HORIZONTAL_FACING;
 

@@ -69,7 +69,7 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
 
         IBlockState iBlockState = tileEntity.hasWorld() ?
                 tileEntity.getBlockState() :
-                (IBlockState) tileEntity.getBlockToUse().getDefaultState().with(BlockChest.FACING, EnumFacing.SOUTH);
+                (IBlockState) tileEntity.getBlockToUse().getDefaultState().with(BlockChest.FACING, EnumFacing.NORTH);
         IronChestType chestType = IronChestType.IRON;
         IronChestType typeNew = BlockChest.getTypeFromBlock(iBlockState.getBlock());
 

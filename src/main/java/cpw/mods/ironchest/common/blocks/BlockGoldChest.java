@@ -28,10 +28,4 @@ public class BlockGoldChest extends BlockChest
         return new TileEntityGoldChest();
     }
 
-    @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn)
-    {
-        return new TileEntityGoldChest();
-    }
-
 }

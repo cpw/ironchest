@@ -86,6 +86,8 @@ public class PacketTopStackSyncChest
                     }
                 }
             });
+
+            ctx.get().setPacketHandled(true);
         }
     }
 
