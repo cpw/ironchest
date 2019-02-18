@@ -9,27 +9,22 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle'
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'maven'
 apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
-// This is a simple flatdir repository for "uploadArchives" when you don't have a remote repo to target
 repositories {
-    flatDir {
-        name "fileRepo"
-        dirs "repo"
-    }
     maven {
         name 'DVS1 Maven FS'
         url 'http://dvs1.progwml6.com/files/maven'
     }
 }
 
-// This is our group. I'm cpw.mods
-group = "cpw.mods" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-// This is our actual project within the group. Note: FML has "fml" here. But this is ironchest.
-archivesBaseName = "ironchest"
+group = "com.progwml6.ironchest"
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
     mappings channel: 'snapshot', version: mappings_version
@@ -55,123 +50,73 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge.test:forge:' + minecraft_version + '-' + forge_version
+    minecraft 'net.minecraftforge:forge:' + minecraft_version + '-' + forge_version
 }
 
-// IronChest uses git tagging to mark major versions. This sets up the project version to that version data
-def versionInfo = getGitVersion()
-version = minecraft_version + "-${versionInfo['IronChest.version']}"
+task buildInfo {
+    def cmd = "git rev-parse --short HEAD"
+    def proc = cmd.execute()
+    proc.waitFor()
+    if (proc.exitValue() == 0) {
+        ext.revision = proc.text.trim()
+    } else {
+        ext.revision = "GITBORK"
+    }
 
-// This wrangles the resources for the jar files- stuff like textures and languages
+    if (System.getenv().BUILD_NUMBER != null) {
+        ext.buildNum = System.getenv().BUILD_NUMBER
+    } else {
+        ext.buildNum = "DEV.${project.buildInfo.revision}"
+    }
+}
+
+version = "${minecraft_version}-${mod_version}.${project.buildInfo.buildNum}"
+
 processResources {
-    // we're omitting the .xcf files - they're development only
     exclude '**/*.xcf'
-    // we only want to do search/replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'META-INF/mods.toml'
 
-        // replace version and mcversion
         expand 'version': project.version, 'mcversion': minecraft_version
     }
 
-    // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'META-INF/mods.toml'
     }
+}
 
-    // generate version.properties file from the git version data earlier
-    doLast {
-        def propsFile = new File(destinationDir, 'version.properties')
-        def properties = new Properties()
-        properties.putAll(versionInfo)
-        properties['IronChest.build.mcversion'] = minecraft_version
-        properties.store(propsFile.newWriter(), null)
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+jar {
+    manifest {
+        attributes(["Specification-Title": "Iron Chests",
+                    "Specification-Vendor": "Progwml6",
+                    "Specification-Version": "1", // We are version 1 of ourselves
+                    "Implementation-Title": project.name,
+                    "Implementation-Version": "${version}",
+                    "Implementation-Vendor" :"Progwml6",
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
 }
 
-// Configure an upload task. this is setup for uploading to files.minecraftforge.net. There are other examples around
-uploadArchives {
-    repositories.mavenDeployer {
-        dependsOn 'build'
-
-        if (project.hasProperty('forgeMavenPassword')) {
-            repository(url: "http://files.minecraftforge.net/maven/manage/upload") {
-                authentication(userName: project.getProperty('forgeMavenUser'), password: project.getProperty('forgeMavenPassword'))
-                // the elvis operator. look it up.
-            }
-        } else {
-            // local repo folder. Might wanna juset use  gradle install   if you wanans end it to maven-local
-            repository(url: 'file://localhost/' + project.file('repo').getAbsolutePath())
-        }
-        // This is just the pom data for the maven repo
-        pom {
-            groupId = project.group
-            // Force the maven upload to use the <mcversion>-<version> syntax preferred at files
-            version = "${project.version}"
-            artifactId = project.archivesBaseName
-            project {
-                name project.archivesBaseName
-                packaging 'jar'
-                description 'IronChest'
-                url 'https://github.com/progwml6/IronChest'
-
-                scm {
-                    url 'https://github.com/progwml6/IronChest'
-                    connection 'scm:git:git://github.com/progwml6/IronChest.git'
-                    developerConnection 'scm:git:git@github.com:progwml6/IronChest.git'
-                }
-
-                issueManagement {
-                    system 'github'
-                    url 'https://github.com/progwml6/IronChest/issues'
-                }
-
-                licenses {
-                    license {
-                        name 'GNU Public License (GPL), Version 3.0'
-                        url 'http://www.gnu.org/licenses/gpl-3.0.txt'
-                        distribution 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'cpw'
-                        name 'cpw'
-                        roles { role 'developer' }
-                    }
-                }
-            }
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+            artifact sourcesJar
         }
     }
-}
 
-// This is a special task for pulling the version information from git and the environment (for BUILD_NUMBER)
-def getGitVersion() {
-    def out = [:]
-
-    // call git command.
-    def outStream = new ByteArrayOutputStream()
-    def result = exec {
-        executable = 'git'
-        args = ['describe', '--long', "--match=[^(jenkins)]*"]
-        standardOutput = outStream
+    repositories {
+        if (project.hasProperty('DEPLOY_DIR')) {
+            maven { url DEPLOY_DIR }
+        }
     }
-
-    def fullVersion = outStream.toString().trim()
-    def matcher = fullVersion =~ /(\d+).(\d+)-(\d+)-(.*)/
-
-    def maj = matcher[0][1]
-    def min = matcher[0][2]
-    def rev = matcher[0][3]
-    def bn = System.getenv("PROMOTED_NUMBER") ?: System.getenv("BUILD_NUMBER") ?: "1"
-
-    out['IronChest.build.major.number'] = maj.toString()
-    out['IronChest.build.minor.number'] = min.toString()
-    out['IronChest.build.revision.number'] = rev.toString()
-    out['IronChest.build.githash'] = matcher[0][4].toString()
-    out['IronChest.build.number'] = bn.toString()
-    out['IronChest.version'] = "${maj}.${min}.${rev}.${bn}".toString()
-
-    return out
 }
