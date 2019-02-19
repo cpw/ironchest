@@ -102,6 +102,7 @@ public class TileEntityIronChestRenderer<T extends TileEntity & IChestLid> exten
         GlStateManager.scalef(1.0F, -1.0F, -1.0F);
 
         float f = iBlockState.get(BlockChest.FACING).getHorizontalAngle();
+
         if (Math.abs(f) > 1.0E-5D)
         {
             GlStateManager.translatef(0.5F, 0.5F, 0.5F);

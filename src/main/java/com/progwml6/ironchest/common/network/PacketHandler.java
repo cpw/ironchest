@@ -14,9 +14,13 @@ import com.progwml6.ironchest.IronChest;
 import com.progwml6.ironchest.common.network.packets.PacketTopStackSyncChest;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public final class PacketHandler
@@ -33,15 +37,11 @@ public final class PacketHandler
     {
         int disc = 0;
 
-        HANDLER.registerMessage(disc++, PacketTopStackSyncChest.class, PacketTopStackSyncChest::encode, PacketTopStackSyncChest::decode,
-                PacketTopStackSyncChest.Handler::handle);
+        HANDLER.registerMessage(disc++, PacketTopStackSyncChest.class, PacketTopStackSyncChest::encode, PacketTopStackSyncChest::decode, PacketTopStackSyncChest.Handler::handle);
     }
 
-    public static void sendTo(Object msg, EntityPlayerMP player)
+    public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message)
     {
-        if (!(player instanceof FakePlayer))
-        {
-            HANDLER.sendTo(msg, player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-        }
+        HANDLER.send(target, message);
     }
 }

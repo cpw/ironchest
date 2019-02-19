@@ -11,7 +11,6 @@
 package com.progwml6.ironchest.common.blocks;
 
 import com.progwml6.ironchest.common.tileentity.TileEntityIronChest;
-import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.BlockFaceShape;
@@ -27,7 +26,6 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -143,10 +141,8 @@ public abstract class BlockChest extends Block
                 if (player instanceof EntityPlayerMP && !(player instanceof FakePlayer))
                 {
                     EntityPlayerMP entityPlayerMP = (EntityPlayerMP) player;
-                    PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
-                    buffer.writeBlockPos(pos);
 
-                    NetworkHooks.openGui(entityPlayerMP, ilockablecontainer, buffer);
+                    NetworkHooks.openGui(entityPlayerMP, ilockablecontainer, buf -> buf.writeBlockPos(pos));
                 }
 
                 player.addStat(StatList.OPEN_CHEST);

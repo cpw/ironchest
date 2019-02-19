@@ -44,8 +44,7 @@ public class TileEntityIronChestItemRenderer extends TileEntityItemStackRenderer
 
     private static final TileEntityDirtChest DIRT_CHEST = new TileEntityDirtChest();
 
-    private static final TileEntityIronChest[] CHESTS = { IRON_CHEST, GOLD_CHEST, DIAMOND_CHEST, COPPER_CHEST, SILVER_CHEST, CRYSTAL_CHEST, OBSIDIAN_CHEST,
-            DIRT_CHEST };
+    private static final TileEntityIronChest[] CHESTS = { IRON_CHEST, GOLD_CHEST, DIAMOND_CHEST, COPPER_CHEST, SILVER_CHEST, CRYSTAL_CHEST, OBSIDIAN_CHEST, DIRT_CHEST };
 
     public static TileEntityIronChestItemRenderer instance = new TileEntityIronChestItemRenderer();
 

@@ -17,10 +17,9 @@ import com.progwml6.ironchest.common.network.PacketHandler;
 import com.progwml6.ironchest.common.network.packets.PacketTopStackSyncChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Collections;
 
@@ -220,20 +219,7 @@ public class TileEntityCrystalChest extends TileEntityIronChest
     {
         NonNullList<ItemStack> stacks = this.buildItemStackDataList();
 
-        for (EntityPlayerMP player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
-        {
-            if (player.dimension == world.getDimension().getType())
-            {
-                double d4 = getPos().getX() - player.posX;
-                double d5 = getPos().getY() - player.posY;
-                double d6 = getPos().getZ() - player.posZ;
-
-                if (d4 * d4 + d5 * d5 + d6 * d6 < 16384)
-                {
-                    PacketHandler.sendTo(new PacketTopStackSyncChest(this.getWorld().getDimension().getType().getId(), this.getPos(), stacks), player);
-                }
-            }
-        }
+        PacketHandler.send(PacketDistributor.TRACKING_CHUNK.with(() -> this.getWorld().getChunk(this.getPos())), new PacketTopStackSyncChest(this.getWorld().getDimension().getType().getId(), this.getPos(), stacks));
     }
 
     public void receiveMessageFromServer(NonNullList<ItemStack> topStacks)
