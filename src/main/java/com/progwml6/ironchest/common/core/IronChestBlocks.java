@@ -10,18 +10,18 @@
  ******************************************************************************/
 package com.progwml6.ironchest.common.core;
 
-import com.progwml6.ironchest.client.renderer.TileEntityIronChestItemRenderer;
 import com.progwml6.ironchest.IronChest;
-import com.progwml6.ironchest.common.blocks.BlockChest;
-import com.progwml6.ironchest.common.blocks.BlockCopperChest;
-import com.progwml6.ironchest.common.blocks.BlockCrystalChest;
-import com.progwml6.ironchest.common.blocks.BlockDiamondChest;
-import com.progwml6.ironchest.common.blocks.BlockDirtChest;
-import com.progwml6.ironchest.common.blocks.BlockGoldChest;
-import com.progwml6.ironchest.common.blocks.BlockIronChest;
-import com.progwml6.ironchest.common.blocks.BlockObsidianChest;
-import com.progwml6.ironchest.common.blocks.BlockSilverChest;
-import com.progwml6.ironchest.common.items.ItemChest;
+import com.progwml6.ironchest.client.renderer.IronChestItemStackTileEntityRenderer;
+import com.progwml6.ironchest.common.blocks.ChestBlock;
+import com.progwml6.ironchest.common.blocks.CopperChestBlock;
+import com.progwml6.ironchest.common.blocks.CrystalChestBlock;
+import com.progwml6.ironchest.common.blocks.DiamondChestBlock;
+import com.progwml6.ironchest.common.blocks.DirtChestBlock;
+import com.progwml6.ironchest.common.blocks.GoldChestBlock;
+import com.progwml6.ironchest.common.blocks.IronChestBlock;
+import com.progwml6.ironchest.common.blocks.ObsidianChestBlock;
+import com.progwml6.ironchest.common.blocks.SilverChestBlock;
+import com.progwml6.ironchest.common.items.ChestItem;
 import com.progwml6.ironchest.common.util.BlockNames;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -38,49 +38,49 @@ public class IronChestBlocks
     public static Properties itemBuilder;
 
     @ObjectHolder(BlockNames.IRON_CHEST)
-    public static BlockChest ironChestBlock;
+    public static ChestBlock ironChestBlock;
 
     @ObjectHolder(BlockNames.IRON_CHEST)
     public static Item ironChestItemBlock;
 
     @ObjectHolder(BlockNames.GOLD_CHEST)
-    public static BlockChest goldChestBlock;
+    public static ChestBlock goldChestBlock;
 
     @ObjectHolder(BlockNames.GOLD_CHEST)
     public static Item goldChestItemBlock;
 
     @ObjectHolder(BlockNames.DIAMOND_CHEST)
-    public static BlockChest diamondChestBlock;
+    public static ChestBlock diamondChestBlock;
 
     @ObjectHolder(BlockNames.DIAMOND_CHEST)
     public static Item diamondChestItemBlock;
 
     @ObjectHolder(BlockNames.COPPER_CHEST)
-    public static BlockChest copperChestBlock;
+    public static ChestBlock copperChestBlock;
 
     @ObjectHolder(BlockNames.COPPER_CHEST)
     public static Item copperChestItemBlock;
 
     @ObjectHolder(BlockNames.SILVER_CHEST)
-    public static BlockChest silverChestBlock;
+    public static ChestBlock silverChestBlock;
 
     @ObjectHolder(BlockNames.SILVER_CHEST)
     public static Item silverChestItemBlock;
 
     @ObjectHolder(BlockNames.CRYSTAL_CHEST)
-    public static BlockChest crystalChestBlock;
+    public static ChestBlock crystalChestBlock;
 
     @ObjectHolder(BlockNames.CRYSTAL_CHEST)
     public static Item crystalChestItemBlock;
 
     @ObjectHolder(BlockNames.OBSIDIAN_CHEST)
-    public static BlockChest obsidianChestBlock;
+    public static ChestBlock obsidianChestBlock;
 
     @ObjectHolder(BlockNames.OBSIDIAN_CHEST)
     public static Item obsidianChestItemBlock;
 
     @ObjectHolder(BlockNames.DIRT_CHEST)
-    public static BlockChest dirtChestBlock;
+    public static ChestBlock dirtChestBlock;
 
     @ObjectHolder(BlockNames.DIRT_CHEST)
     public static Item dirtChestItemBlock;
@@ -98,14 +98,14 @@ public class IronChestBlocks
         {
             IForgeRegistry<Block> blockRegistry = event.getRegistry();
 
-            blockRegistry.register(new BlockIronChest(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
-            blockRegistry.register(new BlockGoldChest(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
-            blockRegistry.register(new BlockDiamondChest(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
-            blockRegistry.register(new BlockCopperChest(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
-            blockRegistry.register(new BlockSilverChest(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
-            blockRegistry.register(new BlockCrystalChest(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
-            blockRegistry.register(new BlockObsidianChest(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 10000.0F)));
-            blockRegistry.register(new BlockDirtChest(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+            blockRegistry.register(new IronChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+            blockRegistry.register(new GoldChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+            blockRegistry.register(new DiamondChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+            blockRegistry.register(new CopperChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+            blockRegistry.register(new SilverChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+            blockRegistry.register(new CrystalChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
+            blockRegistry.register(new ObsidianChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 10000.0F)));
+            blockRegistry.register(new DirtChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 3.0F)));
         }
 
         @SubscribeEvent
@@ -113,16 +113,16 @@ public class IronChestBlocks
         {
             IForgeRegistry<Item> itemRegistry = event.getRegistry();
 
-            itemBuilder = (new Properties()).group(IronChestCreativeTabs.IRON_CHESTS).setTEISR(() -> TileEntityIronChestItemRenderer::new);
+            itemBuilder = (new Properties()).group(IronChestItemGroups.IRON_CHESTS).setTEISR(() -> IronChestItemStackTileEntityRenderer::new);
 
-            itemRegistry.register(new ItemChest(ironChestBlock, itemBuilder));
-            itemRegistry.register(new ItemChest(goldChestBlock, itemBuilder));
-            itemRegistry.register(new ItemChest(diamondChestBlock, itemBuilder));
-            itemRegistry.register(new ItemChest(copperChestBlock, itemBuilder));
-            itemRegistry.register(new ItemChest(silverChestBlock, itemBuilder));
-            itemRegistry.register(new ItemChest(crystalChestBlock, itemBuilder));
-            itemRegistry.register(new ItemChest(obsidianChestBlock, itemBuilder));
-            itemRegistry.register(new ItemChest(dirtChestBlock, itemBuilder));
+            itemRegistry.register(new ChestItem(ironChestBlock, itemBuilder));
+            itemRegistry.register(new ChestItem(goldChestBlock, itemBuilder));
+            itemRegistry.register(new ChestItem(diamondChestBlock, itemBuilder));
+            itemRegistry.register(new ChestItem(copperChestBlock, itemBuilder));
+            itemRegistry.register(new ChestItem(silverChestBlock, itemBuilder));
+            itemRegistry.register(new ChestItem(crystalChestBlock, itemBuilder));
+            itemRegistry.register(new ChestItem(obsidianChestBlock, itemBuilder));
+            itemRegistry.register(new ChestItem(dirtChestBlock, itemBuilder));
         }
     }
 }

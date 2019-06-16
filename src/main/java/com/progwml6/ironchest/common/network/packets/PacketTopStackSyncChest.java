@@ -10,8 +10,8 @@
  ******************************************************************************/
 package com.progwml6.ironchest.common.network.packets;
 
-import com.progwml6.ironchest.common.tileentity.TileEntityCrystalChest;
 import com.progwml6.ironchest.IronChest;
+import com.progwml6.ironchest.common.tileentity.CrystalChestTileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -80,9 +80,9 @@ public class PacketTopStackSyncChest
                 {
                     TileEntity tile = world.getTileEntity(message.pos);
 
-                    if (tile instanceof TileEntityCrystalChest)
+                    if (tile instanceof CrystalChestTileEntity)
                     {
-                        ((TileEntityCrystalChest) tile).receiveMessageFromServer(message.topStacks);
+                        ((CrystalChestTileEntity) tile).receiveMessageFromServer(message.topStacks);
                     }
                 }
             });

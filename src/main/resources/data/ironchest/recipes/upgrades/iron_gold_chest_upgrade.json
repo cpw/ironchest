@@ -7,10 +7,10 @@
     ],
     "key": {
         "M": {
-            "constant": "ironchest:gold"
+            "tag": "forge:ingots/gold"
         },
         "S": {
-            "constant": "ironchest:iron"
+            "tag": "forge:ingots/iron"
         }
     },
     "result": {

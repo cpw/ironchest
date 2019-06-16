@@ -10,18 +10,18 @@
  ******************************************************************************/
 package com.progwml6.ironchest.common.items;
 
-import com.progwml6.ironchest.common.blocks.IronChestType;
+import com.progwml6.ironchest.common.blocks.ChestType;
 import com.progwml6.ironchest.common.util.ItemNames;
 import net.minecraft.util.ResourceLocation;
 
-import static com.progwml6.ironchest.common.blocks.IronChestType.COPPER;
-import static com.progwml6.ironchest.common.blocks.IronChestType.CRYSTAL;
-import static com.progwml6.ironchest.common.blocks.IronChestType.DIAMOND;
-import static com.progwml6.ironchest.common.blocks.IronChestType.GOLD;
-import static com.progwml6.ironchest.common.blocks.IronChestType.IRON;
-import static com.progwml6.ironchest.common.blocks.IronChestType.OBSIDIAN;
-import static com.progwml6.ironchest.common.blocks.IronChestType.SILVER;
-import static com.progwml6.ironchest.common.blocks.IronChestType.WOOD;
+import static com.progwml6.ironchest.common.blocks.ChestType.COPPER;
+import static com.progwml6.ironchest.common.blocks.ChestType.CRYSTAL;
+import static com.progwml6.ironchest.common.blocks.ChestType.DIAMOND;
+import static com.progwml6.ironchest.common.blocks.ChestType.GOLD;
+import static com.progwml6.ironchest.common.blocks.ChestType.IRON;
+import static com.progwml6.ironchest.common.blocks.ChestType.OBSIDIAN;
+import static com.progwml6.ironchest.common.blocks.ChestType.SILVER;
+import static com.progwml6.ironchest.common.blocks.ChestType.WOOD;
 
 public enum ChestChangerType
 {
@@ -37,20 +37,20 @@ public enum ChestChangerType
     DIAMOND_OBSIDIAN(DIAMOND, OBSIDIAN, ItemNames.DIAMOND_OBSIDIAN_UPGRADE);
     //@formatter:on
 
-    public final IronChestType source;
+    public final ChestType source;
 
-    public final IronChestType target;
+    public final ChestType target;
 
     public final ResourceLocation itemName;
 
-    ChestChangerType(IronChestType source, IronChestType target, String itemName)
+    ChestChangerType(ChestType source, ChestType target, String itemName)
     {
         this.source = source;
         this.target = target;
         this.itemName = new ResourceLocation(itemName);
     }
 
-    public boolean canUpgrade(IronChestType from)
+    public boolean canUpgrade(ChestType from)
     {
         return from == this.source;
     }

@@ -12,13 +12,12 @@ package com.progwml6.ironchest;
 
 import com.progwml6.ironchest.client.ClientProxy;
 import com.progwml6.ironchest.common.ServerProxy;
-import com.progwml6.ironchest.common.ai.OcelotsSitOnChestsHandler;
+import com.progwml6.ironchest.common.ai.CatsSitOnChestsHandler;
+import com.progwml6.ironchest.common.inventory.ChestContainerType;
 import com.progwml6.ironchest.common.network.PacketHandler;
-import com.progwml6.ironchest.common.gui.GuiHandler;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -36,13 +35,14 @@ public class IronChest
     {
         instance = this;
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::preInit);
-        MinecraftForge.EVENT_BUS.register(new OcelotsSitOnChestsHandler());
-        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiHandler::openGui);
+        MinecraftForge.EVENT_BUS.register(new CatsSitOnChestsHandler());
     }
 
     private void preInit(final FMLCommonSetupEvent event)
     {
         proxy.preInit();
+
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> ChestContainerType::registerScreenFactories);
 
         PacketHandler.register();
     }

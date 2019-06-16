@@ -7,7 +7,7 @@
 	],
 	"key": {
 		"M": {
-			"constant": "ironchest:silver"
+			"tag": "forge:ingots/silver"
 		},
 		"S": {
 			"item": "ironchest:copper_chest"

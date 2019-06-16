@@ -11,8 +11,8 @@
 package com.progwml6.ironchest.common.core;
 
 import com.progwml6.ironchest.IronChest;
+import com.progwml6.ironchest.common.items.ChestChangerItem;
 import com.progwml6.ironchest.common.items.ChestChangerType;
-import com.progwml6.ironchest.common.items.ItemChestChanger;
 import com.progwml6.ironchest.common.util.ItemNames;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Properties;
@@ -66,17 +66,17 @@ public class IronChestItems
         {
             IForgeRegistry<Item> itemRegistry = event.getRegistry();
 
-            itemProperties = (new Properties()).group(IronChestCreativeTabs.IRON_CHESTS).maxStackSize(1);
+            itemProperties = (new Properties()).group(IronChestItemGroups.IRON_CHESTS).maxStackSize(1);
 
-            itemRegistry.register(new ItemChestChanger(itemProperties, ChestChangerType.IRON_GOLD));
-            itemRegistry.register(new ItemChestChanger(itemProperties, ChestChangerType.GOLD_DIAMOND));
-            itemRegistry.register(new ItemChestChanger(itemProperties, ChestChangerType.COPPER_SILVER));
-            itemRegistry.register(new ItemChestChanger(itemProperties, ChestChangerType.SILVER_GOLD));
-            itemRegistry.register(new ItemChestChanger(itemProperties, ChestChangerType.COPPER_IRON));
-            itemRegistry.register(new ItemChestChanger(itemProperties, ChestChangerType.DIAMOND_CRYSTAL));
-            itemRegistry.register(new ItemChestChanger(itemProperties, ChestChangerType.WOOD_IRON));
-            itemRegistry.register(new ItemChestChanger(itemProperties, ChestChangerType.WOOD_COPPER));
-            itemRegistry.register(new ItemChestChanger(itemProperties, ChestChangerType.DIAMOND_OBSIDIAN));
+            itemRegistry.register(new ChestChangerItem(itemProperties, ChestChangerType.IRON_GOLD));
+            itemRegistry.register(new ChestChangerItem(itemProperties, ChestChangerType.GOLD_DIAMOND));
+            itemRegistry.register(new ChestChangerItem(itemProperties, ChestChangerType.COPPER_SILVER));
+            itemRegistry.register(new ChestChangerItem(itemProperties, ChestChangerType.SILVER_GOLD));
+            itemRegistry.register(new ChestChangerItem(itemProperties, ChestChangerType.COPPER_IRON));
+            itemRegistry.register(new ChestChangerItem(itemProperties, ChestChangerType.DIAMOND_CRYSTAL));
+            itemRegistry.register(new ChestChangerItem(itemProperties, ChestChangerType.WOOD_IRON));
+            itemRegistry.register(new ChestChangerItem(itemProperties, ChestChangerType.WOOD_COPPER));
+            itemRegistry.register(new ChestChangerItem(itemProperties, ChestChangerType.DIAMOND_OBSIDIAN));
         }
     }
 }

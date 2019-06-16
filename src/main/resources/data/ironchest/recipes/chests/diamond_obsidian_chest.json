@@ -7,7 +7,7 @@
 	],
 	"key": {
 		"M": {
-			"constant": "ironchest:obsidian"
+			"item": "minecraft:obsidian"
 		},
 		"S": {
 			"item": "ironchest:diamond_chest"

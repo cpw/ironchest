@@ -10,9 +10,9 @@
  ******************************************************************************/
 package com.progwml6.ironchest.client;
 
-import com.progwml6.ironchest.client.renderer.TileEntityIronChestRenderer;
+import com.progwml6.ironchest.client.renderer.IronChestTileEntityRenderer;
 import com.progwml6.ironchest.common.ServerProxy;
-import com.progwml6.ironchest.common.blocks.IronChestType;
+import com.progwml6.ironchest.common.blocks.ChestType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -30,11 +30,11 @@ public class ClientProxy extends ServerProxy
     {
         super.preInit();
 
-        for (IronChestType type : IronChestType.values())
+        for (ChestType type : ChestType.values())
         {
             if (type.clazz != null)
             {
-                ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new TileEntityIronChestRenderer());
+                ClientRegistry.bindTileEntitySpecialRenderer(type.clazz, new IronChestTileEntityRenderer());
             }
         }
     }
