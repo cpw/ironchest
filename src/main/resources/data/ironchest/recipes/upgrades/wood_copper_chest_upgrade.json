@@ -1,19 +1,19 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "pattern": [
-        "MMM",
-        "MSM",
-        "MMM"
-    ],
-    "key": {
-        "M": {
-            "tag": "forge:ingots/copper"
-        },
-        "S": {
-            "tag": "minecraft:planks"
-        }
-    },
-    "result": {
-        "item": "ironchest:wood_copper_chest_upgrade"
-    }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"MMM",
+		"MSM",
+		"MMM"
+	],
+	"key": {
+		"M": {
+			"tag": "forge:ingots/copper"
+		},
+		"S": {
+			"tag": "minecraft:planks"
+		}
+	},
+	"result": {
+		"item": "ironchest:wood_copper_chest_upgrade"
+	}
 }
