@@ -116,7 +116,7 @@ public class ChestContainer extends Container
     public ChestContainer(ContainerType<?> containerType, int windowId, PlayerInventory playerInventory, IInventory inventory, ChestType chestType)
     {
         super(containerType, windowId);
-        func_216962_a(inventory, chestType.size);
+        assertInventorySize(inventory, chestType.size);
 
         this.inventory = inventory;
         this.chestType = chestType;

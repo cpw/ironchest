@@ -3,9 +3,9 @@ Iron Chests [![Curseforge](http://cf.way2muchnoise.eu/full_iron-chests_downloads
 
 Iron Chests! A mod that adds new chests.
 
-Please note that the Shulker Boxes in 1.13 have been moved to their own mod: [Iron Shulker Boxes](https://minecraft.curseforge.com/projects/iron-shulker-boxes)
+Please note that the Shulker Boxes in 1.13+ have been moved to their own mod: [Iron Shulker Boxes](https://minecraft.curseforge.com/projects/iron-shulker-boxes)
 
-For issues with the Shulker Boxes starting in 1.13, Please report them to [Iron Shulker Boxes](https://github.com/progwml6/ironshulkerboxes)
+For issues with the Shulker Boxes starting in 1.13+, Please report them to [Iron Shulker Boxes](https://github.com/progwml6/ironshulkerboxes)
 
 ## Setting up a Workspace/Compiling from Source
 Note: Git MUST be installed and in the system path to use our scripts.

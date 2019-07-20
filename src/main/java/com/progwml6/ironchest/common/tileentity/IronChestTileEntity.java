@@ -283,7 +283,7 @@ public class IronChestTileEntity extends LockableLootTileEntity implements IChes
     @OnlyIn(Dist.CLIENT)
     public float getLidAngle(float partialTicks)
     {
-        return MathHelper.func_219799_g(partialTicks, this.prevLidAngle, this.lidAngle);
+        return MathHelper.lerp(partialTicks, this.prevLidAngle, this.lidAngle);
     }
 
     public static int getPlayersUsing(IBlockReader reader, BlockPos posIn)

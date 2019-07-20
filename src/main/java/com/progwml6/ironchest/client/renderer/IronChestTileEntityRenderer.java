@@ -123,7 +123,7 @@ public class IronChestTileEntityRenderer<T extends TileEntity & IChestLid> exten
 
         if (this.rendererDispatcher.renderInfo != null)
         {
-            if (chestType.isTransparent() && tileEntity.getDistanceSq(this.rendererDispatcher.renderInfo.func_216785_c().x, this.rendererDispatcher.renderInfo.func_216785_c().y, this.rendererDispatcher.renderInfo.func_216785_c().z) < 128d)
+            if (chestType.isTransparent() && tileEntity.getDistanceSq(this.rendererDispatcher.renderInfo.getProjectedView().x, this.rendererDispatcher.renderInfo.getProjectedView().y, this.rendererDispatcher.renderInfo.getProjectedView().z) < 128d)
             {
                 this.random.setSeed(254L);
                 float shiftX;
