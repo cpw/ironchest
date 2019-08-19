@@ -121,8 +121,8 @@ public class ChestChangerItem extends TooltipItem
 
         tileEntity.updateContainingBlockInfo();
 
-        world.removeBlock(blockPos, false);
         world.removeTileEntity(blockPos);
+        world.removeBlock(blockPos, false);
 
         BlockState iBlockState = ChestType.get(this.type.target).with(ChestBlock.FACING, chestFacing);
 
