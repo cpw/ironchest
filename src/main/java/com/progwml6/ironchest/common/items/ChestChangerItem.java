@@ -66,6 +66,15 @@ public class ChestChangerItem extends TooltipItem
         }
 
         TileEntity tileEntity = world.getTileEntity(blockPos);
+
+        if (this.type.canUpgrade(ChestType.WOOD))
+        {
+            if (!(tileEntity instanceof ChestTileEntity))
+            {
+                return ActionResultType.PASS;
+            }
+        }
+
         IronChestTileEntity newChest = new IronChestTileEntity();
 
         ITextComponent customName = null;
