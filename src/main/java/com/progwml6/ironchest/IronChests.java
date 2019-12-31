@@ -89,7 +89,7 @@ public class IronChests {
       gen.addProvider(new IronChestsLangProvider(gen));
     }
     if (event.includeServer()) {
-      //gen.addProvider(new TropicraftLootTableProvider(gen));
+      //gen.addProvider(new IronChestsLootTableProvider(gen));
     }
   }
 
