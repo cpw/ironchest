@@ -33,18 +33,18 @@ public class IronChestTileEntityRenderer<T extends TileEntity & IChestLid> exten
     super(tileEntityRendererDispatcher);
 
     this.chestBottom = new ModelRenderer(64, 64, 0, 19);
-    this.chestBottom.func_228301_a_(1.0F, 0.0F, 1.0F, 14.0F, 10.0F, 14.0F, 0.0F);
+    this.chestBottom.addBox(1.0F, 0.0F, 1.0F, 14.0F, 10.0F, 14.0F, 0.0F);
     this.chestLid = new ModelRenderer(64, 64, 0, 0);
-    this.chestLid.func_228301_a_(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
+    this.chestLid.addBox(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
     this.chestLid.rotationPointY = 9.0F;
     this.chestLid.rotationPointZ = 1.0F;
     this.chestLock = new ModelRenderer(64, 64, 0, 0);
-    this.chestLock.func_228301_a_(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
+    this.chestLock.addBox(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
     this.chestLock.rotationPointY = 8.0F;
   }
 
   @Override
-  public void func_225616_a_(T tileEntityIn, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int p_225616_5_, int p_225616_6_) {
+  public void render(T tileEntityIn, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int p_225616_5_, int p_225616_6_) {
     GenericIronChestTileEntity tileEntity = (GenericIronChestTileEntity) tileEntityIn;
 
     World world = tileEntity.getWorld();
@@ -62,11 +62,11 @@ public class IronChestTileEntityRenderer<T extends TileEntity & IChestLid> exten
     if (block instanceof GenericIronChestBlock) {
       GenericIronChestBlock ironChestBlock = (GenericIronChestBlock) block;
 
-      matrixStack.func_227860_a_();
+      matrixStack.push();
       float f = blockstate.get(GenericIronChestBlock.FACING).getHorizontalAngle();
-      matrixStack.func_227861_a_(0.5D, 0.5D, 0.5D);
-      matrixStack.func_227863_a_(Vector3f.field_229181_d_.func_229187_a_(-f));
-      matrixStack.func_227861_a_(-0.5D, -0.5D, -0.5D);
+      matrixStack.translate(0.5D, 0.5D, 0.5D);
+      matrixStack.rotate(Vector3f.field_229181_d_.func_229187_a_(-f));
+      matrixStack.translate(-0.5D, -0.5D, -0.5D);
 
       TileEntityMerger.ICallbackWrapper<? extends GenericIronChestTileEntity> iCallbackWrapper;
       if (flag) {
@@ -82,19 +82,19 @@ public class IronChestTileEntityRenderer<T extends TileEntity & IChestLid> exten
       int i = iCallbackWrapper.apply(new DualBrightnessCallback<>()).applyAsInt(p_225616_5_);
 
       Material material = IronChestsModels.chooseChestModel(tileEntity, chestType);
-      IVertexBuilder ivertexbuilder = material.func_229311_a_(iRenderTypeBuffer, RenderType::func_228638_b_);
+      IVertexBuilder ivertexbuilder = material.func_229311_a_(iRenderTypeBuffer, RenderType::entityCutout);
 
       this.handleModelRender(matrixStack, ivertexbuilder, this.chestLid, this.chestLock, this.chestBottom, f1, i, p_225616_6_);
 
-      matrixStack.func_227865_b_();
+      matrixStack.pop();
     }
   }
 
   private void handleModelRender(MatrixStack matrixStack, IVertexBuilder iVertexBuilder, ModelRenderer firstModel, ModelRenderer secondModel, ModelRenderer thirdModel, float f1, int p_228871_7_, int p_228871_8_) {
     firstModel.rotateAngleX = -(f1 * ((float) Math.PI / 2F));
     secondModel.rotateAngleX = firstModel.rotateAngleX;
-    firstModel.func_228308_a_(matrixStack, iVertexBuilder, p_228871_7_, p_228871_8_);
-    secondModel.func_228308_a_(matrixStack, iVertexBuilder, p_228871_7_, p_228871_8_);
-    thirdModel.func_228308_a_(matrixStack, iVertexBuilder, p_228871_7_, p_228871_8_);
+    firstModel.render(matrixStack, iVertexBuilder, p_228871_7_, p_228871_8_);
+    secondModel.render(matrixStack, iVertexBuilder, p_228871_7_, p_228871_8_);
+    thirdModel.render(matrixStack, iVertexBuilder, p_228871_7_, p_228871_8_);
   }
 }

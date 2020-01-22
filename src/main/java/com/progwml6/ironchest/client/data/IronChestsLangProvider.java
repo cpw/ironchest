@@ -1,11 +1,26 @@
 package com.progwml6.ironchest.client.data;
 
 import com.progwml6.ironchest.IronChests;
+import com.progwml6.ironchest.common.Util;
+import com.progwml6.ironchest.common.block.IronChestsBlocks;
+import com.progwml6.ironchest.common.block.IronChestsTypes;
+import com.progwml6.ironchest.common.item.IronChestsItems;
+import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.data.LanguageProvider;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class IronChestsLangProvider extends LanguageProvider {
 
@@ -34,7 +49,57 @@ public class IronChestsLangProvider extends LanguageProvider {
 
   @Override
   protected void addTranslations() {
+    // Blocks
 
+    this.addBlock(IronChestsBlocks.IRON_CHEST);
+    this.addBlock(IronChestsBlocks.GOLD_CHEST);
+    this.addBlock(IronChestsBlocks.DIAMOND_CHEST);
+    this.addBlock(IronChestsBlocks.COPPER_CHEST);
+    this.addBlock(IronChestsBlocks.SILVER_CHEST);
+    this.addBlock(IronChestsBlocks.CRYSTAL_CHEST);
+    this.addBlock(IronChestsBlocks.OBSIDIAN_CHEST);
+    this.addBlock(IronChestsBlocks.DIRT_CHEST);
+
+    // ITEMS
+
+    IronChestsItems.UPGRADES.values().forEach(this::addItem);
+
+    // MISC
+
+    this.add(IronChests.IRONCHESTS_ITEM_GROUP, "Iron Chests");
+
+    //IronChestsTypes.values()
+  }
+
+  private String getAutomaticName(Supplier<? extends IForgeRegistryEntry<?>> sup) {
+    return Util.toEnglishName(sup.get().getRegistryName().getPath());
+  }
+
+  private void addBlock(Supplier<? extends Block> block) {
+    this.addBlock(block, this.getAutomaticName(block));
+  }
+
+  private void addItem(Supplier<? extends Item> item) {
+    this.addItem(item, this.getAutomaticName(item));
+  }
+
+  private void addItemWithTooltip(Supplier<? extends Item> block, String name, List<String> tooltip) {
+    this.addItem(block, name);
+    this.addTooltip(block, tooltip);
+  }
+
+  private void addTooltip(Supplier<? extends IItemProvider> item, String tooltip) {
+    this.add(item.get().asItem().getTranslationKey() + ".desc", tooltip);
+  }
+
+  private void addTooltip(Supplier<? extends IItemProvider> item, List<String> tooltip) {
+    for (int i = 0; i < tooltip.size(); i++) {
+      this.add(item.get().asItem().getTranslationKey() + ".desc." + i, tooltip.get(i));
+    }
+  }
+
+  private void add(ItemGroup group, String name) {
+    this.add(group.getTranslationKey(), name);
   }
 
   // Automatic en_ud generation
@@ -83,7 +148,7 @@ public class IronChestsLangProvider extends LanguageProvider {
   }
 
   @Override
-  protected void add(String key, String value) {
+  public void add(String key, String value) {
     super.add(key, value);
     this.upsideDown.add(key, this.toUpsideDown(value));
   }

@@ -1,37 +1,22 @@
 package com.progwml6.ironchest.client.tileentity;
 
-import com.google.common.collect.Sets;
-import com.mojang.datafixers.util.Pair;
 import com.progwml6.ironchest.IronChests;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.model.Material;
-import net.minecraft.client.renderer.model.ModelBakery;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.profiler.EmptyProfiler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
+@Mod.EventBusSubscriber(modid = IronChests.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IronChestsModels {
 
   public static final ResourceLocation chestAtlas = new ResourceLocation("textures/atlas/chest.png");
-
-  protected static final Set<Material> LOCATIONS_BUILTIN_TEXTURES = Util.make(Sets.newHashSet(), (p_229337_0_) -> {
-    addTextures(p_229337_0_::add);
-  });
-
-  public IronChestsModels() {
-    System.out.println("IronChestsModels");
-    //ModelBakery.LOCATIONS_BUILTIN_TEXTURES.addAll(LOCATIONS_BUILTIN_TEXTURES);
-  }
 
   public static final Material IRON_CHEST_LOCATION = getChestMaterial("iron");
   public static final Material GOLD_CHEST_LOCATION = getChestMaterial("gold");
@@ -54,7 +39,7 @@ public class IronChestsModels {
   }
 
   private static Material getChestMaterial(String name) {
-    return new Material(Atlases.field_228747_f_, new ResourceLocation(IronChests.MODID, "model/" + name + "_chest"));
+    return new Material(Atlases.CHEST_ATLAS, new ResourceLocation(IronChests.MODID, "model/" + name + "_chest"));
   }
 
   public static Material chooseChestModel(TileEntity tileEntity, IronChestsTypes type) {
@@ -77,7 +62,23 @@ public class IronChestsModels {
         return DIRT_CHEST_LOCATION;
       case WOOD:
       default:
-        return Atlases.field_228758_q_;
+        return Atlases.CHEST_MATERIAL;
     }
+  }
+
+  @SubscribeEvent
+  public static void onStitch(TextureStitchEvent.Pre event) {
+    if (!event.getMap().getBasePath().equals(Atlases.CHEST_ATLAS)) {
+      return;
+    }
+
+    event.addSprite(IRON_CHEST_LOCATION.func_229313_b_());
+    event.addSprite(GOLD_CHEST_LOCATION.func_229313_b_());
+    event.addSprite(DIAMOND_CHEST_LOCATION.func_229313_b_());
+    event.addSprite(COPPER_CHEST_LOCATION.func_229313_b_());
+    event.addSprite(SILVER_CHEST_LOCATION.func_229313_b_());
+    event.addSprite(CRYSTAL_CHEST_LOCATION.func_229313_b_());
+    event.addSprite(OBSIDIAN_CHEST_LOCATION.func_229313_b_());
+    event.addSprite(DIRT_CHEST_LOCATION.func_229313_b_());
   }
 }

@@ -1,13 +1,16 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"MMM",
-		"MGM",
-		"MMM"
+		"GGG",
+		"MSM",
+		"GGG"
 	],
 	"key": {
 		"M": {
-			"item": "minecraft:obsidian"
+			"tag": "forge:gems/diamond"
+		},
+		"S": {
+			"tag": "forge:ingots/gold"
 		},
 		"G": [
 			{
@@ -64,7 +67,7 @@
 		]
 	},
 	"result": {
-		"item": "ironchest:diamond_obsidian_chest_upgrade"
+		"item": "ironchest:gold_to_diamond_chest_upgrade"
 	},
 	"_comment": "replaceme with tag forge:glass when out."
 }

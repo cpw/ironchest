@@ -1,5 +1,6 @@
 package com.progwml6.ironchest.common.block.tileentity;
 
+import com.progwml6.ironchest.IronChests;
 import com.progwml6.ironchest.common.block.GenericIronChestBlock;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
 import com.progwml6.ironchest.common.inventory.IronChestContainer;
@@ -71,7 +72,7 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
 
   @Override
   protected ITextComponent getDefaultName() {
-    return new TranslationTextComponent("container.chest");
+    return new TranslationTextComponent(IronChests.MODID + ".container."+ this.chestType.getId() + "chest");
   }
 
   @Override
@@ -250,10 +251,10 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
     IronChestsTypes type = IronChestsTypes.IRON;
 
     if (this.hasWorld()) {
-      IronChestsTypes typeNew = GenericIronChestBlock.getTypeFromBlock(this.getBlockState().getBlock());
+      IronChestsTypes typeFromBlock = GenericIronChestBlock.getTypeFromBlock(this.getBlockState().getBlock());
 
-      if (typeNew != null) {
-        type = typeNew;
+      if (typeFromBlock != null) {
+        type = typeFromBlock;
       }
     }
 

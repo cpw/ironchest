@@ -7,13 +7,13 @@
 	],
 	"key": {
 		"M": {
-			"tag": "forge:ingots/copper"
+			"tag": "forge:ingots/silver"
 		},
 		"S": {
-			"tag": "minecraft:planks"
+			"tag": "forge:ingots/copper"
 		}
 	},
 	"result": {
-		"item": "ironchest:wood_copper_chest_upgrade"
+		"item": "ironchest:copper_to_silver_chest_upgrade"
 	}
 }

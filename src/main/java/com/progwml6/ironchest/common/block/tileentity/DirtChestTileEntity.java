@@ -48,16 +48,16 @@ public class DirtChestTileEntity extends GenericIronChestTileEntity {
   }
 
   private static void createBookData() {
-    dirtChest9000GuideBook.setTagInfo("author", StringNBT.func_229705_a_("cpw"));
+    dirtChest9000GuideBook.setTagInfo("author", StringNBT.valueOf("cpw"));
 
-    dirtChest9000GuideBook.setTagInfo("title", StringNBT.func_229705_a_(I18n.format("book.ironchest.dirtchest9000.title")));
+    dirtChest9000GuideBook.setTagInfo("title", StringNBT.valueOf(I18n.format("book.ironchest.dirtchest9000.title")));
 
     ListNBT pages = new ListNBT();
-    pages.add(StringNBT.func_229705_a_(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page1"))));
-    pages.add(StringNBT.func_229705_a_(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page2"))));
-    pages.add(StringNBT.func_229705_a_(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page3"))));
-    pages.add(StringNBT.func_229705_a_(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page4"))));
-    pages.add(StringNBT.func_229705_a_(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page5"))));
+    pages.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page1"))));
+    pages.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page2"))));
+    pages.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page3"))));
+    pages.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page4"))));
+    pages.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page5"))));
 
     dirtChest9000GuideBook.setTagInfo("pages", pages);
 

@@ -34,35 +34,35 @@ public class IronChestsBlocks {
 
   public static final RegistryObject<IronChestBlock> IRON_CHEST = register(
           "iron_chest", () -> new IronChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F)),
-          () -> ironChestRenderer());
+          IronChestsBlocks::ironChestRenderer);
 
   public static final RegistryObject<GoldChestBlock> GOLD_CHEST = register(
           "gold_chest", () -> new GoldChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F)),
-          () -> goldChestRenderer());
+          IronChestsBlocks::goldChestRenderer);
 
   public static final RegistryObject<DiamondChestBlock> DIAMOND_CHEST = register(
           "diamond_chest", () -> new DiamondChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F)),
-          () -> diamondChestRenderer());
+          IronChestsBlocks::diamondChestRenderer);
 
   public static final RegistryObject<CopperChestBlock> COPPER_CHEST = register(
           "copper_chest", () -> new CopperChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F)),
-          () -> copperChestRenderer());
+          IronChestsBlocks::copperChestRenderer);
 
   public static final RegistryObject<SilverChestBlock> SILVER_CHEST = register(
           "silver_chest", () -> new SilverChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F)),
-          () -> silverChestRenderer());
+          IronChestsBlocks::silverChestRenderer);
 
   public static final RegistryObject<CrystalChestBlock> CRYSTAL_CHEST = register(
           "crystal_chest", () -> new CrystalChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F)),
-          () -> crystalChestRenderer());
+          IronChestsBlocks::crystalChestRenderer);
 
   public static final RegistryObject<ObsidianChestBlock> OBSIDIAN_CHEST = register(
           "obsidian_chest", () -> new ObsidianChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F, 10000.0F)),
-          () -> obsidianChestRenderer());
+          IronChestsBlocks::obsidianChestRenderer);
 
   public static final RegistryObject<DirtChestBlock> DIRT_CHEST = register(
           "dirt_chest", () -> new DirtChestBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(3.0F)),
-          () -> dirtChestRenderer());
+          IronChestsBlocks::dirtChestRenderer);
 
   private static <T extends Block> RegistryObject<T> register(String name, Supplier<? extends T> sup, Supplier<Callable<ItemStackTileEntityRenderer>> renderMethod) {
     return register(name, sup, block -> item(block, renderMethod));
@@ -79,46 +79,46 @@ public class IronChestsBlocks {
   }
 
   private static Supplier<BlockItem> item(final RegistryObject<? extends Block> block, final Supplier<Callable<ItemStackTileEntityRenderer>> renderMethod) {
-    return () -> new BlockItem(block.get(), new Item.Properties().group(IronChests.IRONCHESTS_ITEM_GROUP).setTEISR(renderMethod));
+    return () -> new BlockItem(block.get(), new Item.Properties().group(IronChests.IRONCHESTS_ITEM_GROUP).setISTER(renderMethod));
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<ItemStackTileEntityRenderer> ironChestRenderer() {
-    return () -> new IronChestItemStackRenderer(() -> new IronChestTileEntity());
+    return () -> new IronChestItemStackRenderer(IronChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<ItemStackTileEntityRenderer> goldChestRenderer() {
-    return () -> new IronChestItemStackRenderer(() -> new GoldChestTileEntity());
+    return () -> new IronChestItemStackRenderer(GoldChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<ItemStackTileEntityRenderer> diamondChestRenderer() {
-    return () -> new IronChestItemStackRenderer(() -> new DiamondChestTileEntity());
+    return () -> new IronChestItemStackRenderer(DiamondChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<ItemStackTileEntityRenderer> copperChestRenderer() {
-    return () -> new IronChestItemStackRenderer(() -> new CopperChestTileEntity());
+    return () -> new IronChestItemStackRenderer(CopperChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<ItemStackTileEntityRenderer> silverChestRenderer() {
-    return () -> new IronChestItemStackRenderer(() -> new SilverChestTileEntity());
+    return () -> new IronChestItemStackRenderer(SilverChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<ItemStackTileEntityRenderer> crystalChestRenderer() {
-    return () -> new IronChestItemStackRenderer(() -> new CrystalChestTileEntity());
+    return () -> new IronChestItemStackRenderer(CrystalChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<ItemStackTileEntityRenderer> obsidianChestRenderer() {
-    return () -> new IronChestItemStackRenderer(() -> new ObsidianChestTileEntity());
+    return () -> new IronChestItemStackRenderer(ObsidianChestTileEntity::new);
   }
 
   @OnlyIn(Dist.CLIENT)
   private static Callable<ItemStackTileEntityRenderer> dirtChestRenderer() {
-    return () -> new IronChestItemStackRenderer(() -> new DirtChestTileEntity());
+    return () -> new IronChestItemStackRenderer(DirtChestTileEntity::new);
   }
 }
