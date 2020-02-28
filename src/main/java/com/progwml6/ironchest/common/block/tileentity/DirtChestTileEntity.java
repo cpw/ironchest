@@ -21,7 +21,11 @@ public class DirtChestTileEntity extends GenericIronChestTileEntity {
   private static boolean bookDataCreated = false;
 
   public DirtChestTileEntity() {
-    super(IronChestsTileEntityTypes.DIRT_CHEST.get(), IronChestsTypes.DIRTCHEST9000, IronChestsBlocks.DIRT_CHEST::get);
+    super(IronChestsTileEntityTypes.DIRT_CHEST.get(), IronChestsTypes.DIRT, IronChestsBlocks.DIRT_CHEST::get);
+
+    if (!bookDataCreated) {
+      createBookData();
+    }
   }
 
   @Override

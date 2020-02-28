@@ -67,8 +67,6 @@ public class IronChestsLangProvider extends LanguageProvider {
     // MISC
 
     this.add(IronChests.IRONCHESTS_ITEM_GROUP, "Iron Chests");
-
-    //IronChestsTypes.values()
   }
 
   private String getAutomaticName(Supplier<? extends IForgeRegistryEntry<?>> sup) {

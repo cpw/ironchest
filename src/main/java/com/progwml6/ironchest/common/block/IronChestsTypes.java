@@ -27,7 +27,7 @@ public enum IronChestsTypes implements IStringSerializable {
   SILVER(72, 9, 184, 258, new ResourceLocation("ironchest", "textures/gui/silver_container.png"), 256, 276),
   CRYSTAL(108, 12, 238, 276, new ResourceLocation("ironchest", "textures/gui/diamond_container.png"), 256, 276),
   OBSIDIAN(108, 12, 238, 276, new ResourceLocation("ironchest", "textures/gui/diamond_container.png"), 256, 276),
-  DIRTCHEST9000(1, 1, 184, 184, new ResourceLocation("ironchest", "textures/gui/dirt_container.png"), 256, 256),
+  DIRT(1, 1, 184, 184, new ResourceLocation("ironchest", "textures/gui/dirt_container.png"), 256, 256),
   WOOD(0, 0, 0, 0, null, 0, 0);
 
   private final String name;
@@ -91,7 +91,7 @@ public enum IronChestsTypes implements IStringSerializable {
         return IronChestsBlocks.CRYSTAL_CHEST.get();
       case OBSIDIAN:
         return IronChestsBlocks.OBSIDIAN_CHEST.get();
-      case DIRTCHEST9000:
+      case DIRT:
         return IronChestsBlocks.DIRT_CHEST.get();
       default:
         return Blocks.CHEST;
@@ -114,7 +114,7 @@ public enum IronChestsTypes implements IStringSerializable {
         return new CrystalChestTileEntity();
       case OBSIDIAN:
         return new ObsidianChestTileEntity();
-      case DIRTCHEST9000:
+      case DIRT:
         return new DirtChestTileEntity();
       default:
         return null;

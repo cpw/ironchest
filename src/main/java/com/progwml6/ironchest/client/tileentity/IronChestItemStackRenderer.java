@@ -21,7 +21,7 @@ public class IronChestItemStackRenderer<T extends TileEntity> extends ItemStackT
   }
 
   @Override
-  public void render(ItemStack itemStackIn, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int p_228364_4_, int p_228364_5_) {
-    TileEntityRendererDispatcher.instance.renderNullable(this.te.get(), matrixStack, iRenderTypeBuffer, p_228364_4_, p_228364_5_);
+  public void render(ItemStack itemStackIn, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    TileEntityRendererDispatcher.instance.renderItem(this.te.get(), matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
   }
 }

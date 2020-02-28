@@ -58,7 +58,7 @@ public class IronChestsModels {
         return CRYSTAL_CHEST_LOCATION;
       case OBSIDIAN:
         return OBSIDIAN_CHEST_LOCATION;
-      case DIRTCHEST9000:
+      case DIRT:
         return DIRT_CHEST_LOCATION;
       case WOOD:
       default:
@@ -68,17 +68,17 @@ public class IronChestsModels {
 
   @SubscribeEvent
   public static void onStitch(TextureStitchEvent.Pre event) {
-    if (!event.getMap().getBasePath().equals(Atlases.CHEST_ATLAS)) {
+    if (!event.getMap().getTextureLocation().equals(Atlases.CHEST_ATLAS)) {
       return;
     }
 
-    event.addSprite(IRON_CHEST_LOCATION.func_229313_b_());
-    event.addSprite(GOLD_CHEST_LOCATION.func_229313_b_());
-    event.addSprite(DIAMOND_CHEST_LOCATION.func_229313_b_());
-    event.addSprite(COPPER_CHEST_LOCATION.func_229313_b_());
-    event.addSprite(SILVER_CHEST_LOCATION.func_229313_b_());
-    event.addSprite(CRYSTAL_CHEST_LOCATION.func_229313_b_());
-    event.addSprite(OBSIDIAN_CHEST_LOCATION.func_229313_b_());
-    event.addSprite(DIRT_CHEST_LOCATION.func_229313_b_());
+    event.addSprite(IRON_CHEST_LOCATION.getTextureLocation());
+    event.addSprite(GOLD_CHEST_LOCATION.getTextureLocation());
+    event.addSprite(DIAMOND_CHEST_LOCATION.getTextureLocation());
+    event.addSprite(COPPER_CHEST_LOCATION.getTextureLocation());
+    event.addSprite(SILVER_CHEST_LOCATION.getTextureLocation());
+    event.addSprite(CRYSTAL_CHEST_LOCATION.getTextureLocation());
+    event.addSprite(OBSIDIAN_CHEST_LOCATION.getTextureLocation());
+    event.addSprite(DIRT_CHEST_LOCATION.getTextureLocation());
   }
 }

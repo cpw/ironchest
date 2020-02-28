@@ -72,7 +72,7 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
 
   @Override
   protected ITextComponent getDefaultName() {
-    return new TranslationTextComponent(IronChests.MODID + ".container."+ this.chestType.getId() + "chest");
+    return new TranslationTextComponent(IronChests.MODID + ".container."+ this.chestType.getId() + "_chest");
   }
 
   @Override

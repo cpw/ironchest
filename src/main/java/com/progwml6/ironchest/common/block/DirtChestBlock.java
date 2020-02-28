@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockReader;
 public class DirtChestBlock extends GenericIronChestBlock {
 
   public DirtChestBlock(Properties properties) {
-    super(IronChestsTypes.DIRTCHEST9000, IronChestsTileEntityTypes.DIRT_CHEST::get, properties);
+    super(IronChestsTypes.DIRT, IronChestsTileEntityTypes.DIRT_CHEST::get, properties);
   }
 
   @Override

@@ -27,6 +27,16 @@
   "book.ironchest.dirtchest9000.page3": "We hope you have enjoyed reviewing this instruction manual, and hope you will consider using our products in future! Kind regards, The DirtChest 9000 manual writers incorporated.",
   "book.ironchest.dirtchest9000.page4": "Warranty: This product has no warranty of any kind. Your dirt may not be stored, it may slowly leech into the environment, or alternatively, it may not do anything at all.",
   "book.ironchest.dirtchest9000.page5": "DirtChest 9000 is kind to the environment. Please dispose of this guide book responsibly, and do not whatever you do just chuck it into some lava. We would be very sad.",
+
+  "_comment": "Containers",
+  "ironchest.container.iron_chest": "Iron Chest",
+  "ironchest.container.gold_chest": "Gold Chest",
+  "ironchest.container.diamond_chest": "Diamond Chest",
+  "ironchest.container.copper_chest": "Copper Chest",
+  "ironchest.container.silver_chest": "Silver Chest",
+  "ironchest.container.crystal_chest": "Crystal Chest",
+  "ironchest.container.obsidian_chest": "Obsidian Chest",
+  "ironchest.container.dirt_chest": "DirtChest 9000!",
   
   "_comment": "Item Groups",
   "itemGroup.ironchest": "Iron Chests"

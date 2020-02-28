@@ -79,11 +79,11 @@ public class IronChestContainer extends Container {
   }
 
   public static IronChestContainer createDirtContainer(int windowId, PlayerInventory playerInventory) {
-    return new IronChestContainer(IronChestsContainerTypes.DIRT_CHEST.get(), windowId, playerInventory, new Inventory(IronChestsTypes.DIRTCHEST9000.size), IronChestsTypes.DIRTCHEST9000);
+    return new IronChestContainer(IronChestsContainerTypes.DIRT_CHEST.get(), windowId, playerInventory, new Inventory(IronChestsTypes.DIRT.size), IronChestsTypes.DIRT);
   }
 
   public static IronChestContainer createDirtContainer(int windowId, PlayerInventory playerInventory, IInventory inventory) {
-    return new IronChestContainer(IronChestsContainerTypes.DIRT_CHEST.get(), windowId, playerInventory, inventory, IronChestsTypes.DIRTCHEST9000);
+    return new IronChestContainer(IronChestsContainerTypes.DIRT_CHEST.get(), windowId, playerInventory, inventory, IronChestsTypes.DIRT);
   }
 
   public IronChestContainer(ContainerType<?> containerType, int windowId, PlayerInventory playerInventory, IInventory inventory, IronChestsTypes chestType) {
@@ -95,7 +95,7 @@ public class IronChestContainer extends Container {
 
     inventory.openInventory(playerInventory.player);
 
-    if (chestType == IronChestsTypes.DIRTCHEST9000) {
+    if (chestType == IronChestsTypes.DIRT) {
       this.addSlot(new DirtChestSlot(inventory, 0, 12 + 4 * 18, 8 + 2 * 18));
     }
     else {
