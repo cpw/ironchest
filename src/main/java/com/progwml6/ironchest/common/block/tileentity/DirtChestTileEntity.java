@@ -24,7 +24,7 @@ public class DirtChestTileEntity extends GenericIronChestTileEntity {
     super(IronChestsTileEntityTypes.DIRT_CHEST.get(), IronChestsTypes.DIRT, IronChestsBlocks.DIRT_CHEST::get);
 
     if (!bookDataCreated) {
-      createBookData();
+      //createBookData();
     }
   }
 
@@ -36,11 +36,12 @@ public class DirtChestTileEntity extends GenericIronChestTileEntity {
   @Override
   public void wasPlaced(LivingEntity entityLivingBase, ItemStack itemStack) {
     if (!(itemStack.hasTag() && itemStack.getTag().getBoolean("been_placed"))) {
-      this.setInventorySlotContents(0, dirtChest9000GuideBook.copy());
+      //TODO FIX BOOK
+      //this.setInventorySlotContents(0, dirtChest9000GuideBook.copy());
     }
 
     if (!bookDataCreated) {
-      createBookData();
+      //createBookData();
     }
   }
 
