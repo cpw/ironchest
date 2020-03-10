@@ -16,33 +16,17 @@ import java.util.function.Consumer;
 @Mod.EventBusSubscriber(modid = IronChests.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IronChestsModels {
 
-  public static final ResourceLocation chestAtlas = new ResourceLocation("textures/atlas/chest.png");
+  public static final ResourceLocation IRON_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/iron_chest");
+  public static final ResourceLocation GOLD_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/gold_chest");
+  public static final ResourceLocation DIAMOND_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/diamond_chest");
+  public static final ResourceLocation COPPER_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/copper_chest");
+  public static final ResourceLocation SILVER_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/silver_chest");
+  public static final ResourceLocation CRYSTAL_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/crystal_chest");
+  public static final ResourceLocation OBSIDIAN_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/obsidian_chest");
+  public static final ResourceLocation DIRT_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/dirt_chest");
+  public static final ResourceLocation VANLLA_CHEST_LOCATION = new ResourceLocation("entity/chest/normal");
 
-  public static final Material IRON_CHEST_LOCATION = getChestMaterial("iron");
-  public static final Material GOLD_CHEST_LOCATION = getChestMaterial("gold");
-  public static final Material DIAMOND_CHEST_LOCATION = getChestMaterial("diamond");
-  public static final Material COPPER_CHEST_LOCATION = getChestMaterial("copper");
-  public static final Material SILVER_CHEST_LOCATION = getChestMaterial("silver");
-  public static final Material CRYSTAL_CHEST_LOCATION = getChestMaterial("crystal");
-  public static final Material OBSIDIAN_CHEST_LOCATION = getChestMaterial("obsidian");
-  public static final Material DIRT_CHEST_LOCATION = getChestMaterial("dirt");
-
-  public static void addTextures(Consumer<Material> p_228775_0_) {
-    p_228775_0_.accept(IRON_CHEST_LOCATION);
-    p_228775_0_.accept(GOLD_CHEST_LOCATION);
-    p_228775_0_.accept(DIAMOND_CHEST_LOCATION);
-    p_228775_0_.accept(COPPER_CHEST_LOCATION);
-    p_228775_0_.accept(SILVER_CHEST_LOCATION);
-    p_228775_0_.accept(CRYSTAL_CHEST_LOCATION);
-    p_228775_0_.accept(OBSIDIAN_CHEST_LOCATION);
-    p_228775_0_.accept(DIRT_CHEST_LOCATION);
-  }
-
-  private static Material getChestMaterial(String name) {
-    return new Material(Atlases.CHEST_ATLAS, new ResourceLocation(IronChests.MODID, "model/" + name + "_chest"));
-  }
-
-  public static Material chooseChestModel(TileEntity tileEntity, IronChestsTypes type) {
+  public static ResourceLocation chooseChestTexture(IronChestsTypes type) {
     switch (type) {
       case IRON:
         return IRON_CHEST_LOCATION;
@@ -62,7 +46,7 @@ public class IronChestsModels {
         return DIRT_CHEST_LOCATION;
       case WOOD:
       default:
-        return Atlases.CHEST_MATERIAL;
+        return VANLLA_CHEST_LOCATION;
     }
   }
 
@@ -72,13 +56,13 @@ public class IronChestsModels {
       return;
     }
 
-    event.addSprite(IRON_CHEST_LOCATION.getTextureLocation());
-    event.addSprite(GOLD_CHEST_LOCATION.getTextureLocation());
-    event.addSprite(DIAMOND_CHEST_LOCATION.getTextureLocation());
-    event.addSprite(COPPER_CHEST_LOCATION.getTextureLocation());
-    event.addSprite(SILVER_CHEST_LOCATION.getTextureLocation());
-    event.addSprite(CRYSTAL_CHEST_LOCATION.getTextureLocation());
-    event.addSprite(OBSIDIAN_CHEST_LOCATION.getTextureLocation());
-    event.addSprite(DIRT_CHEST_LOCATION.getTextureLocation());
+    event.addSprite(IRON_CHEST_LOCATION);
+    event.addSprite(GOLD_CHEST_LOCATION);
+    event.addSprite(DIAMOND_CHEST_LOCATION);
+    event.addSprite(COPPER_CHEST_LOCATION);
+    event.addSprite(SILVER_CHEST_LOCATION);
+    event.addSprite(CRYSTAL_CHEST_LOCATION);
+    event.addSprite(OBSIDIAN_CHEST_LOCATION);
+    event.addSprite(DIRT_CHEST_LOCATION);
   }
 }

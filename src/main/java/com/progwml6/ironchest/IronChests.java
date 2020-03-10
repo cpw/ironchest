@@ -3,9 +3,7 @@ package com.progwml6.ironchest;
 import com.progwml6.ironchest.client.data.IronChestsLangProvider;
 import com.progwml6.ironchest.client.screen.IronChestScreen;
 import com.progwml6.ironchest.client.tileentity.IronChestTileEntityRenderer;
-import com.progwml6.ironchest.client.tileentity.IronChestsModels;
 import com.progwml6.ironchest.common.block.IronChestsBlocks;
-import com.progwml6.ironchest.common.block.IronChestsTypes;
 import com.progwml6.ironchest.common.block.tileentity.IronChestsTileEntityTypes;
 import com.progwml6.ironchest.common.inventory.IronChestsContainerTypes;
 import com.progwml6.ironchest.common.item.IronChestsItems;
@@ -47,7 +45,6 @@ public class IronChests {
     DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
       // Client setup
       modBus.addListener(this::setupClient);
-      new IronChestsModels();
     });
 
     // Registry objects

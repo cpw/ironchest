@@ -82,7 +82,7 @@ public class IronChestTileEntityRenderer<T extends TileEntity & IChestLid> exten
       f1 = 1.0F - f1 * f1 * f1;
       int i = iCallbackWrapper.apply(new DualBrightnessCallback<>()).applyAsInt(combinedLightIn);
 
-      Material material = IronChestsModels.chooseChestModel(tileEntity, chestType);
+      Material material = new Material(Atlases.CHEST_ATLAS, IronChestsModels.chooseChestTexture(chestType));
       IVertexBuilder ivertexbuilder = material.getBuffer(bufferIn, RenderType::getEntityCutout);
 
       this.handleModelRender(matrixStackIn, ivertexbuilder, this.chestLid, this.chestLock, this.chestBottom, f1, i, combinedOverlayIn);
