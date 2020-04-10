@@ -1,0 +1,43 @@
+{
+  "_comment": "Blocks",
+  "block.ironchest.iron_chest": "鐵箱",
+  "block.ironchest.gold_chest": "金箱",
+  "block.ironchest.diamond_chest": "鑽石箱",
+  "block.ironchest.copper_chest": "銅箱",
+  "block.ironchest.silver_chest": "銀箱",
+  "block.ironchest.crystal_chest": "水晶箱",
+  "block.ironchest.obsidian_chest": "黑曜石箱",
+  "block.ironchest.dirt_chest": "泥箱子9000!",
+  
+  "_comment": "Upgrades",
+  "item.ironchest.iron_to_gold_chest_upgrade": "鐵箱升級成金箱",
+  "item.ironchest.gold_to_diamond_chest_upgrade": "金箱升級成鑽石箱",
+  "item.ironchest.copper_to_silver_chest_upgrade": "銅箱升級成銀箱",
+  "item.ironchest.silver_to_gold_chest_upgrade": "銀箱升級成金箱",
+  "item.ironchest.copper_to_iron_chest_upgrade": "銅箱升級成鐵箱",
+  "item.ironchest.diamond_to_crystal_chest_upgrade": "鑽石箱升級成水晶箱",
+  "item.ironchest.wood_to_iron_chest_upgrade": "木箱升級成鐵箱",
+  "item.ironchest.wood_to_copper_chest_upgrade": "木箱升級成銅箱",
+  "item.ironchest.diamond_to_obsidian_chest_upgrade": "鑽石箱升級成黑曜石箱",
+  
+  "_comment": "Books",
+  "book.ironchest.dirtchest9000.title": "笨蛋也一定會用的泥土箱9000!",
+  "book.ironchest.dirtchest9000.page1": "歡迎使用全新的泥土箱9000!希望你能夠愉快地常年使用我們的設備來儲存泥土。",
+  "book.ironchest.dirtchest9000.page2": "使用方法: 把一組泥土丟進去就行了。每次您經過的時候都可以打開它(很方便地)取出來用",
+  "book.ironchest.dirtchest9000.page3": "我們希望您喜歡閱讀本說明手冊，並希望將來考慮使用我們的產品！作為泥箱子9000手冊作者我謹向您致以誠摯問候。",
+  "book.ironchest.dirtchest9000.page4": "品質保障: 本產品不提供任何形式的保證。您的泥土可能不會被存儲，可能會慢慢滲入環境中，或者根本無法做任何事情。",
+  "book.ironchest.dirtchest9000.page5": "泥箱子9000十分環保。請小心收藏好本手冊，如果你隨手丟進岩漿的話，我們會很傷心。",
+
+  "_comment": "Containers",
+  "ironchest.container.iron_chest": "鐵箱",
+  "ironchest.container.gold_chest": "金箱",
+  "ironchest.container.diamond_chest": "鑽石箱",
+  "ironchest.container.copper_chest": "銅箱",
+  "ironchest.container.silver_chest": "銀箱",
+  "ironchest.container.crystal_chest": "水晶箱",
+  "ironchest.container.obsidian_chest": "黑曜石箱",
+  "ironchest.container.dirt_chest": "泥箱子9000!",
+  
+  "_comment": "Item Groups",
+  "itemGroup.ironchest": "Iron Chests"
+}
