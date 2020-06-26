@@ -1,5 +1,6 @@
 package com.progwml6.ironchest.client.screen;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
 import com.progwml6.ironchest.common.inventory.IronChestContainer;
@@ -28,32 +29,32 @@ public class IronChestScreen extends ContainerScreen<IronChestContainer> impleme
     this.textureXSize = container.getChestType().textureXSize;
     this.textureYSize = container.getChestType().textureYSize;
 
-    this.passEvents = false;
+    this.field_230711_n_  = false;
   }
 
   @Override
-  public void render(int mouseX, int mouseY, float partialTicks) {
-    this.renderBackground();
-    super.render(mouseX, mouseY, partialTicks);
-    this.renderHoveredToolTip(mouseX, mouseY);
+  public void func_230430_a_(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    this.func_230446_a_(matrixStack);
+    super.func_230430_a_(matrixStack, mouseX, mouseY, partialTicks);
+    this.func_230459_a_(matrixStack, mouseX, mouseY);
   }
 
   @Override
-  protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.font.drawString(this.title.getFormattedText(), 8.0F, 6.0F, 4210752);
-    this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
+  protected void func_230451_b_(MatrixStack matrixStack, int mouseX, int mouseY) {
+    this.field_230712_o_.func_238422_b_(matrixStack, this.field_230704_d_, 8.0F, 6.0F, 4210752);
+    this.field_230712_o_.func_238422_b_(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+  protected void func_230450_a_(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
     RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-    this.minecraft.getTextureManager().bindTexture(this.chestType.guiTexture);
+    this.field_230706_i_.getTextureManager().bindTexture(this.chestType.guiTexture);
 
-    int x = (this.width - this.xSize) / 2;
-    int y = (this.height - this.ySize) / 2;
+    int x = (this.field_230708_k_ - this.xSize) / 2;
+    int y = (this.field_230709_l_ - this.ySize) / 2;
 
-    blit(x, y, 0, 0, this.xSize, this.ySize, this.textureXSize, this.textureYSize);
+    func_238463_a_(matrixStack, x, y, 0, 0, this.xSize, this.ySize, this.textureXSize, this.textureYSize);
   }
 }
 

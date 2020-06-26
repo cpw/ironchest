@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class IronChestsItems {
 
-  public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, IronChests.MODID);
+  public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, IronChests.MODID);
 
   public static final ImmutableMap<IronChestsUpgradeType, RegistryObject<ChestUpgradeItem>> UPGRADES = ImmutableMap.copyOf(Arrays.stream(IronChestsUpgradeType.values())
           .collect(Collectors.toMap(Function.identity(), type -> register(type.name().toLowerCase(Locale.ROOT) + "_chest_upgrade",

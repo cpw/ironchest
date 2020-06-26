@@ -8,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class IronChestsContainerTypes {
 
-  public static final DeferredRegister<ContainerType<?>> CONTAINERS = new DeferredRegister<>(ForgeRegistries.CONTAINERS, IronChests.MODID);
+  public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, IronChests.MODID);
 
   public static final RegistryObject<ContainerType<IronChestContainer>> IRON_CHEST = CONTAINERS.register("iron_chest", () -> new ContainerType<>(IronChestContainer::createIronContainer));
 

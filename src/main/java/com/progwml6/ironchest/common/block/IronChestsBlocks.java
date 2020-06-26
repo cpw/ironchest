@@ -29,7 +29,7 @@ import java.util.function.Supplier;
 
 public class IronChestsBlocks {
 
-  public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, IronChests.MODID);
+  public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, IronChests.MODID);
   public static final DeferredRegister<Item> ITEMS = IronChestsItems.ITEMS;
 
   public static final RegistryObject<IronChestBlock> IRON_CHEST = register(

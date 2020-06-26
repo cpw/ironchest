@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class IronChestsTileEntityTypes {
 
-  public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, IronChests.MODID);
+  public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, IronChests.MODID);
 
   public static final RegistryObject<TileEntityType<IronChestTileEntity>> IRON_CHEST = TILE_ENTITIES.register(
           "iron_chest", () -> new TileEntityType<>(IronChestTileEntity::new, Sets.newHashSet(IronChestsBlocks.IRON_CHEST.get()), null));

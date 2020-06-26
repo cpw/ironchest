@@ -3,8 +3,6 @@ package com.progwml6.ironchest.client.tileentity;
 import com.progwml6.ironchest.IronChests;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
 import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.model.Material;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.TextureStitchEvent;
