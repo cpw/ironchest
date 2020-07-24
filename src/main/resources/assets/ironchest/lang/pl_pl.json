@@ -1,0 +1,33 @@
+{
+  "_comment": "Blocks",
+  "block.ironchest.iron_chest": "Żelazna skrzynia",
+  "block.ironchest.gold_chest": "Złota skrzynia",
+  "block.ironchest.diamond_chest": "Diamentowa skrzynia",
+  "block.ironchest.copper_chest": "Miedziana skrzynia",
+  "block.ironchest.silver_chest": "Srebrna skrzynia",
+  "block.ironchest.crystal_chest": "Kryształowa skrzynia",
+  "block.ironchest.obsidian_chest": "Obsydianowa skrzynia",
+  "block.ironchest.dirt_chest": "DirtChest 9000!",
+  
+  "_comment": "Upgrades",
+  "item.ironchest.iron_to_gold_chest_upgrade": "Ulepszenie żelaznej skrzyni na złotą",
+  "item.ironchest.gold_to_diamond_chest_upgrade": "Ulepszenie złotej skrzyni na diamentową",
+  "item.ironchest.copper_to_silver_chest_upgrade": "Ulepszenie miedzianej skrzyni na srebrną",
+  "item.ironchest.silver_to_gold_chest_upgrade": "Ulepszenie srebrnej skrzyni na złotą",
+  "item.ironchest.copper_to_iron_chest_upgrade": "Ulepszenie miedzianej skrzyni na żelazną",
+  "item.ironchest.diamond_to_crystal_chest_upgrade": "Ulepszenie diamentowej skrzyni na kryształową",
+  "item.ironchest.wood_to_iron_chest_upgrade": "Ulepszenie drewnianej skrzyni na żelazną",
+  "item.ironchest.wood_to_copper_chest_upgrade": "Ulepszenie drewnianej skrzyni na miedzianą",
+  "item.ironchest.diamond_to_obsidian_chest_upgrade": "Ulepszenie diamentowej skrzyni na obsydianową",
+  
+  "_comment": "Books",
+  "book.ironchest.dirtchest9000.title": "Jak używać skrzyni DirtChest 9000!",
+  "book.ironchest.dirtchest9000.page1": "Witamy w Twojej nowej skrzyni DirtChest 9000! Mamy nadzieję, że dobrze spędzisz wiele szczęśliwych lat przechowując swoje stosy ziemi w naszym magazynie.",
+  "book.ironchest.dirtchest9000.page2": "Sposób użycia: wystarczy włożyć wybrany przez siebie stos ziemi do jednego z dostępnych miejsc, a następnie cieszyć się udogodnieniem, jakim jest skład ziemi dostępny na wyciągnięcie ręki!",
+  "book.ironchest.dirtchest9000.page3": "Mamy nadzieję, że z przyjemnością zapoznali się Państwo z tą instrukcją obsługi oraz mamy nadzieję, że rozważą Państwo dalsze korzystanie z naszych produktów! Z poważaniem, stowarzyszenie pisarzy ds. instrukcji obsługi skrzyni DirtChest 9000.",
+  "book.ironchest.dirtchest9000.page4": "Gwarancja: Ten produkt nie jest objęty ochroną gwarancyjną. Ziemia może nie być przechowywana, może powoli przedostawać się do otoczenia lub może w ogóle nic nie robić.",
+  "book.ironchest.dirtchest9000.page5": "DirtChest 9000 jest przyjazny dla środowiska. Proszę o pozbycie się tego podręcznika w sposób odpowiedzialny, a na pewno nie o beztroskie smyrgnięcie go do lawy. Byłoby nam bardzo przykro.",
+  
+  "_comment": "Item Groups",
+  "itemGroup.ironchest": "Iron Chests"
+}

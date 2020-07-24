@@ -1,0 +1,33 @@
+{
+  "_comment": "Blocks",
+  "block.ironchest.iron_chest": "철 상자",
+  "block.ironchest.gold_chest": "금 상자",
+  "block.ironchest.diamond_chest": "다이아몬드 상자",
+  "block.ironchest.copper_chest": "구리 상자",
+  "block.ironchest.silver_chest": "은 상자",
+  "block.ironchest.crystal_chest": "수정 상자",
+  "block.ironchest.obsidian_chest": "흑요석 상자",
+  "block.ironchest.dirt_chest": "흙 상자 9000!",
+  
+  "_comment": "Upgrades",
+  "item.ironchest.iron_to_gold_chest_upgrade": "철 상자를 금 상자로 업그레이드",
+  "item.ironchest.gold_to_diamond_chest_upgrade": "금 상자를 다이아몬드 상자로 업그레이드",
+  "item.ironchest.copper_to_silver_chest_upgrade": "구리 상자를 은 상자로 업그레이드",
+  "item.ironchest.silver_to_gold_chest_upgrade": "은 상자를 금 상자로 업그레이드",
+  "item.ironchest.copper_to_iron_chest_upgrade": "구리 상자를 철 상자로 업그레이드",
+  "item.ironchest.diamond_to_crystal_chest_upgrade": "다이아몬드 상자를 수정 상자로 업그레이드",
+  "item.ironchest.wood_to_iron_chest_upgrade": "나무 상자를 철 상자로 업그레이드",
+  "item.ironchest.wood_to_copper_chest_upgrade": "나무 상자를 구리 상자로 업그레이드",
+  "item.ironchest.diamond_to_obsidian_chest_upgrade": "다이아몬드 상자를 흑요석 상자로 업그레이드",
+  
+  "_comment": "Books",
+  "book.ironchest.dirtchest9000.title": "흙 상자 9000을 사용하는 방법!",
+  "book.ironchest.dirtchest9000.page1": "새로운 흙 상자 9000을 사용하게 되신 것을 환영합니다! 우리는 당신이 이 저장 도구에서 흙들을 많은 해 동안 행복하게 저장하기를 기원합니다.",
+  "book.ironchest.dirtchest9000.page2": "사용법: 단순히 흙 뭉치들을 아이템 슬롯에 넣고 이 상자를 지나갈 때마다 언제나 당신에게 제공되어지는 흙들의 편리함을 누리세요!",
+  "book.ironchest.dirtchest9000.page3": "우리는 당신이 이 사용설명서를 즐겁게 읽었고, 나중에 이 제품을 사용하기를 바랍니다! 흙 상자 9000 매뉴얼",
+  "book.ironchest.dirtchest9000.page4": "주의: 이 제품에는 어떤 종류의 보증도 하지 않습니다 당신의 흙들은 저장되지 않을 수도 있습니다. 그러면 이 흙 상자는 천천히 환경 속으로 돌아가거나, 혹은 아무것도 하지 않을 것입니다.",
+  "book.ironchest.dirtchest9000.page5": "흙 상자 9000은 환경 친화적입니다. 가이드북의 처분에는 책임이 따릅니다, 그러니 어떠한 경우라도 용암에 버리지 마세요. 우리는 매우 슬플 것입니다.",
+  
+  "_comment": "Item Groups",
+  "itemGroup.ironchest": "Iron Chests"
+}

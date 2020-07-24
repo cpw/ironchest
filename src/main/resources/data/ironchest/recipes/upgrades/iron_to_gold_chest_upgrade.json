@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"MMM",
+		"MSM",
+		"MMM"
+	],
+	"key": {
+		"M": {
+			"tag": "forge:ingots/gold"
+		},
+		"S": {
+			"tag": "forge:ingots/iron"
+		}
+	},
+	"result": {
+		"item": "ironchest:iron_to_gold_chest_upgrade"
+	}
+}
