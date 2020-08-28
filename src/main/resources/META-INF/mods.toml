@@ -1,6 +1,7 @@
 modLoader="javafml"
 loaderVersion="[24,)"
 issueTrackerURL="https://github.com/progwml6/ironchest/issues"
+license="GNU General Public License v3.0"
 
 [[mods]]
     modId="ironchest"

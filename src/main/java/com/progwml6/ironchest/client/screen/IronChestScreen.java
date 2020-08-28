@@ -41,9 +41,9 @@ public class IronChestScreen extends ContainerScreen<IronChestContainer> impleme
 
   @Override
   protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-    this.font.func_238422_b_(matrixStack, this.title, 8.0F, 6.0F, 4210752);
+    this.font.func_243248_b(matrixStack, this.title, 8.0F, 6.0F, 4210752);
 
-    this.font.func_238422_b_(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
+    this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
   }
 
   @Override
