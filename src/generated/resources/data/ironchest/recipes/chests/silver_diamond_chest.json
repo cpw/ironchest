@@ -14,9 +14,9 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "MGM",
+          "GGG",
           "GSG",
-          "MGM"
+          "MMM"
         ],
         "key": {
           "M": {
@@ -30,7 +30,7 @@
           }
         },
         "result": {
-          "item": "ironchest:gold_chest"
+          "item": "ironchest:diamond_chest"
         }
       }
     }
