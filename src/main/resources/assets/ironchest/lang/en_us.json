@@ -8,7 +8,7 @@
   "block.ironchest.crystal_chest": "Crystal Chest",
   "block.ironchest.obsidian_chest": "Obsidian Chest",
   "block.ironchest.dirt_chest": "DirtChest 9000!",
-  
+
   "_comment": "Upgrades",
   "item.ironchest.iron_to_gold_chest_upgrade": "Iron to Gold Chest Upgrade",
   "item.ironchest.gold_to_diamond_chest_upgrade": "Gold to Diamond Chest Upgrade",
@@ -19,7 +19,7 @@
   "item.ironchest.wood_to_iron_chest_upgrade": "Wood to Iron Chest Upgrade",
   "item.ironchest.wood_to_copper_chest_upgrade": "Wood to Copper Chest Upgrade",
   "item.ironchest.diamond_to_obsidian_chest_upgrade": "Diamond to Obsidian Chest Upgrade",
-  
+
   "_comment": "Books",
   "book.ironchest.dirtchest9000.title": "How to use your DirtChest 9000!",
   "book.ironchest.dirtchest9000.page1": "Welcome to your new DirtChest 9000! We hope you will enjoy many happy years of storing your stack of dirt in our storage utility.",
@@ -37,7 +37,7 @@
   "ironchest.container.crystal_chest": "Crystal Chest",
   "ironchest.container.obsidian_chest": "Obsidian Chest",
   "ironchest.container.dirt_chest": "DirtChest 9000!",
-  
+
   "_comment": "Item Groups",
   "itemGroup.ironchest": "Iron Chests"
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "ironchest:chests/gold_diamond_chest"
+    ]
+  },
+  "criteria": {
+    "has_diamonds": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:gems/diamond"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "ironchest:chests/gold_diamond_chest"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_diamonds",
+      "has_the_recipe"
+    ]
+  ]
+}

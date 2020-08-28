@@ -1,10 +1,10 @@
 package com.progwml6.ironchest;
 
-import com.progwml6.ironchest.client.data.IronChestsLangProvider;
 import com.progwml6.ironchest.client.screen.IronChestScreen;
 import com.progwml6.ironchest.client.tileentity.IronChestTileEntityRenderer;
 import com.progwml6.ironchest.common.block.IronChestsBlocks;
 import com.progwml6.ironchest.common.block.tileentity.IronChestsTileEntityTypes;
+import com.progwml6.ironchest.common.data.IronChestsRecipeProvider;
 import com.progwml6.ironchest.common.inventory.IronChestsContainerTypes;
 import com.progwml6.ironchest.common.item.IronChestsItems;
 import net.minecraft.client.gui.ScreenManager;
@@ -80,13 +80,10 @@ public class IronChests {
   }
 
   private void gatherData(GatherDataEvent event) {
-    DataGenerator gen = event.getGenerator();
+    DataGenerator datagenerator = event.getGenerator();
 
-    if (event.includeClient()) {
-      gen.addProvider(new IronChestsLangProvider(gen));
-    }
     if (event.includeServer()) {
-      //gen.addProvider(new IronChestsLootTableProvider(gen));
+      datagenerator.addProvider(new IronChestsRecipeProvider(datagenerator));
     }
   }
 

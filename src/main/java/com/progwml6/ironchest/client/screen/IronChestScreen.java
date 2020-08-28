@@ -14,11 +14,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class IronChestScreen extends ContainerScreen<IronChestContainer> implements IHasContainer<IronChestContainer> {
 
-  private IronChestsTypes chestType;
+  private final IronChestsTypes chestType;
 
-  private int textureXSize;
+  private final int textureXSize;
 
-  private int textureYSize;
+  private final int textureYSize;
 
   public IronChestScreen(IronChestContainer container, PlayerInventory playerInventory, ITextComponent title) {
     super(container, playerInventory, title);
@@ -29,32 +29,33 @@ public class IronChestScreen extends ContainerScreen<IronChestContainer> impleme
     this.textureXSize = container.getChestType().textureXSize;
     this.textureYSize = container.getChestType().textureYSize;
 
-    this.field_230711_n_  = false;
+    this.passEvents = false;
   }
 
   @Override
-  public void func_230430_a_(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-    this.func_230446_a_(matrixStack);
-    super.func_230430_a_(matrixStack, mouseX, mouseY, partialTicks);
+  public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    this.renderBackground(matrixStack);
+    super.render(matrixStack, mouseX, mouseY, partialTicks);
     this.func_230459_a_(matrixStack, mouseX, mouseY);
   }
 
   @Override
-  protected void func_230451_b_(MatrixStack matrixStack, int mouseX, int mouseY) {
-    this.field_230712_o_.func_238422_b_(matrixStack, this.field_230704_d_, 8.0F, 6.0F, 4210752);
-    this.field_230712_o_.func_238422_b_(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
+  protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+    this.font.func_238422_b_(matrixStack, this.title, 8.0F, 6.0F, 4210752);
+
+    this.font.func_238422_b_(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
   }
 
   @Override
-  protected void func_230450_a_(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+  protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
     RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-    this.field_230706_i_.getTextureManager().bindTexture(this.chestType.guiTexture);
+    this.minecraft.getTextureManager().bindTexture(this.chestType.guiTexture);
 
-    int x = (this.field_230708_k_ - this.xSize) / 2;
-    int y = (this.field_230709_l_ - this.ySize) / 2;
+    int x = (this.width - this.xSize) / 2;
+    int y = (this.height - this.ySize) / 2;
 
-    func_238463_a_(matrixStack, x, y, 0, 0, this.xSize, this.ySize, this.textureXSize, this.textureYSize);
+    blit(matrixStack, x, y, 0, 0, this.xSize, this.ySize, this.textureXSize, this.textureYSize);
   }
 }
 

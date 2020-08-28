@@ -1,0 +1,38 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "value": {
+            "tag": "forge:ingots/silver",
+            "type": "forge:tag_empty"
+          },
+          "type": "forge:not"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "MGM",
+          "GSG",
+          "MGM"
+        ],
+        "key": {
+          "M": {
+            "tag": "forge:ingots/gold"
+          },
+          "S": {
+            "tag": "forge:ingots/copper"
+          },
+          "G": {
+            "tag": "forge:glass"
+          }
+        },
+        "result": {
+          "item": "ironchest:silver_to_gold_chest_upgrade"
+        }
+      }
+    }
+  ]
+}
