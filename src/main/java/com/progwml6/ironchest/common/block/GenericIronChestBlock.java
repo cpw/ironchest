@@ -181,7 +181,7 @@ public class GenericIronChestBlock extends Block implements IWaterLoggable {
     List<CatEntity> list = iWorld.getEntitiesWithinAABB(CatEntity.class, new AxisAlignedBB((double) blockPos.getX(), (double) (blockPos.getY() + 1), (double) blockPos.getZ(), (double) (blockPos.getX() + 1), (double) (blockPos.getY() + 2), (double) (blockPos.getZ() + 1)));
     if (!list.isEmpty()) {
       for (CatEntity catentity : list) {
-        if (catentity.func_233684_eK_()) {
+        if (catentity.isSleeping()) {
           return true;
         }
       }
