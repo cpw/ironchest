@@ -139,10 +139,9 @@ version = "${minecraft_version}-${mod_version}.${project.buildInfo.buildNum}"
 sourceSets {
     main {
         resources {
-            srcDirs = [
-                    "$rootDir/src/main/resources",
-                    "$rootDir/src/generated/resources"
-            ]
+            srcDirs "src/generated/resources"
+            //But exclude the cache of the generated data from what gets built
+            exclude '.cache'
         }
     }
 }
