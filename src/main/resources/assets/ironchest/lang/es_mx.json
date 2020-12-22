@@ -1,0 +1,43 @@
+{
+  "_comment": "Blocks",
+  "block.ironchest.iron_chest": "Cofre de hierro",
+  "block.ironchest.gold_chest": "Cofre de oro",
+  "block.ironchest.diamond_chest": "Cofre de diamante",
+  "block.ironchest.copper_chest": "Cofre de cobre",
+  "block.ironchest.silver_chest": "Cofre de plata",
+  "block.ironchest.crystal_chest": "Cofre de cristal",
+  "block.ironchest.obsidian_chest": "Cofre de obsidiana",
+  "block.ironchest.dirt_chest": "¡CofreTierra 9000!",
+
+  "_comment": "Upgrades",
+  "item.ironchest.iron_to_gold_chest_upgrade": "Mejora de cofre de hierro a oro",
+  "item.ironchest.gold_to_diamond_chest_upgrade": "Mejora de cofre de oro a diamante",
+  "item.ironchest.copper_to_silver_chest_upgrade": "Mejora de cofre de cobre a plata",
+  "item.ironchest.silver_to_gold_chest_upgrade": "Mejora de cofre de plata a oro",
+  "item.ironchest.copper_to_iron_chest_upgrade": "Mejora de cofre de cobre a hierro",
+  "item.ironchest.diamond_to_crystal_chest_upgrade": "Mejora de cofre de diamante a cristal",
+  "item.ironchest.wood_to_iron_chest_upgrade": "Mejora de cofre de madera a hierro",
+  "item.ironchest.wood_to_copper_chest_upgrade": "Mejora de cofre de madera a cobre",
+  "item.ironchest.diamond_to_obsidian_chest_upgrade": "Mejora de cofre de diamante a obsidiana",
+
+  "_comment": "Books",
+  "book.ironchest.dirtchest9000.title": "¡Cómo usar su CofreTierra 9000!",
+  "book.ironchest.dirtchest9000.page1": "¡Le damos la bienvenida a su nuevo CofreTierra 9000! Esperamos que disfrute de muchos años preservando sus montones de tierra en nuestra gran utilidad de almacenamiento.",
+  "book.ironchest.dirtchest9000.page2": "Modo de uso: simplemente introduzca el stack de tierra a su elección en el espacio altamente receptivo, y disfrute de la maravillosa comodidad de tener tierra disponible siempre que pase cerca del cofre",
+  "book.ironchest.dirtchest9000.page3": "¡Esperamos que haya disfrutado de la lectura de este manual de instrucciones, y que considere usar nuestros productos en el futuro! Saludos cordiales, los escritores del manual del CofreTierra 9000 y asociados.",
+  "book.ironchest.dirtchest9000.page4": "Garantía: Este producto no tiene ningún tipo de garantía. Es posible que su tierra no se preserve o se filtre lentamente en el entorno. Alternativamente, puede que no pase nada en lo absoluto.",
+  "book.ironchest.dirtchest9000.page5": "CofreTierra 9000 es amigable con el ambiente. Por favor deshagase de esta guía de forma responsable y, ante todo, no lo tire en la lava. Nos pondría muy trsites.",
+
+  "_comment": "Containers",
+  "ironchest.container.iron_chest": "Cofre de hierro",
+  "ironchest.container.gold_chest": "Cofre de oro",
+  "ironchest.container.diamond_chest": "Cofre de diamante",
+  "ironchest.container.copper_chest": "Cofre de cobre",
+  "ironchest.container.silver_chest": "Cofre de plata",
+  "ironchest.container.crystal_chest": "Cofre de cristal",
+  "ironchest.container.obsidian_chest": "Cofre de obsidiana",
+  "ironchest.container.dirt_chest": "¡CofreTierra 9000!",
+
+  "_comment": "Item Groups",
+  "itemGroup.ironchest": "Iron Chests"
+}
