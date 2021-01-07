@@ -1,0 +1,43 @@
+{
+  "_comment": "Blocks",
+  "block.ironchest.iron_chest": "Eisentruhe",
+  "block.ironchest.gold_chest": "Goldtruhe",
+  "block.ironchest.diamond_chest": "Diamanttruhe",
+  "block.ironchest.copper_chest": "Kupfertruhe",
+  "block.ironchest.silver_chest": "Silbertruhe",
+  "block.ironchest.crystal_chest": "Kristalltruhe",
+  "block.ironchest.obsidian_chest": "Obsidiantruhe",
+  "block.ironchest.dirt_chest": "ErdTruhe 9000!",
+
+  "_comment": "Upgrades",
+  "item.ironchest.iron_to_gold_chest_upgrade": "Upgrade: Eisen zu Goldtruhe",
+  "item.ironchest.gold_to_diamond_chest_upgrade": "Upgrade: Gold zu Diamanttruhe",
+  "item.ironchest.copper_to_silver_chest_upgrade": "Upgrade: Kupfer zu Silbertruhe",
+  "item.ironchest.silver_to_gold_chest_upgrade": "Upgrade: Silber zu Goldtruhe",
+  "item.ironchest.copper_to_iron_chest_upgrade": "Upgrade: Kupfer zu Eisentruhe",
+  "item.ironchest.diamond_to_crystal_chest_upgrade": "Upgrade: Diamant zu Kristalltruhe",
+  "item.ironchest.wood_to_iron_chest_upgrade": "Upgrade: Holz zu Eisentruhe",
+  "item.ironchest.wood_to_copper_chest_upgrade": "Upgrade: Holz zu Kupfertruhe",
+  "item.ironchest.diamond_to_obsidian_chest_upgrade": "Upgrade: Diamant zu Obsidiantruhe",
+
+  "_comment": "Books",
+  "book.ironchest.dirtchest9000.title": "Bedienungsanleitung für ihre ErdTruhe 9000!",
+  "book.ironchest.dirtchest9000.page1": "Vielen Dank, dass sie sich für eine neue ErdTruhe 9000 entschieden haben. Wir hoffen, dass sie für Jahre Freude daran haben werden, ihre Erde in dieser Truhe zu lagern.",
+  "book.ironchest.dirtchest9000.page2": "Benutzung: füllen sie einfach einen Stack Erde nach Wahl in den äußerst aufnahmefähigen Slot ein und erfreuen sie sich jedes Mal, wenn sie an dieser Truhe vorbeilaufen, an der Bequemlichkeit, diese Erde jederzeit verfügbar zu haben.",
+  "book.ironchest.dirtchest9000.page3": "Wir hoffen, dass ihnen diese Bedienungsanleitung gefallen hat und dass sie sich auch in Zukunft für unsere Produkte entscheiden werden! Mit freundlichen Grüßen, ihre ErdTruhe 9000 GmbH & Co. KG",
+  "book.ironchest.dirtchest9000.page4": "Garantiebestimmungen: Wir übernehmen keine Gewährleistung für dieses Produkt. Ihre Erde könnte zufällig verschwinden, langsam auf den Boden rieseln oder auch überhaupt nicht gespeichert werden.",
+  "book.ironchest.dirtchest9000.page5": "DirtChest 9000 achtet die Umwelt. Bitte entsorgen sie diese Bedienungsanleitung fachgerecht und werfen sie sie nicht einfach in Lava. Wir wären sehr traurig.",
+
+  "_comment": "Containers",
+  "ironchest.container.iron_chest": "Eisentruhe",
+  "ironchest.container.gold_chest": "Goldtruhe",
+  "ironchest.container.diamond_chest": "Diamanttruhe",
+  "ironchest.container.copper_chest": "Kupfertruhe",
+  "ironchest.container.silver_chest": "Silbertruhe",
+  "ironchest.container.crystal_chest": "Kristalltruhe",
+  "ironchest.container.obsidian_chest": "Obsidiantruhe",
+  "ironchest.container.dirt_chest": "ErdTruhe 9000!",
+
+  "_comment": "Item Groups",
+  "itemGroup.ironchest": "Eisentruhen"
+}
