@@ -1,24 +1,23 @@
 buildscript {
     repositories {
         mavenLocal()
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
+        maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
+        jcenter()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 repositories {
     maven {
         name 'DVS1 Maven FS'
-        url 'http://dvs1.progwml6.com/files/maven'
+        url 'https://dvs1.progwml6.com/files/maven'
     }
 }
 
@@ -108,15 +107,6 @@ minecraft {
     }
 }
 
-dependencies {
-    minecraft 'net.minecraftforge:forge:' + minecraft_version + '-' + forge_version
-
-    // compile against the JEI API but do not include it at runtime
-    compileOnly fg.deobf("mezz.jei:jei-1.16.2:${jei_version}:api")
-    // at runtime, use the full JEI jar
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:${jei_version}")
-}
-
 task buildInfo {
     def cmd = "git rev-parse --short HEAD"
     def proc = cmd.execute()
@@ -146,19 +136,24 @@ sourceSets {
     }
 }
 
+dependencies {
+    minecraft 'net.minecraftforge:forge:' + minecraft_version + '-' + forge_version
+
+    // compile against the JEI API but do not include it at runtime
+    compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
+    // at runtime, use the full JEI jar
+    runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
+}
+
 def modsTomlSpec = copySpec{
     from(sourceSets.main.resources) {
         include 'META-INF/mods.toml'
         expand 'version': project.version,
-                'minecraft_version_min': minecraft_version_min,
-                'minecraft_version_max': minecraft_version_max,
-                'forge_version_min': forge_version_min,
-                'forge_version_max': forge_version_max,
-                'javafml_min': javafml_min,
-                'javafml_max': javafml_max
+                'loader_range': loader_range,
+                'minecraft_range': minecraft_range,
+                'forge_range': forge_range
     }
 }
-
 
 // need to copy into each build directory, unfortunately does not seem easy to do this automatically
 def buildPaths = [
@@ -191,15 +186,6 @@ processResources {
     finalizedBy replaceResources
 }
 
-task sourcesJar(type: Jar) {
-    from sourceSets.main.allJava
-    classifier = 'sources'
-}
-
-artifacts {
-    archives sourcesJar
-}
-
 jar {
     manifest {
         attributes([
@@ -215,6 +201,15 @@ jar {
 }
 
 jar.finalizedBy('reobfJar')
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
 
 publishing {
     publications {

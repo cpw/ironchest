@@ -14,9 +14,9 @@
       "recipe": {
         "type": "minecraft:crafting_shaped",
         "pattern": [
-          "GGG",
+          "MGM",
           "MSM",
-          "GGG"
+          "MGM"
         ],
         "key": {
           "M": {

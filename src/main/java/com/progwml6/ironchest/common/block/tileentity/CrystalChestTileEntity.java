@@ -3,11 +3,15 @@ package com.progwml6.ironchest.common.block.tileentity;
 import com.progwml6.ironchest.common.block.IronChestsBlocks;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
 import com.progwml6.ironchest.common.inventory.IronChestContainer;
+import com.progwml6.ironchest.common.network.InventoryTopStacksSyncPacket;
+import com.progwml6.ironchest.common.network.IronChestNetwork;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Collections;
 
@@ -177,7 +181,9 @@ public class CrystalChestTileEntity extends GenericIronChestTileEntity {
   protected void sendTopStacksPacket() {
     NonNullList<ItemStack> stacks = this.buildItemStackDataList();
 
-    //PacketHandler.send(PacketDistributor.TRACKING_CHUNK.with(() -> (Chunk) this.getWorld().getChunk(this.getPos())), new PacketTopStackSyncChest(this.getWorld().getDimension().getType().getId(), this.getPos(), stacks));
+    if (this.world != null && this.world instanceof ServerWorld && !this.world.isRemote) {
+      IronChestNetwork.getInstance().sendToClientsAround(new InventoryTopStacksSyncPacket(stacks, this.pos), (ServerWorld) this.world, this.pos);
+    }
   }
 
   public void receiveMessageFromServer(NonNullList<ItemStack> topStacks) {

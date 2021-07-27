@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[${javafml_min},${javafml_max})"
+loaderVersion="${loader_range}"
 issueTrackerURL="https://github.com/progwml6/ironchest/issues"
 license="GNU General Public License v3.0"
 
@@ -18,6 +18,13 @@ The feature chest is the crystal chest, which is transparent - some inventory co
 [[dependencies.ironchest]]
     modId="forge"
     mandatory=true
-    versionRange="[${forge_version_min},${forge_version_max})"
+    versionRange="${forge_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.ironchest]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_range}"
     ordering="NONE"
     side="BOTH"

@@ -1,4 +1,4 @@
-package com.progwml6.ironchest.client.tileentity;
+package com.progwml6.ironchest.client.model.inventory;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

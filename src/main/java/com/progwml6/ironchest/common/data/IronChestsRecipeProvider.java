@@ -13,6 +13,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
@@ -27,6 +28,9 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class IronChestsRecipeProvider extends RecipeProvider implements IConditionBuilder {
+
+  public static final Tags.IOptionalNamedTag<Item> INGOTS_COPPER = tag("ingots/copper");
+  public static final Tags.IOptionalNamedTag<Item> INGOTS_SILVER = tag("ingots/silver");
 
   public IronChestsRecipeProvider(DataGenerator generatorIn) {
     super(generatorIn);
@@ -121,18 +125,18 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
     ConditionalRecipe.builder()
       .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
       .addRecipe(ShapedRecipeBuilder.shapedRecipe(IronChestsBlocks.SILVER_CHEST.get())
-        .key('M', ItemTags.makeWrapperTag("forge:ingots/silver"))
+        .key('M', INGOTS_SILVER)
         .key('S', IronChestsBlocks.COPPER_CHEST.get())
         .patternLine("MMM")
         .patternLine("MSM")
         .patternLine("MMM")
-        .addCriterion("has_item", hasItem(ItemTags.makeWrapperTag("forge:ingots/silver")))::build)
+        .addCriterion("has_item", hasItem(INGOTS_SILVER))::build)
       .setAdvancement(location("recipes/ironchest/chests/copper_silver_chest"), ConditionalAdvancement.builder()
         .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
         .addAdvancement(Advancement.Builder.builder()
           .withParentId(new ResourceLocation("recipes/root"))
           .withRewards(AdvancementRewards.Builder.recipe(copperToSilverChest))
-          .withCriterion("has_item", hasItem(ItemTags.makeWrapperTag("forge:ingots/silver")))
+          .withCriterion("has_item", hasItem(INGOTS_SILVER))
           .withCriterion("has_the_recipe", RecipeUnlockedTrigger.create(copperToSilverChest))
           .withRequirementsStrategy(IRequirementsStrategy.OR))
       ).build(consumer, copperToSilverChest);
@@ -141,19 +145,19 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
     ConditionalRecipe.builder()
       .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
       .addRecipe(ShapedRecipeBuilder.shapedRecipe(IronChestsBlocks.SILVER_CHEST.get())
-        .key('M', ItemTags.makeWrapperTag("forge:ingots/silver"))
+        .key('M', INGOTS_SILVER)
         .key('S', IronChestsBlocks.IRON_CHEST.get())
         .key('G', Tags.Items.GLASS)
-        .patternLine("GGG")
+        .patternLine("MGM")
         .patternLine("MSM")
-        .patternLine("GGG")
-        .addCriterion("has_item", hasItem(ItemTags.makeWrapperTag("forge:ingots/silver")))::build)
+        .patternLine("MGM")
+        .addCriterion("has_item", hasItem(INGOTS_SILVER))::build)
       .setAdvancement(location("recipes/ironchest/chests/iron_silver_chest"), ConditionalAdvancement.builder()
         .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
         .addAdvancement(Advancement.Builder.builder()
           .withParentId(new ResourceLocation("recipes/root"))
           .withRewards(AdvancementRewards.Builder.recipe(ironToSilverChest))
-          .withCriterion("has_item", hasItem(ItemTags.makeWrapperTag("forge:ingots/silver")))
+          .withCriterion("has_item", hasItem(INGOTS_SILVER))
           .withCriterion("has_the_recipe", RecipeUnlockedTrigger.create(ironToSilverChest))
           .withRequirementsStrategy(IRequirementsStrategy.OR))
       ).build(consumer, ironToSilverChest);
@@ -162,18 +166,18 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
     ConditionalRecipe.builder()
       .addCondition(not(new TagEmptyCondition("forge:ingots/copper")))
       .addRecipe(ShapedRecipeBuilder.shapedRecipe(IronChestsBlocks.COPPER_CHEST.get())
-        .key('M', ItemTags.makeWrapperTag("forge:ingots/copper"))
+        .key('M', INGOTS_COPPER)
         .key('S', Tags.Items.CHESTS_WOODEN)
         .patternLine("MMM")
         .patternLine("MSM")
         .patternLine("MMM")
-        .addCriterion("has_item", hasItem(ItemTags.makeWrapperTag("forge:ingots/copper")))::build)
+        .addCriterion("has_item", hasItem(INGOTS_COPPER))::build)
       .setAdvancement(location("recipes/ironchest/chests/vanilla_copper_chest"), ConditionalAdvancement.builder()
         .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
         .addAdvancement(Advancement.Builder.builder()
           .withParentId(new ResourceLocation("recipes/root"))
           .withRewards(AdvancementRewards.Builder.recipe(vanillaToCopperChest))
-          .withCriterion("has_item", hasItem(ItemTags.makeWrapperTag("forge:ingots/copper")))
+          .withCriterion("has_item", hasItem(INGOTS_COPPER))
           .withCriterion("has_the_recipe", RecipeUnlockedTrigger.create(vanillaToCopperChest))
           .withRequirementsStrategy(IRequirementsStrategy.OR))
       ).build(consumer, vanillaToCopperChest);
@@ -188,13 +192,13 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
         .patternLine("MGM")
         .patternLine("GSG")
         .patternLine("MGM")
-        .addCriterion("has_item", hasItem(ItemTags.makeWrapperTag("forge:ingots/silver")))::build)
+        .addCriterion("has_item", hasItem(INGOTS_SILVER))::build)
       .setAdvancement(location("recipes/ironchest/chests/silver_gold_chest"), ConditionalAdvancement.builder()
         .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
         .addAdvancement(Advancement.Builder.builder()
           .withParentId(new ResourceLocation("recipes/root"))
           .withRewards(AdvancementRewards.Builder.recipe(silverToGoldChest))
-          .withCriterion("has_item", hasItem(ItemTags.makeWrapperTag("forge:ingots/silver")))
+          .withCriterion("has_item", hasItem(INGOTS_SILVER))
           .withCriterion("has_the_recipe", RecipeUnlockedTrigger.create(silverToGoldChest))
           .withRequirementsStrategy(IRequirementsStrategy.OR))
       ).build(consumer, silverToGoldChest);
@@ -274,7 +278,7 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
     ConditionalRecipe.builder()
       .addCondition(not(new TagEmptyCondition("forge:ingots/copper")))
       .addRecipe(ShapedRecipeBuilder.shapedRecipe(IronChestsItems.UPGRADES.get(IronChestsUpgradeType.WOOD_TO_COPPER).get())
-        .key('M', ItemTags.makeWrapperTag("forge:ingots/copper"))
+        .key('M', INGOTS_COPPER)
         .key('S', ItemTags.PLANKS)
         .patternLine("MMM")
         .patternLine("MSM")
@@ -295,7 +299,7 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
       .addCondition(not(new TagEmptyCondition("forge:ingots/copper")))
       .addRecipe(ShapedRecipeBuilder.shapedRecipe(IronChestsItems.UPGRADES.get(IronChestsUpgradeType.COPPER_TO_IRON).get())
         .key('M', Tags.Items.INGOTS_IRON)
-        .key('S', ItemTags.makeWrapperTag("forge:ingots/copper"))
+        .key('S', INGOTS_COPPER)
         .key('G', Tags.Items.GLASS)
         .patternLine("MGM")
         .patternLine("GSG")
@@ -315,18 +319,18 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
     ConditionalRecipe.builder()
       .addCondition(and(not(new TagEmptyCondition("forge:ingots/copper")), not(new TagEmptyCondition("forge:ingots/silver"))))
       .addRecipe(ShapedRecipeBuilder.shapedRecipe(IronChestsItems.UPGRADES.get(IronChestsUpgradeType.COPPER_TO_SILVER).get())
-        .key('M', ItemTags.makeWrapperTag("forge:ingots/silver"))
-        .key('S', ItemTags.makeWrapperTag("forge:ingots/copper"))
+        .key('M', INGOTS_SILVER)
+        .key('S', INGOTS_COPPER)
         .patternLine("MMM")
         .patternLine("MSM")
         .patternLine("MMM")
-        .addCriterion("has_item", hasItem(ItemTags.makeWrapperTag("forge:ingots/copper")))::build)
+        .addCriterion("has_item", hasItem(INGOTS_COPPER))::build)
       .setAdvancement(location("recipes/ironchest/upgrades/copper_to_silver_chest_upgrade"), ConditionalAdvancement.builder()
         .addCondition(and(not(new TagEmptyCondition("forge:ingots/copper")), not(new TagEmptyCondition("forge:ingots/silver"))))
         .addAdvancement(Advancement.Builder.builder()
           .withParentId(new ResourceLocation("recipes/root"))
           .withRewards(AdvancementRewards.Builder.recipe(copperToSilverChestUpgrade))
-          .withCriterion("has_item", hasItem(ItemTags.makeWrapperTag("forge:ingots/copper")))
+          .withCriterion("has_item", hasItem(INGOTS_COPPER))
           .withCriterion("has_the_recipe", RecipeUnlockedTrigger.create(copperToSilverChestUpgrade))
           .withRequirementsStrategy(IRequirementsStrategy.OR))
       ).build(consumer, copperToSilverChestUpgrade);
@@ -336,7 +340,7 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
       .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
       .addRecipe(ShapedRecipeBuilder.shapedRecipe(IronChestsItems.UPGRADES.get(IronChestsUpgradeType.SILVER_TO_GOLD).get())
         .key('M', Tags.Items.INGOTS_GOLD)
-        .key('S', ItemTags.makeWrapperTag("forge:ingots/copper"))
+        .key('S', INGOTS_SILVER)
         .key('G', Tags.Items.GLASS)
         .patternLine("MGM")
         .patternLine("GSG")
@@ -360,5 +364,9 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
 
   private static ResourceLocation location(String id) {
     return new ResourceLocation(IronChests.MODID, id);
+  }
+
+  private static Tags.IOptionalNamedTag<Item> tag(String name) {
+    return ItemTags.createOptional(new ResourceLocation("forge", name));
   }
 }

@@ -1,13 +1,12 @@
 package com.progwml6.ironchest.common.block;
 
 import com.progwml6.ironchest.IronChests;
-import com.progwml6.ironchest.client.tileentity.IronChestItemStackRenderer;
+import com.progwml6.ironchest.client.model.inventory.IronChestItemStackRenderer;
 import com.progwml6.ironchest.common.block.tileentity.CopperChestTileEntity;
 import com.progwml6.ironchest.common.block.tileentity.CrystalChestTileEntity;
 import com.progwml6.ironchest.common.block.tileentity.DiamondChestTileEntity;
 import com.progwml6.ironchest.common.block.tileentity.DirtChestTileEntity;
 import com.progwml6.ironchest.common.block.tileentity.GoldChestTileEntity;
-import com.progwml6.ironchest.common.block.tileentity.GenericIronChestTileEntity;
 import com.progwml6.ironchest.common.block.tileentity.IronChestTileEntity;
 import com.progwml6.ironchest.common.block.tileentity.ObsidianChestTileEntity;
 import com.progwml6.ironchest.common.block.tileentity.SilverChestTileEntity;

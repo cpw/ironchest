@@ -1,4 +1,4 @@
-package com.progwml6.ironchest.client.tileentity;
+package com.progwml6.ironchest.client.model;
 
 import com.progwml6.ironchest.IronChests;
 import com.progwml6.ironchest.common.block.IronChestsTypes;

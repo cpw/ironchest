@@ -1,12 +1,13 @@
 package com.progwml6.ironchest;
 
 import com.progwml6.ironchest.client.screen.IronChestScreen;
-import com.progwml6.ironchest.client.tileentity.IronChestTileEntityRenderer;
+import com.progwml6.ironchest.client.render.IronChestTileEntityRenderer;
 import com.progwml6.ironchest.common.block.IronChestsBlocks;
 import com.progwml6.ironchest.common.block.tileentity.IronChestsTileEntityTypes;
 import com.progwml6.ironchest.common.data.IronChestsRecipeProvider;
 import com.progwml6.ironchest.common.inventory.IronChestsContainerTypes;
 import com.progwml6.ironchest.common.item.IronChestsItems;
+import com.progwml6.ironchest.common.network.IronChestNetwork;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemGroup;
@@ -46,6 +47,8 @@ public class IronChests {
       // Client setup
       modBus.addListener(this::setupClient);
     });
+
+    IronChestNetwork.setup();
 
     // Registry objects
     IronChestsBlocks.BLOCKS.register(modBus);

@@ -1,6 +1,6 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package com.progwml6.ironchest.client.tileentity;
+package com.progwml6.ironchest.client.model;
 
 import mcp.MethodsReturnNonnullByDefault;
 
