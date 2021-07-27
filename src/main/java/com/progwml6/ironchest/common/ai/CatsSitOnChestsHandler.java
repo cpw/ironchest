@@ -1,8 +1,8 @@
 package com.progwml6.ironchest.common.ai;
 
-import net.minecraft.entity.ai.goal.CatSitOnBlockGoal;
-import net.minecraft.entity.ai.goal.PrioritizedGoal;
-import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.world.entity.ai.goal.CatSitOnBlockGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.animal.Cat;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -12,18 +12,18 @@ public class CatsSitOnChestsHandler {
 
   @SubscribeEvent
   public void changeSittingTaskForOcelots(final LivingEvent.LivingUpdateEvent evt) {
-    if (evt.getEntityLiving().ticksExisted < 5 && evt.getEntityLiving() instanceof CatEntity) {
-      HashSet<PrioritizedGoal> goals = new HashSet<>();
+    if (evt.getEntityLiving().tickCount < 5 && evt.getEntityLiving() instanceof Cat) {
+      HashSet<WrappedGoal> goals = new HashSet<>();
 
-      CatEntity catEntity = (CatEntity) evt.getEntityLiving();
+      Cat catEntity = (Cat) evt.getEntityLiving();
 
-      for (PrioritizedGoal goal : catEntity.goalSelector.goals) {
+      for (WrappedGoal goal : catEntity.goalSelector.availableGoals) {
         if (goal.getGoal().getClass() == CatSitOnBlockGoal.class) {
           goals.add(goal);
         }
       }
 
-      for (PrioritizedGoal goal : goals) {
+      for (WrappedGoal goal : goals) {
         catEntity.goalSelector.removeGoal(goal.getGoal());
         catEntity.goalSelector.addGoal(goal.getPriority(), new IronChestCatSitOnBlockGoal(catEntity, 0.4F));
       }

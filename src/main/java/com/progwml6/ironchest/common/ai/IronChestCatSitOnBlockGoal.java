@@ -2,22 +2,22 @@ package com.progwml6.ironchest.common.ai;
 
 import com.progwml6.ironchest.common.block.GenericIronChestBlock;
 import com.progwml6.ironchest.common.block.tileentity.GenericIronChestTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.ai.goal.CatSitOnBlockGoal;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.ai.goal.CatSitOnBlockGoal;
+import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
 
 public class IronChestCatSitOnBlockGoal extends CatSitOnBlockGoal {
 
-  public IronChestCatSitOnBlockGoal(CatEntity catEntity, double p_i50330_2_) {
+  public IronChestCatSitOnBlockGoal(Cat catEntity, double p_i50330_2_) {
     super(catEntity, p_i50330_2_);
   }
 
   @Override
-  protected boolean shouldMoveTo(IWorldReader worldIn, BlockPos pos) {
-    if (!worldIn.isAirBlock(pos.up())) {
+  protected boolean isValidTarget(LevelReader worldIn, BlockPos pos) {
+    if (!worldIn.isEmptyBlock(pos.above())) {
       return false;
     }
     else {
@@ -28,7 +28,7 @@ public class IronChestCatSitOnBlockGoal extends CatSitOnBlockGoal {
         return GenericIronChestTileEntity.getPlayersUsing(worldIn, pos) < 1;
       }
 
-      return super.shouldMoveTo(worldIn, pos);
+      return super.isValidTarget(worldIn, pos);
     }
   }
 }

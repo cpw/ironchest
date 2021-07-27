@@ -4,39 +4,39 @@ import com.progwml6.ironchest.IronChests;
 import com.progwml6.ironchest.common.block.GenericIronChestBlock;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
 import com.progwml6.ironchest.common.inventory.IronChestContainer;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.IChestLid;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.LockableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.LidBlockEntity;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.NonNullList;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
-@OnlyIn(value = Dist.CLIENT, _interface = IChestLid.class)
-public class GenericIronChestTileEntity extends LockableLootTileEntity implements IChestLid, ITickableTileEntity {
+@OnlyIn(value = Dist.CLIENT, _interface = LidBlockEntity.class)
+public class GenericIronChestTileEntity extends RandomizableContainerBlockEntity implements LidBlockEntity, TickableBlockEntity {
 
   private NonNullList<ItemStack> chestContents;
   protected float lidAngle;
@@ -46,7 +46,7 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
   private IronChestsTypes chestType;
   private Supplier<Block> blockToUse;
 
-  protected GenericIronChestTileEntity(TileEntityType<?> typeIn, IronChestsTypes chestTypeIn, Supplier<Block> blockToUseIn) {
+  protected GenericIronChestTileEntity(BlockEntityType<?> typeIn, IronChestsTypes chestTypeIn, Supplier<Block> blockToUseIn) {
     super(typeIn);
 
     this.chestContents = NonNullList.<ItemStack>withSize(chestTypeIn.size, ItemStack.EMPTY);
@@ -55,7 +55,7 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
   }
 
   @Override
-  public int getSizeInventory() {
+  public int getContainerSize() {
     return this.getItems().size();
   }
 
@@ -71,27 +71,27 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
   }
 
   @Override
-  protected ITextComponent getDefaultName() {
-    return new TranslationTextComponent(IronChests.MODID + ".container." + this.chestType.getId() + "_chest");
+  protected Component getDefaultName() {
+    return new TranslatableComponent(IronChests.MODID + ".container." + this.chestType.getId() + "_chest");
   }
 
   @Override
-  public void read(BlockState state, CompoundNBT compound) {
-    super.read(state, compound);
+  public void load(BlockState state, CompoundTag compound) {
+    super.load(state, compound);
 
-    this.chestContents = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+    this.chestContents = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 
-    if (!this.checkLootAndRead(compound)) {
-      ItemStackHelper.loadAllItems(compound, this.chestContents);
+    if (!this.tryLoadLootTable(compound)) {
+      ContainerHelper.loadAllItems(compound, this.chestContents);
     }
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT compound) {
-    super.write(compound);
+  public CompoundTag save(CompoundTag compound) {
+    super.save(compound);
 
-    if (!this.checkLootAndWrite(compound)) {
-      ItemStackHelper.saveAllItems(compound, this.chestContents);
+    if (!this.trySaveLootTable(compound)) {
+      ContainerHelper.saveAllItems(compound, this.chestContents);
     }
 
     return compound;
@@ -99,15 +99,15 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
 
   @Override
   public void tick() {
-    int i = this.pos.getX();
-    int j = this.pos.getY();
-    int k = this.pos.getZ();
+    int i = this.worldPosition.getX();
+    int j = this.worldPosition.getY();
+    int k = this.worldPosition.getZ();
     ++this.ticksSinceSync;
-    this.numPlayersUsing = getNumberOfPlayersUsing(this.world, this, this.ticksSinceSync, i, j, k, this.numPlayersUsing);
+    this.numPlayersUsing = getNumberOfPlayersUsing(this.level, this, this.ticksSinceSync, i, j, k, this.numPlayersUsing);
     this.prevLidAngle = this.lidAngle;
     float f = 0.1F;
     if (this.numPlayersUsing > 0 && this.lidAngle == 0.0F) {
-      this.playSound(SoundEvents.BLOCK_CHEST_OPEN);
+      this.playSound(SoundEvents.CHEST_OPEN);
     }
 
     if (this.numPlayersUsing == 0 && this.lidAngle > 0.0F || this.numPlayersUsing > 0 && this.lidAngle < 1.0F) {
@@ -125,7 +125,7 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
 
       float f2 = 0.5F;
       if (this.lidAngle < 0.5F && f1 >= 0.5F) {
-        this.playSound(SoundEvents.BLOCK_CHEST_CLOSE);
+        this.playSound(SoundEvents.CHEST_CLOSE);
       }
 
       if (this.lidAngle < 0.0F) {
@@ -134,19 +134,19 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
     }
   }
 
-  public static int getNumberOfPlayersUsing(World worldIn, LockableTileEntity lockableTileEntity, int ticksSinceSync, int x, int y, int z, int numPlayersUsing) {
-    if (!worldIn.isRemote && numPlayersUsing != 0 && (ticksSinceSync + x + y + z) % 200 == 0) {
+  public static int getNumberOfPlayersUsing(Level worldIn, BaseContainerBlockEntity lockableTileEntity, int ticksSinceSync, int x, int y, int z, int numPlayersUsing) {
+    if (!worldIn.isClientSide && numPlayersUsing != 0 && (ticksSinceSync + x + y + z) % 200 == 0) {
       numPlayersUsing = getNumberOfPlayersUsing(worldIn, lockableTileEntity, x, y, z);
     }
 
     return numPlayersUsing;
   }
 
-  public static int getNumberOfPlayersUsing(World world, LockableTileEntity lockableTileEntity, int x, int y, int z) {
+  public static int getNumberOfPlayersUsing(Level world, BaseContainerBlockEntity lockableTileEntity, int x, int y, int z) {
     int i = 0;
 
-    for (PlayerEntity playerentity : world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB((double) ((float) x - 5.0F), (double) ((float) y - 5.0F), (double) ((float) z - 5.0F), (double) ((float) (x + 1) + 5.0F), (double) ((float) (y + 1) + 5.0F), (double) ((float) (z + 1) + 5.0F)))) {
-      if (playerentity.openContainer instanceof IronChestContainer) {
+    for (Player playerentity : world.getEntitiesOfClass(Player.class, new AABB((double) ((float) x - 5.0F), (double) ((float) y - 5.0F), (double) ((float) z - 5.0F), (double) ((float) (x + 1) + 5.0F), (double) ((float) (y + 1) + 5.0F), (double) ((float) (z + 1) + 5.0F)))) {
+      if (playerentity.containerMenu instanceof IronChestContainer) {
         ++i;
       }
     }
@@ -155,26 +155,26 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
   }
 
   private void playSound(SoundEvent soundIn) {
-    double d0 = (double) this.pos.getX() + 0.5D;
-    double d1 = (double) this.pos.getY() + 0.5D;
-    double d2 = (double) this.pos.getZ() + 0.5D;
+    double d0 = (double) this.worldPosition.getX() + 0.5D;
+    double d1 = (double) this.worldPosition.getY() + 0.5D;
+    double d2 = (double) this.worldPosition.getZ() + 0.5D;
 
-    this.world.playSound((PlayerEntity) null, d0, d1, d2, soundIn, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+    this.level.playSound((Player) null, d0, d1, d2, soundIn, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
   }
 
   @Override
-  public boolean receiveClientEvent(int id, int type) {
+  public boolean triggerEvent(int id, int type) {
     if (id == 1) {
       this.numPlayersUsing = type;
       return true;
     }
     else {
-      return super.receiveClientEvent(id, type);
+      return super.triggerEvent(id, type);
     }
   }
 
   @Override
-  public void openInventory(PlayerEntity player) {
+  public void startOpen(Player player) {
     if (!player.isSpectator()) {
       if (this.numPlayersUsing < 0) {
         this.numPlayersUsing = 0;
@@ -186,7 +186,7 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
   }
 
   @Override
-  public void closeInventory(PlayerEntity player) {
+  public void stopOpen(Player player) {
     if (!player.isSpectator()) {
       --this.numPlayersUsing;
       this.onOpenOrClose();
@@ -197,8 +197,8 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
     Block block = this.getBlockState().getBlock();
 
     if (block instanceof GenericIronChestBlock) {
-      this.world.addBlockEvent(this.pos, block, 1, this.numPlayersUsing);
-      this.world.notifyNeighborsOfStateChange(this.pos, block);
+      this.level.blockEvent(this.worldPosition, block, 1, this.numPlayersUsing);
+      this.level.updateNeighborsAt(this.worldPosition, block);
     }
   }
 
@@ -220,14 +220,14 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public float getLidAngle(float partialTicks) {
-    return MathHelper.lerp(partialTicks, this.prevLidAngle, this.lidAngle);
+  public float getOpenNess(float partialTicks) {
+    return Mth.lerp(partialTicks, this.prevLidAngle, this.lidAngle);
   }
 
-  public static int getPlayersUsing(IBlockReader reader, BlockPos posIn) {
+  public static int getPlayersUsing(BlockGetter reader, BlockPos posIn) {
     BlockState blockstate = reader.getBlockState(posIn);
     if (blockstate.hasTileEntity()) {
-      TileEntity tileentity = reader.getTileEntity(posIn);
+      BlockEntity tileentity = reader.getBlockEntity(posIn);
       if (tileentity instanceof GenericIronChestTileEntity) {
         return ((GenericIronChestTileEntity) tileentity).numPlayersUsing;
       }
@@ -237,7 +237,7 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
   }
 
   @Override
-  protected Container createMenu(int windowId, PlayerInventory playerInventory) {
+  protected AbstractContainerMenu createMenu(int windowId, Inventory playerInventory) {
     return IronChestContainer.createIronContainer(windowId, playerInventory, this);
   }
 
@@ -250,7 +250,7 @@ public class GenericIronChestTileEntity extends LockableLootTileEntity implement
   public IronChestsTypes getChestType() {
     IronChestsTypes type = IronChestsTypes.IRON;
 
-    if (this.hasWorld()) {
+    if (this.hasLevel()) {
       IronChestsTypes typeFromBlock = GenericIronChestBlock.getTypeFromBlock(this.getBlockState().getBlock());
 
       if (typeFromBlock != null) {

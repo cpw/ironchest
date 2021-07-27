@@ -10,15 +10,15 @@ import com.progwml6.ironchest.common.block.tileentity.GoldChestTileEntity;
 import com.progwml6.ironchest.common.block.tileentity.IronChestTileEntity;
 import com.progwml6.ironchest.common.block.tileentity.ObsidianChestTileEntity;
 import com.progwml6.ironchest.common.block.tileentity.SilverChestTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
 
-public enum IronChestsTypes implements IStringSerializable {
+public enum IronChestsTypes implements StringRepresentable {
 
   IRON(54, 9, 184, 222, new ResourceLocation("ironchest", "textures/gui/iron_container.png"), 256, 256),
   GOLD(81, 9, 184, 276, new ResourceLocation("ironchest", "textures/gui/gold_container.png"), 256, 276),
@@ -63,7 +63,7 @@ public enum IronChestsTypes implements IStringSerializable {
   }
 
   @Override
-  public String getString() {
+  public String getSerializedName() {
     return this.getEnglishName();
   }
 

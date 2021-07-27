@@ -8,10 +8,10 @@ import com.progwml6.ironchest.common.data.IronChestsRecipeProvider;
 import com.progwml6.ironchest.common.inventory.IronChestsContainerTypes;
 import com.progwml6.ironchest.common.item.IronChestsItems;
 import com.progwml6.ironchest.common.network.IronChestNetwork;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -28,10 +28,10 @@ public class IronChests {
 
   public static final String MODID = "ironchest";
 
-  public static final ItemGroup IRONCHESTS_ITEM_GROUP = (new ItemGroup("ironchest") {
+  public static final CreativeModeTab IRONCHESTS_ITEM_GROUP = (new CreativeModeTab("ironchest") {
     @Override
     @OnlyIn(Dist.CLIENT)
-    public ItemStack createIcon() {
+    public ItemStack makeIcon() {
       return new ItemStack(IronChestsBlocks.IRON_CHEST.get());
     }
   });
@@ -59,14 +59,14 @@ public class IronChests {
 
   @OnlyIn(Dist.CLIENT)
   private void setupClient(final FMLClientSetupEvent event) {
-    ScreenManager.registerFactory(IronChestsContainerTypes.IRON_CHEST.get(), IronChestScreen::new);
-    ScreenManager.registerFactory(IronChestsContainerTypes.GOLD_CHEST.get(), IronChestScreen::new);
-    ScreenManager.registerFactory(IronChestsContainerTypes.DIAMOND_CHEST.get(), IronChestScreen::new);
-    ScreenManager.registerFactory(IronChestsContainerTypes.CRYSTAL_CHEST.get(), IronChestScreen::new);
-    ScreenManager.registerFactory(IronChestsContainerTypes.COPPER_CHEST.get(), IronChestScreen::new);
-    ScreenManager.registerFactory(IronChestsContainerTypes.SILVER_CHEST.get(), IronChestScreen::new);
-    ScreenManager.registerFactory(IronChestsContainerTypes.OBSIDIAN_CHEST.get(), IronChestScreen::new);
-    ScreenManager.registerFactory(IronChestsContainerTypes.DIRT_CHEST.get(), IronChestScreen::new);
+    MenuScreens.register(IronChestsContainerTypes.IRON_CHEST.get(), IronChestScreen::new);
+    MenuScreens.register(IronChestsContainerTypes.GOLD_CHEST.get(), IronChestScreen::new);
+    MenuScreens.register(IronChestsContainerTypes.DIAMOND_CHEST.get(), IronChestScreen::new);
+    MenuScreens.register(IronChestsContainerTypes.CRYSTAL_CHEST.get(), IronChestScreen::new);
+    MenuScreens.register(IronChestsContainerTypes.COPPER_CHEST.get(), IronChestScreen::new);
+    MenuScreens.register(IronChestsContainerTypes.SILVER_CHEST.get(), IronChestScreen::new);
+    MenuScreens.register(IronChestsContainerTypes.OBSIDIAN_CHEST.get(), IronChestScreen::new);
+    MenuScreens.register(IronChestsContainerTypes.DIRT_CHEST.get(), IronChestScreen::new);
 
     ClientRegistry.bindTileEntityRenderer(IronChestsTileEntityTypes.IRON_CHEST.get(), IronChestTileEntityRenderer::new);
     ClientRegistry.bindTileEntityRenderer(IronChestsTileEntityTypes.GOLD_CHEST.get(), IronChestTileEntityRenderer::new);

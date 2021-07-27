@@ -1,6 +1,6 @@
 package com.progwml6.ironchest.client.model.inventory;
 
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.math.Vector3f;
 
 public class ModelItem {
   private final Vector3f center;

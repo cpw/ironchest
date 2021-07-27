@@ -3,16 +3,16 @@ package com.progwml6.ironchest.common.block.tileentity;
 import com.progwml6.ironchest.common.block.IronChestsBlocks;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
 import com.progwml6.ironchest.common.inventory.IronChestContainer;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class DirtChestTileEntity extends GenericIronChestTileEntity {
 
@@ -29,7 +29,7 @@ public class DirtChestTileEntity extends GenericIronChestTileEntity {
   }
 
   @Override
-  protected Container createMenu(int id, PlayerInventory playerInventory) {
+  protected AbstractContainerMenu createMenu(int id, Inventory playerInventory) {
     return IronChestContainer.createDirtContainer(id, playerInventory, this);
   }
 
@@ -47,24 +47,24 @@ public class DirtChestTileEntity extends GenericIronChestTileEntity {
 
   @Override
   public void removeAdornments() {
-    if (!this.getItems().get(0).isEmpty() && this.getItems().get(0).isItemEqual(dirtChest9000GuideBook)) {
+    if (!this.getItems().get(0).isEmpty() && this.getItems().get(0).sameItem(dirtChest9000GuideBook)) {
       this.getItems().set(0, ItemStack.EMPTY);
     }
   }
 
   private static void createBookData() {
-    dirtChest9000GuideBook.setTagInfo("author", StringNBT.valueOf("cpw"));
+    dirtChest9000GuideBook.addTagElement("author", StringTag.valueOf("cpw"));
 
-    dirtChest9000GuideBook.setTagInfo("title", StringNBT.valueOf(I18n.format("book.ironchest.dirtchest9000.title")));
+    dirtChest9000GuideBook.addTagElement("title", StringTag.valueOf(I18n.get("book.ironchest.dirtchest9000.title")));
 
-    ListNBT pages = new ListNBT();
-    pages.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page1"))));
-    pages.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page2"))));
-    pages.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page3"))));
-    pages.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page4"))));
-    pages.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new TranslationTextComponent("book.ironchest.dirtchest9000.page5"))));
+    ListTag pages = new ListTag();
+    pages.add(StringTag.valueOf(Component.Serializer.toJson(new TranslatableComponent("book.ironchest.dirtchest9000.page1"))));
+    pages.add(StringTag.valueOf(Component.Serializer.toJson(new TranslatableComponent("book.ironchest.dirtchest9000.page2"))));
+    pages.add(StringTag.valueOf(Component.Serializer.toJson(new TranslatableComponent("book.ironchest.dirtchest9000.page3"))));
+    pages.add(StringTag.valueOf(Component.Serializer.toJson(new TranslatableComponent("book.ironchest.dirtchest9000.page4"))));
+    pages.add(StringTag.valueOf(Component.Serializer.toJson(new TranslatableComponent("book.ironchest.dirtchest9000.page5"))));
 
-    dirtChest9000GuideBook.setTagInfo("pages", pages);
+    dirtChest9000GuideBook.addTagElement("pages", pages);
 
     bookDataCreated = true;
   }
