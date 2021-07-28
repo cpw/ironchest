@@ -9,43 +9,31 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.function.Consumer;
-
-@Mod.EventBusSubscriber(modid = IronChests.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = IronChests.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class IronChestsModels {
 
-  public static final ResourceLocation IRON_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/iron_chest");
-  public static final ResourceLocation GOLD_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/gold_chest");
-  public static final ResourceLocation DIAMOND_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/diamond_chest");
-  public static final ResourceLocation COPPER_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/copper_chest");
-  public static final ResourceLocation SILVER_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/silver_chest");
-  public static final ResourceLocation CRYSTAL_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/crystal_chest");
-  public static final ResourceLocation OBSIDIAN_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/obsidian_chest");
-  public static final ResourceLocation DIRT_CHEST_LOCATION = new ResourceLocation(IronChests.MODID, "model/dirt_chest");
-  public static final ResourceLocation VANLLA_CHEST_LOCATION = new ResourceLocation("entity/chest/normal");
+  public static final ResourceLocation IRON_CHEST_LOCATION = new ResourceLocation(IronChests.MOD_ID, "model/iron_chest");
+  public static final ResourceLocation GOLD_CHEST_LOCATION = new ResourceLocation(IronChests.MOD_ID, "model/gold_chest");
+  public static final ResourceLocation DIAMOND_CHEST_LOCATION = new ResourceLocation(IronChests.MOD_ID, "model/diamond_chest");
+  public static final ResourceLocation COPPER_CHEST_LOCATION = new ResourceLocation(IronChests.MOD_ID, "model/copper_chest");
+  public static final ResourceLocation SILVER_CHEST_LOCATION = new ResourceLocation(IronChests.MOD_ID, "model/silver_chest");
+  public static final ResourceLocation CRYSTAL_CHEST_LOCATION = new ResourceLocation(IronChests.MOD_ID, "model/crystal_chest");
+  public static final ResourceLocation OBSIDIAN_CHEST_LOCATION = new ResourceLocation(IronChests.MOD_ID, "model/obsidian_chest");
+  public static final ResourceLocation DIRT_CHEST_LOCATION = new ResourceLocation(IronChests.MOD_ID, "model/dirt_chest");
+  public static final ResourceLocation VANILLA_CHEST_LOCATION = new ResourceLocation("entity/chest/normal");
 
   public static ResourceLocation chooseChestTexture(IronChestsTypes type) {
-    switch (type) {
-      case IRON:
-        return IRON_CHEST_LOCATION;
-      case GOLD:
-        return GOLD_CHEST_LOCATION;
-      case DIAMOND:
-        return DIAMOND_CHEST_LOCATION;
-      case COPPER:
-        return COPPER_CHEST_LOCATION;
-      case SILVER:
-        return SILVER_CHEST_LOCATION;
-      case CRYSTAL:
-        return CRYSTAL_CHEST_LOCATION;
-      case OBSIDIAN:
-        return OBSIDIAN_CHEST_LOCATION;
-      case DIRT:
-        return DIRT_CHEST_LOCATION;
-      case WOOD:
-      default:
-        return VANLLA_CHEST_LOCATION;
-    }
+    return switch (type) {
+      case IRON -> IRON_CHEST_LOCATION;
+      case GOLD -> GOLD_CHEST_LOCATION;
+      case DIAMOND -> DIAMOND_CHEST_LOCATION;
+      case COPPER -> COPPER_CHEST_LOCATION;
+      case SILVER -> SILVER_CHEST_LOCATION;
+      case CRYSTAL -> CRYSTAL_CHEST_LOCATION;
+      case OBSIDIAN -> OBSIDIAN_CHEST_LOCATION;
+      case DIRT -> DIRT_CHEST_LOCATION;
+      default -> VANILLA_CHEST_LOCATION;
+    };
   }
 
   @SubscribeEvent

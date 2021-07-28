@@ -1,46 +1,43 @@
-package com.progwml6.ironchest.common.block.tileentity;
+package com.progwml6.ironchest.common.block.entity;
 
 import com.progwml6.ironchest.common.block.IronChestsBlocks;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
-import com.progwml6.ironchest.common.inventory.IronChestContainer;
+import com.progwml6.ironchest.common.inventory.IronChestMenu;
 import com.progwml6.ironchest.common.network.InventoryTopStacksSyncPacket;
 import com.progwml6.ironchest.common.network.IronChestNetwork;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.NonNullList;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Collections;
-
-public class CrystalChestTileEntity extends GenericIronChestTileEntity {
+public class CrystalChestBlockEntity extends AbstractIronChestBlockEntity {
 
   private NonNullList<ItemStack> topStacks;
-
   private boolean inventoryTouched;
-
   private boolean hadStuff;
 
-  public CrystalChestTileEntity() {
-    super(IronChestsTileEntityTypes.CRYSTAL_CHEST.get(), IronChestsTypes.CRYSTAL, IronChestsBlocks.CRYSTAL_CHEST::get);
-    this.topStacks = NonNullList.<ItemStack>withSize(8, ItemStack.EMPTY);
+  public CrystalChestBlockEntity(BlockPos blockPos, BlockState blockState) {
+    super(IronChestsBlockEntityTypes.CRYSTAL_CHEST.get(), blockPos, blockState, IronChestsTypes.CRYSTAL, IronChestsBlocks.CRYSTAL_CHEST::get);
+
+    this.topStacks = NonNullList.withSize(8, ItemStack.EMPTY);
   }
 
   @Override
-  protected AbstractContainerMenu createMenu(int id, Inventory playerInventory) {
-    return IronChestContainer.createCrystalContainer(id, playerInventory, this);
+  protected AbstractContainerMenu createMenu(int containerId, Inventory playerInventory) {
+    return IronChestMenu.createCrystalContainer(containerId, playerInventory, this);
   }
 
-  @Override
-  public void tick() {
-    super.tick();
+  public static void tick(Level level, BlockPos blockPos, BlockState blockState, AbstractIronChestBlockEntity chestBlockEntity) {
+    if (chestBlockEntity instanceof CrystalChestBlockEntity crystalChestBlockEntity) {
+      if (!level.isClientSide && crystalChestBlockEntity.inventoryTouched) {
+        crystalChestBlockEntity.inventoryTouched = false;
 
-    if (!this.level.isClientSide && this.inventoryTouched) {
-      this.inventoryTouched = false;
-
-      this.sortTopStacks();
+        crystalChestBlockEntity.sortTopStacks();
+      }
     }
   }
 
@@ -106,9 +103,9 @@ public class CrystalChestTileEntity extends GenericIronChestTileEntity {
       }
 
       if (this.level != null) {
-        BlockState iblockstate = this.level.getBlockState(this.worldPosition);
+        BlockState blockState = this.level.getBlockState(this.worldPosition);
 
-        this.level.sendBlockUpdated(this.worldPosition, iblockstate, iblockstate, 3);
+        this.level.sendBlockUpdated(this.worldPosition, blockState, blockState, 3);
       }
 
       return;
@@ -116,43 +113,41 @@ public class CrystalChestTileEntity extends GenericIronChestTileEntity {
 
     this.hadStuff = true;
 
-    Collections.sort(tempCopy, (stack1, stack2) -> {
+    tempCopy.sort((stack1, stack2) -> {
       if (stack1.isEmpty()) {
         return 1;
-      }
-      else if (stack2.isEmpty()) {
+      } else if (stack2.isEmpty()) {
         return -1;
-      }
-      else {
+      } else {
         return stack2.getCount() - stack1.getCount();
       }
     });
 
-    int p = 0;
+    int slot = 0;
 
-    for (ItemStack element : tempCopy) {
-      if (!element.isEmpty() && element.getCount() > 0) {
-        if (p == this.getTopItems().size()) {
+    for (ItemStack itemStack : tempCopy) {
+      if (!itemStack.isEmpty() && itemStack.getCount() > 0) {
+        if (slot == this.getTopItems().size()) {
           break;
         }
 
-        this.getTopItems().set(p, element);
+        this.getTopItems().set(slot, itemStack);
 
-        p++;
+        slot++;
       }
     }
 
-    for (int i = p; i < this.getTopItems().size(); i++) {
+    for (int i = slot; i < this.getTopItems().size(); i++) {
       this.getTopItems().set(i, ItemStack.EMPTY);
     }
 
     if (this.level != null) {
-      BlockState iblockstate = this.level.getBlockState(this.worldPosition);
+      BlockState blockState = this.level.getBlockState(this.worldPosition);
 
-      this.level.sendBlockUpdated(this.worldPosition, iblockstate, iblockstate, 3);
+      this.level.sendBlockUpdated(this.worldPosition, blockState, blockState, 3);
     }
 
-    sendTopStacksPacket();
+    this.sendTopStacksPacket();
   }
 
   public NonNullList<ItemStack> buildItemStackDataList() {
@@ -164,8 +159,7 @@ public class CrystalChestTileEntity extends GenericIronChestTileEntity {
       for (ItemStack is : this.topStacks) {
         if (!is.isEmpty()) {
           sortList.set(pos, is);
-        }
-        else {
+        } else {
           sortList.set(pos, ItemStack.EMPTY);
         }
 

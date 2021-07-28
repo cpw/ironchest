@@ -1,21 +1,22 @@
 package com.progwml6.ironchest.common.block;
 
-import com.progwml6.ironchest.common.block.tileentity.DiamondChestTileEntity;
-import com.progwml6.ironchest.common.block.tileentity.IronChestsTileEntityTypes;
-import net.minecraft.world.level.block.state.BlockState;
+import com.progwml6.ironchest.common.block.entity.DiamondChestBlockEntity;
+import com.progwml6.ironchest.common.block.entity.IronChestsBlockEntityTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import javax.annotation.Nullable;
 
-public class DiamondChestBlock extends GenericIronChestBlock {
+public class DiamondChestBlock extends AbstractIronChestBlock {
 
   public DiamondChestBlock(Properties properties) {
-    super(IronChestsTypes.DIAMOND, IronChestsTileEntityTypes.DIAMOND_CHEST::get, properties);
+    super(properties, IronChestsBlockEntityTypes.DIAMOND_CHEST::get, IronChestsTypes.DIAMOND);
   }
 
+  @Nullable
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new DiamondChestTileEntity();
+  public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    return new DiamondChestBlockEntity(blockPos, blockState);
   }
 }

@@ -37,7 +37,7 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
   }
 
   @Override
-  protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer) {
+  protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
     this.addChestsRecipes(consumer);
     this.addUpgradesRecipes(consumer);
   }
@@ -363,7 +363,7 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
   }
 
   private static ResourceLocation location(String id) {
-    return new ResourceLocation(IronChests.MODID, id);
+    return new ResourceLocation(IronChests.MOD_ID, id);
   }
 
   private static Tags.IOptionalNamedTag<Item> tag(String name) {

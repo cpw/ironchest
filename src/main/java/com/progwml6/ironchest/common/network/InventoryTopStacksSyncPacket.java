@@ -1,6 +1,6 @@
 package com.progwml6.ironchest.common.network;
 
-import com.progwml6.ironchest.common.block.tileentity.CrystalChestTileEntity;
+import com.progwml6.ironchest.common.block.entity.CrystalChestBlockEntity;
 import com.progwml6.ironchest.common.network.helper.IThreadsafePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class InventoryTopStacksSyncPacket implements IThreadsafePacket {
 
@@ -48,7 +48,7 @@ public class InventoryTopStacksSyncPacket implements IThreadsafePacket {
   }
 
   @Override
-  public void handleThreadsafe(Context context) {
+  public void handleThreadsafe(NetworkEvent.Context context) {
     HandleClient.handle(this);
   }
 
@@ -64,8 +64,9 @@ public class InventoryTopStacksSyncPacket implements IThreadsafePacket {
         BlockEntity te = world.getBlockEntity(packet.pos);
 
         if (te != null) {
-          if (te instanceof CrystalChestTileEntity) {
-            ((CrystalChestTileEntity) te).receiveMessageFromServer(packet.topStacks);
+          if (te instanceof CrystalChestBlockEntity) {
+            ((CrystalChestBlockEntity) te).receiveMessageFromServer(packet.topStacks);
+
             Minecraft.getInstance().levelRenderer.blockChanged(null, packet.pos, null, null, 0);
           }
         }

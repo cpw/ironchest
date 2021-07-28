@@ -13,11 +13,11 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkRegistry;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -34,7 +34,7 @@ public class IronChestNetwork {
   private static final String PROTOCOL_VERSION = Integer.toString(1);
 
   public IronChestNetwork() {
-    this.network = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(IronChests.MODID, "network"))
+    this.network = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(IronChests.MOD_ID, "network"))
       .clientAcceptedVersions(PROTOCOL_VERSION::equals)
       .serverAcceptedVersions(PROTOCOL_VERSION::equals)
       .networkProtocolVersion(() -> PROTOCOL_VERSION)
@@ -179,7 +179,7 @@ public class IronChestNetwork {
   }
 
   /**
-   * Same as {@link #sendToClientsAround(Object, ServerWorld, BlockPos)}, but checks that the world is a serverworld
+   * Same as {@link #sendToClientsAround(Object, ServerLevel, BlockPos)}, but checks that the world is a level accessor
    *
    * @param msg      Packet to send
    * @param world    World instance

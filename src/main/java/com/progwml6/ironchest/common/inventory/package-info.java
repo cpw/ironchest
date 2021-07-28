@@ -2,6 +2,6 @@
 @MethodsReturnNonnullByDefault
 package com.progwml6.ironchest.common.inventory;
 
-import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

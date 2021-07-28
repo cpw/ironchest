@@ -1,8 +1,8 @@
 package com.progwml6.ironchest.common.item;
 
-import com.progwml6.ironchest.common.block.GenericIronChestBlock;
+import com.progwml6.ironchest.common.block.AbstractIronChestBlock;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
-import com.progwml6.ironchest.common.block.tileentity.GenericIronChestTileEntity;
+import com.progwml6.ironchest.common.block.entity.AbstractIronChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.item.TooltipFlag;
@@ -17,13 +17,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class ChestUpgradeItem extends Item {
 
@@ -32,12 +28,6 @@ public class ChestUpgradeItem extends Item {
   public ChestUpgradeItem(IronChestsUpgradeType type, Properties properties) {
     super(properties);
     this.type = type;
-  }
-
-  @Override
-  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    //tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc").applyTextStyle(TextFormatting.GRAY));
   }
 
   @Override
@@ -59,8 +49,7 @@ public class ChestUpgradeItem extends Item {
       if (!(world.getBlockState(blockPos).getBlock() instanceof ChestBlock)) {
         return InteractionResult.PASS;
       }
-    }
-    else {
+    } else {
       if (world.getBlockState(blockPos).getBlock().defaultBlockState() != IronChestsTypes.get(this.type.source).defaultBlockState()) {
         return InteractionResult.PASS;
       }
@@ -74,17 +63,17 @@ public class ChestUpgradeItem extends Item {
       }
     }
 
-    GenericIronChestTileEntity newChest = null;
+    AbstractIronChestBlockEntity newChest = null;
     Component customName = null;
     NonNullList<ItemStack> chestContents = NonNullList.withSize(27, ItemStack.EMPTY);
     Direction chestFacing = Direction.NORTH;
+    BlockState iBlockState = IronChestsTypes.get(this.type.target).defaultBlockState();
 
     if (tileEntity != null) {
-      if (tileEntity instanceof GenericIronChestTileEntity) {
-        GenericIronChestTileEntity chest = (GenericIronChestTileEntity) tileEntity;
+      if (tileEntity instanceof AbstractIronChestBlockEntity chest) {
         BlockState chestState = world.getBlockState(blockPos);
 
-        if (GenericIronChestTileEntity.getPlayersUsing(world, blockPos) > 0) {
+        if (AbstractIronChestBlockEntity.getOpenCount(world, blockPos) > 0) {
           return InteractionResult.PASS;
         }
 
@@ -93,18 +82,13 @@ public class ChestUpgradeItem extends Item {
         }
 
         chestContents = chest.getItems();
-        chestFacing = chestState.getValue(GenericIronChestBlock.FACING);
+        chestFacing = chestState.getValue(AbstractIronChestBlock.FACING);
         customName = chest.getCustomName();
-        newChest = this.type.target.makeEntity();
-
-        if (newChest == null) {
-          return InteractionResult.PASS;
-        }
-      }
-      else if (tileEntity instanceof ChestBlockEntity) {
+        iBlockState = iBlockState.setValue(AbstractIronChestBlock.FACING, chestFacing);
+        newChest = this.type.target.makeEntity(blockPos, iBlockState);
+      } else if (tileEntity instanceof ChestBlockEntity chest) {
         BlockState chestState = world.getBlockState(blockPos);
         chestFacing = chestState.getValue(ChestBlock.FACING);
-        ChestBlockEntity chest = (ChestBlockEntity) tileEntity;
 
         if (ChestBlockEntity.getOpenCount(world, blockPos) > 0) {
           return InteractionResult.PASS;
@@ -126,33 +110,35 @@ public class ChestUpgradeItem extends Item {
 
         customName = chest.getCustomName();
 
-        newChest = this.type.target.makeEntity();
+        iBlockState = iBlockState.setValue(AbstractIronChestBlock.FACING, chestFacing);
+
+        newChest = this.type.target.makeEntity(blockPos, iBlockState);
       }
     }
 
-    tileEntity.clearCache();
+    if (newChest == null) {
+      return InteractionResult.PASS;
+    }
 
     world.removeBlockEntity(blockPos);
     world.removeBlock(blockPos, false);
 
-    BlockState iBlockState = IronChestsTypes.get(this.type.target).defaultBlockState().setValue(GenericIronChestBlock.FACING, chestFacing);
-
     world.setBlock(blockPos, iBlockState, 3);
-    world.setBlockEntity(blockPos, newChest);
+    world.setBlockEntity(newChest);
 
     world.sendBlockUpdated(blockPos, iBlockState, iBlockState, 3);
 
     BlockEntity tileEntity2 = world.getBlockEntity(blockPos);
 
-    if (tileEntity2 instanceof GenericIronChestTileEntity) {
+    if (tileEntity2 instanceof AbstractIronChestBlockEntity) {
       if (customName != null) {
-        ((GenericIronChestTileEntity) tileEntity2).setCustomName(customName);
+        ((AbstractIronChestBlockEntity) tileEntity2).setCustomName(customName);
       }
 
-      ((GenericIronChestTileEntity) tileEntity2).setItems(chestContents);
+      ((AbstractIronChestBlockEntity) tileEntity2).setItems(chestContents);
     }
 
-    if (!entityPlayer.abilities.instabuild) {
+    if (!entityPlayer.getAbilities().instabuild) {
       itemStack.shrink(1);
     }
 

@@ -1,21 +1,22 @@
 package com.progwml6.ironchest.common.block;
 
-import com.progwml6.ironchest.common.block.tileentity.CopperChestTileEntity;
-import com.progwml6.ironchest.common.block.tileentity.IronChestsTileEntityTypes;
-import net.minecraft.world.level.block.state.BlockState;
+import com.progwml6.ironchest.common.block.entity.CopperChestBlockEntity;
+import com.progwml6.ironchest.common.block.entity.IronChestsBlockEntityTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import javax.annotation.Nullable;
 
-public class CopperChestBlock extends GenericIronChestBlock {
+public class CopperChestBlock extends AbstractIronChestBlock {
 
   public CopperChestBlock(Properties properties) {
-    super(IronChestsTypes.COPPER, IronChestsTileEntityTypes.COPPER_CHEST::get, properties);
+    super(properties, IronChestsBlockEntityTypes.COPPER_CHEST::get, IronChestsTypes.COPPER);
   }
 
+  @Nullable
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new CopperChestTileEntity();
+  public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    return new CopperChestBlockEntity(blockPos, blockState);
   }
 }

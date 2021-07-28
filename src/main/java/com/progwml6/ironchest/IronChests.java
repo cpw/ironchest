@@ -1,14 +1,15 @@
 package com.progwml6.ironchest;
 
 import com.progwml6.ironchest.client.screen.IronChestScreen;
-import com.progwml6.ironchest.client.render.IronChestTileEntityRenderer;
+import com.progwml6.ironchest.client.render.IronChestRenderer;
+import com.progwml6.ironchest.common.block.entity.IronChestsBlockEntityTypes;
 import com.progwml6.ironchest.common.block.IronChestsBlocks;
-import com.progwml6.ironchest.common.block.tileentity.IronChestsTileEntityTypes;
 import com.progwml6.ironchest.common.data.IronChestsRecipeProvider;
 import com.progwml6.ironchest.common.inventory.IronChestsContainerTypes;
 import com.progwml6.ironchest.common.item.IronChestsItems;
 import com.progwml6.ironchest.common.network.IronChestNetwork;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -16,17 +17,16 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
-@Mod(IronChests.MODID)
+@Mod(IronChests.MOD_ID)
 public class IronChests {
 
-  public static final String MODID = "ironchest";
+  public static final String MOD_ID = "ironchest";
 
   public static final CreativeModeTab IRONCHESTS_ITEM_GROUP = (new CreativeModeTab("ironchest") {
     @Override
@@ -53,7 +53,7 @@ public class IronChests {
     // Registry objects
     IronChestsBlocks.BLOCKS.register(modBus);
     IronChestsItems.ITEMS.register(modBus);
-    IronChestsTileEntityTypes.TILE_ENTITIES.register(modBus);
+    IronChestsBlockEntityTypes.BLOCK_ENTITIES.register(modBus);
     IronChestsContainerTypes.CONTAINERS.register(modBus);
   }
 
@@ -68,14 +68,14 @@ public class IronChests {
     MenuScreens.register(IronChestsContainerTypes.OBSIDIAN_CHEST.get(), IronChestScreen::new);
     MenuScreens.register(IronChestsContainerTypes.DIRT_CHEST.get(), IronChestScreen::new);
 
-    ClientRegistry.bindTileEntityRenderer(IronChestsTileEntityTypes.IRON_CHEST.get(), IronChestTileEntityRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(IronChestsTileEntityTypes.GOLD_CHEST.get(), IronChestTileEntityRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(IronChestsTileEntityTypes.DIAMOND_CHEST.get(), IronChestTileEntityRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(IronChestsTileEntityTypes.COPPER_CHEST.get(), IronChestTileEntityRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(IronChestsTileEntityTypes.SILVER_CHEST.get(), IronChestTileEntityRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(IronChestsTileEntityTypes.CRYSTAL_CHEST.get(), IronChestTileEntityRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(IronChestsTileEntityTypes.OBSIDIAN_CHEST.get(), IronChestTileEntityRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(IronChestsTileEntityTypes.DIRT_CHEST.get(), IronChestTileEntityRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.IRON_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.GOLD_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.DIAMOND_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.COPPER_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.SILVER_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.CRYSTAL_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.OBSIDIAN_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.DIRT_CHEST.get(), IronChestRenderer::new);
   }
 
   private void setup(final FMLCommonSetupEvent event) {

@@ -1,22 +1,23 @@
 package com.progwml6.ironchest.common.block;
 
-import com.progwml6.ironchest.common.block.tileentity.IronChestsTileEntityTypes;
-import com.progwml6.ironchest.common.block.tileentity.ObsidianChestTileEntity;
-import com.progwml6.ironchest.common.block.tileentity.SilverChestTileEntity;
-import net.minecraft.world.level.block.state.BlockState;
+import com.progwml6.ironchest.common.block.entity.IronChestsBlockEntityTypes;
+import com.progwml6.ironchest.common.block.entity.ObsidianChestBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import javax.annotation.Nullable;
 
-public class ObsidianChestBlock extends GenericIronChestBlock {
+public class ObsidianChestBlock extends AbstractIronChestBlock {
 
-  public ObsidianChestBlock(Properties properties) {
-    super(IronChestsTypes.OBSIDIAN, IronChestsTileEntityTypes.OBSIDIAN_CHEST::get, properties);
+  public ObsidianChestBlock(BlockBehaviour.Properties properties) {
+    super(properties, IronChestsBlockEntityTypes.GOLD_CHEST::get, IronChestsTypes.GOLD);
   }
 
+  @Nullable
   @Override
-  public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-    return new ObsidianChestTileEntity();
+  public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    return new ObsidianChestBlockEntity(blockPos, blockState);
   }
 }
