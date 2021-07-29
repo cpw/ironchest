@@ -3,7 +3,6 @@ package com.progwml6.ironchest.common.block;
 import com.progwml6.ironchest.common.block.entity.AbstractIronChestBlockEntity;
 import com.progwml6.ironchest.common.block.entity.CrystalChestBlockEntity;
 import com.progwml6.ironchest.common.block.entity.IronChestsBlockEntityTypes;
-import com.progwml6.ironchest.common.block.entity.SilverChestBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;

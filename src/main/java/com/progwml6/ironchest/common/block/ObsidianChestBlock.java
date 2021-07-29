@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 public class ObsidianChestBlock extends AbstractIronChestBlock {
 
   public ObsidianChestBlock(BlockBehaviour.Properties properties) {
-    super(properties, IronChestsBlockEntityTypes.GOLD_CHEST::get, IronChestsTypes.GOLD);
+    super(properties, IronChestsBlockEntityTypes.OBSIDIAN_CHEST::get, IronChestsTypes.OBSIDIAN);
   }
 
   @Nullable
