@@ -1,7 +1,7 @@
 package com.progwml6.ironchest.common.ai;
 
-import com.progwml6.ironchest.common.block.AbstractIronChestBlock;
-import com.progwml6.ironchest.common.block.entity.AbstractIronChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.AbstractIronChestBlock;
+import com.progwml6.ironchest.common.block.regular.entity.AbstractIronChestBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.ai.goal.CatSitOnBlockGoal;

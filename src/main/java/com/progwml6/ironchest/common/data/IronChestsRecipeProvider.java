@@ -8,6 +8,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -30,7 +31,6 @@ import java.util.function.Consumer;
 public class IronChestsRecipeProvider extends RecipeProvider implements IConditionBuilder {
 
   public static final Tags.IOptionalNamedTag<Item> INGOTS_COPPER = tag("ingots/copper");
-  public static final Tags.IOptionalNamedTag<Item> INGOTS_SILVER = tag("ingots/silver");
 
   public IronChestsRecipeProvider(DataGenerator generatorIn) {
     super(generatorIn);
@@ -100,6 +100,48 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
       .unlockedBy("has_iron_ingot", has(Blocks.DIRT))
       .save(consumer, location(folder + "vanilla_dirt_chest"));
 
+    ShapelessRecipeBuilder.shapeless(IronChestsBlocks.TRAPPED_IRON_CHEST.get())
+      .requires(IronChestsBlocks.IRON_CHEST.get())
+      .requires(Blocks.TRIPWIRE_HOOK)
+      .unlockedBy("has_tripwire_hook", has(Blocks.TRIPWIRE_HOOK))
+      .save(consumer, location(folder + "trapped_iron_chest"));
+
+    ShapelessRecipeBuilder.shapeless(IronChestsBlocks.TRAPPED_GOLD_CHEST.get())
+      .requires(IronChestsBlocks.GOLD_CHEST.get())
+      .requires(Blocks.TRIPWIRE_HOOK)
+      .unlockedBy("has_tripwire_hook", has(Blocks.TRIPWIRE_HOOK))
+      .save(consumer, location(folder + "trapped_gold_chest"));
+
+    ShapelessRecipeBuilder.shapeless(IronChestsBlocks.TRAPPED_DIAMOND_CHEST.get())
+      .requires(IronChestsBlocks.DIAMOND_CHEST.get())
+      .requires(Blocks.TRIPWIRE_HOOK)
+      .unlockedBy("has_tripwire_hook", has(Blocks.TRIPWIRE_HOOK))
+      .save(consumer, location(folder + "trapped_diamond_chest"));
+
+    ShapelessRecipeBuilder.shapeless(IronChestsBlocks.TRAPPED_COPPER_CHEST.get())
+      .requires(IronChestsBlocks.COPPER_CHEST.get())
+      .requires(Blocks.TRIPWIRE_HOOK)
+      .unlockedBy("has_tripwire_hook", has(Blocks.TRIPWIRE_HOOK))
+      .save(consumer, location(folder + "trapped_copper_chest"));
+
+    ShapelessRecipeBuilder.shapeless(IronChestsBlocks.TRAPPED_CRYSTAL_CHEST.get())
+      .requires(IronChestsBlocks.CRYSTAL_CHEST.get())
+      .requires(Blocks.TRIPWIRE_HOOK)
+      .unlockedBy("has_tripwire_hook", has(Blocks.TRIPWIRE_HOOK))
+      .save(consumer, location(folder + "trapped_crystal_chest"));
+
+    ShapelessRecipeBuilder.shapeless(IronChestsBlocks.TRAPPED_OBSIDIAN_CHEST.get())
+      .requires(IronChestsBlocks.OBSIDIAN_CHEST.get())
+      .requires(Blocks.TRIPWIRE_HOOK)
+      .unlockedBy("has_tripwire_hook", has(Blocks.TRIPWIRE_HOOK))
+      .save(consumer, location(folder + "trapped_obsidian_chest"));
+
+    ShapelessRecipeBuilder.shapeless(IronChestsBlocks.TRAPPED_DIRT_CHEST.get())
+      .requires(IronChestsBlocks.DIRT_CHEST.get())
+      .requires(Blocks.TRIPWIRE_HOOK)
+      .unlockedBy("has_tripwire_hook", has(Blocks.TRIPWIRE_HOOK))
+      .save(consumer, location(folder + "trapped_dirt_chest"));
+
     ResourceLocation copperToIronChest = location(folder + "copper_iron_chest");
     ConditionalRecipe.builder()
       .addCondition(not(new TagEmptyCondition("forge:ingots/copper")))
@@ -121,47 +163,6 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
           .requirements(RequirementsStrategy.OR))
       ).build(consumer, copperToIronChest);
 
-    ResourceLocation copperToSilverChest = location(folder + "copper_silver_chest");
-    ConditionalRecipe.builder()
-      .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
-      .addRecipe(ShapedRecipeBuilder.shaped(IronChestsBlocks.SILVER_CHEST.get())
-        .define('M', INGOTS_SILVER)
-        .define('S', IronChestsBlocks.COPPER_CHEST.get())
-        .pattern("MMM")
-        .pattern("MSM")
-        .pattern("MMM")
-        .unlockedBy("has_item", has(INGOTS_SILVER))::save)
-      .setAdvancement(location("recipes/ironchest/chests/copper_silver_chest"), ConditionalAdvancement.builder()
-        .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
-        .addAdvancement(Advancement.Builder.advancement()
-          .parent(new ResourceLocation("recipes/root"))
-          .rewards(AdvancementRewards.Builder.recipe(copperToSilverChest))
-          .addCriterion("has_item", has(INGOTS_SILVER))
-          .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(copperToSilverChest))
-          .requirements(RequirementsStrategy.OR))
-      ).build(consumer, copperToSilverChest);
-
-    ResourceLocation ironToSilverChest = location(folder + "iron_silver_chest");
-    ConditionalRecipe.builder()
-      .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
-      .addRecipe(ShapedRecipeBuilder.shaped(IronChestsBlocks.SILVER_CHEST.get())
-        .define('M', INGOTS_SILVER)
-        .define('S', IronChestsBlocks.IRON_CHEST.get())
-        .define('G', Tags.Items.GLASS)
-        .pattern("MGM")
-        .pattern("MSM")
-        .pattern("MGM")
-        .unlockedBy("has_item", has(INGOTS_SILVER))::save)
-      .setAdvancement(location("recipes/ironchest/chests/iron_silver_chest"), ConditionalAdvancement.builder()
-        .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
-        .addAdvancement(Advancement.Builder.advancement()
-          .parent(new ResourceLocation("recipes/root"))
-          .rewards(AdvancementRewards.Builder.recipe(ironToSilverChest))
-          .addCriterion("has_item", has(INGOTS_SILVER))
-          .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(ironToSilverChest))
-          .requirements(RequirementsStrategy.OR))
-      ).build(consumer, ironToSilverChest);
-
     ResourceLocation vanillaToCopperChest = location(folder + "vanilla_copper_chest");
     ConditionalRecipe.builder()
       .addCondition(not(new TagEmptyCondition("forge:ingots/copper")))
@@ -173,7 +174,7 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
         .pattern("MMM")
         .unlockedBy("has_item", has(INGOTS_COPPER))::save)
       .setAdvancement(location("recipes/ironchest/chests/vanilla_copper_chest"), ConditionalAdvancement.builder()
-        .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
+        .addCondition(not(new TagEmptyCondition("forge:ingots/copper")))
         .addAdvancement(Advancement.Builder.advancement()
           .parent(new ResourceLocation("recipes/root"))
           .rewards(AdvancementRewards.Builder.recipe(vanillaToCopperChest))
@@ -181,48 +182,6 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
           .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(vanillaToCopperChest))
           .requirements(RequirementsStrategy.OR))
       ).build(consumer, vanillaToCopperChest);
-
-    ResourceLocation silverToGoldChest = location(folder + "silver_gold_chest");
-    ConditionalRecipe.builder()
-      .addCondition(not(new TagEmptyCondition("forge:ingots/copper")))
-      .addRecipe(ShapedRecipeBuilder.shaped(IronChestsBlocks.GOLD_CHEST.get())
-        .define('M', Tags.Items.INGOTS_GOLD)
-        .define('S', IronChestsBlocks.SILVER_CHEST.get())
-        .define('G', Tags.Items.GLASS)
-        .pattern("MGM")
-        .pattern("GSG")
-        .pattern("MGM")
-        .unlockedBy("has_item", has(INGOTS_SILVER))::save)
-      .setAdvancement(location("recipes/ironchest/chests/silver_gold_chest"), ConditionalAdvancement.builder()
-        .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
-        .addAdvancement(Advancement.Builder.advancement()
-          .parent(new ResourceLocation("recipes/root"))
-          .rewards(AdvancementRewards.Builder.recipe(silverToGoldChest))
-          .addCriterion("has_item", has(INGOTS_SILVER))
-          .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(silverToGoldChest))
-          .requirements(RequirementsStrategy.OR))
-      ).build(consumer, silverToGoldChest);
-
-    ResourceLocation silverToDiamondChest = location(folder + "silver_diamond_chest");
-    ConditionalRecipe.builder()
-      .addCondition(not(new TagEmptyCondition("forge:ingots/copper")))
-      .addRecipe(ShapedRecipeBuilder.shaped(IronChestsBlocks.DIAMOND_CHEST.get())
-        .define('M', Tags.Items.GEMS_DIAMOND)
-        .define('S', IronChestsBlocks.SILVER_CHEST.get())
-        .define('G', Tags.Items.GLASS)
-        .pattern("GGG")
-        .pattern("GSG")
-        .pattern("MMM")
-        .unlockedBy("has_item", has(Tags.Items.GEMS_DIAMOND))::save)
-      .setAdvancement(location("recipes/ironchest/chests/silver_diamond_chest"), ConditionalAdvancement.builder()
-        .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
-        .addAdvancement(Advancement.Builder.advancement()
-          .parent(new ResourceLocation("recipes/root"))
-          .rewards(AdvancementRewards.Builder.recipe(silverToDiamondChest))
-          .addCriterion("has_item", has(Tags.Items.GEMS_DIAMOND))
-          .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(silverToDiamondChest))
-          .requirements(RequirementsStrategy.OR))
-      ).build(consumer, silverToDiamondChest);
   }
 
   private void addUpgradesRecipes(Consumer<FinishedRecipe> consumer) {
@@ -314,47 +273,6 @@ public class IronChestsRecipeProvider extends RecipeProvider implements IConditi
           .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(copperToIronChestUpgrade))
           .requirements(RequirementsStrategy.OR))
       ).build(consumer, copperToIronChestUpgrade);
-
-    ResourceLocation copperToSilverChestUpgrade = prefix(IronChestsItems.UPGRADES.get(IronChestsUpgradeType.COPPER_TO_SILVER).get(), folder);
-    ConditionalRecipe.builder()
-      .addCondition(and(not(new TagEmptyCondition("forge:ingots/copper")), not(new TagEmptyCondition("forge:ingots/silver"))))
-      .addRecipe(ShapedRecipeBuilder.shaped(IronChestsItems.UPGRADES.get(IronChestsUpgradeType.COPPER_TO_SILVER).get())
-        .define('M', INGOTS_SILVER)
-        .define('S', INGOTS_COPPER)
-        .pattern("MMM")
-        .pattern("MSM")
-        .pattern("MMM")
-        .unlockedBy("has_item", has(INGOTS_COPPER))::save)
-      .setAdvancement(location("recipes/ironchest/upgrades/copper_to_silver_chest_upgrade"), ConditionalAdvancement.builder()
-        .addCondition(and(not(new TagEmptyCondition("forge:ingots/copper")), not(new TagEmptyCondition("forge:ingots/silver"))))
-        .addAdvancement(Advancement.Builder.advancement()
-          .parent(new ResourceLocation("recipes/root"))
-          .rewards(AdvancementRewards.Builder.recipe(copperToSilverChestUpgrade))
-          .addCriterion("has_item", has(INGOTS_COPPER))
-          .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(copperToSilverChestUpgrade))
-          .requirements(RequirementsStrategy.OR))
-      ).build(consumer, copperToSilverChestUpgrade);
-
-    ResourceLocation silverToGoldChestUpgrade = prefix(IronChestsItems.UPGRADES.get(IronChestsUpgradeType.SILVER_TO_GOLD).get(), folder);
-    ConditionalRecipe.builder()
-      .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
-      .addRecipe(ShapedRecipeBuilder.shaped(IronChestsItems.UPGRADES.get(IronChestsUpgradeType.SILVER_TO_GOLD).get())
-        .define('M', Tags.Items.INGOTS_GOLD)
-        .define('S', INGOTS_SILVER)
-        .define('G', Tags.Items.GLASS)
-        .pattern("MGM")
-        .pattern("GSG")
-        .pattern("MGM")
-        .unlockedBy("has_item", has(Tags.Items.GLASS))::save)
-      .setAdvancement(location("recipes/ironchest/upgrades/silver_to_gold_chest_upgrade"), ConditionalAdvancement.builder()
-        .addCondition(not(new TagEmptyCondition("forge:ingots/silver")))
-        .addAdvancement(Advancement.Builder.advancement()
-          .parent(new ResourceLocation("recipes/root"))
-          .rewards(AdvancementRewards.Builder.recipe(silverToGoldChestUpgrade))
-          .addCriterion("has_item", has(Tags.Items.GLASS))
-          .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(silverToGoldChestUpgrade))
-          .requirements(RequirementsStrategy.OR))
-      ).build(consumer, silverToGoldChestUpgrade);
   }
 
   protected static ResourceLocation prefix(ItemLike item, String prefix) {

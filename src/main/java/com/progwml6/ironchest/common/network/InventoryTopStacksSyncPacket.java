@@ -1,6 +1,6 @@
 package com.progwml6.ironchest.common.network;
 
-import com.progwml6.ironchest.common.block.entity.CrystalChestBlockEntity;
+import com.progwml6.ironchest.common.block.entity.ICrystalChest;
 import com.progwml6.ironchest.common.network.helper.IThreadsafePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
@@ -64,8 +64,8 @@ public class InventoryTopStacksSyncPacket implements IThreadsafePacket {
         BlockEntity te = world.getBlockEntity(packet.pos);
 
         if (te != null) {
-          if (te instanceof CrystalChestBlockEntity) {
-            ((CrystalChestBlockEntity) te).receiveMessageFromServer(packet.topStacks);
+          if (te instanceof ICrystalChest) {
+            ((ICrystalChest) te).receiveMessageFromServer(packet.topStacks);
 
             Minecraft.getInstance().levelRenderer.blockChanged(null, packet.pos, null, null, 0);
           }

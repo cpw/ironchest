@@ -64,7 +64,6 @@ public class IronChests {
     MenuScreens.register(IronChestsContainerTypes.DIAMOND_CHEST.get(), IronChestScreen::new);
     MenuScreens.register(IronChestsContainerTypes.CRYSTAL_CHEST.get(), IronChestScreen::new);
     MenuScreens.register(IronChestsContainerTypes.COPPER_CHEST.get(), IronChestScreen::new);
-    MenuScreens.register(IronChestsContainerTypes.SILVER_CHEST.get(), IronChestScreen::new);
     MenuScreens.register(IronChestsContainerTypes.OBSIDIAN_CHEST.get(), IronChestScreen::new);
     MenuScreens.register(IronChestsContainerTypes.DIRT_CHEST.get(), IronChestScreen::new);
 
@@ -72,10 +71,17 @@ public class IronChests {
     BlockEntityRenderers.register(IronChestsBlockEntityTypes.GOLD_CHEST.get(), IronChestRenderer::new);
     BlockEntityRenderers.register(IronChestsBlockEntityTypes.DIAMOND_CHEST.get(), IronChestRenderer::new);
     BlockEntityRenderers.register(IronChestsBlockEntityTypes.COPPER_CHEST.get(), IronChestRenderer::new);
-    BlockEntityRenderers.register(IronChestsBlockEntityTypes.SILVER_CHEST.get(), IronChestRenderer::new);
     BlockEntityRenderers.register(IronChestsBlockEntityTypes.CRYSTAL_CHEST.get(), IronChestRenderer::new);
     BlockEntityRenderers.register(IronChestsBlockEntityTypes.OBSIDIAN_CHEST.get(), IronChestRenderer::new);
     BlockEntityRenderers.register(IronChestsBlockEntityTypes.DIRT_CHEST.get(), IronChestRenderer::new);
+
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.TRAPPED_IRON_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.TRAPPED_GOLD_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.TRAPPED_DIAMOND_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.TRAPPED_COPPER_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.TRAPPED_CRYSTAL_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.TRAPPED_OBSIDIAN_CHEST.get(), IronChestRenderer::new);
+    BlockEntityRenderers.register(IronChestsBlockEntityTypes.TRAPPED_DIRT_CHEST.get(), IronChestRenderer::new);
   }
 
   private void setup(final FMLCommonSetupEvent event) {

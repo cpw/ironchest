@@ -1,15 +1,21 @@
 package com.progwml6.ironchest.common.block;
 
 import com.progwml6.ironchest.common.Util;
-import com.progwml6.ironchest.common.block.entity.AbstractIronChestBlockEntity;
-import com.progwml6.ironchest.common.block.entity.CopperChestBlockEntity;
-import com.progwml6.ironchest.common.block.entity.CrystalChestBlockEntity;
-import com.progwml6.ironchest.common.block.entity.DiamondChestBlockEntity;
-import com.progwml6.ironchest.common.block.entity.DirtChestBlockEntity;
-import com.progwml6.ironchest.common.block.entity.GoldChestBlockEntity;
-import com.progwml6.ironchest.common.block.entity.IronChestBlockEntity;
-import com.progwml6.ironchest.common.block.entity.ObsidianChestBlockEntity;
-import com.progwml6.ironchest.common.block.entity.SilverChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.entity.AbstractIronChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.entity.CopperChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.entity.CrystalChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.entity.DiamondChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.entity.DirtChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.entity.GoldChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.entity.IronChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.entity.ObsidianChestBlockEntity;
+import com.progwml6.ironchest.common.block.trapped.entity.TrappedCopperChestBlockEntity;
+import com.progwml6.ironchest.common.block.trapped.entity.TrappedCrystalChestBlockEntity;
+import com.progwml6.ironchest.common.block.trapped.entity.TrappedDiamondChestBlockEntity;
+import com.progwml6.ironchest.common.block.trapped.entity.TrappedDirtChestBlockEntity;
+import com.progwml6.ironchest.common.block.trapped.entity.TrappedGoldChestBlockEntity;
+import com.progwml6.ironchest.common.block.trapped.entity.TrappedIronChestBlockEntity;
+import com.progwml6.ironchest.common.block.trapped.entity.TrappedObsidianChestBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -18,6 +24,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 public enum IronChestsTypes implements StringRepresentable {
@@ -26,7 +34,6 @@ public enum IronChestsTypes implements StringRepresentable {
   GOLD(81, 9, 184, 276, new ResourceLocation("ironchest", "textures/gui/gold_container.png"), 256, 276),
   DIAMOND(108, 12, 238, 276, new ResourceLocation("ironchest", "textures/gui/diamond_container.png"), 256, 276),
   COPPER(45, 9, 184, 204, new ResourceLocation("ironchest", "textures/gui/copper_container.png"), 256, 256),
-  SILVER(72, 9, 184, 258, new ResourceLocation("ironchest", "textures/gui/silver_container.png"), 256, 276),
   CRYSTAL(108, 12, 238, 276, new ResourceLocation("ironchest", "textures/gui/diamond_container.png"), 256, 276),
   OBSIDIAN(108, 12, 238, 276, new ResourceLocation("ironchest", "textures/gui/diamond_container.png"), 256, 276),
   DIRT(1, 1, 184, 184, new ResourceLocation("ironchest", "textures/gui/dirt_container.png"), 256, 256),
@@ -77,32 +84,43 @@ public enum IronChestsTypes implements StringRepresentable {
     return this == CRYSTAL;
   }
 
-  public static Block get(IronChestsTypes type) {
+  public static List<Block> get(IronChestsTypes type) {
     return switch (type) {
-      case IRON -> IronChestsBlocks.IRON_CHEST.get();
-      case GOLD -> IronChestsBlocks.GOLD_CHEST.get();
-      case DIAMOND -> IronChestsBlocks.DIAMOND_CHEST.get();
-      case COPPER -> IronChestsBlocks.COPPER_CHEST.get();
-      case SILVER -> IronChestsBlocks.SILVER_CHEST.get();
-      case CRYSTAL -> IronChestsBlocks.CRYSTAL_CHEST.get();
-      case OBSIDIAN -> IronChestsBlocks.OBSIDIAN_CHEST.get();
-      case DIRT -> IronChestsBlocks.DIRT_CHEST.get();
-      default -> Blocks.CHEST;
+      case IRON -> Arrays.asList(IronChestsBlocks.IRON_CHEST.get(), IronChestsBlocks.TRAPPED_IRON_CHEST.get());
+      case GOLD -> Arrays.asList(IronChestsBlocks.GOLD_CHEST.get(), IronChestsBlocks.TRAPPED_GOLD_CHEST.get());
+      case DIAMOND -> Arrays.asList(IronChestsBlocks.DIAMOND_CHEST.get(), IronChestsBlocks.TRAPPED_DIAMOND_CHEST.get());
+      case COPPER -> Arrays.asList(IronChestsBlocks.COPPER_CHEST.get(), IronChestsBlocks.TRAPPED_COPPER_CHEST.get());
+      case CRYSTAL -> Arrays.asList(IronChestsBlocks.CRYSTAL_CHEST.get(), IronChestsBlocks.TRAPPED_CRYSTAL_CHEST.get());
+      case OBSIDIAN -> Arrays.asList(IronChestsBlocks.OBSIDIAN_CHEST.get(), IronChestsBlocks.TRAPPED_OBSIDIAN_CHEST.get());
+      case DIRT -> Arrays.asList(IronChestsBlocks.DIRT_CHEST.get(), IronChestsBlocks.TRAPPED_DIRT_CHEST.get());
+      default -> List.of(Blocks.CHEST);
     };
   }
 
   @Nullable
-  public AbstractIronChestBlockEntity makeEntity(BlockPos blockPos, BlockState blockState) {
-    return switch (this) {
-      case IRON -> new IronChestBlockEntity(blockPos, blockState);
-      case GOLD -> new GoldChestBlockEntity(blockPos, blockState);
-      case DIAMOND -> new DiamondChestBlockEntity(blockPos, blockState);
-      case COPPER -> new CopperChestBlockEntity(blockPos, blockState);
-      case SILVER -> new SilverChestBlockEntity(blockPos, blockState);
-      case CRYSTAL -> new CrystalChestBlockEntity(blockPos, blockState);
-      case OBSIDIAN -> new ObsidianChestBlockEntity(blockPos, blockState);
-      case DIRT -> new DirtChestBlockEntity(blockPos, blockState);
-      default -> null;
-    };
+  public AbstractIronChestBlockEntity makeEntity(BlockPos blockPos, BlockState blockState, boolean trapped) {
+    if(trapped) {
+      return switch (this) {
+        case IRON -> new TrappedIronChestBlockEntity(blockPos, blockState);
+        case GOLD -> new TrappedGoldChestBlockEntity(blockPos, blockState);
+        case DIAMOND -> new TrappedDiamondChestBlockEntity(blockPos, blockState);
+        case COPPER -> new TrappedCopperChestBlockEntity(blockPos, blockState);
+        case CRYSTAL -> new TrappedCrystalChestBlockEntity(blockPos, blockState);
+        case OBSIDIAN -> new TrappedObsidianChestBlockEntity(blockPos, blockState);
+        case DIRT -> new TrappedDirtChestBlockEntity(blockPos, blockState);
+        default -> null;
+      };
+    } else {
+      return switch (this) {
+        case IRON -> new IronChestBlockEntity(blockPos, blockState);
+        case GOLD -> new GoldChestBlockEntity(blockPos, blockState);
+        case DIAMOND -> new DiamondChestBlockEntity(blockPos, blockState);
+        case COPPER -> new CopperChestBlockEntity(blockPos, blockState);
+        case CRYSTAL -> new CrystalChestBlockEntity(blockPos, blockState);
+        case OBSIDIAN -> new ObsidianChestBlockEntity(blockPos, blockState);
+        case DIRT -> new DirtChestBlockEntity(blockPos, blockState);
+        default -> null;
+      };
+    }
   }
 }

@@ -64,14 +64,6 @@ public class IronChestMenu extends AbstractContainerMenu {
     return new IronChestMenu(IronChestsContainerTypes.COPPER_CHEST.get(), containerId, playerInventory, inventory, IronChestsTypes.COPPER);
   }
 
-  public static IronChestMenu createSilverContainer(int containerId, Inventory playerInventory) {
-    return new IronChestMenu(IronChestsContainerTypes.SILVER_CHEST.get(), containerId, playerInventory, new SimpleContainer(IronChestsTypes.CRYSTAL.size), IronChestsTypes.SILVER);
-  }
-
-  public static IronChestMenu createSilverContainer(int containerId, Inventory playerInventory, Container inventory) {
-    return new IronChestMenu(IronChestsContainerTypes.SILVER_CHEST.get(), containerId, playerInventory, inventory, IronChestsTypes.SILVER);
-  }
-
   public static IronChestMenu createObsidianContainer(int containerId, Inventory playerInventory) {
     return new IronChestMenu(IronChestsContainerTypes.OBSIDIAN_CHEST.get(), containerId, playerInventory, new SimpleContainer(IronChestsTypes.OBSIDIAN.size), IronChestsTypes.OBSIDIAN);
   }

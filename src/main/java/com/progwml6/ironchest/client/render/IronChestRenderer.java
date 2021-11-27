@@ -1,15 +1,15 @@
 package com.progwml6.ironchest.client.render;
 
-import com.google.common.primitives.SignedBytes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.progwml6.ironchest.IronChestsClientEvents;
 import com.progwml6.ironchest.client.model.IronChestsModels;
 import com.progwml6.ironchest.client.model.inventory.ModelItem;
-import com.progwml6.ironchest.common.block.AbstractIronChestBlock;
-import com.progwml6.ironchest.common.block.entity.CrystalChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.AbstractIronChestBlock;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
-import com.progwml6.ironchest.common.block.entity.AbstractIronChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.entity.AbstractIronChestBlockEntity;
+import com.progwml6.ironchest.common.block.entity.ICrystalChest;
+import com.progwml6.ironchest.common.block.trapped.entity.AbstractTrappedIronChestBlockEntity;
 import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import net.minecraft.client.model.geom.PartPose;
@@ -17,22 +17,20 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -54,8 +52,6 @@ public class IronChestRenderer<T extends BlockEntity & LidBlockEntity> implement
   private final ModelPart bottom;
   private final ModelPart lock;
 
-  private static ItemEntity customItem;
-  private static ItemEntityRenderer itemRenderer;
   private final BlockEntityRenderDispatcher renderer;
 
   private static final List<ModelItem> MODEL_ITEMS = Arrays.asList(
@@ -129,7 +125,9 @@ public class IronChestRenderer<T extends BlockEntity & LidBlockEntity> implement
 
       int brightness = neighborCombineResult.<Int2IntFunction>apply(new BrightnessCombiner<>()).applyAsInt(combinedLightIn);
 
-      Material material = new Material(Sheets.CHEST_SHEET, IronChestsModels.chooseChestTexture(chestType));
+      boolean trapped = tileEntityIn instanceof AbstractTrappedIronChestBlockEntity;
+
+      Material material = new Material(Sheets.CHEST_SHEET, IronChestsModels.chooseChestTexture(chestType, trapped));
 
       VertexConsumer vertexConsumer = material.buffer(bufferSource, RenderType::entityCutout);
 
@@ -137,16 +135,11 @@ public class IronChestRenderer<T extends BlockEntity & LidBlockEntity> implement
 
       poseStack.popPose();
 
-      if (chestType.isTransparent() && tileEntity instanceof CrystalChestBlockEntity crystalChestTileEntity && Vec3.atCenterOf(tileEntityIn.getBlockPos()).closerThan(this.renderer.camera.getPosition(), 128d)) {
+      if (chestType.isTransparent() && tileEntity instanceof ICrystalChest crystalChest && Vec3.atCenterOf(tileEntityIn.getBlockPos()).closerThan(this.renderer.camera.getPosition(), 128d)) {
         float rotation = (float) (360D * (System.currentTimeMillis() & 0x3FFFL) / 0x3FFFL) - partialTicks;
 
-        if (customItem == null) {
-          assert level != null;
-          customItem = new ItemEntity(EntityType.ITEM, level);
-        }
-
         for (int j = 0; j < MODEL_ITEMS.size() - 1; j++) {
-          renderItem(poseStack, bufferSource, crystalChestTileEntity.getTopItems().get(j), MODEL_ITEMS.get(j), rotation, combinedLightIn, partialTicks);
+          renderItem(poseStack, bufferSource, crystalChest.getTopItems().get(j), MODEL_ITEMS.get(j), rotation, combinedLightIn);
         }
       }
     }
@@ -170,11 +163,9 @@ public class IronChestRenderer<T extends BlockEntity & LidBlockEntity> implement
    * @param modelItem Model items for render information
    * @param light     Model light
    */
-  public static void renderItem(PoseStack matrices, MultiBufferSource buffer, ItemStack item, ModelItem modelItem, float rotation, int light, float partialTicks) {
+  public static void renderItem(PoseStack matrices, MultiBufferSource buffer, ItemStack item, ModelItem modelItem, float rotation, int light) {
     // if no stack, skip
     if (item.isEmpty()) return;
-
-    customItem.setItem(item);
 
     // start rendering
     matrices.pushPose();
@@ -188,26 +179,8 @@ public class IronChestRenderer<T extends BlockEntity & LidBlockEntity> implement
     matrices.scale(scale, scale, scale);
 
     // render the actual item
-    if (itemRenderer == null) {
-      itemRenderer = new ItemEntityRenderer(new EntityRendererProvider.Context(Minecraft.getInstance().getEntityRenderDispatcher(), Minecraft.getInstance().getItemRenderer(), Minecraft.getInstance().getResourceManager(), Minecraft.getInstance().getEntityModels(), Minecraft.getInstance().font)) {
-        @Override
-        public int getRenderAmount(ItemStack stack) {
-          return SignedBytes.saturatedCast(Math.min(stack.getCount() / 32, 15) + 1);
-        }
+    Minecraft.getInstance().getItemRenderer().renderStatic(item, ItemTransforms.TransformType.NONE, light, OverlayTexture.NO_OVERLAY, matrices, buffer, 0);
 
-        @Override
-        public boolean shouldBob() {
-          return false;
-        }
-
-        @Override
-        public boolean shouldSpreadItems() {
-          return true;
-        }
-      };
-    }
-
-    itemRenderer.render(customItem, 0F, partialTicks, matrices, buffer, light);
     matrices.popPose();
   }
 }

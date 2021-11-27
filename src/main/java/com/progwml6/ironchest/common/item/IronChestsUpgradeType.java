@@ -9,15 +9,12 @@ import static com.progwml6.ironchest.common.block.IronChestsTypes.DIAMOND;
 import static com.progwml6.ironchest.common.block.IronChestsTypes.GOLD;
 import static com.progwml6.ironchest.common.block.IronChestsTypes.IRON;
 import static com.progwml6.ironchest.common.block.IronChestsTypes.OBSIDIAN;
-import static com.progwml6.ironchest.common.block.IronChestsTypes.SILVER;
 import static com.progwml6.ironchest.common.block.IronChestsTypes.WOOD;
 
 public enum IronChestsUpgradeType {
 
   IRON_TO_GOLD(IRON, GOLD),
   GOLD_TO_DIAMOND(GOLD, DIAMOND),
-  COPPER_TO_SILVER(COPPER, SILVER),
-  SILVER_TO_GOLD(SILVER, GOLD),
   COPPER_TO_IRON(COPPER, IRON),
   DIAMOND_TO_CRYSTAL(DIAMOND, CRYSTAL),
   WOOD_TO_IRON(WOOD, IRON),

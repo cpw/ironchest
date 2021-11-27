@@ -20,8 +20,6 @@ public class IronChestsContainerTypes {
 
   public static final RegistryObject<MenuType<IronChestMenu>> COPPER_CHEST = CONTAINERS.register("copper_chest", () -> new MenuType<>(IronChestMenu::createCopperContainer));
 
-  public static final RegistryObject<MenuType<IronChestMenu>> SILVER_CHEST = CONTAINERS.register("silver_chest", () -> new MenuType<>(IronChestMenu::createSilverContainer));
-
   public static final RegistryObject<MenuType<IronChestMenu>> OBSIDIAN_CHEST = CONTAINERS.register("obsidian_chest", () -> new MenuType<>(IronChestMenu::createObsidianContainer));
 
   public static final RegistryObject<MenuType<IronChestMenu>> DIRT_CHEST = CONTAINERS.register("dirt_chest", () -> new MenuType<>(IronChestMenu::createDirtContainer));

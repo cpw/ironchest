@@ -1,8 +1,12 @@
 package com.progwml6.ironchest.common.item;
 
-import com.progwml6.ironchest.common.block.AbstractIronChestBlock;
+import com.progwml6.ironchest.common.block.IronChestsBlocks;
+import com.progwml6.ironchest.common.block.regular.AbstractIronChestBlock;
 import com.progwml6.ironchest.common.block.IronChestsTypes;
-import com.progwml6.ironchest.common.block.entity.AbstractIronChestBlockEntity;
+import com.progwml6.ironchest.common.block.regular.entity.AbstractIronChestBlockEntity;
+import com.progwml6.ironchest.common.block.trapped.entity.AbstractTrappedIronChestBlockEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.TrappedChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.entity.player.Player;
@@ -33,6 +37,7 @@ public class ChestUpgradeItem extends Item {
     BlockPos blockPos = context.getClickedPos();
     Level world = context.getLevel();
     ItemStack itemStack = context.getItemInHand();
+    boolean passed = false;
 
     if (world.isClientSide) {
       return InteractionResult.PASS;
@@ -47,10 +52,16 @@ public class ChestUpgradeItem extends Item {
         return InteractionResult.PASS;
       }
     } else {
-      if (world.getBlockState(blockPos).getBlock().defaultBlockState() != IronChestsTypes.get(this.type.source).defaultBlockState()) {
-        return InteractionResult.PASS;
+      for (Block block : IronChestsTypes.get(this.type.source)) {
+        if (!passed)
+          passed = world.getBlockState(blockPos).getBlock().defaultBlockState() == block.defaultBlockState();
       }
     }
+
+    if (!passed) {
+      return InteractionResult.PASS;
+    }
+
 
     BlockEntity tileEntity = world.getBlockEntity(blockPos);
 
@@ -64,7 +75,7 @@ public class ChestUpgradeItem extends Item {
     Component customName = null;
     NonNullList<ItemStack> chestContents = NonNullList.withSize(27, ItemStack.EMPTY);
     Direction chestFacing = Direction.NORTH;
-    BlockState iBlockState = IronChestsTypes.get(this.type.target).defaultBlockState();
+    BlockState iBlockState = IronChestsBlocks.COPPER_CHEST.get().defaultBlockState();
 
     if (tileEntity != null) {
       if (tileEntity instanceof AbstractIronChestBlockEntity chest) {
@@ -78,11 +89,20 @@ public class ChestUpgradeItem extends Item {
           return InteractionResult.PASS;
         }
 
+        boolean trapped = tileEntity instanceof AbstractTrappedIronChestBlockEntity;
+
+        if(trapped) {
+          iBlockState = IronChestsTypes.get(this.type.target).get(1).defaultBlockState();
+        } else {
+          iBlockState = IronChestsTypes.get(this.type.target).get(0).defaultBlockState();
+        }
+
         chestContents = chest.getItems();
         chestFacing = chestState.getValue(AbstractIronChestBlock.FACING);
         customName = chest.getCustomName();
         iBlockState = iBlockState.setValue(AbstractIronChestBlock.FACING, chestFacing);
-        newChest = this.type.target.makeEntity(blockPos, iBlockState);
+
+        newChest = this.type.target.makeEntity(blockPos, iBlockState, trapped);
       } else if (tileEntity instanceof ChestBlockEntity chest) {
         BlockState chestState = world.getBlockState(blockPos);
         chestFacing = chestState.getValue(ChestBlock.FACING);
@@ -107,9 +127,17 @@ public class ChestUpgradeItem extends Item {
 
         customName = chest.getCustomName();
 
+        boolean trapped = tileEntity instanceof TrappedChestBlockEntity;
+
+        if(trapped) {
+          iBlockState = IronChestsTypes.get(this.type.source).get(1).defaultBlockState();
+        } else {
+          iBlockState = IronChestsTypes.get(this.type.source).get(0).defaultBlockState();
+        }
+
         iBlockState = iBlockState.setValue(AbstractIronChestBlock.FACING, chestFacing);
 
-        newChest = this.type.target.makeEntity(blockPos, iBlockState);
+        newChest = this.type.target.makeEntity(blockPos, iBlockState, trapped);
       }
     }
 
