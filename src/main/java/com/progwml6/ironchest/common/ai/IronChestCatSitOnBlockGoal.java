@@ -11,8 +11,8 @@ import net.minecraft.world.level.LevelReader;
 
 public class IronChestCatSitOnBlockGoal extends CatSitOnBlockGoal {
 
-  public IronChestCatSitOnBlockGoal(Cat cat, double p_i50330_2_) {
-    super(cat, p_i50330_2_);
+  public IronChestCatSitOnBlockGoal(Cat cat, double speedModifier) {
+    super(cat, speedModifier);
   }
 
   @Override

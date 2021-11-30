@@ -1,12 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "GGG",
-    "GSG",
-    "GGG"
+    "MMM",
+    "MGM",
+    "MMM"
   ],
   "key": {
-    "S": {
+    "M": {
       "item": "minecraft:obsidian"
     },
     "G": {
