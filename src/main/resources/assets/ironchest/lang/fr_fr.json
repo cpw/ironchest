@@ -1,0 +1,43 @@
+{
+  "_comment": "Blocks",
+  "block.ironchest.iron_chest": "Coffre en fer",
+  "block.ironchest.gold_chest": "Coffre en or",
+  "block.ironchest.diamond_chest": "Coffre en diamant",
+  "block.ironchest.copper_chest": "Coffre en cuivre",
+  "block.ironchest.silver_chest": "Coffre en argent",
+  "block.ironchest.crystal_chest": "Coffre de cristal",
+  "block.ironchest.obsidian_chest": "Coffre en obsidienne",
+  "block.ironchest.dirt_chest": "DirtChest 9000!",
+
+  "_comment": "Upgrades",
+  "item.ironchest.iron_to_gold_chest_upgrade": "Amélioration Fer à Or",
+  "item.ironchest.gold_to_diamond_chest_upgrade": "Amélioration Or à Diamant",
+  "item.ironchest.copper_to_silver_chest_upgrade": "Amélioration Cuivre à Argent",
+  "item.ironchest.silver_to_gold_chest_upgrade": "Amélioration Argent à Or",
+  "item.ironchest.copper_to_iron_chest_upgrade": "Amélioration Cuivre à Fer",
+  "item.ironchest.diamond_to_crystal_chest_upgrade": "Amélioration Diamant à Cristal",
+  "item.ironchest.wood_to_iron_chest_upgrade": "Amélioration Bois à Fer",
+  "item.ironchest.wood_to_copper_chest_upgrade": "Amélioration Bois à Cuivre",
+  "item.ironchest.diamond_to_obsidian_chest_upgrade": "Amélioration Diamant à Obsidienne",
+
+  "_comment": "Books",
+  "book.ironchest.dirtchest9000.title": "Comment utiliser votre DirtChest 9000!",
+  "book.ironchest.dirtchest9000.page1": "Découvrez votre nouveau DirtChest 9000! Nous espérons que vous allez aprécier de nombreuse années de stockage de terre dans notre coffre",
+  "book.ironchest.dirtchest9000.page2": "Utilisation: Inserrez simplement votre terre dans le slot prévu à cet effet et profitez de la simplicité de l'avoir à portée de main dés que vous passez près du coffre!",
+  "book.ironchest.dirtchest9000.page3": "Nous espérons que ce guide vous aura été utile et que vous continuerez d'utilisez nos produits à l'avenir! Cordialement, la rédaction des manuels DirtChest 9000.",
+  "book.ironchest.dirtchest9000.page4": "Garantie: Ce produit n'est sous aucune garantie d'aucune sorte. Votre terre ne rentrera peut être pas, elle s'infiltrera peut être lentement dans l'environement ou il ne se passera peut être rien du tout.",
+  "book.ironchest.dirtchest9000.page5": "Le DirtChest 9000 est bon pour la planette. Merci de vous débarasser de ce guide responsablement et de ne pas le jeter dans la lave, ça nous rendrait triste.",
+
+  "_comment": "Containers",
+  "ironchest.container.iron_chest": "Coffre en fer",
+  "ironchest.container.gold_chest": "Coffre en or",
+  "ironchest.container.diamond_chest": "Coffre en diamant",
+  "ironchest.container.copper_chest": "Coffre en cuivre",
+  "ironchest.container.silver_chest": "Coffre en argent",
+  "ironchest.container.crystal_chest": "Coffre de cristal",
+  "ironchest.container.obsidian_chest": "Coffre en obsidienne",
+  "ironchest.container.dirt_chest": "DirtChest 9000!",
+
+  "_comment": "Item Groups",
+  "itemGroup.ironchest": "Iron Chests"
+}

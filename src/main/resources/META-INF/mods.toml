@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="${loader_range}"
+issueTrackerURL="https://github.com/progwml6/ironchest/issues"
+license="GNU General Public License v3.0"
+
+[[mods]]
+    modId="ironchest"
+    namespace="ironchest"
+    version="${version}"
+    displayName="Iron Chests"
+    authors="cpw, alexbegt, progwml6"
+    description='''
+New chests with larger sizes, with in-place upgrade items.
+The feature chest is the crystal chest, which is transparent - some inventory contents are visible without opening the chest
+    '''
+    displayURL="https://minecraft.curseforge.com/projects/iron-chests"
+
+[[dependencies.ironchest]]
+    modId="forge"
+    mandatory=true
+    versionRange="${forge_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.ironchest]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_range}"
+    ordering="NONE"
+    side="BOTH"

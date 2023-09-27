@@ -1,0 +1,33 @@
+{
+  "_comment": "Blocks",
+  "block.ironchest.iron_chest": "Żelazna skrzynia",
+  "block.ironchest.gold_chest": "Złota skrzynia",
+  "block.ironchest.diamond_chest": "Diamentowa skrzynia",
+  "block.ironchest.copper_chest": "Miedziana skrzynia",
+  "block.ironchest.silver_chest": "Srebrna skrzynia",
+  "block.ironchest.crystal_chest": "Kryształowa skrzynia",
+  "block.ironchest.obsidian_chest": "Obsydianowa skrzynia",
+  "block.ironchest.dirt_chest": "DirtChest 9000!",
+  
+  "_comment": "Upgrades",
+  "item.ironchest.iron_to_gold_chest_upgrade": "Ulepszenie żelaznej skrzyni na złotą",
+  "item.ironchest.gold_to_diamond_chest_upgrade": "Ulepszenie złotej skrzyni na diamentową",
+  "item.ironchest.copper_to_silver_chest_upgrade": "Ulepszenie miedzianej skrzyni na srebrną",
+  "item.ironchest.silver_to_gold_chest_upgrade": "Ulepszenie srebrnej skrzyni na złotą",
+  "item.ironchest.copper_to_iron_chest_upgrade": "Ulepszenie miedzianej skrzyni na żelazną",
+  "item.ironchest.diamond_to_crystal_chest_upgrade": "Ulepszenie diamentowej skrzyni na kryształową",
+  "item.ironchest.wood_to_iron_chest_upgrade": "Ulepszenie drewnianej skrzyni na żelazną",
+  "item.ironchest.wood_to_copper_chest_upgrade": "Ulepszenie drewnianej skrzyni na miedzianą",
+  "item.ironchest.diamond_to_obsidian_chest_upgrade": "Ulepszenie diamentowej skrzyni na obsydianową",
+  
+  "_comment": "Books",
+  "book.ironchest.dirtchest9000.title": "How to use your DirtChest 9000!",
+  "book.ironchest.dirtchest9000.page1": "Welcome to your new DirtChest 9000! We hope you will enjoy many happy years of storing your stack of dirt in our storage utility.",
+  "book.ironchest.dirtchest9000.page2": "Usage: simply insert the stack of dirt of your choice into the highly receptive slot and enjoy the great convenience of having that dirt available to you, any time you pass by this chest!",
+  "book.ironchest.dirtchest9000.page3": "We hope you have enjoyed reviewing this instruction manual, and hope you will consider using our products in future! Kind regards, The DirtChest 9000 manual writers incorporated.",
+  "book.ironchest.dirtchest9000.page4": "Warranty: This product has no warranty of any kind. Your dirt may not be stored, it may slowly leech into the environment, or alternatively, it may not do anything at all.",
+  "book.ironchest.dirtchest9000.page5": "DirtChest 9000 is kind to the environment. Please dispose of this guide book responsibly, and do not whatever you do just chuck it into some lava. We would be very sad.",
+  
+  "_comment": "Item Groups",
+  "itemGroup.ironchest": "Iron Chests"
+}

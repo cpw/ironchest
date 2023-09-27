@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:block",
+	"pools": [
+		{
+			"name": "ironchest:crystal_chest",
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"functions": [
+						{
+							"function": "minecraft:copy_name",
+							"source": "block_entity"
+						}
+					],
+					"name": "ironchest:crystal_chest"
+				}
+			],
+			"conditions": [
+				{
+					"condition": "minecraft:survives_explosion"
+				}
+			]
+		}
+	]
+}
